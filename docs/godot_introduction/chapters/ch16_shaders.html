@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 16 章 シェーダー入門 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 17 章 チュートリアル：岩よけゲームを作る" href="ch17_tutorial.html" />
+    <link rel="prev" title="第 15 章 シーン管理とデータ" href="ch15_scenes_and_data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 16 章　シェーダー入門</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">シェーダーとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#godot">Godot のシェーダー言語</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">シェーダーの種類</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">処理関数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">型と組み込み変数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">シェーダーを適用する手順</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">例 1：点滅（白く光らせる）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uniform">スクリプトから uniform を変更する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">例 2：波打ち</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">例 3：消滅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">例 4：画面全体の効果</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">ビジュアルシェーダー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">シェーダーを書くときの注意</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 16 章　シェーダー入門</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch15_scenes_and_data.html" class="btn btn-neutral float-left" title="第 15 章 シーン管理とデータ" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch17_tutorial.html" class="btn btn-neutral float-right" title="第 17 章 チュートリアル：岩よけゲームを作る" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch16">
+<span id="id1"></span><h1>第 16 章　シェーダー入門<a class="headerlink" href="#ch16" title="Link to this heading"></a></h1>
+<p>被弾したキャラクターを白く光らせる、旗を波打たせる、敵が燃え尽きるように消える、画面全体を白黒にする。こうした見た目の効果は、シェーダーを使うと少ない手間で実現できる。本章では、シェーダーの考え方と Godot のシェーダー言語の基本を、4 つの例で説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter16</span></code> フォルダーにある。</p>
+<section id="id2">
+<h2>シェーダーとは<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>シェーダー（shader）は、GPU（グラフィックス処理装置）の上で動く小さなプログラムである。画面に描画する物体の頂点ごと、またはピクセルごとに実行され、その位置や色を決める。</p>
+<p>CPU で動く GDScript は、命令を 1 つずつ順番に処理する。一方、GPU は同じ処理を大量のデータに対して同時に実行するのが得意である。シェーダーは「1 つのピクセルの色を決める処理」として書き、GPU がそれを画面の全ピクセルに対して並列に実行する。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 57 </span><span class="caption-text">GDScript とシェーダーの違い</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 37.0%" />
+<col style="width: 38.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>GDScript</p></th>
+<th class="head"><p>シェーダー</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>実行する場所</p></td>
+<td><p>CPU</p></td>
+<td><p>GPU</p></td>
+</tr>
+<tr class="row-odd"><td><p>書く処理の単位</p></td>
+<td><p>ゲーム全体の処理の流れ</p></td>
+<td><p>1 つの頂点、または 1 つのピクセルの処理</p></td>
+</tr>
+<tr class="row-even"><td><p>得意なこと</p></td>
+<td><p>ゲームのルール、状態の管理</p></td>
+<td><p>見た目の効果、大量の要素の一括処理</p></td>
+</tr>
+<tr class="row-odd"><td><p>ほかの要素との情報のやり取り</p></td>
+<td><p>自由にできる</p></td>
+<td><p>ほぼできない。隣のピクセルの計算結果は使えない。</p></td>
+</tr>
+</tbody>
+</table>
+<p>例えば、画像の色を白に近づける処理を GDScript でピクセルごとに行うと、画像が大きいほど時間がかかる。シェーダーなら、GPU が全ピクセルを同時に処理するので、毎フレーム実行しても負荷はほとんど問題にならない。</p>
+</section>
+<section id="godot">
+<h2>Godot のシェーダー言語<a class="headerlink" href="#godot" title="Link to this heading"></a></h2>
+<p>Godot のシェーダーは、GLSL（OpenGL のシェーダー言語）を簡略化した、Godot 独自のシェーダー言語で書く。ファイルの拡張子は <code class="docutils literal notranslate"><span class="pre">.gdshader</span></code> である。Godot は、このコードを使っているレンダラー（Vulkan、OpenGL など）に合わせて変換する。</p>
+<section id="id3">
+<h3>シェーダーの種類<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>ファイルの先頭の <code class="docutils literal notranslate"><span class="pre">shader_type</span></code> で、シェーダーの種類を指定する。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 58 </span><span class="caption-text">シェーダーの種類</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>対象</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">canvas_item</span></code></p></td>
+<td><p>2D のノードと UI（<code class="docutils literal notranslate"><span class="pre">CanvasItem</span></code> を継承したノード）。本章で扱う。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spatial</span></code></p></td>
+<td><p>3D の物体</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">particles</span></code></p></td>
+<td><p>GPU パーティクルの粒の動き</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sky</span></code></p></td>
+<td><p>3D の空</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fog</span></code></p></td>
+<td><p>3D のボリュームフォグ</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h3>処理関数<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>シェーダーには、決まった名前の関数（処理関数）を書く。<code class="docutils literal notranslate"><span class="pre">canvas_item</span></code> のシェーダーでは、次の関数を使う。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 59 </span><span class="caption-text">canvas_item シェーダーの処理関数</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>関数</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vertex()</span></code></p></td>
+<td><p>頂点ごとに実行される。頂点の位置を変えて、形を変形させる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fragment()</span></code></p></td>
+<td><p>ピクセルごとに実行される。そのピクセルの色を決める。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">light()</span></code></p></td>
+<td><p>ピクセルとライトの組み合わせごとに実行される。2D のライトの当たり方を変える。</p></td>
+</tr>
+</tbody>
+</table>
+<p>本章の例は、すべて <code class="docutils literal notranslate"><span class="pre">fragment()</span></code> だけを使う。</p>
+</section>
+<section id="id5">
+<h3>型と組み込み変数<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>シェーダー言語の主な型は次のとおりである。<code class="docutils literal notranslate"><span class="pre">vec4</span></code> の各成分は <code class="docutils literal notranslate"><span class="pre">.x</span></code>、<code class="docutils literal notranslate"><span class="pre">.y</span></code>、<code class="docutils literal notranslate"><span class="pre">.z</span></code>、<code class="docutils literal notranslate"><span class="pre">.w</span></code> のほか、色として <code class="docutils literal notranslate"><span class="pre">.r</span></code>、<code class="docutils literal notranslate"><span class="pre">.g</span></code>、<code class="docutils literal notranslate"><span class="pre">.b</span></code>、<code class="docutils literal notranslate"><span class="pre">.a</span></code> でも参照できる。<code class="docutils literal notranslate"><span class="pre">COLOR.rgb</span></code> のように複数の成分をまとめて取り出すこともできる（スウィズル）。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 60 </span><span class="caption-text">シェーダー言語の主な型</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>型</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code>、<code class="docutils literal notranslate"><span class="pre">int</span></code>、<code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p>浮動小数点数、整数、真偽値</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vec2</span></code>、<code class="docutils literal notranslate"><span class="pre">vec3</span></code>、<code class="docutils literal notranslate"><span class="pre">vec4</span></code></p></td>
+<td><p>2 ～ 4 個の <code class="docutils literal notranslate"><span class="pre">float</span></code> の組。座標や色に使う。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mat2</span></code>、<code class="docutils literal notranslate"><span class="pre">mat3</span></code>、<code class="docutils literal notranslate"><span class="pre">mat4</span></code></p></td>
+<td><p>行列</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sampler2D</span></code></p></td>
+<td><p>テクスチャ（画像）</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">fragment()</span></code> の中では、次の組み込み変数を使える。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 61 </span><span class="caption-text">canvas_item シェーダーの fragment() で使う主な組み込み変数</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>変数</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">UV</span></code></p></td>
+<td><p>テクスチャ上の座標。画像の左上が (0, 0)、右下が (1, 1) である。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TEXTURE</span></code></p></td>
+<td><p>ノードに設定されたテクスチャ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">COLOR</span></code></p></td>
+<td><p>入力としては、テクスチャの色に頂点の色（<code class="docutils literal notranslate"><span class="pre">modulate</span></code> など）を掛けた値。出力として、このピクセルの最終的な色を代入する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TIME</span></code></p></td>
+<td><p>ゲームの開始からの経過秒数。時間とともに変化する効果に使う。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SCREEN_UV</span></code></p></td>
+<td><p>画面上の座標。画面の左上が (0, 0)、右下が (1, 1) である。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TEXTURE_PIXEL_SIZE</span></code></p></td>
+<td><p>テクスチャの 1 ピクセルの大きさ（UV 単位）</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>シェーダー言語は型に厳しい。<code class="docutils literal notranslate"><span class="pre">float</span></code> の変数に整数の <code class="docutils literal notranslate"><span class="pre">1</span></code> を代入するとエラーになるので、<code class="docutils literal notranslate"><span class="pre">1.0</span></code> のように小数点を付けて書く。GDScript の感覚で書くと間違えやすい。</p>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>シェーダーを適用する手順<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>2D のノードにシェーダーを適用する手順は次のとおりである。</p>
+<ol class="arabic simple">
+<li><p>シェーダーを適用したいノード（<code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> など）を選ぶ。</p></li>
+<li><p>インスペクターの「CanvasItem」→「マテリアル」→「マテリアル」で「新規 ShaderMaterial」を選ぶ。</p></li>
+<li><p>作られた <code class="docutils literal notranslate"><span class="pre">ShaderMaterial</span></code> をクリックして開き、「シェーダー」で「新規 Shader」を選ぶ。保存先を聞かれたら、<code class="docutils literal notranslate"><span class="pre">.gdshader</span></code> ファイルとして保存する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Shader</span></code> をクリックすると、下部パネルの「シェーダーエディター」が開くので、コードを書く。</p></li>
+<li><p>コードの中で <code class="docutils literal notranslate"><span class="pre">uniform</span></code> として宣言した値は、<code class="docutils literal notranslate"><span class="pre">ShaderMaterial</span></code> のインスペクターの「Shader Parameters」に表示され、エディターから変更できる。</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">ShaderMaterial</span></code> はシェーダーと、そのパラメーター（uniform の値）の組を保持するリソースである。同じシェーダーを使い、パラメーターだけが異なるマテリアルを複数作れる。</p>
+</section>
+<section id="id7">
+<h2>例 1：点滅（白く光らせる）<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>最初の例は、画像を指定した色で塗りつぶすシェーダーである。被弾したときにキャラクターを一瞬白く光らせる演出に使う。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 32 </span><span class="caption-text">chapter16/flash.gdshader</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// 画像を指定した色で塗りつぶす（被弾時の点滅などに使う）シェーダー。</span>
+<span class="linenos"> 2</span><span class="n">shader_type</span><span class="w"> </span><span class="n">canvas_item</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">// 塗りつぶす色。source_color を付けるとインスペクターでカラーピッカーが使える。</span>
+<span class="linenos"> 5</span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">flash_color</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">source_color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="linenos"> 6</span><span class="c1">// 塗りつぶしの度合い。0.0 で元の画像、1.0 で flash_color 一色になる。</span>
+<span class="linenos"> 7</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">flash_amount</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hint_range</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kt">void</span><span class="w"> </span><span class="n">fragment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">10</span><span class="w">    </span><span class="c1">// COLOR には、テクスチャの色に頂点色（modulate など）を掛けた値が入っている。</span>
+<span class="linenos">11</span><span class="w">    </span><span class="c1">// 透明度はそのままにして、RGB だけを flash_color へ近づける。</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">COLOR</span><span class="p">.</span><span class="n">rgb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">COLOR</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span><span class="w"> </span><span class="n">flash_color</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span><span class="w"> </span><span class="n">flash_amount</span><span class="p">);</span>
+<span class="linenos">13</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">uniform</span></code> は、シェーダーの外（エディターやスクリプト）から値を設定できる変数である。GDScript の <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> に近い。<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">source_color</span></code> や <code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">hint_range(0.0,</span> <span class="pre">1.0)</span></code> はヒントと呼ばれ、インスペクターでの入力方法を指定する。<code class="docutils literal notranslate"><span class="pre">source_color</span></code> を付けた <code class="docutils literal notranslate"><span class="pre">vec4</span></code> はカラーピッカーで入力でき、色空間の変換も正しく行われる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">fragment()</span></code> では、<code class="docutils literal notranslate"><span class="pre">mix(a,</span> <span class="pre">b,</span> <span class="pre">t)</span></code> で元の色と <code class="docutils literal notranslate"><span class="pre">flash_color</span></code> を <code class="docutils literal notranslate"><span class="pre">flash_amount</span></code> の割合で混ぜている。<code class="docutils literal notranslate"><span class="pre">mix()</span></code> は <span class="math notranslate nohighlight">\(a(1 - t) + bt\)</span> を計算する関数で、GDScript の <code class="docutils literal notranslate"><span class="pre">lerp()</span></code> に相当する。透明度（<code class="docutils literal notranslate"><span class="pre">COLOR.a</span></code>）は変えないので、画像の透明な部分は透明のままになる。</p>
+<section id="uniform">
+<h3>スクリプトから uniform を変更する<a class="headerlink" href="#uniform" title="Link to this heading"></a></h3>
+<p>uniform の値は、GDScript から <code class="docutils literal notranslate"><span class="pre">ShaderMaterial</span></code> の <code class="docutils literal notranslate"><span class="pre">set_shader_parameter()</span></code> で変更できる。<code class="docutils literal notranslate"><span class="pre">Tween</span></code> の <code class="docutils literal notranslate"><span class="pre">tween_method()</span></code> と組み合わせると、値を時間とともに変化させられる。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-number">リスト 33 </span><span class="caption-text">chapter16/shader_demo.gd</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos"> 2</span><span class="c1">## 4 種類のシェーダーを試すサンプル。</span>
+<span class="linenos"> 3</span><span class="c1">## スペースキーで点滅、Enter キーで画面効果の切り替えを行う。消滅の効果は自動で繰り返す。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_flash_material</span><span class="p">:</span><span class="w"> </span><span class="n">ShaderMaterial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$FlashSprite</span><span class="o">.</span><span class="n">material</span>
+<span class="linenos"> 6</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_dissolve_material</span><span class="p">:</span><span class="w"> </span><span class="n">ShaderMaterial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$DissolveSprite</span><span class="o">.</span><span class="n">material</span>
+<span class="linenos"> 7</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_screen_effect</span><span class="p">:</span><span class="w"> </span><span class="n">ColorRect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$EffectLayer/ScreenEffect</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">    </span><span class="c1"># シェーダーの uniform は set_shader_parameter() で変更する。</span>
+<span class="linenos">12</span><span class="w">    </span><span class="c1"># Tween を使えば、時間をかけて変化させられる。</span>
+<span class="linenos">13</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">tween</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">create_tween</span><span class="p">()</span><span class="o">.</span><span class="n">set_loops</span><span class="p">()</span>
+<span class="linenos">14</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_method</span><span class="p">(</span><span class="n">_set_dissolve_progress</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span>
+<span class="linenos">15</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_interval</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_method</span><span class="p">(</span><span class="n">_set_dissolve_progress</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_interval</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">func</span><span class="w"> </span><span class="n">_unhandled_input</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">InputEvent</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;jump&quot;</span><span class="p">):</span>
+<span class="linenos">22</span><span class="w">        </span><span class="n">_flash</span><span class="p">()</span>
+<span class="linenos">23</span><span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_accept&quot;</span><span class="p">):</span>
+<span class="linenos">24</span><span class="w">        </span><span class="n">_screen_effect</span><span class="o">.</span><span class="n">visible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">_screen_effect</span><span class="o">.</span><span class="n">visible</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="c1">## 白く光ってから 0.3 秒かけて元に戻る。</span>
+<span class="linenos">28</span><span class="k">func</span><span class="w"> </span><span class="n">_flash</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">29</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">tween</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">create_tween</span><span class="p">()</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_method</span><span class="p">(</span><span class="n">_set_flash_amount</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">)</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="k">func</span><span class="w"> </span><span class="n">_set_flash_amount</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">34</span><span class="w">    </span><span class="n">_flash_material</span><span class="o">.</span><span class="n">set_shader_parameter</span><span class="p">(</span><span class="s2">&quot;flash_amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="k">func</span><span class="w"> </span><span class="n">_set_dissolve_progress</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">38</span><span class="w">    </span><span class="n">_dissolve_material</span><span class="o">.</span><span class="n">set_shader_parameter</span><span class="p">(</span><span class="s2">&quot;progress&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">_flash()</span></code> では、<code class="docutils literal notranslate"><span class="pre">flash_amount</span></code> を 0.3 秒かけて 1.0 から 0.0 に変化させている。<code class="docutils literal notranslate"><span class="pre">tween_method()</span></code> は、<code class="docutils literal notranslate"><span class="pre">tween_property()</span></code> と異なり、途中の値を引数にして指定した関数を毎フレーム呼ぶ。プロパティではない値（ここでは uniform）を変化させたいときに使う。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">ShaderMaterial</span></code> もリソースなので、同じマテリアルを複数のノードで使うと共有される（<a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a>）。1 体の敵を光らせたつもりが、同じマテリアルを使う敵が全員光ってしまう、ということが起こる。ノードごとに別の値にしたい場合は、マテリアルのインスペクターで「リソース」→「シーン固有」（resource_local_to_scene）をオンにする。シーンのインスタンスごとに、マテリアルが複製されるようになる。</p>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>例 2：波打ち<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>2 つ目の例は、画像を横方向に波打たせるシェーダーである。テクスチャを読み取る座標をずらすことで、画像を変形させる。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-number">リスト 34 </span><span class="caption-text">chapter16/wave.gdshader</span><a class="headerlink" href="#id20" title="Link to this code"></a></div>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// 画像を横方向に波打たせるシェーダー。旗や水面の揺らぎを表現する。</span>
+<span class="linenos"> 2</span><span class="n">shader_type</span><span class="w"> </span><span class="n">canvas_item</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">amplitude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span><span class="w">  </span><span class="c1">// 揺れ幅（UV 座標の単位。画像の幅に対する割合）</span>
+<span class="linenos"> 5</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">12.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// 縦方向に並ぶ波の細かさ</span>
+<span class="linenos"> 6</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// 波が流れる速さ</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kt">void</span><span class="w"> </span><span class="n">fragment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="kt">vec2</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UV</span><span class="p">;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="c1">// 行（y）ごとに、時間とともに変化する量だけ横にずらして読み取る。</span>
+<span class="linenos">11</span><span class="w">    </span><span class="n">uv</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">uv</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">TIME</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">amplitude</span><span class="p">;</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">COLOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">TEXTURE</span><span class="p">,</span><span class="w"> </span><span class="n">uv</span><span class="p">);</span>
+<span class="linenos">13</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">texture(TEXTURE,</span> <span class="pre">uv)</span></code> は、テクスチャの <code class="docutils literal notranslate"><span class="pre">uv</span></code> の位置の色を読み取る関数である。通常は <code class="docutils literal notranslate"><span class="pre">UV</span></code> の位置を読むので画像がそのまま表示されるが、この例では <code class="docutils literal notranslate"><span class="pre">uv.x</span></code> を少しずらした位置を読んでいる。ずらす量は <code class="docutils literal notranslate"><span class="pre">UV.y</span></code>（画像の上下の位置）と <code class="docutils literal notranslate"><span class="pre">TIME</span></code> で決まるので、行ごとにずれ方が違い、時間とともに変化する。</p>
+<figure class="align-default" id="id21">
+<a class="reference internal image-reference" href="../_images/uv_coordinates.png"><img alt="../_images/uv_coordinates.png" src="../_images/uv_coordinates.png" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 32 </span><span class="caption-text">UV 座標（左）と、波打ちシェーダーのずらし量（右）</span><a class="headerlink" href="#id21" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>右の図は、横軸がずらす量、縦軸が <code class="docutils literal notranslate"><span class="pre">UV.y</span></code> である。<code class="docutils literal notranslate"><span class="pre">TIME</span></code> が増えると波の形が下へ流れていく。</p>
+</section>
+<section id="id9">
+<h2>例 3：消滅<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>3 つ目の例は、ノイズ画像を使って、画像が燃え尽きるように消えていくシェーダーである。</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-number">リスト 35 </span><span class="caption-text">chapter16/dissolve.gdshader</span><a class="headerlink" href="#id22" title="Link to this code"></a></div>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// ノイズ画像を使って、画像が燃え尽きるように消えていくシェーダー。</span>
+<span class="linenos"> 2</span><span class="n">shader_type</span><span class="w"> </span><span class="n">canvas_item</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">noise_texture</span><span class="p">;</span><span class="w">  </span><span class="c1">// 消える順番を決めるノイズ画像</span>
+<span class="linenos"> 5</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hint_range</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// 0.0 で元の画像、1.0 で完全に消える</span>
+<span class="linenos"> 6</span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">edge_color</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">source_color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// 消える境目の色</span>
+<span class="linenos"> 7</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">edge_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span><span class="w">  </span><span class="c1">// 境目の太さ</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kt">void</span><span class="w"> </span><span class="n">fragment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">10</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">noise</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">noise_texture</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">).</span><span class="n">r</span><span class="p">;</span>
+<span class="linenos">11</span><span class="w">    </span><span class="c1">// ノイズの値が progress より小さい部分は描画しない。</span>
+<span class="linenos">12</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">noise</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">progress</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">13</span><span class="w">        </span><span class="k">discard</span><span class="p">;</span>
+<span class="linenos">14</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">15</span><span class="w">    </span><span class="c1">// 消える直前の部分を edge_color で塗り、燃えているように見せる。</span>
+<span class="linenos">16</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">noise</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">edge_width</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">17</span><span class="w">        </span><span class="n">COLOR</span><span class="p">.</span><span class="n">rgb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge_color</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
+<span class="linenos">18</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">19</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">noise_texture</span></code> には、白と黒がまだらに分布したノイズ画像を設定する。サンプルでは、Godot の <code class="docutils literal notranslate"><span class="pre">NoiseTexture2D</span></code> リソース（<code class="docutils literal notranslate"><span class="pre">FastNoiseLite</span></code> で生成するノイズ）を使っている。インスペクターの uniform の欄で「新規 NoiseTexture2D」を選び、その「ノイズ」で「新規 FastNoiseLite」を選べば作れる。</p>
+<p>ピクセルごとにノイズの値（0.0 ～ 1.0）を読み、それが <code class="docutils literal notranslate"><span class="pre">progress</span></code> より小さければ <code class="docutils literal notranslate"><span class="pre">discard</span></code> でそのピクセルを描画しない。<code class="docutils literal notranslate"><span class="pre">progress</span></code> を 0.0 から 1.0 へ増やすと、ノイズの値が小さい部分から順に消えていく。消える境目のすぐ手前の部分は <code class="docutils literal notranslate"><span class="pre">edge_color</span></code> で塗り、燃えているように見せている。</p>
+<p><code class="docutils literal notranslate"><span class="pre">shader_demo.gd</span></code> では、<code class="docutils literal notranslate"><span class="pre">tween_method()</span></code> で <code class="docutils literal notranslate"><span class="pre">progress</span></code> を 2 秒かけて 0.0 から 1.0 まで変化させ、また戻す動きを繰り返している。</p>
+<figure class="align-default" id="id23">
+<a class="screenshot reference internal image-reference" href="../_images/ch16_shader.png"><img alt="../_images/ch16_shader.png" class="screenshot" src="../_images/ch16_shader.png" style="width: 85%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 33 </span><span class="caption-text">shader_demo.tscn の実行結果（左から元の画像、点滅、波打ち、消滅）</span><a class="headerlink" href="#id23" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id10">
+<h2>例 4：画面全体の効果<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>最後の例は、画面全体を白黒にし、周辺を暗くする（周辺減光、ビネット）シェーダーである。個々の画像ではなく、すでに描画された画面の内容を加工する。</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-number">リスト 36 </span><span class="caption-text">chapter16/screen_effect.gdshader</span><a class="headerlink" href="#id24" title="Link to this code"></a></div>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// 画面全体を白黒にし、周囲を暗くするシェーダー。画面全体を覆う ColorRect に設定する。</span>
+<span class="linenos"> 2</span><span class="n">shader_type</span><span class="w"> </span><span class="n">canvas_item</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">// 描画済みの画面の内容を読み取るためのテクスチャ</span>
+<span class="linenos"> 5</span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">screen_texture</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hint_screen_texture</span><span class="p">,</span><span class="w"> </span><span class="n">filter_linear_mipmap</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">grayscale</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hint_range</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// 白黒の度合い</span>
+<span class="linenos"> 7</span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">vignette</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hint_range</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span><span class="p">;</span><span class="w">  </span><span class="c1">// 周辺を暗くする強さ</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kt">void</span><span class="w"> </span><span class="n">fragment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">10</span><span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">textureLod</span><span class="p">(</span><span class="n">screen_texture</span><span class="p">,</span><span class="w"> </span><span class="n">SCREEN_UV</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+<span class="linenos">11</span><span class="w">    </span><span class="c1">// 人の目の感度に合わせた重みで明るさ（輝度）を求める。</span>
+<span class="linenos">12</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">luminance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="mf">0.299</span><span class="p">,</span><span class="w"> </span><span class="mf">0.587</span><span class="p">,</span><span class="w"> </span><span class="mf">0.114</span><span class="p">));</span>
+<span class="linenos">13</span><span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">luminance</span><span class="p">),</span><span class="w"> </span><span class="n">grayscale</span><span class="p">);</span>
+<span class="linenos">14</span><span class="w">    </span><span class="c1">// 画面の中心からの距離が大きいほど暗くする。</span>
+<span class="linenos">15</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">distance_from_center</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">distance</span><span class="p">(</span><span class="n">SCREEN_UV</span><span class="p">,</span><span class="w"> </span><span class="kt">vec2</span><span class="p">(</span><span class="mf">0.5</span><span class="p">));</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vignette</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">distance_from_center</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">distance_from_center</span><span class="p">;</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">COLOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="linenos">18</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">hint_screen_texture</span></code> を付けた <code class="docutils literal notranslate"><span class="pre">sampler2D</span></code> の uniform は、このノードより奥に描画済みの画面の内容になる。<code class="docutils literal notranslate"><span class="pre">SCREEN_UV</span></code> で現在のピクセルの画面上の位置を読み取り、色を加工して <code class="docutils literal notranslate"><span class="pre">COLOR</span></code> に代入している。</p>
+<p>白黒にする処理では、赤、緑、青に人の目の感度に応じた重みを付けて足し合わせ、明るさ（輝度）を求めている。</p>
+<div class="math notranslate nohighlight">
+\[Y = 0.299R + 0.587G + 0.114B\]</div>
+<p>周辺減光では、画面の中心 (0.5, 0.5) からの距離の 2 乗に比例して暗くしている。</p>
+<p>このシェーダーは、画面全体を覆う <code class="docutils literal notranslate"><span class="pre">ColorRect</span></code> に設定して使う。サンプルでは、<code class="docutils literal notranslate"><span class="pre">CanvasLayer</span></code> の子に「Rect全面」の <code class="docutils literal notranslate"><span class="pre">ColorRect</span></code> を置き、マウスのフィルターを Ignore にしている（<a class="reference internal" href="ch13_ui.html#ch13"><span class="std std-ref">第 13 章　UI</span></a>）。<code class="docutils literal notranslate"><span class="pre">CanvasLayer</span></code> に置くことで、カメラが動いても常に画面全体を覆い、ほかのノードより手前に描画される。<kbd class="kbd docutils literal notranslate">Enter</kbd> キーで表示・非表示を切り替えられる。</p>
+<figure class="align-default" id="id25">
+<a class="screenshot reference internal image-reference" href="../_images/ch16_shader_screen.png"><img alt="../_images/ch16_shader_screen.png" class="screenshot" src="../_images/ch16_shader_screen.png" style="width: 85%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 34 </span><span class="caption-text">画面全体の効果を有効にしたところ</span><a class="headerlink" href="#id25" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id11">
+<h2>ビジュアルシェーダー<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>Godot には、コードを書く代わりに、ノードを線でつないでシェーダーを作るビジュアルシェーダー（<code class="docutils literal notranslate"><span class="pre">VisualShader</span></code>）もある。「新規 Shader」の代わりに「新規 VisualShader」を選ぶと、ノードを並べて編集する画面になる。処理の流れが目で見えるので、試行錯誤しながら効果を作るのに向く。作れる効果はコードのシェーダーと同じである。</p>
+</section>
+<section id="id12">
+<h2>シェーダーを書くときの注意<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ピクセル数だけ実行される</strong>：<code class="docutils literal notranslate"><span class="pre">fragment()</span></code> は描画するピクセルの数だけ実行される。画面全体を覆うシェーダーでは、1 フレームに数十万回から数百万回実行されるので、重いループなどは避ける。</p></li>
+<li><p><strong>初回の表示で一瞬止まることがある</strong>：シェーダーは、初めて使われるときに GPU 用にコンパイルされる。ゲームの途中で初めて登場する効果は、その瞬間にわずかな引っかかりが出ることがある。</p></li>
+<li><p><strong>デバッグが難しい</strong>：シェーダーには <code class="docutils literal notranslate"><span class="pre">print()</span></code> がない。途中の値を確かめたいときは、その値を <code class="docutils literal notranslate"><span class="pre">COLOR</span></code> に出力して色として確認する。</p></li>
+</ul>
+<p>シェーダーの考え方は、Godot に限らず、ほかのゲームエンジンや Web の WebGL でも共通である。<code class="docutils literal notranslate"><span class="pre">TIME</span></code> や <code class="docutils literal notranslate"><span class="pre">UV</span></code> を使って色を計算する練習を重ねると、表現の幅が大きく広がる。参考になる資料は付録 D にまとめた。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch15_scenes_and_data.html" class="btn btn-neutral float-left" title="第 15 章 シーン管理とデータ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch17_tutorial.html" class="btn btn-neutral float-right" title="第 17 章 チュートリアル：岩よけゲームを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

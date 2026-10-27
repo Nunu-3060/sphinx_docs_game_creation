@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11. プロトタイピングとプレイテスト &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="12. 総合演習" href="ch12_final_project.html" />
+    <link rel="prev" title="10. 手続き型生成" href="ch10_procgen.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">11. プロトタイピングとプレイテスト</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">11.1. プロトタイプの目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">11.2. 紙のプロトタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">11.3. デジタルのプロトタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">11.4. プレイテスト</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">11.4.1. プレイテストの準備</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">11.4.2. プレイテストの進め方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">11.4.3. 何人に遊んでもらうか</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">11.5. ログで遊び方を記録する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">11.5.1. ヒートマップで可視化する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">11.6. 改善を繰り返す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">11.7. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">11. </span>プロトタイピングとプレイテスト</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">11. </span>プロトタイピングとプレイテスト<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 2 章で、デザイナーが直接作れるのはルールだけであり、ルールの変更が体験に与える影響は実際に遊んで確かめる作業が欠かせないと述べた。この章では、アイデアを素早く形にして確かめる試作（プロトタイピング）と、他の人に遊んでもらって問題を見つけるプレイテストの進め方を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">11.1. </span>プロトタイプの目的<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>プロトタイプは、完成品の小さな版ではない。特定の問いに答えるための実験装置である。作り始める前に、そのプロトタイプで何を確かめたいのかを 1 つの問いとして書き出しておく。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 11.1 </span><span class="caption-text">プロトタイプで確かめる問いの例</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>問い</p></th>
+<th class="head"><p>作るもの</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>敵を踏んで倒す操作は気持ちよいか</p></td>
+<td><p>四角いキャラクターと四角い敵だけが動く画面</p></td>
+</tr>
+<tr class="row-odd"><td><p>3 種類のユニットの相性は駆け引きを生むか</p></td>
+<td><p>紙に書いたユニットのカードと、さいころ</p></td>
+</tr>
+<tr class="row-even"><td><p>時間が巻き戻る仕掛けで、パズルが作れるか</p></td>
+<td><p>仕掛けだけを実装した、1 つの小さな部屋</p></td>
+</tr>
+<tr class="row-odd"><td><p>プレイヤーは地図を見ずに目的地にたどり着けるか</p></td>
+<td><p>灰色の箱で組んだブロックアウトのレベル</p></td>
+</tr>
+</tbody>
+</table>
+<p>問いが決まれば、その問いに関係しない部分は作らなくてよい。操作の気持ちよさを確かめるのに、タイトル画面も物語も要らない。問いと関係の無い部分に時間をかけるほど、試せる回数が減り、作ったものを捨てにくくなる。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">11.2. </span>紙のプロトタイプ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ルールやバランスを確かめるだけなら、プログラムを書く必要すらないことが多い。紙、カード、さいころ、おはじきなどを使えば、数十分でルールを形にして遊べる。</p>
+<p>紙のプロトタイプには次の利点がある。</p>
+<ul class="simple">
+<li><p>ルールをその場で書き換えて、すぐに遊び直せる。</p></li>
+<li><p>プログラムを書けない人も、設計の議論に参加できる。</p></li>
+<li><p>コンピューターが自動で処理する部分も人が手で行うので、ルールの複雑さを肌で感じられる。手で処理するのが面倒なルールは、プレイヤーにとっても理解しにくいことが多い。</p></li>
+</ul>
+<p>一方で、リアルタイムの操作感や、大量の計算が必要な仕組みは、紙では確かめられない。そうした問いには、デジタルのプロトタイプが必要になる。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">11.3. </span>デジタルのプロトタイプ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>デジタルのプロトタイプでは、見た目に凝らず、四角や丸などの単純な図形で作る。第 7 章の <code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> は、キャラクターも足場もただの四角だが、ジャンプの操作感という問いに答えるには十分である。</p>
+<p>デジタルのプロトタイプを作るときは、次の点を心がけるとよい。</p>
+<ul class="simple">
+<li><p><strong>調整したい数値を 1 か所にまとめる</strong>：<code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> のように、物理のパラメーターをファイルの先頭に定数として並べておくと、値を変えて試すのが簡単になる。</p></li>
+<li><p><strong>実行中に切り替えられるようにする</strong>：数字キーで工夫の ON / OFF を切り替えたように、比べたい設定を実行中に切り替えられると、違いが分かりやすい。</p></li>
+<li><p><strong>捨てる前提で作る</strong>：プロトタイプのコードは、問いに答えたら捨ててよい。製品のコードの品質を求めると、試作の速さが失われる。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2><span class="section-number">11.4. </span>プレイテスト<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>プレイテストは、他の人にゲームを遊んでもらい、その様子を観察して問題を見つける作業である。作った本人は、ルールも正解の道筋も知っているため、初めて遊ぶ人がどこで迷い、何を誤解するかが分からない。プレイテストは、この知識の偏りを取り除く最も確実な方法である。</p>
+<section id="id6">
+<h3><span class="section-number">11.4.1. </span>プレイテストの準備<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>確かめたいことを決める</strong>：プロトタイプと同じく、何を確かめるかを先に決める。「最初のレベルで、説明なしにジャンプの操作に気付けるか」のように具体的にする。</p></li>
+<li><p><strong>対象者を選ぶ</strong>：ゲームが想定するプレイヤーに近い人に遊んでもらう。開発者の仲間は、ゲームに慣れすぎていることが多い。また、同じ人に何度も遊んでもらうと、その人はゲームを覚えてしまい、初めて遊ぶ人の反応は得られなくなる。</p></li>
+<li><p><strong>記録の方法を決める</strong>：観察のメモ、画面の録画、ゲーム内のログなど、何をどう記録するかを決めておく。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3><span class="section-number">11.4.2. </span>プレイテストの進め方<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>プレイテストで最も重要なのは、遊んでいる人に口を出さないことである。迷っている人を見ると、つい「そこは右だよ」と教えたくなるが、教えてしまうと、そのゲームが説明なしでは分からないという事実を見逃す。製品版のゲームでは、デザイナーが隣に座って教えることはできない。</p>
+<p>遊んでいる人には、思ったことを声に出しながら遊んでもらうとよい。この方法を発話思考法と呼ぶ。「これは何だろう」「たぶんここを押せばいい」といった言葉から、プレイヤーがゲームをどう理解しているかが分かる。</p>
+<p>遊び終わった後には、短い質問を行う。質問は、答えを誘導しない形にする。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 11.2 </span><span class="caption-text">プレイテスト後の質問の例</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>よい質問の例</p></th>
+<th class="head"><p>避けたい質問の例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>このゲームでは何をするのが目的だと思ったか</p></td>
+<td><p>目的は分かりやすかったか</p></td>
+</tr>
+<tr class="row-odd"><td><p>一番印象に残った場面はどこか</p></td>
+<td><p>ボス戦は楽しかったか</p></td>
+</tr>
+<tr class="row-even"><td><p>やめたくなった瞬間はあったか。それはどこか</p></td>
+<td><p>難しすぎなかったか</p></td>
+</tr>
+<tr class="row-odd"><td><p>友人にこのゲームをどう説明するか</p></td>
+<td><p>このゲームは面白かったか</p></td>
+</tr>
+</tbody>
+</table>
+<p>避けたい質問の多くは「はい」か「いいえ」で答えられ、しかも相手が気を遣って「はい」と答えやすい。テストに協力してくれた人は、作った人の前で悪い感想を言いにくいものである。プレイヤーの言葉よりも、プレイヤーの行動（どこで止まったか、何回失敗したか、どこで笑ったか）を重視するのがよい。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">11.4.3. </span>何人に遊んでもらうか<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>ユーザビリティの分野では、ヤコブ・ニールセンが「5 人程度のユーザーでテストすれば、主要な問題の多くが見つかる」と述べたことがよく知られている。少人数のテストを何度も繰り返すほうが、大人数のテストを 1 回行うより効率がよいという考え方である。ゲームでもこの考え方は参考になる。ただし、難易度のばらつきや、多様なプレイヤーの好みを調べるには、より多くの人数が必要になる。</p>
+</section>
+</section>
+<section id="id9">
+<h2><span class="section-number">11.5. </span>ログで遊び方を記録する<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>観察とあわせて、ゲームの中でプレイヤーの行動を自動的に記録しておくと、数字で問題を見つけられる。記録する内容の例を次に示す。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 11.3 </span><span class="caption-text">記録する内容の例</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>記録</p></th>
+<th class="head"><p>分かること</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>失敗（死亡）した位置と回数</p></td>
+<td><p>難しすぎる場所、理不尽な場所</p></td>
+</tr>
+<tr class="row-odd"><td><p>プレイをやめた位置</p></td>
+<td><p>意欲を失わせる場所</p></td>
+</tr>
+<tr class="row-even"><td><p>各区間にかかった時間</p></td>
+<td><p>迷いやすい場所、間延びする場所</p></td>
+</tr>
+<tr class="row-odd"><td><p>通った経路</p></td>
+<td><p>想定外の近道や、誰も通らない場所</p></td>
+</tr>
+<tr class="row-even"><td><p>アイテムや能力の使用回数</p></td>
+<td><p>使われない選択肢、強すぎる選択肢</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id10">
+<h3><span class="section-number">11.5.1. </span>ヒートマップで可視化する<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>位置の記録は、ヒートマップにすると傾向が一目で分かる。ヒートマップは、マップを区画に分け、区画ごとの件数を色の濃さで表した図である。</p>
+<p><code class="docutils literal notranslate"><span class="pre">playtest_heatmap.py</span></code> は、次の形の CSV ファイルからヒートマップを描くプログラムである。1 行が 1 つの出来事を表す。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>session,level,x,y,event
+<span class="linenos">2</span>1,demo,41.8,2.3,death
+<span class="linenos">3</span>1,demo,90.6,6.1,death
+<span class="linenos">4</span>1,demo,195.0,3.0,clear
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--input</span></code> を省略すると、横スクロールのアクションゲームを想定した架空のログを生成して使う。架空のレベルには、x = 40（穴）、x = 90（敵）、x = 150（難しいジャンプ）の 3 か所の難所があり、架空のプレイヤー 30 人が、それぞれの難所を突破するまで挑戦を繰り返す。同じ難所で 6 回ミスしたプレイヤーは、そこでプレイをやめてしまう。</p>
+<div class="literal-block-wrapper docutils container" id="list-heatmap-hazard">
+<div class="code-block-caption"><span class="caption-number">リスト 11.1 </span><span class="caption-text">playtest_heatmap.py（1 つの難所に挑戦する架空のプレイヤー）</span><a class="headerlink" href="#list-heatmap-hazard" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">56</span><span class="k">def</span><span class="w"> </span><span class="nf">play_hazard</span><span class="p">(</span><span class="n">session</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hazard</span><span class="p">:</span> <span class="n">Hazard</span><span class="p">,</span> <span class="n">skill</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Record</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="linenos">57</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;1 つの難所を突破するか諦めるまで挑戦する。出来事の一覧と、突破できたかを返す。&quot;&quot;&quot;</span>
+<span class="linenos">58</span>    <span class="n">records</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Record</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">59</span>    <span class="k">while</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">hazard</span><span class="o">.</span><span class="n">success</span> <span class="o">+</span> <span class="n">skill</span><span class="p">:</span>
+<span class="linenos">60</span>        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">gauss</span><span class="p">(</span><span class="n">hazard</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">gauss</span><span class="p">(</span><span class="n">hazard</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">61</span>        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Record</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;demo&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;death&quot;</span><span class="p">))</span>
+<span class="linenos">62</span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">GIVE_UP_DEATHS</span><span class="p">:</span>
+<span class="linenos">63</span>            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Record</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;demo&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;quit&quot;</span><span class="p">))</span>
+<span class="linenos">64</span>            <span class="k">return</span> <span class="n">records</span><span class="p">,</span> <span class="kc">False</span>
+<span class="linenos">65</span>    <span class="k">return</span> <span class="n">records</span><span class="p">,</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="go">python playtest_heatmap.py</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id16">
+<img alt="死亡位置のヒートマップ" src="_images/playtest_heatmap.png" />
+<figcaption>
+<p><span class="caption-number">図 11.1 </span><span class="caption-text">死亡位置のヒートマップ（上）と、横方向の位置ごとの件数（下）</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>図から、x = 150 付近の難所での死亡が他の 2 か所に比べて突出していることが分かる。実行したときに表示される集計では、30 人中 3 人がプレイをやめていた。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>セッション数: 30
+<span class="linenos">2</span>  clear: 27 件
+<span class="linenos">3</span>  death: 94 件
+<span class="linenos">4</span>  quit: 3 件
+</pre></div>
+</div>
+<p>このデータからは、x = 150 の難所の難易度を下げるべきかどうかを検討することになる。ただし、データは「どこで」問題が起きているかは教えてくれるが、「なぜ」起きているかは教えてくれない。ジャンプの距離が長すぎるのか、足場が見えにくいのか、直前に気を散らすものがあるのかは、プレイテストの録画や観察と突き合わせて判断する。</p>
+</section>
+</section>
+<section id="id11">
+<h2><span class="section-number">11.6. </span>改善を繰り返す<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>プレイテストで見つかった問題は、次のような手順で改善する。</p>
+<figure class="align-center" id="id17">
+<div class="graphviz"><img src="_images/graphviz-e45d047b4bb14e522e64c196b1392902addb4443.png" alt="digraph iteration {
+    rankdir=LR;
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    q [label=&quot;問いを\n立てる&quot;];
+    make [label=&quot;作る&quot;];
+    test [label=&quot;遊んで\nもらう&quot;];
+    analyze [label=&quot;分析する&quot;];
+    q -&gt; make -&gt; test -&gt; analyze -&gt; q;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 11.2 </span><span class="caption-text">試作と改善の繰り返し</span><a class="headerlink" href="#id17" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>問題に優先順位を付ける</strong>：プレイテストではたくさんの問題が見つかる。すべてを一度に直すことはできないので、プレイヤーの体験への影響が大きく、多くのプレイヤーに起きている問題から直す。</p></li>
+<li><p><strong>一度に 1 つずつ変える</strong>：複数の箇所を同時に変えると、どの変更が効いたのか分からなくなる。これは実験の基本と同じである。</p></li>
+<li><p><strong>変えたら、もう一度確かめる</strong>：直したつもりの変更が、別の問題を生むこともある。変更のたびに、新しい人にプレイテストを行う。</p></li>
+</ul>
+<p>製品として公開した後のゲームでは、プレイヤーを 2 つのグループに分け、一方には変更前、もう一方には変更後の版を遊んでもらって結果を比べる A/B テストを行うこともある。</p>
+</section>
+<section id="id12">
+<h2><span class="section-number">11.7. </span>演習<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>自分の作りたいゲームについて、最初に作るプロトタイプで確かめたい問いを 1 つ書き、その問いに答えるために最低限必要なものを列挙せよ。</p></li>
+<li><p>遊んだことのある単純なカードゲームのルールを 1 つだけ変え、紙のプロトタイプで遊んで、体験がどう変わったかを記録せよ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">playtest_heatmap.py</span></code> の <code class="docutils literal notranslate"><span class="pre">DEMO_HAZARDS</span></code> で、x = 150 の難所の <code class="docutils literal notranslate"><span class="pre">success</span></code> を 0.35 から 0.6 に上げて実行し、死亡の件数とプレイをやめた人数がどう変わるかを確かめよ。</p></li>
+<li><p>友人に何かのゲームを初めて遊んでもらい、口を出さずに観察せよ。プレイヤーが迷った場所と、その原因と思われるものを記録せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch10_procgen.html" class="btn btn-neutral float-left" title="10. 手続き型生成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch12_final_project.html" class="btn btn-neutral float-right" title="12. 総合演習" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

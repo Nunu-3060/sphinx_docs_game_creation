@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 4 章 エディターの画面構成 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 5 章 ノードとシーン" href="ch05_nodes_and_scenes.html" />
+    <link rel="prev" title="第 3 章 環境構築" href="ch03_setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 4 章　エディターの画面構成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">画面の全体像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">シーンドック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">ファイルシステムドック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">インスペクター</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">メイン画面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#d">2D ビューポートの操作</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">下部パネル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">プロジェクト設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">プロジェクトのパス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">ヘルプを使う</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 4 章　エディターの画面構成</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch03_setup.html" class="btn btn-neutral float-left" title="第 3 章 環境構築" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch05_nodes_and_scenes.html" class="btn btn-neutral float-right" title="第 5 章 ノードとシーン" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch04">
+<span id="id1"></span><h1>第 4 章　エディターの画面構成<a class="headerlink" href="#ch04" title="Link to this heading"></a></h1>
+<p>本章では、Godot エディターの画面を構成する各部分の役割と、よく使う操作を説明する。最初からすべてを覚える必要はない。以降の章を読みながら、必要に応じて参照してほしい。</p>
+<section id="id2">
+<h2>画面の全体像<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>エディターの画面は、既定では次の図のように配置されている。それぞれの区画を「ドック」と呼ぶ。ドックはドラッグして移動したり、タブとしてまとめたりできる。</p>
+<figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="../_images/editor_layout.png"><img alt="../_images/editor_layout.png" src="../_images/editor_layout.png" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 3 </span><span class="caption-text">エディターの画面構成（模式図）</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 13 </span><span class="caption-text">画面の各部分</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 8.0%" />
+<col style="width: 27.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>番号</p></th>
+<th class="head"><p>名前</p></th>
+<th class="head"><p>役割</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>メニュー</p></td>
+<td><p>「シーン」「プロジェクト」「デバッグ」「エディター」「ヘルプ」のメニュー。シーンの保存、プロジェクト設定、エディター設定などを開く。</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>メイン画面の切り替え</p></td>
+<td><p>中央のメイン画面に表示する内容を「2D」「3D」「スクリプト」「ゲーム」「AssetLib」から選ぶ。</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>実行ボタン</p></td>
+<td><p>プロジェクトや現在のシーンを実行・一時停止・停止する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>シーンドック</p></td>
+<td><p>編集中のシーンのノードを木構造で表示する。「インポート」ドックがタブとして並んでいる。</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>ファイルシステムドック</p></td>
+<td><p>プロジェクトのフォルダーの中身を表示する。「履歴」ドックがタブとして並んでいる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>メイン画面</p></td>
+<td><p>シーンを視覚的に編集するビューポートや、スクリプトエディターなどを表示する。</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>インスペクタードック</p></td>
+<td><p>選んだノードやリソースのプロパティを表示・編集する。「シグナル」「グループ」ドックがタブとして並んでいる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>下部パネル</p></td>
+<td><p>「出力」「デバッガー」「オーディオ」「アニメーション」「シェーダーエディター」などを切り替えて表示する。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>シーンドック<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>シーンドックは、編集中のシーンを構成するノードの木構造（シーンツリー）を表示する。ここでノードの追加、削除、名前の変更、親子関係の変更を行う。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 14 </span><span class="caption-text">シーンドックのよく使う操作</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>操作</p></th>
+<th class="head"><p>方法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>子ノードを追加する</p></td>
+<td><p>親にしたいノードを選んで <kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">A</kbd>、またはドック上部の「+」ボタン</p></td>
+</tr>
+<tr class="row-odd"><td><p>別のシーンを子として追加する（インスタンス化）</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">Shift</kbd> + <kbd class="kbd docutils literal notranslate">A</kbd>、またはドック上部の鎖の形のボタン。ファイルシステムドックからシーンファイルをドラッグしてもよい。</p></td>
+</tr>
+<tr class="row-even"><td><p>名前を変える</p></td>
+<td><p>ノードを選んで <kbd class="kbd docutils literal notranslate">F2</kbd>、またはダブルクリック</p></td>
+</tr>
+<tr class="row-odd"><td><p>複製する</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">D</kbd></p></td>
+</tr>
+<tr class="row-even"><td><p>親子関係を変える</p></td>
+<td><p>ノードを別のノードの上へドラッグする。</p></td>
+</tr>
+<tr class="row-odd"><td><p>スクリプトを付ける</p></td>
+<td><p>右クリックして「スクリプトをアタッチ」</p></td>
+</tr>
+<tr class="row-even"><td><p>ノードの種類を変える</p></td>
+<td><p>右クリックして「型を変更...」</p></td>
+</tr>
+<tr class="row-odd"><td><p>一部をシーンとして切り出す</p></td>
+<td><p>右クリックして「ブランチをシーンとして保存…」</p></td>
+</tr>
+</tbody>
+</table>
+<p>ノード名の右に表示されるアイコンにも意味がある。巻物の形のアイコンはスクリプトが付いていること、目の形のアイコンは表示・非表示の切り替えを表す。黄色い警告アイコンは、そのノードに設定が足りないことを示す。例えば、物理演算のノードに衝突形状が設定されていない場合に表示される。アイコンにマウスを重ねると、理由が表示される。</p>
+</section>
+<section id="id4">
+<h2>ファイルシステムドック<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ファイルシステムドックは、プロジェクトのフォルダー（<code class="docutils literal notranslate"><span class="pre">res://</span></code>）の中身を表示する。シーンやスクリプトはダブルクリックで開ける。画像ファイルをビューポートへドラッグすると、その画像を表示するノードが作られる。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>プロジェクト内のファイルを移動したり名前を変えたりするときは、Windows のエクスプローラーではなく、ファイルシステムドックで行う。Godot はシーンなどからの参照を自動で書き換えるが、エクスプローラーで操作すると参照が切れて、シーンを開けなくなることがある。</p>
+</div>
+<p>スクリプトやシェーダーのファイルの横には、<code class="docutils literal notranslate"><span class="pre">.uid</span></code> という拡張子のファイルが自動で作られる。これは、ファイルを移動しても参照が切れないように、ファイルごとに一意の ID を記録したものである。元のファイルと一緒に保存・移動し、Git などで管理する場合もコミットしておく。</p>
+</section>
+<section id="id5">
+<h2>インスペクター<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>インスペクターは、シーンドックで選んだノードのプロパティを表示し、編集する場所である。プロパティはノードの種類（クラス）ごとにまとめて表示される。例えば <code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> を選ぶと、<code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> 固有のプロパティのあとに、継承元の <code class="docutils literal notranslate"><span class="pre">Node2D</span></code>、<code class="docutils literal notranslate"><span class="pre">CanvasItem</span></code>、<code class="docutils literal notranslate"><span class="pre">Node</span></code> のプロパティが順に並ぶ。</p>
+<p>既定値から変更したプロパティの右には、元に戻すためのボタン（円弧の矢印）が表示される。プロパティ名にマウスを重ねると説明が表示され、右クリックからはスクリプトで使う名前をコピーできる。</p>
+<p>インスペクターの右に並ぶ「シグナル」ドックと「グループ」ドックは、それぞれ選んだノードのシグナルとグループを編集する。シグナルは <a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>、グループは <a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で説明する。</p>
+</section>
+<section id="id6">
+<h2>メイン画面<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>メイン画面は、画面上部の切り替えボタンで表示内容を変える。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 15 </span><span class="caption-text">メイン画面の種類</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>名前</p></th>
+<th class="head"><p>ショートカット</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2D</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">F1</kbd></p></td>
+<td><p>2D のシーンや UI を編集するビューポート</p></td>
+</tr>
+<tr class="row-odd"><td><p>3D</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">F2</kbd></p></td>
+<td><p>3D のシーンを編集するビューポート</p></td>
+</tr>
+<tr class="row-even"><td><p>スクリプト</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">F3</kbd></p></td>
+<td><p>スクリプトエディター。GDScript の編集、組み込みのリファレンスの表示を行う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ゲーム</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">F4</kbd></p></td>
+<td><p>実行中のゲームを表示し、ゲームを止めてノードを選ぶなどの操作を行う。</p></td>
+</tr>
+<tr class="row-even"><td><p>AssetLib</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">F5</kbd></p></td>
+<td><p>アセットライブラリ。サンプルやプラグインを検索してダウンロードする。</p></td>
+</tr>
+</tbody>
+</table>
+<section id="d">
+<h3>2D ビューポートの操作<a class="headerlink" href="#d" title="Link to this heading"></a></h3>
+<p>2D ビューポートでは、マウスでノードを選んで動かせる。ツールバーのボタンかキーで、操作のモードを切り替える。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 16 </span><span class="caption-text">2D ビューポートの主な操作</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>操作</p></th>
+<th class="head"><p>方法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>選択モード</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Q</kbd>。ノードを選び、ドラッグで移動もできる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>移動モード</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">W</kbd></p></td>
+</tr>
+<tr class="row-even"><td><p>回転モード</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">E</kbd></p></td>
+</tr>
+<tr class="row-odd"><td><p>拡大縮小モード</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">R</kbd></p></td>
+</tr>
+<tr class="row-even"><td><p>表示を拡大・縮小する</p></td>
+<td><p>マウスホイール</p></td>
+</tr>
+<tr class="row-odd"><td><p>表示をスクロールする</p></td>
+<td><p>マウスの中ボタンでドラッグする。または <kbd class="kbd docutils literal notranslate">Space</kbd> を押しながらドラッグする。</p></td>
+</tr>
+<tr class="row-even"><td><p>選んだノードを画面の中央に表示する</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Shift</kbd> + <kbd class="kbd docutils literal notranslate">F</kbd></p></td>
+</tr>
+</tbody>
+</table>
+<p>ビューポートには、ゲームの画面の範囲を示す枠が表示される。既定の画面の大きさは幅 1152 ピクセル、高さ 648 ピクセルで、枠の左上が座標 (0, 0) である。2D の座標については <a class="reference internal" href="ch10_vectors.html#ch10"><span class="std std-ref">第 10 章　2D の座標とベクトル</span></a> で説明する。</p>
+</section>
+</section>
+<section id="id7">
+<h2>下部パネル<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>下部パネルは、タブを押すと開き、もう一度押すと閉じる。よく使うのは次のタブである。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 17 </span><span class="caption-text">下部パネルの主なタブ</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>タブ</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>出力</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">print()</span></code> の出力やエラーメッセージを表示する。既定では、実行するたびに内容が消去される。</p></td>
+</tr>
+<tr class="row-odd"><td><p>デバッガー</p></td>
+<td><p>エラーの一覧、ブレークポイントでの変数の確認、性能の計測などを行う。詳しくは <a class="reference internal" href="ch18_debug_and_optimization.html#ch18"><span class="std std-ref">第 18 章　デバッグと最適化</span></a> で説明する。</p></td>
+</tr>
+<tr class="row-even"><td><p>オーディオ</p></td>
+<td><p>オーディオバス（音量の系統）を編集する。<a class="reference internal" href="ch14_audio.html#ch14"><span class="std std-ref">第 14 章　サウンド</span></a> で使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>アニメーション</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AnimationPlayer</span></code> ノードのアニメーションを編集する。<a class="reference internal" href="ch12_graphics_and_animation.html#ch12"><span class="std std-ref">第 12 章　描画とアニメーション</span></a> で使う。</p></td>
+</tr>
+<tr class="row-even"><td><p>シェーダーエディター</p></td>
+<td><p>シェーダーのファイルを編集する。<a class="reference internal" href="ch16_shaders.html#ch16"><span class="std std-ref">第 16 章　シェーダー入門</span></a> で使う。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h2>プロジェクト設定<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>「プロジェクト」→「プロジェクト設定」を開くと、プロジェクト全体の設定を変更できる。設定内容はプロジェクトのフォルダーの <code class="docutils literal notranslate"><span class="pre">project.godot</span></code> に保存される。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 18 </span><span class="caption-text">プロジェクト設定の主なタブ</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>タブ</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>一般</p></td>
+<td><p>画面の大きさ、メインシーン、物理演算、レンダリングなど、ほとんどの設定項目</p></td>
+</tr>
+<tr class="row-odd"><td><p>インプットマップ</p></td>
+<td><p>入力アクション（「ジャンプ」などの操作と、キーやボタンの対応）を定義する。<a class="reference internal" href="ch09_input.html#ch09"><span class="std std-ref">第 9 章　入力</span></a> で使う。</p></td>
+</tr>
+<tr class="row-even"><td><p>ローカライズ</p></td>
+<td><p>多言語対応のための翻訳ファイルを登録する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>グローバル</p></td>
+<td><p>オートロード（どのシーンからも使えるノード）などを登録する。<a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a> で使う。</p></td>
+</tr>
+<tr class="row-even"><td><p>プラグイン</p></td>
+<td><p>エディターのプラグインを有効・無効にする。</p></td>
+</tr>
+</tbody>
+</table>
+<p>「一般」タブには、既定では主な項目だけが表示される。右上の「高度な設定」をオンにすると、すべての項目が表示される。上部の検索欄に設定名の一部を入力すると、項目を絞り込める。</p>
+</section>
+<section id="id9">
+<h2>プロジェクトのパス<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>Godot では、ファイルの場所を次の 2 種類の特別なパスで表す。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 19 </span><span class="caption-text">Godot のパス</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 40.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>パス</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">res://</span></code></p></td>
+<td><p>プロジェクトのフォルダー</p></td>
+<td><p>シーン、スクリプト、画像などのゲームの素材。エクスポートしたゲームでは読み取り専用になる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user://</span></code></p></td>
+<td><p>ユーザーごとのデータ保存用フォルダー。Windows では <code class="docutils literal notranslate"><span class="pre">%APPDATA%\Godot\app_userdata\プロジェクト名</span></code> になる。</p></td>
+<td><p>セーブデータ、設定ファイルなど、ゲームの実行中に書き込むファイル</p></td>
+</tr>
+</tbody>
+</table>
+<p>区切り文字は Windows でも <code class="docutils literal notranslate"><span class="pre">/</span></code> を使う。ゲームの実行中にファイルを書き込む場合は、必ず <code class="docutils literal notranslate"><span class="pre">user://</span></code> を使う。詳しくは <a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a> で説明する。</p>
+</section>
+<section id="id10">
+<h2>ヘルプを使う<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>Godot のエディターには、全クラスのリファレンス（クラスリファレンス）が組み込まれている。インターネットに接続していなくても読める。</p>
+<ul class="simple">
+<li><p><kbd class="kbd docutils literal notranslate">F1</kbd> を押すと「ヘルプを検索」ダイアログが開き、クラス名やメソッド名で検索できる。</p></li>
+<li><p>スクリプトエディターで、クラス名やメソッド名を <kbd class="kbd docutils literal notranslate">Ctrl</kbd> キーを押しながらクリックすると、その説明が開く。</p></li>
+<li><p>インスペクターのプロパティ名を右クリックすると、そのプロパティのドキュメントを開くメニューがある。</p></li>
+</ul>
+<p>クラスリファレンスの説明文は英語の部分も多いが、メソッドの引数や戻り値の型が正確に書かれているので、困ったときはまずここを確認する習慣をつけるとよい。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch03_setup.html" class="btn btn-neutral float-left" title="第 3 章 環境構築" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch05_nodes_and_scenes.html" class="btn btn-neutral float-right" title="第 5 章 ノードとシーン" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

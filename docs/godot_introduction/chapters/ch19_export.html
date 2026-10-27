@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 19 章 エクスポート &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 20 章 3D への入り口" href="ch20_3d.html" />
+    <link rel="prev" title="第 18 章 デバッグと最適化" href="ch18_debug_and_optimization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 19 章　エクスポート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">エクスポートの仕組み</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">エクスポートテンプレートを入手する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">エクスポートのプリセットを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windows">Windows 向けにエクスポートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#web">Web ブラウザー向けにエクスポートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">コマンドラインからエクスポートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">配布する前に確認すること</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 19 章　エクスポート</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch18_debug_and_optimization.html" class="btn btn-neutral float-left" title="第 18 章 デバッグと最適化" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch20_3d.html" class="btn btn-neutral float-right" title="第 20 章 3D への入り口" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch19">
+<span id="id1"></span><h1>第 19 章　エクスポート<a class="headerlink" href="#ch19" title="Link to this heading"></a></h1>
+<p>作ったゲームを、Godot を持っていない人にも遊んでもらうには、プラットフォームごとの実行形式に書き出す必要がある。これをエクスポート（export）と呼ぶ。本章では、Windows 向けと Web ブラウザー向けのエクスポートの手順と、配布する前に確認すべきことを説明する。</p>
+<section id="id2">
+<h2>エクスポートの仕組み<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>エクスポートしたゲームは、次の 2 つの部分からなる。</p>
+<ul class="simple">
+<li><p><strong>実行ファイル</strong>：Godot のランタイム（エディターの機能を除いたエンジン本体）。プラットフォームごとに用意された「エクスポートテンプレート」から作られる。</p></li>
+<li><p><strong>PCK ファイル</strong>：プロジェクトのシーン、スクリプト、画像などをまとめたデータ。Windows 向けでは、実行ファイルに埋め込んで 1 つのファイルにすることもできる。</p></li>
+</ul>
+<p>エクスポートテンプレートは、エディター本体とは別にダウンロードする必要がある。テンプレートのバージョンは、エディターのバージョン（本書では 4.7.2）と一致していなければならない。</p>
+</section>
+<section id="id3">
+<h2>エクスポートテンプレートを入手する<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>エディターの「エディター」→「エクスポートテンプレートの管理...」を開く。</p></li>
+<li><p>ダウンロード元のミラーを選び、ダウンロードしてインストールするボタンを押す。</p></li>
+</ol>
+<p>テンプレートはすべてのプラットフォーム向けのものがまとめて入っているので、ファイルが大きく、ダウンロードに時間がかかる。インターネットに接続できない環境では、公式サイトから <code class="docutils literal notranslate"><span class="pre">.tpz</span></code> ファイルを別途ダウンロードし、同じ画面の「ファイルからインストール」でインストールする。</p>
+</section>
+<section id="id4">
+<h2>エクスポートのプリセットを作る<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>どのプラットフォームに、どのような設定で書き出すかを「プリセット」として登録する。</p>
+<ol class="arabic simple">
+<li><p>「プロジェクト」→「エクスポート...」を開く。</p></li>
+<li><p>「追加...」を押し、プラットフォームを選ぶ（例：「Windows Desktop」）。</p></li>
+<li><p>右側に表示される設定を確認し、「エクスポート先のパス」に出力するファイルの名前を指定する。</p></li>
+</ol>
+<p>プリセットの内容は、プロジェクトのフォルダーの <code class="docutils literal notranslate"><span class="pre">export_presets.cfg</span></code> に保存される。</p>
+</section>
+<section id="windows">
+<h2>Windows 向けにエクスポートする<a class="headerlink" href="#windows" title="Link to this heading"></a></h2>
+<p>「Windows Desktop」のプリセットでは、次の設定をよく使う。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 72 </span><span class="caption-text">Windows Desktop の主な設定</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>設定</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>実行可能</p></td>
+<td><p>オンにすると、エディターの実行ボタンの横のメニューから、このプリセットで直接実行（デプロイ）できる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>組み込みPCK</p></td>
+<td><p>オンにすると、PCK ファイルを実行ファイルに埋め込み、1 つの <code class="docutils literal notranslate"><span class="pre">.exe</span></code> ファイルにする。</p></td>
+</tr>
+<tr class="row-even"><td><p>リソースの変更</p></td>
+<td><p>オンにすると、実行ファイルのアイコンやバージョン情報を、プロジェクトの設定に合わせて書き換える。</p></td>
+</tr>
+<tr class="row-odd"><td><p>アプリケーションのアイコン、製品名、バージョンなど</p></td>
+<td><p>実行ファイルのプロパティに表示される情報</p></td>
+</tr>
+</tbody>
+</table>
+<p>設定を確認したら、「プロジェクトのエクスポート...」を押してファイルの保存先を選ぶ。保存のダイアログにある「デバッグ付きエクスポート」は、オフにするとリリース版としてエクスポートする。配布するときはオフにする。</p>
+<p>リリース版では、<code class="docutils literal notranslate"><span class="pre">assert()</span></code> やデバッガーとの接続が無効になり、少し速く動く。エラーが起きてもゲームは止まらず、エラーを出力したうえで処理を続ける（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>エクスポートしたゲームの <code class="docutils literal notranslate"><span class="pre">res://</span></code> は読み取り専用である。実行中にファイルを書き込む処理は、<code class="docutils literal notranslate"><span class="pre">user://</span></code> を使っていれば問題なく動く（<a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a>）。エディターでは動いたのにエクスポートすると保存できない場合は、保存先が <code class="docutils literal notranslate"><span class="pre">res://</span></code> になっていないか確認する。</p>
+</div>
+</section>
+<section id="web">
+<h2>Web ブラウザー向けにエクスポートする<a class="headerlink" href="#web" title="Link to this heading"></a></h2>
+<p>「Web」のプリセットでエクスポートすると、ブラウザーで遊べる形式で出力される。出力は <code class="docutils literal notranslate"><span class="pre">.html</span></code>、<code class="docutils literal notranslate"><span class="pre">.js</span></code>、<code class="docutils literal notranslate"><span class="pre">.wasm</span></code>（WebAssembly のエンジン本体）、<code class="docutils literal notranslate"><span class="pre">.pck</span></code> などのファイルの組である。Web 向けのエクスポートは互換性レンダラー（<a class="reference internal" href="ch03_setup.html#ch03"><span class="std std-ref">第 3 章　環境構築</span></a>）でのみ動作する。</p>
+<p>出力された <code class="docutils literal notranslate"><span class="pre">.html</span></code> ファイルをダブルクリックしてもゲームは動かない。セキュリティの制約のため、Web サーバーから配信する必要がある。手元で確認するには、Web のプリセットで「実行可能」をオンにし、エディター右上の実行ボタンの横に表示される「ブラウザで実行」のボタンを使う。エディターが一時的な Web サーバーを起動し、既定のブラウザーでゲームを開く。</p>
+<p>itch.io などのゲーム投稿サイトに公開する場合は、出力したファイルを zip にまとめてアップロードする。プリセットの「Thread Support」（スレッドのサポート）がオフになっていれば、特別なサーバーの設定（クロスオリジン分離）を必要とせずに動作する。投稿する前に確認しておく。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><a class="reference internal" href="ch13_ui.html#ch13"><span class="std std-ref">第 13 章　UI</span></a> で説明したとおり、Web 向けにエクスポートしたゲームでは OS のフォントを使えないため、日本語の文字が表示されないことがある。日本語を表示するゲームは、日本語のフォントをプロジェクトに入れて、テーマに設定しておく。</p>
+</div>
+</section>
+<section id="id5">
+<h2>コマンドラインからエクスポートする<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>プリセットを作っておけば、エディターを開かずにコマンドラインからエクスポートすることもできる。継続的インテグレーション（CI）で自動的にビルドする場合に使う。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="go">Godot_v4.7.2-stable_win64_console.exe --headless --path プロジェクトのフォルダー --export-release &quot;Windows Desktop&quot; build/game.exe</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--export-release</span></code> の後には、プリセットの名前と出力先のパスを指定する。デバッグ版を出力する場合は <code class="docutils literal notranslate"><span class="pre">--export-debug</span></code> を使う。</p>
+</section>
+<section id="id6">
+<h2>配布する前に確認すること<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 73 </span><span class="caption-text">配布前のチェックリスト</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>確認する内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>動作確認</p></td>
+<td><p>エクスポートしたゲームを、Godot をインストールしていない別の PC で起動して確認する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>セーブデータの保存先</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">user://</span></code> に保存しているか。</p></td>
+</tr>
+<tr class="row-even"><td><p>フォント</p></td>
+<td><p>日本語などの文字が、フォントを含めて正しく表示されるか。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ライセンスの表記</p></td>
+<td><p>使った素材（画像、音声、フォント）のライセンスに従ってクレジットを表記しているか。Godot 自体も MIT ライセンスなので、著作権表示とライセンス文をゲームのクレジットなどに含める必要がある。</p></td>
+</tr>
+<tr class="row-even"><td><p>不要なファイル</p></td>
+<td><p>テスト用のシーンや素材が含まれていないか。プリセットの「リソース」タブで、エクスポートするファイルを絞り込める。</p></td>
+</tr>
+</tbody>
+</table>
+<p>Godot のライセンス文は、エディターの「ヘルプ」→「Godotについて...」で開くダイアログや、公式サイトの「License」のページで確認できる。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch18_debug_and_optimization.html" class="btn btn-neutral float-left" title="第 18 章 デバッグと最適化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch20_3d.html" class="btn btn-neutral float-right" title="第 20 章 3D への入り口" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

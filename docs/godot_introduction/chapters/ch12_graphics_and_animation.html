@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 12 章 描画とアニメーション &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 13 章 UI" href="ch13_ui.html" />
+    <link rel="prev" title="第 11 章 2D の物理と衝突" href="ch11_physics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 12 章　描画とアニメーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">画像を表示する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">描画の順番</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">アニメーションの 3 つの方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#animatedsprite2d">AnimatedSprite2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#animationplayer">AnimationPlayer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tween">Tween</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">タイルマップ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">タイルセット</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">タイルを配置する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">カメラ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">パーティクル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 12 章　描画とアニメーション</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch11_physics.html" class="btn btn-neutral float-left" title="第 11 章 2D の物理と衝突" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch13_ui.html" class="btn btn-neutral float-right" title="第 13 章 UI" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch12">
+<span id="id1"></span><h1>第 12 章　描画とアニメーション<a class="headerlink" href="#ch12" title="Link to this heading"></a></h1>
+<p>本章では、画像の表示、描画の順番、3 種類のアニメーションの方法、タイルマップによるステージ作り、カメラの使い方を説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter12</span></code> フォルダーにある。</p>
+<section id="id2">
+<h2>画像を表示する<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>画像の表示には <code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> を使う。「テクスチャ」（texture）に画像ファイルを設定すると、ノードの位置を中心に画像が表示される。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 45 </span><span class="caption-text">Sprite2D のよく使うプロパティ</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>プロパティ</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>テクスチャ（texture）</p></td>
+<td><p>表示する画像</p></td>
+</tr>
+<tr class="row-odd"><td><p>中央（centered）、オフセット（offset）</p></td>
+<td><p>画像のどこをノードの位置に合わせるか</p></td>
+</tr>
+<tr class="row-even"><td><p>水平反転（flip_h）、垂直反転（flip_v）</p></td>
+<td><p>画像を左右・上下に反転する。キャラクターの向きを変えるときに使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>横フレーム数（hframes）、縦フレーム数（vframes）、フレーム（frame）</p></td>
+<td><p>1 枚の画像に複数のコマを並べた画像（スプライトシート）を分割し、表示するコマを選ぶ。</p></td>
+</tr>
+<tr class="row-even"><td><p>変調（modulate）</p></td>
+<td><p>色を掛け合わせる。半透明にしたり、赤く点滅させたりできる。<code class="docutils literal notranslate"><span class="pre">CanvasItem</span></code> のプロパティなので、子ノードにも影響する。</p></td>
+</tr>
+</tbody>
+</table>
+<p>画像ファイルは、プロジェクトのフォルダーに置くと自動でインポートされる。インポートの設定は、ファイルシステムドックで画像を選び、「インポート」ドックで変更する。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>ドット絵（ピクセルアート）を拡大して表示すると、既定の設定ではぼやけてしまう。プロジェクト設定の「レンダリング」→「テクスチャ」にある「キャンバスのテクスチャ」→「デフォルトのテクスチャフィルタ」を「近傍」（Nearest）にすると、拡大してもドットがくっきり表示される。</p>
+</div>
+</section>
+<section id="id3">
+<h2>描画の順番<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>2D のノードは、シーンツリーの上から順に描画される。後から描画されたものが手前に表示されるので、シーンドックで下にあるノードほど手前になる。子ノードは親ノードより手前に描画される。</p>
+<p>この順番を変えるには、次の方法がある。</p>
+<ul class="simple">
+<li><p><strong>Z インデックス</strong>（z_index）：値が大きいノードほど手前に描画される。シーンツリーの順番より優先される。</p></li>
+<li><p><strong>Y ソート</strong>（y_sort_enabled）：親ノードで有効にすると、子ノードを Y 座標の順に描画する。見下ろし型のゲームで、画面の下にいるキャラクターを手前に表示したいときに使う。</p></li>
+<li><p><strong>CanvasLayer</strong>：ノードを別の描画レイヤーに分ける。「レイヤー」（layer）の値が大きいほど手前に描画される。<code class="docutils literal notranslate"><span class="pre">CanvasLayer</span></code> の子はカメラの影響を受けないので、スコアなどの HUD や、固定の背景に使う。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>アニメーションの 3 つの方法<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>Godot には、動きを付ける方法が主に 3 つある。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 46 </span><span class="caption-text">アニメーションの方法の比較</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 39.0%" />
+<col style="width: 39.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>仕組み</p></th>
+<th class="head"><p>向いている用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AnimatedSprite2D</span></code></p></td>
+<td><p>複数の画像を順に切り替える（パラパラ漫画）。</p></td>
+<td><p>キャラクターの歩行、待機などのコマ送りのアニメーション</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AnimationPlayer</span></code></p></td>
+<td><p>任意のプロパティの値を、時間軸上のキーフレームで変化させる。エディターで編集する。</p></td>
+<td><p>決まった動きの演出、複数のノードを連動させる動き、カットシーン</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Tween</span></code></p></td>
+<td><p>プロパティの値を、開始値から終了値まで補間する。スクリプトで作る。</p></td>
+<td><p>UI の出入り、ダメージを受けたときの揺れなど、その場で決まる動き</p></td>
+</tr>
+</tbody>
+</table>
+<p>サンプルの <code class="docutils literal notranslate"><span class="pre">animation_demo.tscn</span></code> では、3 つの方法を並べて表示している。</p>
+<figure class="align-default" id="id12">
+<a class="screenshot reference internal image-reference" href="../_images/ch12_animation.png"><img alt="../_images/ch12_animation.png" class="screenshot" src="../_images/ch12_animation.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 22 </span><span class="caption-text">animation_demo.tscn の実行結果</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="animatedsprite2d">
+<h3>AnimatedSprite2D<a class="headerlink" href="#animatedsprite2d" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">AnimatedSprite2D</span></code> は、<code class="docutils literal notranslate"><span class="pre">SpriteFrames</span></code> というリソースに登録した画像を、順に切り替えて表示する。</p>
+<ol class="arabic simple">
+<li><p>シーンに <code class="docutils literal notranslate"><span class="pre">AnimatedSprite2D</span></code> を追加し、インスペクターの <code class="docutils literal notranslate"><span class="pre">sprite_frames</span></code> プロパティで「新規 SpriteFrames」を選ぶ。</p></li>
+<li><p>作られた <code class="docutils literal notranslate"><span class="pre">SpriteFrames</span></code> をクリックすると、下部パネルに <code class="docutils literal notranslate"><span class="pre">SpriteFrames</span></code> のエディターが開く。</p></li>
+<li><p>左側のアニメーションの一覧で名前（例：<code class="docutils literal notranslate"><span class="pre">walk</span></code>）を付け、右側にコマの画像をドラッグして並べる。再生速度（FPS）とループの有無も設定する。</p></li>
+</ol>
+<p>サンプルでは、足の位置が異なる 4 枚の画像（<code class="docutils literal notranslate"><span class="pre">assets/player_walk_0.png</span></code> ～ <code class="docutils literal notranslate"><span class="pre">player_walk_3.png</span></code>）を 1 秒あたり 8 コマで切り替えている。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 22 </span><span class="caption-text">chapter12/walker.gd</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">AnimatedSprite2D</span>
+<span class="linenos"> 2</span><span class="c1">## 左右に往復しながら歩くキャラクター。進む向きに合わせて画像を反転する。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="n">SPEED</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">120.0</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="n">LEFT_END</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="n">RIGHT_END</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">500.0</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">var</span><span class="w"> </span><span class="n">_direction</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">play</span><span class="p">(</span><span class="s2">&quot;walk&quot;</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">_direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SPEED</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">17</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">RIGHT_END</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">LEFT_END</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">        </span><span class="n">_direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">_direction</span>
+<span class="linenos">19</span><span class="w">    </span><span class="c1"># 元の画像は右向き。左へ進むときは左右反転して表示する。</span>
+<span class="linenos">20</span><span class="w">    </span><span class="n">flip_h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_direction</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">play(&quot;walk&quot;)</span></code> でアニメーションを再生し、進む向きに合わせて <code class="docutils literal notranslate"><span class="pre">flip_h</span></code> で画像を反転している。アニメーションの再生が終わると <code class="docutils literal notranslate"><span class="pre">animation_finished</span></code> シグナルが発行される（ループしない場合）。</p>
+</section>
+<section id="animationplayer">
+<h3>AnimationPlayer<a class="headerlink" href="#animationplayer" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">AnimationPlayer</span></code> は、ノードのプロパティを時間とともに変化させるアニメーションを作る。位置、回転、色、表示・非表示など、インスペクターに表示されるほとんどのプロパティを対象にできる。決まった時刻に関数を呼ぶこともできる。</p>
+<ol class="arabic simple">
+<li><p>シーンに <code class="docutils literal notranslate"><span class="pre">AnimationPlayer</span></code> を追加する。下部パネルに「アニメーション」エディターが開く。</p></li>
+<li><p>「アニメーション」ボタンから「新規」を選び、アニメーションの名前（例：<code class="docutils literal notranslate"><span class="pre">float</span></code>）を付ける。長さとループの有無を設定する。</p></li>
+<li><p>動かしたいノードを選ぶ。インスペクターのプロパティの右に鍵の形のアイコンが表示されるので、それを押すと、現在の時刻にその値のキーフレームが追加される。</p></li>
+<li><p>時刻を進めてプロパティの値を変え、もう一度鍵のアイコンを押す。キーフレームの間の値は自動で補間される。</p></li>
+</ol>
+<p>サンプルの <code class="docutils literal notranslate"><span class="pre">FloatingCoin</span></code> では、2 秒のループするアニメーションで、コインの位置（上下に浮く）と <code class="docutils literal notranslate"><span class="pre">modulate</span></code>（薄くなる）を同時に変化させている。「読み込み後、自動再生」を設定したので、シーンが始まると自動で再生される。スクリプトからは <code class="docutils literal notranslate"><span class="pre">$AnimationPlayer.play(&quot;float&quot;)</span></code> で再生できる。</p>
+<p>キャラクターの状態（待機、歩行、ジャンプなど）に応じてアニメーションを切り替える処理が複雑になってきたら、<code class="docutils literal notranslate"><span class="pre">AnimationTree</span></code> ノードで状態遷移（ステートマシン）として管理する方法もある。</p>
+</section>
+<section id="tween">
+<h3>Tween<a class="headerlink" href="#tween" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Tween</span></code> は、プロパティの値を開始値から終了値まで、指定した時間をかけて変化させる。スクリプトで作るので、実行時に決まる値（クリックした位置へ移動するなど）にも使える。</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-number">リスト 23 </span><span class="caption-text">Tween の基本的な使い方</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">var</span><span class="w"> </span><span class="n">tween</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">create_tween</span><span class="p">()</span>
+<span class="linenos">2</span><span class="c1"># 0.5 秒かけて x 座標を 400 にする</span>
+<span class="linenos">3</span><span class="n">tween</span><span class="o">.</span><span class="n">tween_property</span><span class="p">(</span><span class="nv">$Box</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;position:x&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">400.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">4</span><span class="c1"># 続けて、0.3 秒かけて透明にする</span>
+<span class="linenos">5</span><span class="n">tween</span><span class="o">.</span><span class="n">tween_property</span><span class="p">(</span><span class="nv">$Box</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;modulate:a&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">)</span>
+<span class="linenos">6</span><span class="c1"># 最後にノードを削除する</span>
+<span class="linenos">7</span><span class="n">tween</span><span class="o">.</span><span class="n">tween_callback</span><span class="p">(</span><span class="nv">$Box</span><span class="o">.</span><span class="n">queue_free</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">create_tween()</span></code> で <code class="docutils literal notranslate"><span class="pre">Tween</span></code> を作り、<code class="docutils literal notranslate"><span class="pre">tween_property()</span></code> で変化させるプロパティを追加する。<code class="docutils literal notranslate"><span class="pre">&quot;position:x&quot;</span></code> のように <code class="docutils literal notranslate"><span class="pre">:</span></code> で区切ると、プロパティの成分だけを対象にできる。追加した処理は順番に実行される。同時に実行したい場合は、<code class="docutils literal notranslate"><span class="pre">tween.parallel()</span></code> の後に追加するか、<code class="docutils literal notranslate"><span class="pre">set_parallel()</span></code> を使う。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Tween</span></code> は、作ったノードに結び付いている。ノードが削除されると、<code class="docutils literal notranslate"><span class="pre">Tween</span></code> も止まる。</p>
+<p>変化の仕方（イージング）は、<code class="docutils literal notranslate"><span class="pre">set_trans()</span></code> と <code class="docutils literal notranslate"><span class="pre">set_ease()</span></code> で指定する。</p>
+<figure class="align-default" id="id15">
+<a class="reference internal image-reference" href="../_images/easing_curves.png"><img alt="../_images/easing_curves.png" src="../_images/easing_curves.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 23 </span><span class="caption-text">主なイージングの変化の仕方（EASE_OUT の場合）</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">TRANS_LINEAR</span></code> は一定の速さで変化する。<code class="docutils literal notranslate"><span class="pre">TRANS_SINE</span></code> は滑らかに減速する。<code class="docutils literal notranslate"><span class="pre">TRANS_BACK</span></code> は目標を少し行き過ぎてから戻る。<code class="docutils literal notranslate"><span class="pre">TRANS_BOUNCE</span></code> は目標で何度か跳ねる。<code class="docutils literal notranslate"><span class="pre">set_ease()</span></code> には、ゆっくり始まる <code class="docutils literal notranslate"><span class="pre">EASE_IN</span></code>、ゆっくり終わる <code class="docutils literal notranslate"><span class="pre">EASE_OUT</span></code>、両方の <code class="docutils literal notranslate"><span class="pre">EASE_IN_OUT</span></code> などを指定する。</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-number">リスト 24 </span><span class="caption-text">chapter12/tween_lane.gd</span><a class="headerlink" href="#id16" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos"> 2</span><span class="c1">## イージング（Tween.TransitionType）の違いを比較するサンプル。</span>
+<span class="linenos"> 3</span><span class="c1">## 4 つの四角形を、同じ時間で同じ距離だけ異なるイージングで動かす。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="n">DISTANCE</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">400.0</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="n">DURATION</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1">## 比較するイージングと表示名</span>
+<span class="linenos"> 9</span><span class="k">const</span><span class="w"> </span><span class="n">TRANSITIONS</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="p">[</span><span class="nb nb-Type">Array</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">10</span><span class="w">    </span><span class="p">[</span><span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_LINEAR</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LINEAR&quot;</span><span class="p">],</span>
+<span class="linenos">11</span><span class="w">    </span><span class="p">[</span><span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_SINE</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SINE&quot;</span><span class="p">],</span>
+<span class="linenos">12</span><span class="w">    </span><span class="p">[</span><span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_BACK</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;BACK&quot;</span><span class="p">],</span>
+<span class="linenos">13</span><span class="w">    </span><span class="p">[</span><span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_BOUNCE</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;BOUNCE&quot;</span><span class="p">],</span>
+<span class="linenos">14</span><span class="p">]</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">TRANSITIONS</span><span class="o">.</span><span class="n">size</span><span class="p">():</span>
+<span class="linenos">19</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">box</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">ColorRect</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">20</span><span class="w">        </span><span class="n">box</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">)</span>
+<span class="linenos">21</span><span class="w">        </span><span class="n">box</span><span class="o">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">48</span><span class="p">)</span>
+<span class="linenos">22</span><span class="w">        </span><span class="n">box</span><span class="o">.</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Color</span><span class="o">.</span><span class="n">from_hsv</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">23</span><span class="w">        </span><span class="n">add_child</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">Label</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">26</span><span class="w">        </span><span class="n">label</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRANSITIONS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">27</span><span class="w">        </span><span class="n">label</span><span class="o">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">48</span><span class="p">)</span>
+<span class="linenos">28</span><span class="w">        </span><span class="n">add_child</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="w">        </span><span class="c1"># 往復を無限に繰り返す Tween を作る。</span>
+<span class="linenos">31</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">transition</span><span class="p">:</span><span class="w"> </span><span class="n">Tween</span><span class="o">.</span><span class="n">TransitionType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRANSITIONS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="linenos">32</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">tween</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">create_tween</span><span class="p">()</span><span class="o">.</span><span class="n">set_loops</span><span class="p">()</span>
+<span class="linenos">33</span><span class="w">        </span><span class="n">tween</span><span class="o">.</span><span class="n">set_trans</span><span class="p">(</span><span class="n">transition</span><span class="p">)</span><span class="o">.</span><span class="n">set_ease</span><span class="p">(</span><span class="n">Tween</span><span class="o">.</span><span class="n">EASE_OUT</span><span class="p">)</span>
+<span class="linenos">34</span><span class="w">        </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_property</span><span class="p">(</span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;position:x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DISTANCE</span><span class="p">,</span><span class="w"> </span><span class="n">DURATION</span><span class="p">)</span>
+<span class="linenos">35</span><span class="w">        </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_interval</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">36</span><span class="w">        </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_property</span><span class="p">(</span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;position:x&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">DURATION</span><span class="p">)</span>
+<span class="linenos">37</span><span class="w">        </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_interval</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">set_loops()</span></code> を引数なしで呼ぶと、<code class="docutils literal notranslate"><span class="pre">Tween</span></code> が無限に繰り返される。<code class="docutils literal notranslate"><span class="pre">tween_interval()</span></code> は、指定した秒数だけ待つ処理を追加する。</p>
+</section>
+</section>
+<section id="id5">
+<h2>タイルマップ<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>ステージの地形は、小さな正方形の画像（タイル）を格子状に並べて作ることが多い。Godot では <code class="docutils literal notranslate"><span class="pre">TileMapLayer</span></code> ノードを使う。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Godot 4.2 までは <code class="docutils literal notranslate"><span class="pre">TileMap</span></code> ノードを使っていたが、4.3 で <code class="docutils literal notranslate"><span class="pre">TileMapLayer</span></code> に置き換えられた。古い解説記事を参考にする場合は注意する。複数の層（地面、装飾など）が必要な場合は、<code class="docutils literal notranslate"><span class="pre">TileMapLayer</span></code> ノードを複数並べる。</p>
+</div>
+<section id="id6">
+<h3>タイルセット<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">TileMapLayer</span></code> で使うタイルの種類は、<code class="docutils literal notranslate"><span class="pre">TileSet</span></code> リソースで定義する。</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TileMapLayer</span></code> を追加し、インスペクターの「タイルセット」（tile_set）で「新規 TileSet」を選ぶ。作られた <code class="docutils literal notranslate"><span class="pre">TileSet</span></code> の「タイルサイズ」（tile_size）でタイルの大きさを設定する。</p></li>
+<li><p>下部パネルの「TileSet」エディターを開き、タイルを並べた画像（アトラス）をドラッグする。画像がタイルの大きさで分割される。</p></li>
+<li><p>当たり判定が必要な場合は、<code class="docutils literal notranslate"><span class="pre">TileSet</span></code> のインスペクターで「物理レイヤー」を追加し、「TileSet」エディターで各タイルに衝突形状を描く。</p></li>
+</ol>
+<p>サンプルの <code class="docutils literal notranslate"><span class="pre">chapter12/tileset.tres</span></code> は、32 × 32 ピクセルの地面とレンガの 2 種類のタイルを定義し、どちらにも四角い衝突形状を付けたタイルセットである。</p>
+</section>
+<section id="id7">
+<h3>タイルを配置する<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>通常は、<code class="docutils literal notranslate"><span class="pre">TileMapLayer</span></code> を選んで下部パネルの「TileMap」エディターを開き、タイルを選んでビューポート上を塗るようにして配置する。</p>
+<p>スクリプトから <code class="docutils literal notranslate"><span class="pre">set_cell(座標,</span> <span class="pre">ソースID,</span> <span class="pre">アトラス座標)</span></code> で配置することもできる。サンプルでは、文字で書いた配置図からタイルを並べている。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 25 </span><span class="caption-text">chapter12/tilemap_demo.gd</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos"> 2</span><span class="c1">## 文字で書いたステージの配置図から TileMapLayer にタイルを並べるサンプル。</span>
+<span class="linenos"> 3</span><span class="c1">## エディターで手作業でタイルを塗る代わりに、コードで配置する方法を示す。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1">## ステージの配置図。# は地面、B はレンガ、それ以外は空白。1 文字が 1 タイル（32 x 32 ピクセル）。</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="n">LEVEL</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="p">[</span><span class="nb nb-Type">String</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">10</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">11</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">12</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">13</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">14</span><span class="w">    </span><span class="s2">&quot;B                                       BBBB               B&quot;</span><span class="p">,</span>
+<span class="linenos">15</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">16</span><span class="w">    </span><span class="s2">&quot;B                           BBBB                           B&quot;</span><span class="p">,</span>
+<span class="linenos">17</span><span class="w">    </span><span class="s2">&quot;B                                                  BBB     B&quot;</span><span class="p">,</span>
+<span class="linenos">18</span><span class="w">    </span><span class="s2">&quot;B                  BBBB                                    B&quot;</span><span class="p">,</span>
+<span class="linenos">19</span><span class="w">    </span><span class="s2">&quot;B                                         ###              B&quot;</span><span class="p">,</span>
+<span class="linenos">20</span><span class="w">    </span><span class="s2">&quot;B          BBBB                                            B&quot;</span><span class="p">,</span>
+<span class="linenos">21</span><span class="w">    </span><span class="s2">&quot;B                                ####                      B&quot;</span><span class="p">,</span>
+<span class="linenos">22</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">23</span><span class="w">    </span><span class="s2">&quot;B                                                          B&quot;</span><span class="p">,</span>
+<span class="linenos">24</span><span class="w">    </span><span class="s2">&quot;############################################################&quot;</span><span class="p">,</span>
+<span class="linenos">25</span><span class="w">    </span><span class="s2">&quot;############################################################&quot;</span><span class="p">,</span>
+<span class="linenos">26</span><span class="w">    </span><span class="s2">&quot;############################################################&quot;</span><span class="p">,</span>
+<span class="linenos">27</span><span class="p">]</span>
+<span class="linenos">28</span><span class="k">const</span><span class="w"> </span><span class="n">SOURCE_ID</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c1"># タイルセット内のアトラスの番号</span>
+<span class="linenos">29</span><span class="c1">## 文字とアトラス内のタイル座標の対応</span>
+<span class="linenos">30</span><span class="k">const</span><span class="w"> </span><span class="n">TILES</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Dictionary</span><span class="p">[</span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="nb nb-Type">Vector2i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">31</span><span class="w">    </span><span class="s2">&quot;#&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2i</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="linenos">32</span><span class="w">    </span><span class="s2">&quot;B&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2i</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="linenos">33</span><span class="p">}</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_ground</span><span class="p">:</span><span class="w"> </span><span class="n">TileMapLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Ground</span>
+<span class="linenos">36</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_camera</span><span class="p">:</span><span class="w"> </span><span class="n">Camera2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Player/Camera2D</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">40</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">LEVEL</span><span class="o">.</span><span class="n">size</span><span class="p">():</span>
+<span class="linenos">41</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">LEVEL</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+<span class="linenos">42</span><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">column</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">line</span><span class="o">.</span><span class="n">length</span><span class="p">():</span>
+<span class="linenos">43</span><span class="w">            </span><span class="k">var</span><span class="w"> </span><span class="n">symbol</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+<span class="linenos">44</span><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">TILES</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+<span class="linenos">45</span><span class="w">                </span><span class="n">_ground</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="nb nb-Type">Vector2i</span><span class="p">(</span><span class="n">column</span><span class="p">,</span><span class="w"> </span><span class="n">row</span><span class="p">),</span><span class="w"> </span><span class="n">SOURCE_ID</span><span class="p">,</span><span class="w"> </span><span class="n">TILES</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="w">    </span><span class="c1"># カメラがステージの外を映さないように、移動範囲を制限する。</span>
+<span class="linenos">48</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">_ground</span><span class="o">.</span><span class="n">get_used_rect</span><span class="p">()</span>
+<span class="linenos">49</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">tile_size</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">_ground</span><span class="o">.</span><span class="n">tile_set</span><span class="o">.</span><span class="n">tile_size</span>
+<span class="linenos">50</span><span class="w">    </span><span class="n">_camera</span><span class="o">.</span><span class="n">limit_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">used</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tile_size</span><span class="o">.</span><span class="n">x</span>
+<span class="linenos">51</span><span class="w">    </span><span class="n">_camera</span><span class="o">.</span><span class="n">limit_top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">used</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tile_size</span><span class="o">.</span><span class="n">y</span>
+<span class="linenos">52</span><span class="w">    </span><span class="n">_camera</span><span class="o">.</span><span class="n">limit_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">used</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tile_size</span><span class="o">.</span><span class="n">x</span>
+<span class="linenos">53</span><span class="w">    </span><span class="n">_camera</span><span class="o">.</span><span class="n">limit_bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">used</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tile_size</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">set_cell()</span></code> の第 1 引数はタイル単位の座標（<code class="docutils literal notranslate"><span class="pre">Vector2i</span></code>）、第 2 引数はタイルセット内の画像（ソース）の番号、第 3 引数はその画像の中でのタイルの位置である。<code class="docutils literal notranslate"><span class="pre">get_used_rect()</span></code> は、タイルが置かれている範囲をタイル単位で返す。</p>
+<figure class="align-default" id="id18">
+<a class="screenshot reference internal image-reference" href="../_images/ch12_tilemap.png"><img alt="../_images/ch12_tilemap.png" class="screenshot" src="../_images/ch12_tilemap.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 24 </span><span class="caption-text">tilemap_demo.tscn の実行結果</span><a class="headerlink" href="#id18" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="id8">
+<h2>カメラ<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>画面より広いステージでは、<code class="docutils literal notranslate"><span class="pre">Camera2D</span></code> を使って画面に映す範囲を動かす。<code class="docutils literal notranslate"><span class="pre">Camera2D</span></code> を追いかけたいノード（プレイヤー）の子にすると、プレイヤーが常に画面の中央に映る。</p>
+<table class="docutils align-default" id="id19">
+<caption><span class="caption-number">表 47 </span><span class="caption-text">Camera2D のよく使うプロパティ</span><a class="headerlink" href="#id19" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>プロパティ</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ズーム（zoom）</p></td>
+<td><p>表示の拡大率。<code class="docutils literal notranslate"><span class="pre">Vector2(2,</span> <span class="pre">2)</span></code> で 2 倍に拡大して映す。</p></td>
+</tr>
+<tr class="row-odd"><td><p>制限値（limit_left、limit_top、limit_right、limit_bottom）</p></td>
+<td><p>カメラが映す範囲の限界。ステージの外が映らないようにする。</p></td>
+</tr>
+<tr class="row-even"><td><p>position_smoothing_enabled</p></td>
+<td><p>有効にすると、カメラが目標を滑らかに追いかける。</p></td>
+</tr>
+<tr class="row-odd"><td><p>オフセット（offset）</p></td>
+<td><p>カメラの位置をずらす。画面を揺らす演出に使える。</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">tilemap_demo.gd</span></code> では、タイルが置かれた範囲からカメラの限界を計算して設定している。1 つのシーンに <code class="docutils literal notranslate"><span class="pre">Camera2D</span></code> が複数ある場合は、<code class="docutils literal notranslate"><span class="pre">make_current()</span></code> を呼んだカメラが使われる。</p>
+</section>
+<section id="id9">
+<h2>パーティクル<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>爆発の火花、煙、雨のように、多数の小さな粒を使う効果には、パーティクル（particle）を使う。<code class="docutils literal notranslate"><span class="pre">GPUParticles2D</span></code> は GPU で計算するので大量の粒を扱える。<code class="docutils literal notranslate"><span class="pre">CPUParticles2D</span></code> は CPU で計算し、古い環境でも確実に動く。どちらも、粒の数、寿命、初速、重力、色の変化などをインスペクターで設定する。本書では詳しく扱わないが、<a class="reference internal" href="ch17_tutorial.html#ch17"><span class="std std-ref">第 17 章　チュートリアル：岩よけゲームを作る</span></a> のゲームに爆発の効果を追加するなどして試してみるとよい。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch11_physics.html" class="btn btn-neutral float-left" title="第 11 章 2D の物理と衝突" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch13_ui.html" class="btn btn-neutral float-right" title="第 13 章 UI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 2 章 Godot の概要 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 3 章 環境構築" href="ch03_setup.html" />
+    <link rel="prev" title="第 1 章 はじめに" href="ch01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 2 章　Godot の概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">ゲームエンジンとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Godot の歴史</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Godot の特徴</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">対応するプログラミング言語</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">他のゲームエンジンとの比較</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Godot でゲームを作る流れ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 2 章　Godot の概要</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch01_introduction.html" class="btn btn-neutral float-left" title="第 1 章 はじめに" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch03_setup.html" class="btn btn-neutral float-right" title="第 3 章 環境構築" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="godot">
+<span id="ch02"></span><h1>第 2 章　Godot の概要<a class="headerlink" href="#godot" title="Link to this heading"></a></h1>
+<p>本章では、ゲームエンジンとは何かを説明したあと、Godot の特徴、対応するプログラミング言語、他のゲームエンジンとの違いを紹介する。</p>
+<section id="id1">
+<h2>ゲームエンジンとは<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>ゲームは、画像の描画、音の再生、キーボードやゲームパッドからの入力、物体どうしの衝突判定など、多くの処理を毎秒数十回のペースで繰り返すプログラムである。これらをすべて一から作るのは大変なので、通常はゲームエンジンを使う。</p>
+<p>ゲームエンジンは、ゲームに共通して必要な機能をまとめたソフトウェアである。多くのゲームエンジンは、次の 2 つの要素からなる。</p>
+<ul class="simple">
+<li><p><strong>ランタイム</strong>：ゲームの実行中に動くプログラム。描画、物理演算、音声、入力などの処理を受け持つ。</p></li>
+<li><p><strong>エディター</strong>：ゲームを作るための GUI ツール。画面に物体を配置したり、スクリプトを書いたり、ゲームを試しに動かしたりできる。</p></li>
+</ul>
+<p>Web 開発にたとえると、ランタイムはフレームワークとそのライブラリ、エディターは IDE に近い。開発者はゲーム固有の部分（キャラクターの動き、ルール、画面構成など）を作ることに集中できる。</p>
+</section>
+<section id="id2">
+<h2>Godot の歴史<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Godot は、Juan Linietsky 氏と Ariel Manzur 氏が開発していた社内向けのエンジンを、2014 年に MIT ライセンスで公開したことに始まる。その後は世界中の開発者が参加するオープンソースプロジェクトとして開発が続いている。2023 年に公開された Godot 4.0 で描画エンジンやスクリプト言語が大きく刷新され、本書で扱う 4.7 はその流れをくむバージョンである。</p>
+</section>
+<section id="id3">
+<h2>Godot の特徴<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>Godot には次のような特徴がある。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 5 </span><span class="caption-text">Godot の主な特徴</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>特徴</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>無料でオープンソース</p></td>
+<td><p>MIT ライセンスで公開されている。作ったゲームを販売しても、使用料やロイヤリティはかからない。エンジンのソースコードを読んだり改造したりもできる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>軽量</p></td>
+<td><p>Windows 版のエディターは 200 MB 弱の実行ファイル 1 つで動き、インストールは不要である。起動も速い。</p></td>
+</tr>
+<tr class="row-even"><td><p>ノードとシーン</p></td>
+<td><p>ゲームを「ノード」という部品の木構造で組み立てる。部品のまとまりは「シーン」として保存し、別のシーンの中で再利用できる。詳しくは <a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で説明する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>専用の 2D エンジン</p></td>
+<td><p>2D の描画と物理は 3D とは別に実装されており、座標の単位はピクセルである。3D 空間にカメラを固定して 2D に見せる方式ではないので、2D ゲームを素直に作れる。</p></td>
+</tr>
+<tr class="row-even"><td><p>統合されたエディター</p></td>
+<td><p>シーンの編集、スクリプトの編集、デバッガー、アニメーションの編集、シェーダーの編集などが 1 つのエディターにまとまっている。エディター自身も Godot の UI 機能で作られている。</p></td>
+</tr>
+<tr class="row-odd"><td><p>多くのプラットフォームに対応</p></td>
+<td><p>Windows、macOS、Linux、Android、iOS、Web ブラウザー向けにゲームを書き出せる。家庭用ゲーム機向けは、各社との契約が必要なため公式には提供されておらず、移植を請け負う企業を通じて対応する。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>対応するプログラミング言語<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>Godot のゲームのロジックは、主に次のいずれかの言語で書く。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 6 </span><span class="caption-text">Godot で使える主なプログラミング言語</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>言語</p></th>
+<th class="head"><p>特徴</p></th>
+<th class="head"><p>向いている用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GDScript</p></td>
+<td><p>Godot 専用のスクリプト言語。Python に似た文法で、エンジンと密に統合されている。追加のインストールは不要。</p></td>
+<td><p>ほとんどのゲームのロジック。本書はこの言語を使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>C#</p></td>
+<td><p>.NET 版の Godot で使える。静的型付けで、.NET のライブラリを利用できる。</p></td>
+<td><p>C# や Unity の経験がある場合、大規模なプロジェクト</p></td>
+</tr>
+<tr class="row-even"><td><p>C++ など（GDExtension）</p></td>
+<td><p>エンジンを再ビルドせずに、ネイティブコードのライブラリとして機能を追加する仕組み。</p></td>
+<td><p>処理速度が重要な部分、既存の C/C++ ライブラリとの連携</p></td>
+</tr>
+</tbody>
+</table>
+<p>GDScript はインデントでブロックを表す、動的型付けを基本とするがオプションで型を書ける、など Python に似た点が多い。Python の経験がある読者は短期間で書けるようになるだろう。一方で、整数の割り算の結果や、ループ変数の扱いなどに細かな違いがある。これらは <a class="reference internal" href="ch06_gdscript_basics.html#ch06"><span class="std std-ref">第 6 章　GDScript の基礎</span></a> と <a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a> で説明する。</p>
+<p>なお、Godot のエディター自体は C++ で書かれている。GDScript で書いたコードは、エンジンの C++ の機能を呼び出して動く。重い処理（描画、物理演算など）はエンジン側で行われるため、GDScript の実行速度が Python 程度であっても、多くのゲームでは問題にならない。</p>
+</section>
+<section id="id5">
+<h2>他のゲームエンジンとの比較<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>よく比較される Unity、Unreal Engine との違いを、おおまかにまとめる。各エンジンの料金体系は変わることがあるので、利用する際は公式サイトで最新の情報を確認してほしい。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 7 </span><span class="caption-text">主なゲームエンジンの比較</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 26.0%" />
+<col style="width: 27.0%" />
+<col style="width: 27.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>Godot</p></th>
+<th class="head"><p>Unity</p></th>
+<th class="head"><p>Unreal Engine</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ライセンス</p></td>
+<td><p>MIT ライセンス（無料、オープンソース）</p></td>
+<td><p>独自のライセンス。規模に応じた有料プランがある。</p></td>
+<td><p>独自のライセンス。ソースコードは公開されているが、売上が一定額を超えるとロイヤリティがかかる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>主な言語</p></td>
+<td><p>GDScript、C#</p></td>
+<td><p>C#</p></td>
+<td><p>C++、Blueprint（ビジュアルスクリプト）</p></td>
+</tr>
+<tr class="row-even"><td><p>得意な分野</p></td>
+<td><p>2D ゲーム、小～中規模の 3D ゲーム</p></td>
+<td><p>2D、3D、モバイルゲームなど幅広い</p></td>
+<td><p>高品質なグラフィックスの 3D ゲーム</p></td>
+</tr>
+<tr class="row-odd"><td><p>エディターの大きさ</p></td>
+<td><p>小さい（インストール不要）</p></td>
+<td><p>大きい（専用のインストーラーで管理）</p></td>
+<td><p>非常に大きい</p></td>
+</tr>
+</tbody>
+</table>
+<p>Godot は特に、2D ゲームや個人・小規模チームでの開発、学習用途に向いている。3D の機能も年々充実しているが、最先端のグラフィックスを追求する大規模な 3D ゲームでは、Unreal Engine などのほうが資料や実績が多い。</p>
+</section>
+<section id="id6">
+<h2>Godot でゲームを作る流れ<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>Godot でのゲーム制作は、おおむね次の流れで進む。本書の章立ても、この流れに沿っている。</p>
+<figure class="align-default" id="id10">
+<div class="graphviz"><object data="../_images/graphviz-8b213d2d239d8c09ce86243218ee849e1195a563.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph flow {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  edge [fontsize=10];
+  project [label=&quot;プロジェクトを作る\n（第 3 章）&quot;];
+  scene [label=&quot;ノードを配置して\nシーンを作る\n（第 5 章）&quot;];
+  script [label=&quot;スクリプトで\n動きを付ける\n（第 6 章～）&quot;];
+  run [label=&quot;実行して確かめる\n（第 18 章）&quot;];
+  export [label=&quot;エクスポートして\n配布する\n（第 19 章）&quot;];
+  project -&gt; scene -&gt; script -&gt; run -&gt; export;
+  run -&gt; scene [label=&quot;修正&quot;, style=dashed, constraint=false];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 2 </span><span class="caption-text">Godot でゲームを作る流れ</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>シーンを作り、スクリプトを書き、実行して確かめる、という作業を何度も繰り返してゲームを完成させる。Godot はエディターからすぐにゲームを実行できるので、この繰り返しを短い間隔で回せる。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch01_introduction.html" class="btn btn-neutral float-left" title="第 1 章 はじめに" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch03_setup.html" class="btn btn-neutral float-right" title="第 3 章 環境構築" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

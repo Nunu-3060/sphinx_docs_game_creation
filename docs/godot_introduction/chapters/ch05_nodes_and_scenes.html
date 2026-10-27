@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 5 章 ノードとシーン &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 6 章 GDScript の基礎" href="ch06_gdscript_basics.html" />
+    <link rel="prev" title="第 4 章 エディターの画面構成" href="ch04_editor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 5 章　ノードとシーン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ノード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ノードの木構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">シーン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">例：コインのシーンを再利用する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">シーンを作る手順</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">シーンファイルの中身</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">実行中のシーンツリー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">スクリプトからノードを操作する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">ノードを取得する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">ノードを生成・削除する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">グループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">シーンを設計するときの考え方</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 5 章　ノードとシーン</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch04_editor.html" class="btn btn-neutral float-left" title="第 4 章 エディターの画面構成" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch06_gdscript_basics.html" class="btn btn-neutral float-right" title="第 6 章 GDScript の基礎" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch05">
+<span id="id1"></span><h1>第 5 章　ノードとシーン<a class="headerlink" href="#ch05" title="Link to this heading"></a></h1>
+<p>Godot でゲームを作るときに最も重要な考え方が、ノードとシーンである。本章では、ノードとシーンとは何か、どのように組み合わせてゲームを作るのかを説明する。</p>
+<section id="id2">
+<h2>ノード<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ノード（node）は、ゲームを組み立てる最小の部品である。ノードには多くの種類があり、それぞれが 1 つの役割を持つ。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 20 </span><span class="caption-text">よく使うノードの例</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード</p></th>
+<th class="head"><p>役割</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Node2D</span></code></p></td>
+<td><p>2D 空間での位置、回転、拡大率を持つ。2D の物体の基本となるノード</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></p></td>
+<td><p>画像（テクスチャ）を表示する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code></p></td>
+<td><p>衝突判定に使う形状（円や長方形など）を表す。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CharacterBody2D</span></code></p></td>
+<td><p>プレイヤーのように、スクリプトで動かす物理的な物体</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Area2D</span></code></p></td>
+<td><p>ほかの物体が入ってきたことを検出する領域</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Label</span></code></p></td>
+<td><p>文字列を表示する UI 部品</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Timer</span></code></p></td>
+<td><p>一定時間ごとに通知を出すタイマー</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer</span></code></p></td>
+<td><p>音を再生する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Camera2D</span></code></p></td>
+<td><p>画面に映す範囲を決めるカメラ</p></td>
+</tr>
+</tbody>
+</table>
+<p>ノードの種類は、オブジェクト指向プログラミングのクラスに対応している。実際に、エディターで追加するノードはエンジンに定義されたクラスのインスタンスであり、スクリプトからは同じ名前のクラスとして扱える。クラスは継承関係にあり、例えば <code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> は <code class="docutils literal notranslate"><span class="pre">Node2D</span></code> を継承しているので、<code class="docutils literal notranslate"><span class="pre">Node2D</span></code> が持つ位置や回転のプロパティを <code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> も持つ。</p>
+<figure class="align-default" id="id15">
+<div class="graphviz"><object data="../_images/graphviz-d3ff7da2f9b759b1fd9e947e2b613a46d963d9ad.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph classes {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#f2f2f2&quot;, fontsize=11];
+  edge [dir=back];
+  &quot;Node&quot; -&gt; &quot;CanvasItem&quot;;
+  &quot;Node&quot; -&gt; &quot;Node3D&quot;;
+  &quot;Node&quot; -&gt; &quot;Timer&quot;;
+  &quot;Node&quot; -&gt; &quot;AudioStreamPlayer&quot;;
+  &quot;CanvasItem&quot; -&gt; &quot;Node2D&quot;;
+  &quot;CanvasItem&quot; -&gt; &quot;Control&quot;;
+  &quot;Node2D&quot; -&gt; &quot;Sprite2D&quot;;
+  &quot;Node2D&quot; -&gt; &quot;Camera2D&quot;;
+  &quot;Node2D&quot; -&gt; &quot;CollisionShape2D&quot;;
+  &quot;Node2D&quot; -&gt; &quot;CollisionObject2D&quot;;
+  &quot;CollisionObject2D&quot; -&gt; &quot;Area2D&quot;;
+  &quot;CollisionObject2D&quot; -&gt; &quot;PhysicsBody2D&quot;;
+  &quot;PhysicsBody2D&quot; -&gt; &quot;CharacterBody2D&quot;;
+  &quot;PhysicsBody2D&quot; -&gt; &quot;RigidBody2D&quot;;
+  &quot;PhysicsBody2D&quot; -&gt; &quot;StaticBody2D&quot;;
+  &quot;Control&quot; -&gt; &quot;Label&quot;;
+  &quot;Control&quot; -&gt; &quot;BaseButton&quot;;
+  &quot;BaseButton&quot; -&gt; &quot;Button&quot;;
+  &quot;Node&quot; [fillcolor=&quot;#cfe2ff&quot;];
+  &quot;CanvasItem&quot; [fillcolor=&quot;#e8f0fe&quot;];
+  &quot;Node2D&quot; [fillcolor=&quot;#d4edda&quot;];
+  &quot;Control&quot; [fillcolor=&quot;#fff3cd&quot;];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 4 </span><span class="caption-text">主なノードのクラスの継承関係（一部）</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>図の矢印は「継承元」を指す。2D の物体は <code class="docutils literal notranslate"><span class="pre">Node2D</span></code> の系統、UI の部品は <code class="docutils literal notranslate"><span class="pre">Control</span></code> の系統、3D の物体は <code class="docutils literal notranslate"><span class="pre">Node3D</span></code> の系統に属する。<code class="docutils literal notranslate"><span class="pre">Node2D</span></code> と <code class="docutils literal notranslate"><span class="pre">Control</span></code> はどちらも画面に描画されるもので、共通の祖先として <code class="docutils literal notranslate"><span class="pre">CanvasItem</span></code> を持つ。</p>
+</section>
+<section id="id3">
+<h2>ノードの木構造<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ノードは親子関係を持ち、木構造を作る。子ノードの位置や回転は、親ノードからの相対値で表される。そのため、親ノードを動かすと子ノードも一緒に動く。例えば、プレイヤーのノードの子として画像のノードと衝突形状のノードを置けば、プレイヤーを動かすだけで、見た目と当たり判定がそろって移動する。</p>
+<figure class="align-default" id="id16">
+<div class="graphviz"><object data="../_images/graphviz-7b2fb7336904d77011d51e4df744aceb6556ba1b.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph player {
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  player [label=&quot;Player\n（CharacterBody2D）&quot;];
+  sprite [label=&quot;Sprite2D\n見た目&quot;];
+  shape [label=&quot;CollisionShape2D\n当たり判定&quot;];
+  camera [label=&quot;Camera2D\nプレイヤーを追うカメラ&quot;];
+  player -&gt; sprite;
+  player -&gt; shape;
+  player -&gt; camera;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 5 </span><span class="caption-text">プレイヤーを表すノードの木構造の例</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>1 つのノードは 1 つの役割しか持たない。複雑な物体は、単純なノードを組み合わせて表現する。これが Godot の基本的な設計方針である。</p>
+</section>
+<section id="id4">
+<h2>シーン<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ノードの木構造をファイルに保存したものをシーン（scene）と呼ぶ。シーンファイルの拡張子は <code class="docutils literal notranslate"><span class="pre">.tscn</span></code> である。<a class="reference internal" href="ch03_setup.html#ch03"><span class="std std-ref">第 3 章　環境構築</span></a> で作った <code class="docutils literal notranslate"><span class="pre">hello.tscn</span></code> もシーンである。</p>
+<p>Godot のシーンは、ゲームの「1 画面」や「1 ステージ」だけを指す言葉ではない。プレイヤー、敵、コイン、弾、UI の部品など、再利用したいまとまりは何でもシーンにする。シーンは、別のシーンの中に部品として何個でも配置できる。これをシーンのインスタンス化と呼ぶ。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 21 </span><span class="caption-text">シーンとオブジェクト指向プログラミングの対応</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Godot</p></th>
+<th class="head"><p>オブジェクト指向プログラミング</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>シーン（<code class="docutils literal notranslate"><span class="pre">.tscn</span></code> ファイル）</p></td>
+<td><p>クラスの定義</p></td>
+</tr>
+<tr class="row-odd"><td><p>シーンのインスタンス</p></td>
+<td><p>クラスのインスタンス（オブジェクト）</p></td>
+</tr>
+<tr class="row-even"><td><p>インスタンスごとにプロパティの値を変える</p></td>
+<td><p>コンストラクターに異なる引数を渡す</p></td>
+</tr>
+<tr class="row-odd"><td><p>シーンの中に別のシーンを配置する</p></td>
+<td><p>別のクラスのインスタンスをフィールドに持つ（コンポジション）</p></td>
+</tr>
+</tbody>
+</table>
+<p>Unity を知っている読者向けに補足すると、Godot のシーンは Unity のシーンとプレハブの両方の役割を兼ねている。</p>
+<section id="id5">
+<h3>例：コインのシーンを再利用する<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>サンプルの <code class="docutils literal notranslate"><span class="pre">chapter05</span></code> フォルダーには、回転するコインのシーン <code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> と、それを 3 個配置したステージのシーン <code class="docutils literal notranslate"><span class="pre">level.tscn</span></code> がある。</p>
+<figure class="align-default" id="id18">
+<div class="graphviz"><object data="../_images/graphviz-b26eb6493725f953dd49d85520129730bc347ab2.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph coin {
+  compound=true;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  subgraph cluster_coin {
+    label=&quot;coin.tscn&quot;; fontsize=11; style=rounded; color=&quot;#888888&quot;;
+    coin [label=&quot;Coin\n（Area2D）\ncoin.gd&quot;];
+    csprite [label=&quot;Sprite2D&quot;];
+    cshape [label=&quot;CollisionShape2D&quot;];
+    coin -&gt; csprite;
+    coin -&gt; cshape;
+  }
+  subgraph cluster_level {
+    label=&quot;level.tscn&quot;; fontsize=11; style=rounded; color=&quot;#888888&quot;;
+    level [label=&quot;Level\n（Node2D）&quot;];
+    lplayer [label=&quot;Player\n（Sprite2D）&quot;];
+    coins [label=&quot;Coins\n（Node2D）&quot;];
+    c1 [label=&quot;Coin1&quot;, fillcolor=&quot;#fff3cd&quot;];
+    c2 [label=&quot;Coin2\nspin_speed = 6.0&quot;, fillcolor=&quot;#fff3cd&quot;];
+    c3 [label=&quot;Coin3\nspin_speed = 1.5&quot;, fillcolor=&quot;#fff3cd&quot;];
+    level -&gt; lplayer;
+    level -&gt; coins;
+    coins -&gt; c1;
+    coins -&gt; c2;
+    coins -&gt; c3;
+  }
+  c1 -&gt; coin [style=dashed, label=&quot;インスタンス&quot;, lhead=cluster_coin, constraint=false];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 6 </span><span class="caption-text">coin.tscn と level.tscn のノードの構成</span><a class="headerlink" href="#id18" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>コインのスクリプトは次のとおりである。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-number">リスト 2 </span><span class="caption-text">chapter05/coin.gd</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Area2D</span>
+<span class="linenos"> 2</span><span class="c1">## 回転し続けるコイン。プレイヤーが触れると消える。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">## 1 秒あたりの回転量 [ラジアン]</span>
+<span class="linenos"> 5</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">spin_speed</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.0</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var</span><span class="w"> </span><span class="n">_angle</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">    </span><span class="c1"># 画像の横幅を cos で伸び縮みさせて、縦の軸で回っているように見せる。</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">_angle</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">spin_speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">13</span><span class="w">    </span><span class="nv">$Sprite2D</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">cos</span><span class="p">(</span><span class="n">_angle</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">func</span><span class="w"> </span><span class="n">_on_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">:</span><span class="w"> </span><span class="n">Node2D</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">17</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">body</span><span class="o">.</span><span class="n">is_in_group</span><span class="p">(</span><span class="s2">&quot;player&quot;</span><span class="p">):</span>
+<span class="linenos">18</span><span class="w">        </span><span class="n">queue_free</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>5 行目の <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> を付けた変数は、インスペクターに表示され、エディターから値を変更できる。<code class="docutils literal notranslate"><span class="pre">level.tscn</span></code> では、3 枚のコインのうち 2 枚の <code class="docutils literal notranslate"><span class="pre">spin_speed</span></code> をインスペクターで上書きしている。元の <code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> を編集すると、上書きしていないプロパティの変更は 3 枚すべてに反映される。</p>
+<figure class="align-default" id="id20">
+<a class="screenshot reference internal image-reference" href="../_images/ch05_level.png"><img alt="../_images/ch05_level.png" class="screenshot" src="../_images/ch05_level.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 7 </span><span class="caption-text">level.tscn の実行結果</span><a class="headerlink" href="#id20" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id6">
+<h3>シーンを作る手順<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> は次の手順で作る。</p>
+<ol class="arabic simple">
+<li><p>「シーン」→「新規シーン」を選び、シーンドックの「その他のノード」から <code class="docutils literal notranslate"><span class="pre">Area2D</span></code> を選んでルートノードにする。名前を <code class="docutils literal notranslate"><span class="pre">Coin</span></code> に変える。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Coin</span></code> の子として <code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> を追加し、インスペクターの「テクスチャ」（texture）に <code class="docutils literal notranslate"><span class="pre">assets/coin.png</span></code> をドラッグする。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Coin</span></code> の子として <code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code> を追加し、「シェイプ」（shape）で「新規 CircleShape2D」を選ぶ。ビューポートに表示される円の大きさを、画像に合わせて調整する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> という名前で保存し、<code class="docutils literal notranslate"><span class="pre">Coin</span></code> にスクリプトをアタッチする。</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">level.tscn</span></code> では、ファイルシステムドックから <code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> をビューポートへドラッグして配置する。</p>
+</section>
+<section id="id7">
+<h3>シーンファイルの中身<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">.tscn</span></code> ファイルはテキスト形式なので、Git などで差分を確認できる。<code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> の中身は次のとおりである。普段はエディターで編集するので、直接書き換える必要はない。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-number">リスト 3 </span><span class="caption-text">chapter05/coin.tscn</span><a class="headerlink" href="#id21" title="Link to this code"></a></div>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">[gd_scene format=3]</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">[ext_resource type=&quot;Script&quot; path=&quot;res://chapter05/coin.gd&quot; id=&quot;1_coin&quot;]</span>
+<span class="linenos"> 4</span><span class="k">[ext_resource type=&quot;Texture2D&quot; path=&quot;res://assets/coin.png&quot; id=&quot;2_tex&quot;]</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">[sub_resource type=&quot;CircleShape2D&quot; id=&quot;CircleShape2D_coin&quot;]</span>
+<span class="linenos"> 7</span><span class="na">radius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">14.0</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="k">[node name=&quot;Coin&quot; type=&quot;Area2D&quot;]</span>
+<span class="linenos">10</span><span class="na">collision_layer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">8</span>
+<span class="linenos">11</span><span class="na">collision_mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
+<span class="linenos">12</span><span class="na">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ExtResource(&quot;1_coin&quot;)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="k">[node name=&quot;Sprite2D&quot; type=&quot;Sprite2D&quot; parent=&quot;.&quot;]</span>
+<span class="linenos">15</span><span class="na">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ExtResource(&quot;2_tex&quot;)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">[node name=&quot;CollisionShape2D&quot; type=&quot;CollisionShape2D&quot; parent=&quot;.&quot;]</span>
+<span class="linenos">18</span><span class="na">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">SubResource(&quot;CircleShape2D_coin&quot;)</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">[connection signal=&quot;body_entered&quot; from=&quot;.&quot; to=&quot;.&quot; method=&quot;_on_body_entered&quot;]</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">[ext_resource]</span></code> は外部ファイル（スクリプトや画像）の参照、<code class="docutils literal notranslate"><span class="pre">[sub_resource]</span></code> はシーンの中で定義したリソース（ここでは円の形状）、<code class="docutils literal notranslate"><span class="pre">[node]</span></code> はノードとそのプロパティ、<code class="docutils literal notranslate"><span class="pre">[connection]</span></code> は後述するシグナルの接続を表す。既定値から変更したプロパティだけが記録される。</p>
+</section>
+</section>
+<section id="id8">
+<h2>実行中のシーンツリー<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>ゲームを実行すると、Godot はシーンツリー（<code class="docutils literal notranslate"><span class="pre">SceneTree</span></code>）を作り、その中でノードを動かす。シーンツリーの根は <code class="docutils literal notranslate"><span class="pre">root</span></code> という名前のウィンドウ（<code class="docutils literal notranslate"><span class="pre">Window</span></code>）で、その子として現在のシーンが配置される。<a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a> で説明するオートロードのノードも、<code class="docutils literal notranslate"><span class="pre">root</span></code> の子に置かれる。</p>
+<figure class="align-default" id="id22">
+<div class="graphviz"><object data="../_images/graphviz-5b9e6ffb915b212910f520533746ea36b0c156de.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph runtime {
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  root [label=&quot;root\n（Window）&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  nav [label=&quot;ExampleNavigator\n（オートロード）&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  gs [label=&quot;GameState\n（オートロード）&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  level [label=&quot;Level\n（現在のシーン）&quot;, fillcolor=&quot;#d4edda&quot;];
+  player [label=&quot;Player&quot;];
+  coins [label=&quot;Coins&quot;];
+  root -&gt; nav;
+  root -&gt; gs;
+  root -&gt; level;
+  level -&gt; player;
+  level -&gt; coins;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 8 </span><span class="caption-text">実行中のシーンツリーの例（サンプルプロジェクトで level.tscn を実行した場合）</span><a class="headerlink" href="#id22" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ノードがシーンツリーに追加されると、Godot はそのノードの決まった関数（<code class="docutils literal notranslate"><span class="pre">_ready()</span></code> や <code class="docutils literal notranslate"><span class="pre">_process()</span></code> など）を、決まったタイミングで呼び出す。これらの関数については <a class="reference internal" href="ch06_gdscript_basics.html#ch06"><span class="std std-ref">第 6 章　GDScript の基礎</span></a> で説明する。</p>
+</section>
+<section id="id9">
+<h2>スクリプトからノードを操作する<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<section id="id10">
+<h3>ノードを取得する<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>スクリプトから別のノードを使うには、まずそのノードを取得する。</p>
+<table class="docutils align-default" id="id23">
+<caption><span class="caption-number">表 22 </span><span class="caption-text">ノードの取得方法</span><a class="headerlink" href="#id23" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>書き方</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$Sprite2D</span></code></p></td>
+<td><p>子ノード <code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code> を取得する。<code class="docutils literal notranslate"><span class="pre">get_node(&quot;Sprite2D&quot;)</span></code> の省略形</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">$Coins/Coin1</span></code></p></td>
+<td><p>子の子など、パスで指定したノードを取得する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">%HealthBar</span></code></p></td>
+<td><p>シーン固有名を付けたノードを、階層に関係なく取得する（後述）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_parent()</span></code></p></td>
+<td><p>親ノードを取得する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_children()</span></code></p></td>
+<td><p>子ノードの配列を取得する。</p></td>
+</tr>
+</tbody>
+</table>
+<p>パスで指定する方法は、ノードの階層を変えると動かなくなる。UI のように階層が深くなりやすいシーンでは、シーン固有名を使うとよい。シーンドックでノードを右クリックし、「固有名でアクセス」を選ぶと、ノード名の横に <code class="docutils literal notranslate"><span class="pre">%</span></code> が表示され、スクリプトから <code class="docutils literal notranslate"><span class="pre">%ノード名</span></code> で取得できるようになる。</p>
+</section>
+<section id="id11">
+<h3>ノードを生成・削除する<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p>ゲームの実行中に敵や弾を出現させるには、シーンを読み込んでインスタンスを作り、シーンツリーに追加する。</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-number">リスト 4 </span><span class="caption-text">シーンのインスタンスを作って追加する例</span><a class="headerlink" href="#id24" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">const</span><span class="w"> </span><span class="n">COIN_SCENE</span><span class="p">:</span><span class="w"> </span><span class="n">PackedScene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://chapter05/coin.tscn&quot;</span><span class="p">)</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="k">func</span><span class="w"> </span><span class="n">spawn_coin</span><span class="p">(</span><span class="n">at</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">5</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">coin</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">COIN_SCENE</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos">6</span><span class="w">    </span><span class="n">coin</span><span class="o">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">at</span>
+<span class="linenos">7</span><span class="w">    </span><span class="n">add_child</span><span class="p">(</span><span class="n">coin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">preload()</span></code> は、スクリプトを読み込む時点でシーンファイルを読み込む。<code class="docutils literal notranslate"><span class="pre">instantiate()</span></code> でノードの木構造を作り、<code class="docutils literal notranslate"><span class="pre">add_child()</span></code> で自分の子として追加すると、画面に表示されて動き始める。</p>
+<p>ノードを削除するには <code class="docutils literal notranslate"><span class="pre">queue_free()</span></code> を呼ぶ。削除は現在のフレームの処理が終わってから行われるので、同じフレームの中で削除したノードに触れても安全である。子ノードは親と一緒に削除される。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Python のオブジェクトと異なり、ノードは参照がなくなっても自動では解放されない。シーンツリーから外しただけのノードはメモリーに残り続ける。不要になったノードは必ず <code class="docutils literal notranslate"><span class="pre">queue_free()</span></code> で削除する。一方、画像やシーンファイルなどのリソース（<code class="docutils literal notranslate"><span class="pre">Resource</span></code>）は参照カウントで管理されており、使われなくなると自動で解放される。</p>
+</div>
+</section>
+</section>
+<section id="id12">
+<h2>グループ<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<p>グループは、ノードに付けるタグのようなものである。1 つのノードは複数のグループに所属できる。グループを使うと、「すべての敵」や「すべてのコイン」をまとめて扱える。</p>
+<p>ノードをグループに追加するには、ノードを選んで「グループ」ドックでグループ名を追加するか、スクリプトで <code class="docutils literal notranslate"><span class="pre">add_to_group(&quot;enemies&quot;)</span></code> を呼ぶ。</p>
+<table class="docutils align-default" id="id25">
+<caption><span class="caption-number">表 23 </span><span class="caption-text">グループに関する主なメソッド</span><a class="headerlink" href="#id25" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>メソッド</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">node.is_in_group(&quot;coins&quot;)</span></code></p></td>
+<td><p>ノードがグループに属しているかを調べる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_tree().get_nodes_in_group(&quot;coins&quot;)</span></code></p></td>
+<td><p>グループに属するノードの配列を返す。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_tree().call_group(&quot;rocks&quot;,</span> <span class="pre">&quot;queue_free&quot;)</span></code></p></td>
+<td><p>グループに属するすべてのノードのメソッドを呼ぶ。</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">coin.gd</span></code> の <code class="docutils literal notranslate"><span class="pre">_on_body_entered()</span></code> では、触れた物体が <code class="docutils literal notranslate"><span class="pre">player</span></code> グループに属しているかを確かめてからコインを消している。こうすると、プレイヤー以外の物体（例えば敵）が触れてもコインは消えない。</p>
+</section>
+<section id="id13">
+<h2>シーンを設計するときの考え方<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<p>Godot でシーンを設計するときは、次の方針が役に立つ。</p>
+<ul class="simple">
+<li><p><strong>小さなシーンを組み合わせる</strong>：プレイヤー、敵、UI などをそれぞれ独立したシーンにし、ステージのシーンでそれらを組み合わせる。それぞれのシーンを単独で実行してテストできるようにしておくと、開発が楽になる。</p></li>
+<li><p><strong>継承よりも合成</strong>：機能を追加するときは、スクリプトの継承を深くするよりも、機能を持つ子ノードを追加することを考える。例えば体力の管理を <code class="docutils literal notranslate"><span class="pre">Health</span></code> ノードとして独立させれば、プレイヤーにも敵にも使い回せる（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a> で実例を示す）。</p></li>
+<li><p><strong>呼び出しは下へ、通知は上へ</strong>：親は子のメソッドを直接呼んでよい。子が親に何かを伝えたいときは、親を直接操作せず、シグナル（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）を発行して親に受け取ってもらう。こうすると、子のシーンが親の構造に依存しなくなり、再利用しやすくなる。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch04_editor.html" class="btn btn-neutral float-left" title="第 4 章 エディターの画面構成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch06_gdscript_basics.html" class="btn btn-neutral float-right" title="第 6 章 GDScript の基礎" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

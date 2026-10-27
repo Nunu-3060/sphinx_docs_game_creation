@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14. 物理エンジンを使う &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="15. 総合演習：2D プラットフォーマーを作る" href="practice.html" />
+    <link rel="prev" title="13. ばね・拘束・粒子" href="springs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">14. 物理エンジンを使う</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">14.1. 物理エンジンが内部で行っていること</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pymunk">14.2. pymunk の基本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">14.3. 自作するか物理エンジンを使うか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">14.4. 決定性とネットワーク対戦・リプレイ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">14.5. 主な物理エンジン</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">14. </span>物理エンジンを使う</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">14. </span>物理エンジンを使う<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 10 章から第 13 章までで、物理の計算を自分で書いてきた。回転する剛体がたくさん積み重なるような場面を正しく安定して計算するのは、さらに多くの工夫が必要で、自分で書くのは大変である。そのような場面では<strong>物理エンジン</strong>を使う。この章では、物理エンジンが内部で行っていることを整理し、2D の物理エンジン pymunk を使ってみる。</p>
+<section id="id2">
+<h2><span class="section-number">14.1. </span>物理エンジンが内部で行っていること<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>物理エンジンは、1 ステップごとにおおむね<a class="reference internal" href="#fig-engine-step"><span class="std std-numref">図 14.1</span></a> の処理を行っている。</p>
+<figure class="align-center" id="id6">
+<span id="fig-engine-step"></span><div class="graphviz"><img src="_images/graphviz-50b44bb42d399f8a57636077f742393dc357751f.png" alt="digraph step {
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  edge [color=&quot;#888888&quot;];
+  force [label=&quot;1. 力を加える\n重力、ばね、ユーザーが加えた力（第 10 章）&quot;];
+  vel [label=&quot;2. 速度を更新する\n加速度 = 力 ÷ 質量（第 10 章）&quot;];
+  broad [label=&quot;3. ブロードフェーズ\nぶつかりそうな組を選ぶ（第 11 章）&quot;];
+  narrow [label=&quot;4. ナローフェーズ\n接触点・法線・めり込みを求める（第 11 章）&quot;];
+  solve [label=&quot;5. 拘束を解く\n接触・摩擦・ジョイントを満たす力積を\n繰り返し計算する（第 12 章・第 13 章）&quot;];
+  pos [label=&quot;6. 位置と角度を更新する\n（半陰的オイラー法）&quot;];
+  force -&gt; vel -&gt; broad -&gt; narrow -&gt; solve -&gt; pos;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 14.1 </span><span class="caption-text">物理エンジンの 1 ステップ</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>本書の各章で扱った内容が、ほぼそのまま並んでいる。物理エンジンならではの工夫は、主に手順 5 にある。接触点が多数あると、1 つの接触を解消すると別の接触がずれる。物理エンジンは、すべての接触とジョイントを同時に満たす力積を、何度も繰り返し計算して近づけていく。このほか、止まっている物を「眠らせて」計算を省く、速い物にだけ連続衝突判定を使う、といった工夫もしている。</p>
+</section>
+<section id="pymunk">
+<h2><span class="section-number">14.2. </span>pymunk の基本<a class="headerlink" href="#pymunk" title="Link to this heading"></a></h2>
+<p><strong>pymunk</strong> は、C 言語で書かれた 2D 物理エンジン Chipmunk2D を Python から使えるようにしたライブラリーである。pymunk では、次の 4 つのものを組み合わせて物理の世界を作る。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 14.1 </span><span class="caption-text">pymunk の基本的な要素</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>要素</p></th>
+<th class="head"><p>役割</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>空間（<code class="docutils literal notranslate"><span class="pre">Space</span></code>）</p></td>
+<td><p>物理の世界全体。重力を持ち、<code class="docutils literal notranslate"><span class="pre">step</span></code> で時間を進める</p></td>
+</tr>
+<tr class="row-odd"><td><p>ボディー（<code class="docutils literal notranslate"><span class="pre">Body</span></code>）</p></td>
+<td><p>剛体。質量・慣性モーメント・位置・角度・速度・角速度を持つ。形は持たない</p></td>
+</tr>
+<tr class="row-even"><td><p>形状（<code class="docutils literal notranslate"><span class="pre">Shape</span></code>）</p></td>
+<td><p>衝突判定に使う形（<code class="docutils literal notranslate"><span class="pre">Circle</span></code>、<code class="docutils literal notranslate"><span class="pre">Poly</span></code>、<code class="docutils literal notranslate"><span class="pre">Segment</span></code>）。ボディーに取り付け、摩擦係数（<code class="docutils literal notranslate"><span class="pre">friction</span></code>）と反発係数（<code class="docutils literal notranslate"><span class="pre">elasticity</span></code>）を持つ</p></td>
+</tr>
+<tr class="row-odd"><td><p>ジョイント（<code class="docutils literal notranslate"><span class="pre">Constraint</span></code>）</p></td>
+<td><p>2 つのボディーをつなぐ拘束（<code class="docutils literal notranslate"><span class="pre">PinJoint</span></code>、<code class="docutils literal notranslate"><span class="pre">PivotJoint</span></code>、<code class="docutils literal notranslate"><span class="pre">DampedSpring</span></code> など）</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#code-add-box"><span class="std std-numref">リスト 14.1</span></a> は、箱を 1 つ追加する関数である。ボディーを作るときに、質量と、形から計算した慣性モーメントを与える。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<span id="code-add-box"></span><div class="code-block-caption"><span class="caption-number">リスト 14.1 </span><span class="caption-text">examples/pymunk_demo.py の add_box 関数</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">add_box</span><span class="p">(</span><span class="n">space</span><span class="p">:</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Space</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;正方形の箱を追加する。慣性モーメントは形と質量から求める。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">body</span> <span class="o">=</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Body</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">moment_for_box</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="p">(</span><span class="n">BOX_SIZE</span><span class="p">,</span> <span class="n">BOX_SIZE</span><span class="p">)))</span>
+<span class="linenos">4</span>    <span class="n">body</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos">5</span>    <span class="n">shape</span> <span class="o">=</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Poly</span><span class="o">.</span><span class="n">create_box</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="p">(</span><span class="n">BOX_SIZE</span><span class="p">,</span> <span class="n">BOX_SIZE</span><span class="p">))</span>
+<span class="linenos">6</span>    <span class="n">shape</span><span class="o">.</span><span class="n">friction</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="linenos">7</span>    <span class="n">shape</span><span class="o">.</span><span class="n">elasticity</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 反発係数</span>
+<span class="linenos">8</span>    <span class="n">space</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>地面や壁のように動かない物は、空間に最初から用意されている <code class="docutils literal notranslate"><span class="pre">space.static_body</span></code> に形状を取り付ける。ジョイントを使うと、ボディーどうしを関節のようにつなげる。<code class="docutils literal notranslate"><span class="pre">pymunk_demo.py</span></code> では、空中の点とボールを <code class="docutils literal notranslate"><span class="pre">PinJoint</span></code>（2 点の距離を一定に保つ）でつなぎ、振り子にしている。これは第 13 章の距離拘束と同じ考え方である。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-number">リスト 14.2 </span><span class="caption-text">examples/pymunk_demo.py の build_world 関数</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">build_world</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
+<span class="linenos"> 2</span>    <span class="n">space</span> <span class="o">=</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Space</span><span class="p">()</span>
+<span class="linenos"> 3</span>    <span class="n">space</span><span class="o">.</span><span class="n">gravity</span> <span class="o">=</span> <span class="n">GRAVITY</span>
+<span class="linenos"> 4</span>    <span class="c1"># 地面と右の壁: 動かない物は space.static_body に付ける</span>
+<span class="linenos"> 5</span>    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span> <span class="o">-</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)),</span>
+<span class="linenos"> 6</span>                 <span class="p">((</span><span class="n">SCREEN_WIDTH</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="p">))):</span>
+<span class="linenos"> 7</span>        <span class="n">segment</span> <span class="o">=</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Segment</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">static_body</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="linenos"> 8</span>        <span class="n">segment</span><span class="o">.</span><span class="n">friction</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="linenos"> 9</span>        <span class="n">space</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+<span class="linenos">10</span>    <span class="c1"># 箱のピラミッド</span>
+<span class="linenos">11</span>    <span class="n">ground</span> <span class="o">=</span> <span class="n">SCREEN_HEIGHT</span> <span class="o">-</span> <span class="mi">24</span>
+<span class="linenos">12</span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+<span class="linenos">13</span>        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span> <span class="o">-</span> <span class="n">row</span><span class="p">):</span>
+<span class="linenos">14</span>            <span class="n">x</span> <span class="o">=</span> <span class="mi">380</span> <span class="o">+</span> <span class="n">col</span> <span class="o">*</span> <span class="n">BOX_SIZE</span> <span class="o">+</span> <span class="n">row</span> <span class="o">*</span> <span class="n">BOX_SIZE</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="linenos">15</span>            <span class="n">y</span> <span class="o">=</span> <span class="n">ground</span> <span class="o">-</span> <span class="n">BOX_SIZE</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">row</span> <span class="o">*</span> <span class="n">BOX_SIZE</span>
+<span class="linenos">16</span>            <span class="n">add_box</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos">17</span>    <span class="c1"># 振り子: 空中の点とボールの中心を、距離を一定に保つピンジョイントでつなぐ</span>
+<span class="linenos">18</span>    <span class="n">pivot</span> <span class="o">=</span> <span class="p">(</span><span class="mf">200.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">)</span>
+<span class="linenos">19</span>    <span class="n">bob</span> <span class="o">=</span> <span class="n">add_ball</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="p">(</span><span class="mf">320.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+<span class="linenos">20</span>    <span class="n">space</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pymunk</span><span class="o">.</span><span class="n">PinJoint</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">static_body</span><span class="p">,</span> <span class="n">bob</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+<span class="linenos">21</span>    <span class="k">return</span> <span class="n">space</span>
+</pre></div>
+</div>
+</div>
+<p>時間を進めるには <code class="docutils literal notranslate"><span class="pre">space.step(dt)</span></code> を呼ぶ。物理エンジンは dt が一定であることを前提に調整されていることが多いので、第 3 章の固定タイムステップで呼ぶのがよい。<code class="docutils literal notranslate"><span class="pre">pymunk_demo.py</span></code> では、1 フレームに 1/120 秒のステップを 2 回進めている。</p>
+<p>描画は自分で行う。ボディーの位置と角度から、形状の頂点をワールド座標に変換して描く。<code class="docutils literal notranslate"><span class="pre">body.local_to_world</span></code> は、第 6 章のワールド変換を行うメソッドである。</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-number">リスト 14.3 </span><span class="caption-text">examples/pymunk_demo.py の draw_space 関数</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">draw_space</span><span class="p">(</span><span class="n">screen</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">,</span> <span class="n">space</span><span class="p">:</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Space</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span>    <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">space</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
+<span class="linenos"> 3</span>        <span class="n">body</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">body</span>
+<span class="linenos"> 4</span>        <span class="k">if</span> <span class="n">body</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 5</span>            <span class="k">continue</span>  <span class="c1"># ボディーに付いていない形状（本書では作らない）</span>
+<span class="linenos"> 6</span>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Poly</span><span class="p">):</span>
+<span class="linenos"> 7</span>            <span class="c1"># 形状の頂点はボディーのローカル座標で定義されている</span>
+<span class="linenos"> 8</span>            <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">body</span><span class="o">.</span><span class="n">local_to_world</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">shape</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">()]</span>
+<span class="linenos"> 9</span>            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">polygon</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">110</span><span class="p">),</span> <span class="n">points</span><span class="p">)</span>
+<span class="linenos">10</span>            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">polygon</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">points</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">11</span>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Circle</span><span class="p">):</span>
+<span class="linenos">12</span>            <span class="n">center</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">position</span>
+<span class="linenos">13</span>            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">center</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+<span class="linenos">14</span>            <span class="c1"># 回転が見えるよう、ボディーの角度の向きに線を引く</span>
+<span class="linenos">15</span>            <span class="n">edge</span> <span class="o">=</span> <span class="n">center</span> <span class="o">+</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Vec2d</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+<span class="linenos">16</span>            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">36</span><span class="p">),</span> <span class="n">center</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">17</span>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">Segment</span><span class="p">):</span>
+<span class="linenos">18</span>            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">180</span><span class="p">),</span> <span class="n">shape</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">19</span>    <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="n">space</span><span class="o">.</span><span class="n">constraints</span><span class="p">:</span>
+<span class="linenos">20</span>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">constraint</span><span class="p">,</span> <span class="n">pymunk</span><span class="o">.</span><span class="n">PinJoint</span><span class="p">):</span>
+<span class="linenos">21</span>            <span class="n">a</span> <span class="o">=</span> <span class="n">constraint</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">local_to_world</span><span class="p">(</span><span class="n">constraint</span><span class="o">.</span><span class="n">anchor_a</span><span class="p">)</span>
+<span class="linenos">22</span>            <span class="n">b</span> <span class="o">=</span> <span class="n">constraint</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">local_to_world</span><span class="p">(</span><span class="n">constraint</span><span class="o">.</span><span class="n">anchor_b</span><span class="p">)</span>
+<span class="linenos">23</span>            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">210</span><span class="p">),</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>pymunk には、デバッグ用にすべての形状を自動で描く <code class="docutils literal notranslate"><span class="pre">pymunk.pygame_util.DrawOptions</span></code> も用意されている。</p>
+<p>座標の向きに注意する。pymunk 自体は y 軸の向きを決めていないので、重力を <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">900)</span></code> とすれば画面座標（y 軸が下向き）でそのまま使える。単位も自由だが、本書のようにピクセルを単位にする場合、重力などの値はピクセル基準で決める。</p>
+<p><a class="reference internal" href="#fig-screen-pymunk"><span class="std std-numref">図 14.2</span></a> は <code class="docutils literal notranslate"><span class="pre">pymunk_demo.py</span></code> の画面である。クリックするとボールを撃ち出し、箱のピラミッドを崩せる。箱が回転しながら崩れ、積み重なって止まる様子は、第 12 章の簡単な衝突応答では再現が難しい。</p>
+<figure class="align-default" id="id11">
+<span id="fig-screen-pymunk"></span><a class="reference internal image-reference" href="_images/screen_pymunk_demo.png"><img alt="pymunk_demo.py の画面" src="_images/screen_pymunk_demo.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 14.2 </span><span class="caption-text">pymunk_demo.py の画面</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id3">
+<h2><span class="section-number">14.3. </span>自作するか物理エンジンを使うか<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>物理エンジンは強力だが、何にでも使えばよいわけではない。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 14.2 </span><span class="caption-text">自作の運動と物理エンジンの使い分け</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>物理エンジンが向いている</p></th>
+<th class="head"><p>自作の運動が向いている</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>積み上げた箱が崩れる、物が転がる、建物が壊れる</p></td>
+<td><p>プレイヤーが操作するキャラクター</p></td>
+</tr>
+<tr class="row-odd"><td><p>ラグドール、車、ロープでつながった物</p></td>
+<td><p>決まったパターンで動く敵や弾</p></td>
+</tr>
+<tr class="row-even"><td><p>物理そのものを遊ぶゲーム（物理パズル、投射ゲーム）</p></td>
+<td><p>手触りを細かく調整したいアクションゲーム</p></td>
+</tr>
+</tbody>
+</table>
+<p>特に、アクションゲームのプレイヤーキャラクターは、物理エンジンに任せず自作の運動で動かすことが多い。物理エンジンのボディーとして動かすと、坂道で滑り落ちる、段差の角に引っかかって跳ねる、押されて予想外に回転する、といった現実的すぎる挙動が出てしまう。第 10 章のコヨーテタイムのような「物理的には正しくない」調整も入れにくい。</p>
+<p>多くのゲームエンジンは、この使い分けのために、物理エンジンとは別に<strong>キャラクターコントローラー</strong>という仕組みを用意している。キャラクターの移動は自作の運動のように指示しつつ、壁や床との衝突判定と押し戻しだけを物理エンジンが行う。第 15 章の総合演習も、この考え方でキャラクターを動かす。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">14.4. </span>決定性とネットワーク対戦・リプレイ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>同じ初期状態と同じ入力から、毎回まったく同じ結果が得られる性質を<strong>決定性</strong>と呼ぶ。リプレイを「入力だけを記録して再生する」方式で作る場合や、ネットワーク対戦で各プレイヤーのコンピューターが同じ計算をして状態を合わせる場合には、物理の計算が決定的でなければならない。</p>
+<p>決定性を損なう主な原因は、次のとおりである。</p>
+<ul class="simple">
+<li><p><strong>可変タイムステップ</strong>: dt が違えば結果が変わる。固定タイムステップにする。</p></li>
+<li><p><strong>乱数</strong>: シードを固定し、物理に使う乱数の生成器を演出用と分ける（第 9 章）。</p></li>
+<li><p><strong>処理の順序</strong>: 物を処理する順番が変わると結果が変わることがある。辞書や集合の順序に依存しないようにする。</p></li>
+<li><p><strong>浮動小数点数の計算の違い</strong>: CPU やコンパイラーの最適化によって、同じ式でも末尾の桁が変わることがある。異なる種類の機械どうしで完全に一致させるのは難しく、固定小数点数を使うゲームもある。</p></li>
+</ul>
+<p>同じ機械で同じプログラムを動かすだけなら、最初の 3 つに気を付ければ決定性を保ちやすい。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">14.5. </span>主な物理エンジン<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 14.3 </span><span class="caption-text">主な物理エンジン</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>名前</p></th>
+<th class="head"><p>次元</p></th>
+<th class="head"><p>特徴</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Box2D</p></td>
+<td><p>2D</p></td>
+<td><p>2D の物理エンジンの定番。多くのゲームやエンジンに組み込まれている</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chipmunk2D</p></td>
+<td><p>2D</p></td>
+<td><p>軽量な 2D 物理エンジン。pymunk はこれを Python から使えるようにしたもの</p></td>
+</tr>
+<tr class="row-even"><td><p>Bullet</p></td>
+<td><p>3D</p></td>
+<td><p>オープンソースの 3D 物理エンジン。ゲームのほか、映像制作やロボットのシミュレーションにも使われる</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jolt Physics</p></td>
+<td><p>3D</p></td>
+<td><p>オープンソースの 3D 物理エンジン。マルチスレッドでの高速な処理を重視している</p></td>
+</tr>
+<tr class="row-even"><td><p>PhysX</p></td>
+<td><p>3D</p></td>
+<td><p>NVIDIA の物理エンジン。Unity の 3D 物理に使われている</p></td>
+</tr>
+</tbody>
+</table>
+<p>ゲームエンジンを使う場合は、エンジンに組み込まれた物理（Unity の Rigidbody、Godot の RigidBody2D / RigidBody3D など）を使うのが普通である。どのエンジンでも、ボディー・形状・ジョイント・固定タイムステップという基本の考え方は共通している。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="springs.html" class="btn btn-neutral float-left" title="13. ばね・拘束・粒子" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="practice.html" class="btn btn-neutral float-right" title="15. 総合演習：2D プラットフォーマーを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

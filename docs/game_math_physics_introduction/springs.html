@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13. ばね・拘束・粒子 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="14. 物理エンジンを使う" href="physics_engine.html" />
+    <link rel="prev" title="12. 衝突応答" href="response.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">13. ばね・拘束・粒子</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">13.1. ばねとダンパー</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">13.1.1. 固有振動数と減衰比で調整する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">13.2. 拘束とベルレ法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">13.2.1. 位置ベルレ法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">13.2.2. 距離拘束</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">13.3. 布とソフトボディー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">13.4. パーティクル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">13. </span>ばね・拘束・粒子</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">13. </span>ばね・拘束・粒子<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、ゲームの演出や表現でよく使う 3 つの物理を扱う。揺れて戻る動きを作るばね、ロープや布を作る拘束、火花や煙を作るパーティクルである。どれも、これまでの章の道具の組み合わせで作れる。</p>
+<section id="id2">
+<h2><span class="section-number">13.1. </span>ばねとダンパー<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ばねは、自然な長さからのずれに比例する力で、元に戻ろうとする（<strong>フックの法則</strong>）。ばねだけでは永遠に揺れ続けるので、速度に比例するブレーキの力（<strong>ダンパー</strong>、減衰力）を組み合わせる。目標の位置 <span class="math notranslate nohighlight">\(x_0\)</span> に向かうばねとダンパーの加速度は、質量 1 あたりで次のようになる。</p>
+<div class="math notranslate nohighlight">
+\[a = -k\,(x - x_0) - c\,v\]</div>
+<p><span class="math notranslate nohighlight">\(k\)</span> を<strong>ばね定数</strong>、<span class="math notranslate nohighlight">\(c\)</span> を<strong>減衰係数</strong>と呼ぶ。<span class="math notranslate nohighlight">\(k\)</span> が大きいほど硬く速く揺れ、<span class="math notranslate nohighlight">\(c\)</span> が大きいほど揺れが早く収まる。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-number">リスト 13.1 </span><span class="caption-text">examples/spring.py の spring_step 関数</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">spring_step</span><span class="p">(</span><span class="n">position</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">velocity</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="linenos">2</span>                <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">]:</span>
+<span class="linenos">3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;ばねの力 -k(x - target) と減衰力 -cv を受けて dt 秒進める（半陰的オイラー法）。&quot;&quot;&quot;</span>
+<span class="linenos">4</span>    <span class="n">acceleration</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span> <span class="o">*</span> <span class="n">k</span> <span class="o">-</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">c</span>
+<span class="linenos">5</span>    <span class="n">velocity</span> <span class="o">=</span> <span class="n">velocity</span> <span class="o">+</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">6</span>    <span class="k">return</span> <span class="n">position</span> <span class="o">+</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">velocity</span>
+</pre></div>
+</div>
+</div>
+<section id="id3">
+<h3><span class="section-number">13.1.1. </span>固有振動数と減衰比で調整する<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(k\)</span> と <span class="math notranslate nohighlight">\(c\)</span> を直接調整するのは難しい。第 10 章のジャンプと同じく、人間が感覚的に分かる値から求めるとよい。</p>
+<ul class="simple">
+<li><p><strong>固有振動数</strong> <span class="math notranslate nohighlight">\(f\)</span>: 減衰が無いときに 1 秒間に揺れる回数（Hz）。速さの目安になる。</p></li>
+<li><p><strong>減衰比</strong> <span class="math notranslate nohighlight">\(\zeta\)</span>: 揺れの収まり方。1 未満なら行き過ぎて揺れながら収まり、1 ならちょうど揺れずに最も早く収まり、1 より大きいと揺れずにゆっくり近づく。</p></li>
+</ul>
+<p>角振動数を <span class="math notranslate nohighlight">\(\omega = 2\pi f\)</span> とすると、次の関係がある。</p>
+<div class="math notranslate nohighlight">
+\[k = \omega^2, \qquad c = 2\,\zeta\,\omega\]</div>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-number">リスト 13.2 </span><span class="caption-text">examples/spring.py の spring_coefficients 関数</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">spring_coefficients</span><span class="p">(</span><span class="n">frequency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">damping_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;固有振動数と減衰比から、質量 1 あたりのばね定数 k と減衰係数 c を求める。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">omega</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">tau</span> <span class="o">*</span> <span class="n">frequency</span>  <span class="c1"># 角振動数</span>
+<span class="linenos">4</span>    <span class="k">return</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">omega</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">damping_ratio</span> <span class="o">*</span> <span class="n">omega</span>
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="#fig-spring-response"><span class="std std-numref">図 13.1</span></a> は、固有振動数 2 Hz で減衰比だけを変えたときの動きである。減衰比 1 の状態を<strong>臨界減衰</strong>と呼ぶ。</p>
+<figure class="align-default" id="id11">
+<span id="fig-spring-response"></span><a class="reference internal image-reference" href="_images/spring_response.png"><img alt="減衰比によるばねの動きの違い" src="_images/spring_response.png" style="width: 520px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 13.1 </span><span class="caption-text">減衰比によるばねの動きの違い（固有振動数 2 Hz）</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">spring.py</span></code> では、3 つの四角がそれぞれの減衰比でマウスを追いかける。第 8 章の <code class="docutils literal notranslate"><span class="pre">damp</span></code> との違いは、速度を持っていることである。<code class="docutils literal notranslate"><span class="pre">damp</span></code> は目標が急に動くと即座に向きを変えるが、ばねは勢いが残るので、行き過ぎたり、遅れて動き出したりする。</p>
+<p>ばねは、ゲームの次のような場面で使われる。</p>
+<ul class="simple">
+<li><p>ボタンを押したときに、ぷるんと揺れて元の大きさに戻る UI</p></li>
+<li><p>着地したときに、キャラクターがつぶれてから元に戻る動き（第 15 章）</p></li>
+<li><p>目標に少し遅れて、勢いよくついてくるカメラ</p></li>
+<li><p>揺れる髪やアクセサリー</p></li>
+</ul>
+<p>ばねが硬い（<span class="math notranslate nohighlight">\(k\)</span> が大きい）ほど、数値積分は不安定になりやすい。目安として、<span class="math notranslate nohighlight">\(\omega\,\Delta t\)</span> が 1 より十分小さくなるようにする。固有振動数 2 Hz、60 FPS なら <span class="math notranslate nohighlight">\(\omega\,\Delta t \approx 0.21\)</span> で問題無い。</p>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">13.2. </span>拘束とベルレ法<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ロープや鎖は、「隣り合う点の距離が一定」という条件を満たしながら動く。このような条件を<strong>拘束</strong>と呼ぶ。拘束を、硬いばねで近似することもできるが、ばねを硬くするほど不安定になる。そこで、力を計算する代わりに、条件を満たすように位置を直接動かす方法がよく使われる。</p>
+<section id="id5">
+<h3><span class="section-number">13.2.1. </span>位置ベルレ法<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>位置を直接動かす方法と相性が良いのが<strong>位置ベルレ法</strong>である。各点は速度を持たず、「今の位置」と「1 ステップ前の位置」だけを持つ。速度は 2 つの位置の差から求める。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x}_{\text{次}} = \mathbf{x}_{\text{今}} + (\mathbf{x}_{\text{今}} - \mathbf{x}_{\text{前}}) + \mathbf{a}\,\Delta t^2\]</div>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 13.3 </span><span class="caption-text">examples/rope.py の verlet_step 関数</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">verlet_step</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;位置ベルレ法: 新しい位置 = 今の位置 + (今の位置 - 前の位置) + 加速度 × dt^2。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
+<span class="linenos">4</span>        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">pinned</span><span class="p">:</span>
+<span class="linenos">5</span>            <span class="k">continue</span>
+<span class="linenos">6</span>        <span class="n">velocity</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="n">previous</span><span class="p">)</span> <span class="o">*</span> <span class="n">DAMPING</span>  <span class="c1"># 1 ステップあたりの移動量</span>
+<span class="linenos">7</span>        <span class="n">p</span><span class="o">.</span><span class="n">previous</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+<span class="linenos">8</span>        <span class="n">p</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">velocity</span> <span class="o">+</span> <span class="n">GRAVITY</span> <span class="o">*</span> <span class="p">(</span><span class="n">dt</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>速度を別に持たないので、拘束で位置を動かすと、その分が自動的に速度に反映される。たとえば、拘束によって点を上に動かすと、次のステップでは上向きの速度を持っているように扱われる。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">13.2.2. </span>距離拘束<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>2 つの点の距離を一定に保つ<strong>距離拘束</strong>は、次のように満たす。今の距離と決められた長さの差を求め、2 つの点を結ぶ線の向きに、差の半分ずつ動かす（固定された点は動かさず、もう一方を全部動かす）。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 13.4 </span><span class="caption-text">examples/rope.py の satisfy 関数</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">satisfy</span><span class="p">(</span><span class="n">stick</span><span class="p">:</span> <span class="n">Stick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの点を結ぶ線の向きに動かして、距離を length に戻す。固定された点は動かさない。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">delta</span> <span class="o">=</span> <span class="n">stick</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">stick</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">position</span>
+<span class="linenos"> 4</span>    <span class="n">distance</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="linenos"> 5</span>    <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="mf">1e-9</span><span class="p">:</span>
+<span class="linenos"> 6</span>        <span class="k">return</span>
+<span class="linenos"> 7</span>    <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">distance</span> <span class="o">-</span> <span class="n">stick</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">/</span> <span class="n">distance</span>  <span class="c1"># 伸びている割合</span>
+<span class="linenos"> 8</span>    <span class="n">movable</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">stick</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">pinned</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="ow">not</span> <span class="n">stick</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">pinned</span><span class="p">)</span>
+<span class="linenos"> 9</span>    <span class="k">if</span> <span class="n">movable</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">10</span>        <span class="k">return</span>
+<span class="linenos">11</span>    <span class="n">shift</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">*</span> <span class="p">(</span><span class="n">error</span> <span class="o">/</span> <span class="n">movable</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">stick</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">pinned</span><span class="p">:</span>
+<span class="linenos">13</span>        <span class="n">stick</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">shift</span>
+<span class="linenos">14</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">stick</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">pinned</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="n">stick</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">position</span> <span class="o">-=</span> <span class="n">shift</span>
+</pre></div>
+</div>
+</div>
+<p>1 つの拘束を満たすと、隣の拘束がずれる。そこで、すべての拘束を順に満たす処理を何回か繰り返す。繰り返すほど伸びにくくなるが、計算は重くなる。<code class="docutils literal notranslate"><span class="pre">rope.py</span></code> では 12 回繰り返している。この方法は、Thomas Jakobsen が 2001 年に発表した手法として知られ、ゲームのロープや布、ラグドール（力の抜けた人体）の表現に広く使われてきた。</p>
+<p><a class="reference internal" href="#fig-rope-frames"><span class="std std-numref">図 13.2</span></a> は、左端を固定した水平なロープが重力で垂れ下がっていく様子である。</p>
+<figure class="align-default" id="id14">
+<span id="fig-rope-frames"></span><a class="reference internal image-reference" href="_images/rope_frames.png"><img alt="ロープが垂れ下がる様子" src="_images/rope_frames.png" style="width: 520px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 13.2 </span><span class="caption-text">左端を固定したロープ（赤い点）が垂れ下がる様子</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">13.3. </span>布とソフトボディー<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>点を格子状に並べ、縦と横に隣り合う点を距離拘束で結べば、布になる。<code class="docutils literal notranslate"><span class="pre">rope.py</span></code> で C キーを押すと、布に切り替わる（<a class="reference internal" href="#fig-screen-rope"><span class="std std-numref">図 13.3</span></a>）。上の辺のいくつかの点を固定しているので、カーテンのように垂れ下がる。マウスでつかんで引っ張ることもできる。</p>
+<figure class="align-default" id="id15">
+<span id="fig-screen-rope"></span><a class="reference internal image-reference" href="_images/screen_rope.png"><img alt="rope.py の布の画面" src="_images/screen_rope.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 13.3 </span><span class="caption-text">rope.py の布</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>斜めの点どうしも拘束で結ぶと、布がせん断（ひし形につぶれる変形）に抵抗するようになる。さらに、閉じた形の点を拘束で結べば、ぷよぷよした弾力のある物体（<strong>ソフトボディー</strong>）も作れる。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">13.4. </span>パーティクル<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>火花、煙、爆発、水しぶき、魔法のエフェクトなどは、たくさんの小さな粒（<strong>パーティクル</strong>）で表現する。1 つ 1 つのパーティクルは、位置・速度・残り寿命などを持つだけの単純な点である。</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-number">リスト 13.5 </span><span class="caption-text">examples/particles.py の update_particles 関数</span><a class="headerlink" href="#id16" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">update_particles</span><span class="p">(</span><span class="n">particles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Particle</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Particle</span><span class="p">]:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;粒子を dt 秒進め、寿命が残っているものだけを返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">drag_factor</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">DRAG</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>  <span class="c1"># 速度が 1 秒で exp(-DRAG) 倍になる減衰（フレームレートによらない）</span>
+<span class="linenos"> 4</span>    <span class="n">alive</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 5</span>    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">particles</span><span class="p">:</span>
+<span class="linenos"> 6</span>        <span class="n">p</span><span class="o">.</span><span class="n">life</span> <span class="o">-=</span> <span class="n">dt</span>
+<span class="linenos"> 7</span>        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">life</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 8</span>            <span class="k">continue</span>
+<span class="linenos"> 9</span>        <span class="n">p</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">velocity</span> <span class="o">+</span> <span class="n">GRAVITY</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="n">drag_factor</span>
+<span class="linenos">10</span>        <span class="n">p</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">p</span><span class="o">.</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">11</span>        <span class="n">alive</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="k">return</span> <span class="n">alive</span>
+</pre></div>
+</div>
+</div>
+<p>重力と空気抵抗を受けて動かし、寿命が尽きたら消す。空気抵抗には、第 10 章で述べた指数関数的な減衰を使っている。描画では、残り寿命の割合で大きさと明るさを変え、消える直前に目立たなくする。</p>
+<p>パーティクルの見た目は、発生のさせ方でほぼ決まる。</p>
+<ul class="simple">
+<li><p><strong>爆発</strong>: 1 か所から全方向へ、ばらばらの速さで一度に多数出す（<code class="docutils literal notranslate"><span class="pre">burst</span></code> 関数）。</p></li>
+<li><p><strong>噴水</strong>: 1 か所から上向きに、少し広がりを持たせて毎秒一定の数を出す（<code class="docutils literal notranslate"><span class="pre">fountain</span></code> 関数）。</p></li>
+</ul>
+<p>1 秒あたり 120 個を出すとき、1 フレームに出す数は 60 FPS なら 2 個、144 FPS なら約 0.83 個になる。端数を次のフレームに持ち越すようにすると、フレームレートによらず 1 秒あたりの数が一定になる（<code class="docutils literal notranslate"><span class="pre">particles.py</span></code> の <code class="docutils literal notranslate"><span class="pre">spawn_debt</span></code>）。</p>
+<p>パーティクルは数が多くなるので、生成と破棄を繰り返すとメモリーの確保と解放の負担が大きくなる。実際のゲームでは、あらかじめ決まった数のパーティクルを用意しておき、使い終わったものを再利用する<strong>オブジェクトプール</strong>という方法がよく使われる。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="response.html" class="btn btn-neutral float-left" title="12. 衝突応答" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="physics_engine.html" class="btn btn-neutral float-right" title="14. 物理エンジンを使う" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15. 総合演習：2D プラットフォーマーを作る &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="付録 A 数式・記号の早見表" href="formulas.html" />
+    <link rel="prev" title="14. 物理エンジンを使う" href="physics_engine.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">15. 総合演習：2D プラットフォーマーを作る</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">15.1. 作るゲーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">15.2. 全体の構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">15.3. マップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">15.4. ゲームループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">15.5. プレイヤーの動き</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">15.6. 地形との衝突</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">15.7. コイン・トゲ・ゴール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">15.8. カメラ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">15.9. 演出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">15.10. テスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">15.11. 改造のアイデア</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">15.12. 次のステップ</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">15. </span>総合演習：2D プラットフォーマーを作る</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="d">
+<h1><span class="section-number">15. </span>総合演習：2D プラットフォーマーを作る<a class="headerlink" href="#d" title="Link to this heading"></a></h1>
+<p>最後に、本書で扱った道具をまとめて、1 本の小さなゲームを作る。題材は、足場を跳び移りながらゴールを目指す 2D プラットフォーマー（横スクロールのアクションゲーム）である。物理エンジンは使わず、キャラクターの動きはすべて自作の運動で作る。</p>
+<section id="id1">
+<h2><span class="section-number">15.1. </span>作るゲーム<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="#fig-screen-platformer"><span class="std std-numref">図 15.1</span></a> がゲームの画面、<a class="reference internal" href="#fig-level-map"><span class="std std-numref">図 15.2</span></a> がマップ全体である。</p>
+<figure class="align-default" id="id13">
+<span id="fig-screen-platformer"></span><a class="reference internal image-reference" href="_images/screen_platformer.png"><img alt="platformer.py の画面" src="_images/screen_platformer.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 15.1 </span><span class="caption-text">platformer.py の画面</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id14">
+<span id="fig-level-map"></span><img alt="マップ全体" src="_images/level_map.png" />
+<figcaption>
+<p><span class="caption-number">図 15.2 </span><span class="caption-text">マップ全体（左下の白い四角がスタート、右下の旗がゴール）</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ルールは次のとおりである。</p>
+<ul class="simple">
+<li><p>左右キー（または A キー・D キー）で走り、スペースキー（または上キー・W キー）でジャンプする。押す長さでジャンプの高さが変わる。</p></li>
+<li><p>穴に落ちるか、トゲに触れるとミスになり、スタート地点に戻る。</p></li>
+<li><p>コインは取らなくてもクリアできる。全部で 15 枚ある。</p></li>
+<li><p>旗に触れるとクリアになる。R キーで最初からやり直せる。</p></li>
+</ul>
+<p>実行するには、<code class="docutils literal notranslate"><span class="pre">platformer.py</span></code> と <code class="docutils literal notranslate"><span class="pre">collision.py</span></code> を同じフォルダーに置き、<code class="docutils literal notranslate"><span class="pre">py</span> <span class="pre">platformer.py</span></code> を実行する。</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">15.2. </span>全体の構成<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">platformer.py</span></code> で使っている道具と、それを扱った章の対応は次のとおりである。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 15.1 </span><span class="caption-text">総合演習で使う道具</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>処理</p></th>
+<th class="head"><p>使う道具</p></th>
+<th class="head"><p>章</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ゲームループ</p></td>
+<td><p>固定タイムステップ、描画の補間</p></td>
+<td><p>第 3 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>走る・跳ぶ</p></td>
+<td><p>加速度の上限、ジャンプの重力と初速、コヨーテタイム、先行入力</p></td>
+<td><p>第 10 章</p></td>
+</tr>
+<tr class="row-even"><td><p>地形との衝突</p></td>
+<td><p>タイルマップとの判定、軸ごとの押し戻し</p></td>
+<td><p>第 11 章、第 12 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>コイン・ゴール</p></td>
+<td><p>円と長方形の判定</p></td>
+<td><p>第 11 章</p></td>
+</tr>
+<tr class="row-even"><td><p>カメラ</p></td>
+<td><p>指数関数的減衰による追従、ノイズによる揺れ</p></td>
+<td><p>第 8 章、第 9 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>着地の伸び縮み</p></td>
+<td><p>ばねとダンパー</p></td>
+<td><p>第 13 章</p></td>
+</tr>
+<tr class="row-even"><td><p>土ぼこり・火花</p></td>
+<td><p>パーティクル</p></td>
+<td><p>第 13 章</p></td>
+</tr>
+</tbody>
+</table>
+<p>プログラムは、<a class="reference internal" href="#fig-platformer-classes"><span class="std std-numref">図 15.3</span></a> のように分かれている。<code class="docutils literal notranslate"><span class="pre">Game</span></code> がゲーム全体の状態を持ち、<code class="docutils literal notranslate"><span class="pre">step</span></code> で物理を 1 ステップ進め、<code class="docutils literal notranslate"><span class="pre">draw</span></code> で描画する。物理の計算（<code class="docutils literal notranslate"><span class="pre">update_player</span></code> と <code class="docutils literal notranslate"><span class="pre">move_and_collide</span></code>）は、画面や入力の処理から切り離した関数にして、単体テストで確かめられるようにしている。</p>
+<figure class="align-center" id="id16">
+<span id="fig-platformer-classes"></span><div class="graphviz"><img src="_images/graphviz-66e1f103120729a6f78e25275f07aa6ecf353d1d.png" alt="digraph classes {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  edge [color=&quot;#888888&quot;, fontsize=10];
+  main [label=&quot;main\nゲームループ\n（固定タイムステップ）&quot;, fillcolor=&quot;#fdf0e2&quot;, color=&quot;#e8862a&quot;];
+  game [label=&quot;Game\nstep / draw\nupdate_camera&quot;];
+  up [label=&quot;update_player\n走る・跳ぶ&quot;];
+  mc [label=&quot;move_and_collide\n地形との衝突&quot;];
+  level [label=&quot;Level\nタイルマップ&quot;];
+  col [label=&quot;collision.py\nAABB、circle_aabb_contact\ntiles_overlapping&quot;];
+  main -&gt; game [label=&quot;STEP ごと&quot;];
+  game -&gt; up -&gt; mc -&gt; level;
+  mc -&gt; col; game -&gt; col; level -&gt; col;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 15.3 </span><span class="caption-text">platformer.py の構成</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id3">
+<h2><span class="section-number">15.3. </span>マップ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>マップは、文字列のリストで書く。1 文字が 1 枚のタイル（32×32 ピクセル）に対応する。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 15.2 </span><span class="caption-text">マップの文字</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 85.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文字</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#</span></code></p></td>
+<td><p>壁・床のタイル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+<td><p>トゲ。タイルの下半分だけを衝突判定に使う</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">C</span></code></p></td>
+<td><p>コイン</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">P</span></code></p></td>
+<td><p>スタート地点</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">G</span></code></p></td>
+<td><p>ゴールの旗</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.</span></code></p></td>
+<td><p>何も無い</p></td>
+</tr>
+</tbody>
+</table>
+<p>文字列のリストにしておくと、テキストエディターで地形を描くように編集できる。<code class="docutils literal notranslate"><span class="pre">Level</span></code> クラスは、タイルの種類を返す <code class="docutils literal notranslate"><span class="pre">tile</span></code> メソッドと、AABB と重なっている壁のタイルを返す <code class="docutils literal notranslate"><span class="pre">solid_tiles</span></code> メソッドを持つ。マップの外は壁として扱い、キャラクターがマップの外へ出られないようにしている。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 15.1 </span><span class="caption-text">examples/platformer.py の Level.solid_tiles メソッド</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">solid_tiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="p">:</span> <span class="n">AABB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AABB</span><span class="p">]:</span>
+<span class="linenos">2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;box と重なっている壁のタイル。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>        <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">tiles_overlapping</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">TILE</span><span class="p">)</span>
+<span class="linenos">4</span>        <span class="k">return</span> <span class="p">[</span><span class="n">AABB</span><span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">TILE</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span> <span class="n">TILE</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">TILE</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">TILE</span><span class="p">)</span>
+<span class="linenos">5</span>                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">==</span> <span class="n">SOLID</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2><span class="section-number">15.4. </span>ゲームループ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>物理は 1/120 秒の固定タイムステップで進め、描画は直前の 2 ステップの位置を補間して行う（第 3 章）。<a class="reference internal" href="#code-platformer-loop"><span class="std std-numref">リスト 15.2</span></a> は <code class="docutils literal notranslate"><span class="pre">main</span></code> 関数のゲームループの部分である。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<span id="code-platformer-loop"></span><div class="code-block-caption"><span class="caption-number">リスト 15.2 </span><span class="caption-text">examples/platformer.py のゲームループ</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos"> 2</span><span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+<span class="linenos"> 3</span>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+<span class="linenos"> 4</span>        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+<span class="linenos"> 5</span>            <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos"> 6</span>        <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
+<span class="linenos"> 7</span>            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_ESCAPE</span><span class="p">:</span>
+<span class="linenos"> 8</span>                <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos"> 9</span>            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_r</span><span class="p">:</span>
+<span class="linenos">10</span>                <span class="n">game</span> <span class="o">=</span> <span class="n">Game</span><span class="p">()</span>
+<span class="linenos">11</span>            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">in</span> <span class="n">jump_keys</span><span class="p">:</span>
+<span class="linenos">12</span>                <span class="n">jump_pressed</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">13</span>    <span class="n">keys</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">get_pressed</span><span class="p">()</span>
+<span class="linenos">14</span>    <span class="n">move</span> <span class="o">=</span> <span class="n">read_move</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+<span class="linenos">15</span>    <span class="n">jump_held</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">jump_keys</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="c1"># 固定タイムステップ: 経過時間を貯め、STEP ごとに更新する</span>
+<span class="linenos">18</span>    <span class="n">frame_time</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">MAX_FRAME_TIME</span><span class="p">)</span>
+<span class="linenos">19</span>    <span class="n">accumulator</span> <span class="o">+=</span> <span class="n">frame_time</span>
+<span class="linenos">20</span>    <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">21</span>    <span class="k">while</span> <span class="n">accumulator</span> <span class="o">&gt;=</span> <span class="n">STEP</span> <span class="ow">and</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="n">MAX_STEPS</span><span class="p">:</span>
+<span class="linenos">22</span>        <span class="n">game</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">STEP</span><span class="p">,</span> <span class="n">move</span><span class="p">,</span> <span class="n">jump_pressed</span><span class="p">,</span> <span class="n">jump_held</span><span class="p">)</span>
+<span class="linenos">23</span>        <span class="n">jump_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">24</span>        <span class="n">accumulator</span> <span class="o">-=</span> <span class="n">STEP</span>
+<span class="linenos">25</span>        <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">26</span>    <span class="n">accumulator</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">STEP</span><span class="p">)</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="n">game</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">accumulator</span> <span class="o">/</span> <span class="n">STEP</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">)</span>
+<span class="linenos">29</span>    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+<span class="linenos">30</span>
+</pre></div>
+</div>
+</div>
+<p>ジャンプボタンを「押した瞬間」の入力は、イベントで受け取り、次の物理の更新で 1 回だけ使う。1 フレームに物理の更新が 2 回行われることがあるので、2 回目の更新で同じ入力をもう一度使わないように、使ったら <code class="docutils literal notranslate"><span class="pre">False</span></code> に戻している。逆に、そのフレームで更新が 1 回も行われなかった場合は、入力は次のフレームまで持ち越される。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">15.5. </span>プレイヤーの動き<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>プレイヤーの動きは、第 10 章の <code class="docutils literal notranslate"><span class="pre">jump.py</span></code> とほぼ同じである。ジャンプの高さはタイル 3.5 枚分、最高点まで 0.38 秒とし、重力と初速はそこから計算している。高さを 3.5 枚にしているのは、3 枚分の段差を確実に登れるようにするためである。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-number">リスト 15.3 </span><span class="caption-text">examples/platformer.py の update_player 関数</span><a class="headerlink" href="#id20" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">update_player</span><span class="p">(</span><span class="n">player</span><span class="p">:</span> <span class="n">Player</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="n">Level</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">jump_pressed</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="linenos"> 2</span>                  <span class="n">jump_held</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;プレイヤーを 1 ステップ進める。(ジャンプしたか, 着地したか) を返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 4</span>    <span class="k">if</span> <span class="n">move</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="n">player</span><span class="o">.</span><span class="n">facing</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">copysign</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">move</span><span class="p">)</span>
+<span class="linenos"> 6</span>    <span class="n">accel</span> <span class="o">=</span> <span class="p">(</span><span class="n">GROUND_ACCEL</span> <span class="k">if</span> <span class="n">move</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">GROUND_DECEL</span><span class="p">)</span> <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="k">else</span> <span class="n">AIR_ACCEL</span>
+<span class="linenos"> 7</span>    <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">approach</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">move</span> <span class="o">*</span> <span class="n">RUN_SPEED</span><span class="p">,</span> <span class="n">accel</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="k">if</span> <span class="n">jump_pressed</span><span class="p">:</span>
+<span class="linenos">10</span>        <span class="n">player</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">=</span> <span class="n">JUMP_BUFFER_TIME</span>
+<span class="linenos">11</span>    <span class="n">jumped</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">12</span>    <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="ow">or</span> <span class="n">player</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+<span class="linenos">13</span>        <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">JUMP_SPEED</span>
+<span class="linenos">14</span>        <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">15</span>        <span class="n">player</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">16</span>        <span class="n">player</span><span class="o">.</span><span class="n">squash_velocity</span> <span class="o">-=</span> <span class="mf">6.0</span>  <span class="c1"># 縦に伸びる</span>
+<span class="linenos">17</span>        <span class="n">jumped</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">18</span>    <span class="n">player</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">player</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos">19</span>    <span class="n">player</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">player</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos">20</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">jump_held</span><span class="p">:</span>
+<span class="linenos">21</span>        <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="n">JUMP_SPEED</span> <span class="o">*</span> <span class="n">JUMP_CUT_SCALE</span><span class="p">)</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="n">gravity</span> <span class="o">=</span> <span class="n">GRAVITY</span> <span class="o">*</span> <span class="p">(</span><span class="n">FALL_GRAVITY_SCALE</span> <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">24</span>    <span class="n">fall_speed</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span>
+<span class="linenos">25</span>    <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">MAX_FALL_SPEED</span><span class="p">)</span>
+<span class="linenos">26</span>    <span class="n">landed</span> <span class="o">=</span> <span class="n">move_and_collide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="k">if</span> <span class="n">landed</span><span class="p">:</span>
+<span class="linenos">28</span>        <span class="n">player</span><span class="o">.</span><span class="n">squash_velocity</span> <span class="o">+=</span> <span class="nb">min</span><span class="p">(</span><span class="n">fall_speed</span> <span class="o">/</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>  <span class="c1"># 速く落ちるほど大きくつぶれる</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>    <span class="c1"># 伸び縮みは 0 を目標にしたばね</span>
+<span class="linenos">31</span>    <span class="n">player</span><span class="o">.</span><span class="n">squash_velocity</span> <span class="o">+=</span> <span class="p">(</span><span class="o">-</span><span class="n">SQUASH_STIFFNESS</span> <span class="o">*</span> <span class="n">player</span><span class="o">.</span><span class="n">squash</span> <span class="o">-</span> <span class="n">SQUASH_DAMPING</span> <span class="o">*</span> <span class="n">player</span><span class="o">.</span><span class="n">squash_velocity</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">32</span>    <span class="n">player</span><span class="o">.</span><span class="n">squash</span> <span class="o">+=</span> <span class="n">player</span><span class="o">.</span><span class="n">squash_velocity</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">33</span>    <span class="k">return</span> <span class="n">jumped</span><span class="p">,</span> <span class="n">landed</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">jump.py</span></code> との違いは、縦方向の位置の更新を <code class="docutils literal notranslate"><span class="pre">move_and_collide</span></code> に任せていることである。<code class="docutils literal notranslate"><span class="pre">move_and_collide</span></code> は速度に dt を掛けて動かすので、全体としては半陰的オイラー法（第 10 章）になる。そのため、実際の最高点は設計した高さより 1 ステップ分ほど低くなる。<code class="docutils literal notranslate"><span class="pre">test_platformer.py</span></code> では、その差が 3 % 以内であることを確かめている。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">15.6. </span>地形との衝突<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>第 12 章で説明した、軸ごとに動かして押し戻す方法で実装している。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-number">リスト 15.4 </span><span class="caption-text">examples/platformer.py の move_and_collide 関数</span><a class="headerlink" href="#id21" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">move_and_collide</span><span class="p">(</span><span class="n">player</span><span class="p">:</span> <span class="n">Player</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="n">Level</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;x 方向と y 方向を別々に動かし、壁にめり込んだら押し戻す。着地したら True を返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos"> 4</span>    <span class="k">for</span> <span class="n">tile</span> <span class="ow">in</span> <span class="n">level</span><span class="o">.</span><span class="n">solid_tiles</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">box</span><span class="p">):</span>
+<span class="linenos"> 5</span>        <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 6</span>            <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">left</span> <span class="o">-</span> <span class="n">PLAYER_WIDTH</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="linenos"> 7</span>        <span class="k">elif</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 8</span>            <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">right</span> <span class="o">+</span> <span class="n">PLAYER_WIDTH</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="linenos"> 9</span>        <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="n">was_on_ground</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span>
+<span class="linenos">12</span>    <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">13</span>    <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">14</span>    <span class="k">for</span> <span class="n">tile</span> <span class="ow">in</span> <span class="n">level</span><span class="o">.</span><span class="n">solid_tiles</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">box</span><span class="p">):</span>
+<span class="linenos">15</span>        <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">16</span>            <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="n">PLAYER_HEIGHT</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="linenos">17</span>            <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">18</span>        <span class="k">elif</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">19</span>            <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">bottom</span> <span class="o">+</span> <span class="n">PLAYER_HEIGHT</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># 天井に頭をぶつけた</span>
+<span class="linenos">20</span>        <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">21</span>    <span class="k">if</span> <span class="n">was_on_ground</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="ow">and</span> <span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">22</span>        <span class="n">player</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">=</span> <span class="n">COYOTE_TIME</span>  <span class="c1"># 足場から歩いて離れた</span>
+<span class="linenos">23</span>    <span class="k">return</span> <span class="n">player</span><span class="o">.</span><span class="n">on_ground</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">was_on_ground</span>
+</pre></div>
+</div>
+</div>
+<p>x 方向に動かした後、重なっている壁のタイルがあれば、右へ動いていたならタイルの左端に、左へ動いていたならタイルの右端に、プレイヤーの端をそろえる。y 方向も同様で、下へ動いていて床にそろえた場合は着地とする。</p>
+<p>着地の判定には工夫が要る。床の上に立っている間も、重力によって毎ステップ少しだけ下向きの速度が付き、床にわずかにめり込んでから押し戻される。このときに <code class="docutils literal notranslate"><span class="pre">on_ground</span></code> を <code class="docutils literal notranslate"><span class="pre">True</span></code> にしている。足場の端から歩いて離れた瞬間（前のステップでは床の上にいたが、今は床が無い）には、コヨーテタイムを開始する。</p>
+<p>1 ステップの移動量がタイルの大きさより十分小さいので、すり抜けは起きない。落下の最高速度を 720 ピクセル毎秒にしており、1/120 秒では 6 ピクセルしか動かない（第 11 章）。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">15.7. </span>コイン・トゲ・ゴール<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Game.step</span></code> では、プレイヤーを動かした後に、コイン・トゲ・ゴールとの判定を行う。コインとゴールは円、プレイヤーは AABB として、<code class="docutils literal notranslate"><span class="pre">collision.py</span></code> の <code class="docutils literal notranslate"><span class="pre">circle_aabb_contact</span></code> で判定する。</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-number">リスト 15.5 </span><span class="caption-text">examples/platformer.py の Game.step メソッド</span><a class="headerlink" href="#id22" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">jump_pressed</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">jump_held</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;固定タイムステップの 1 回分の更新。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>        <span class="bp">self</span><span class="o">.</span><span class="n">previous_position</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+<span class="linenos"> 4</span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleared</span><span class="p">:</span>
+<span class="linenos"> 5</span>            <span class="k">return</span>
+<span class="linenos"> 6</span>        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+=</span> <span class="n">dt</span>
+<span class="linenos"> 7</span>        <span class="n">jumped</span><span class="p">,</span> <span class="n">landed</span> <span class="o">=</span> <span class="n">update_player</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">move</span><span class="p">,</span> <span class="n">jump_pressed</span><span class="p">,</span> <span class="n">jump_held</span><span class="p">)</span>
+<span class="linenos"> 8</span>        <span class="k">if</span> <span class="n">jumped</span> <span class="ow">or</span> <span class="n">landed</span><span class="p">:</span>
+<span class="linenos"> 9</span>            <span class="bp">self</span><span class="o">.</span><span class="n">spawn_dust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">bottom</span><span class="p">)</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">box</span>
+<span class="linenos">12</span>        <span class="k">for</span> <span class="n">coin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coins</span><span class="p">[:]:</span>
+<span class="linenos">13</span>            <span class="k">if</span> <span class="n">circle_aabb_contact</span><span class="p">(</span><span class="n">coin</span><span class="p">,</span> <span class="n">COIN_RADIUS</span><span class="p">,</span> <span class="n">box</span><span class="p">):</span>
+<span class="linenos">14</span>                <span class="bp">self</span><span class="o">.</span><span class="n">coins</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">coin</span><span class="p">)</span>
+<span class="linenos">15</span>                <span class="bp">self</span><span class="o">.</span><span class="n">spawn_sparks</span><span class="p">(</span><span class="n">coin</span><span class="p">)</span>
+<span class="linenos">16</span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">touches_spike</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+<span class="linenos">17</span>            <span class="bp">self</span><span class="o">.</span><span class="n">deaths</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">18</span>            <span class="bp">self</span><span class="o">.</span><span class="n">trauma</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="linenos">19</span>            <span class="bp">self</span><span class="o">.</span><span class="n">spawn_sparks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+<span class="linenos">20</span>            <span class="bp">self</span><span class="o">.</span><span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+<span class="linenos">21</span>            <span class="bp">self</span><span class="o">.</span><span class="n">previous_position</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+<span class="linenos">22</span>        <span class="k">if</span> <span class="n">circle_aabb_contact</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="n">TILE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">box</span><span class="p">):</span>
+<span class="linenos">23</span>            <span class="bp">self</span><span class="o">.</span><span class="n">cleared</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">:</span>
+<span class="linenos">26</span>            <span class="n">p</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">27</span>            <span class="n">p</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">p</span><span class="o">.</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">28</span>            <span class="n">p</span><span class="o">.</span><span class="n">life</span> <span class="o">-=</span> <span class="n">dt</span>
+<span class="linenos">29</span>        <span class="bp">self</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">life</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>トゲの衝突判定の形状は、見た目の三角形より一回り小さい長方形にしている（<code class="docutils literal notranslate"><span class="pre">Level.touches_spike</span></code>）。トゲの先端をかすっただけでミスになると、理不尽に感じられるからである。逆に、コインの判定は見た目どおりにしている。取れる物の判定は大きめ、ミスになる物の判定は小さめにするのが、遊びやすさの基本である。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">15.8. </span>カメラ<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>カメラは、プレイヤーの位置を <code class="docutils literal notranslate"><span class="pre">damp</span></code>（第 8 章）で追いかける。さらに、プレイヤーが向いている方向の先を少し多く見せる（<strong>先読み</strong>）。先読みの量も <code class="docutils literal notranslate"><span class="pre">damp</span></code> で変化させているので、向きを変えたときにカメラが急に動かない。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-number">リスト 15.6 </span><span class="caption-text">examples/platformer.py の Game.update_camera メソッド</span><a class="headerlink" href="#id23" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">update_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">player_drawn</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;カメラを追従させ、揺れを加えた最終的なカメラの位置を返す（描画のフレームごとに呼ぶ）。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>        <span class="bp">self</span><span class="o">.</span><span class="n">look_ahead</span> <span class="o">=</span> <span class="n">damp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">look_ahead</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">facing</span> <span class="o">*</span> <span class="n">LOOK_AHEAD</span><span class="p">,</span> <span class="n">LOOK_AHEAD_RATE</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">)</span>
+<span class="linenos"> 4</span>        <span class="n">target</span> <span class="o">=</span> <span class="n">player_drawn</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">look_ahead</span><span class="p">,</span> <span class="o">-</span><span class="n">TILE</span><span class="p">)</span>
+<span class="linenos"> 5</span>        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">damp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">CAMERA_FOLLOW_RATE</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">)</span>
+<span class="linenos"> 6</span>        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">damp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">CAMERA_FOLLOW_RATE</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="c1"># マップの外が映らないように、カメラの中心の範囲を制限する</span>
+<span class="linenos"> 8</span>        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">SCREEN_WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">SCREEN_WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="linenos"> 9</span>        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">SCREEN_HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">SCREEN_HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+<span class="linenos">10</span>        <span class="bp">self</span><span class="o">.</span><span class="n">trauma</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trauma</span> <span class="o">-</span> <span class="n">SHAKE_DECAY</span> <span class="o">*</span> <span class="n">frame_time</span><span class="p">)</span>
+<span class="linenos">11</span>        <span class="n">shake</span> <span class="o">=</span> <span class="n">MAX_SHAKE</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trauma</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="linenos">12</span>        <span class="n">offset</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">perlin_noise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">SHAKE_FREQUENCY</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">perlin_noise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">SHAKE_FREQUENCY</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">13</span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">*</span> <span class="n">shake</span>
+</pre></div>
+</div>
+</div>
+<p>マップの外が映らないように、カメラの中心の範囲を制限している。ミスしたときは <code class="docutils literal notranslate"><span class="pre">trauma</span></code> を 1 にし、その 2 乗に比例した大きさで、パーリンノイズによる揺れを加える（第 9 章）。カメラは描画のフレームごとに更新するので、<code class="docutils literal notranslate"><span class="pre">damp</span></code> にはフレームの経過時間を渡している。</p>
+<p>この <code class="docutils literal notranslate"><span class="pre">platformer.py</span></code> のカメラは平行移動しかしないので、第 6 章の行列は使わず、カメラの左上の座標を引くだけで画面座標に変換している。回転やズームが必要になったら、<code class="docutils literal notranslate"><span class="pre">camera_demo.py</span></code> のビュー行列に置き換えればよい。</p>
+</section>
+<section id="id9">
+<h2><span class="section-number">15.9. </span>演出<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>着地したときに、プレイヤーが横につぶれてから元に戻る演出を、ばねとダンパー（第 13 章）で作っている。伸び縮みの量 <code class="docutils literal notranslate"><span class="pre">squash</span></code> を、目標 0 のばねで動かす。着地した瞬間に、落下の速さに応じた速度を <code class="docutils literal notranslate"><span class="pre">squash_velocity</span></code> に加えると、つぶれてから少し揺れて元に戻る。ジャンプした瞬間には逆向きの速度を加えて、縦に伸ばしている。描画では、横に広げた分だけ縦を縮めて、面積がほぼ変わらないようにしている。</p>
+<p>ジャンプと着地のときには足元に土ぼこりを、コインを取ったときとミスしたときには火花を、パーティクルで出している。どちらも見た目だけの演出で、ゲームの結果には影響しない。こうした演出は、ゲームの世界では<strong>ジュース</strong>と呼ばれ、操作の手応えを大きく高める。</p>
+</section>
+<section id="id10">
+<h2><span class="section-number">15.10. </span>テスト<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">test_platformer.py</span></code> では、画面を使わずに次のことを確かめている。</p>
+<ul class="simple">
+<li><p>床に着地すること、落下の速さが上限を超えないこと</p></li>
+<li><p>壁をすり抜けないこと</p></li>
+<li><p>ジャンプが設計した高さにほぼ届くこと、ボタンを早く離すと低く跳ぶこと</p></li>
+<li><p>コヨーテタイムの間はジャンプでき、過ぎるとできないこと</p></li>
+<li><p>着地の直前に押したジャンプが実行されること（先行入力）</p></li>
+<li><p>コインを取れること、トゲでスタートに戻ること、ゴールでクリアになること</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-number">リスト 15.7 </span><span class="caption-text">テストの実行</span><a class="headerlink" href="#id24" title="Link to this code"></a></div>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">py</span> <span class="n">-m</span> <span class="n">unittest</span> <span class="n">test_platformer</span>
+</pre></div>
+</div>
+</div>
+<p>ジャンプの高さや重力の値を調整したときに、テストを実行すれば「3 枚分の段差を登れなくなった」といった問題にすぐ気付ける。</p>
+</section>
+<section id="id11">
+<h2><span class="section-number">15.11. </span>改造のアイデア<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>本書の内容を使って、次のような改造に挑戦してみてほしい。</p>
+<ul class="simple">
+<li><p><strong>動く足場</strong>: イージング関数（第 8 章）で往復させ、乗っている間はプレイヤーを一緒に動かす。</p></li>
+<li><p><strong>敵</strong>: 一定の速さで左右に歩き、壁に当たると向きを変える敵を作る。上から踏んだら倒せるようにする（法線の向きで踏んだか横から当たったかを判定する）。</p></li>
+<li><p><strong>飛び道具</strong>: 向いている方向に弾を撃ち、レイキャスト（第 11 章）で壁や敵に当たったかを調べる。</p></li>
+<li><p><strong>坂道</strong>: 斜めのタイルを作り、線分との判定（第 11 章）で坂の上を歩けるようにする。</p></li>
+<li><p><strong>ばねの台</strong>: 乗ると大きく跳ね上げる台を作る。何ピクセルの高さまで跳ばしたいかから、初速を逆算する（第 10 章）。</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2><span class="section-number">15.12. </span>次のステップ<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<p>本書では、ゲームの動きを作る数学と物理を中心に扱った。さらに学びを進めるなら、次のような分野がある。</p>
+<ul class="simple">
+<li><p><strong>経路探索とゲーム AI</strong>: 敵がマップの中で目標への道を探す A* アルゴリズムや、行動を切り替える状態機械。グラフの探索と、距離の見積もり（ヒューリスティック）を使う。</p></li>
+<li><p><strong>3D のゲーム</strong>: 第 6 章・第 7 章の内容を 3D に広げる。3D の描画の仕組みは「コンピューターグラフィックス入門」で扱っている。</p></li>
+<li><p><strong>ゲームエンジン</strong>: Unity や Godot を使うと、本書で自作した仕組み（ベクトル、行列、物理、衝突判定）の多くが最初から用意されている。仕組みを理解したうえで使えば、思いどおりに動かないときに原因を突き止めやすい。ゲームエンジンの選び方は「ゲーム作成入門」で扱っている。</p></li>
+</ul>
+<p>本書で扱った内容をさらに詳しく学ぶための文献は、<a class="reference internal" href="references.html"><span class="doc">付録 C 参考文献</span></a>にまとめている。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="physics_engine.html" class="btn btn-neutral float-left" title="14. 物理エンジンを使う" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="formulas.html" class="btn btn-neutral float-right" title="付録 A 数式・記号の早見表" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

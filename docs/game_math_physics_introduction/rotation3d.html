@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. 3D の回転とクォータニオン &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="8. 補間・イージング・曲線" href="interpolation.html" />
+    <link rel="prev" title="6. 行列と座標変換" href="matrices.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 3D の回転とクォータニオン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">7.1. 3D のベクトルと外積</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">7.1.1. 右手系と左手系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">7.2. オイラー角とジンバルロック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">7.3. 回転軸と回転角</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">7.4. クォータニオン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">7.4.1. 回転の合成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">7.4.2. ベクトルの回転</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">7.4.3. 正規化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">7.5. 球面線形補間</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">7.6. ゲームエンジンでの回転の扱い</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">7. </span>3D の回転とクォータニオン</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="d">
+<h1><span class="section-number">7. </span>3D の回転とクォータニオン<a class="headerlink" href="#d" title="Link to this heading"></a></h1>
+<p>2D の回転は角度 1 つで表せた。3D では、回転の軸も選べるので、回転の表し方がずっと難しくなる。この章では、3D のベクトルの基本を確認した後、3D の回転を表す方法としてオイラー角とクォータニオンを比べる。2D のゲームだけを作る場合は、この章は後回しにしてよい。</p>
+<section id="id1">
+<h2><span class="section-number">7.1. </span>3D のベクトルと外積<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>3D のベクトル <span class="math notranslate nohighlight">\((x, y, z)\)</span> の足し算・引き算・スカラー倍・長さ・正規化・内積は、2D に z 成分を加えるだけで同じように計算できる。内積の意味（前後の判定、視界の判定、射影）もそのまま使える。</p>
+<p>3D の<strong>外積</strong>は、2 つのベクトルの両方に垂直なベクトルを作る演算である。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{a} \times \mathbf{b} = (a_y b_z - a_z b_y,\ a_z b_x - a_x b_z,\ a_x b_y - a_y b_x)\]</div>
+<p>外積の長さは <span class="math notranslate nohighlight">\(|\mathbf{a}|\,|\mathbf{b}|\sin\theta\)</span> で、2 つのベクトルが作る平行四辺形の面積に等しい。第 4 章の 2D の外積は、この z 成分だけを取り出したものである。3D のゲームでは、三角形の 2 辺の外積から、その面の<strong>法線</strong>（面に垂直な向き）を求める用途がよく使われる。法線は、光の当たり方の計算や、坂道の傾きの判定に使う。</p>
+<section id="id2">
+<h3><span class="section-number">7.1.1. </span>右手系と左手系<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>3D の座標系には、x 軸・y 軸・z 軸の向きの組み合わせ方で<strong>右手系</strong>と<strong>左手系</strong>の 2 種類がある。右手の親指・人差し指・中指をそれぞれ x 軸・y 軸・z 軸に合わせられるのが右手系、左手で合わせられるのが左手系である。外積の結果の向きや、正の回転の向きは、どちらの系かによって見え方が逆になる。</p>
+<p>ゲームエンジンによって採用している系が異なる（Unity は左手系、Godot や Blender は右手系）。別のツールからデータを持ち込むときは、z 軸の反転などの変換が必要になることがある。本書の <code class="docutils literal notranslate"><span class="pre">cube_demo.py</span></code> は、x 軸が右、y 軸が上、z 軸が画面の奥向きの左手系で描いている。</p>
+</section>
+</section>
+<section id="id3">
+<h2><span class="section-number">7.2. </span>オイラー角とジンバルロック<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>3D の回転を表す最も直感的な方法は、3 つの軸の周りの回転角を組み合わせることである。この 3 つの角度の組を<strong>オイラー角</strong>と呼ぶ。飛行機にたとえて、上下の軸の周りの回転（左右に向きを変える）を<strong>ヨー</strong>、左右の軸の周りの回転（機首を上げ下げする）を<strong>ピッチ</strong>、前後の軸の周りの回転（機体を傾ける）を<strong>ロール</strong>と呼ぶ。</p>
+<p>オイラー角は人間にとって分かりやすく、エディターで回転を入力する場面や、FPS のカメラ（左右の向きと上下の向きだけを持つ）には向いている。一方で、次のような問題がある。</p>
+<ul class="simple">
+<li><p><strong>回転を適用する順序で結果が変わる。</strong>前の章で見たように、回転の合成は順序で結果が変わる。どの順で回すかを決めておかないと、同じ 3 つの角度でも違う向きになる。</p></li>
+<li><p><strong>補間がうまくいかない。</strong> 2 つの向きの間を、各角度を別々に補間して動かすと、遠回りをしたり、ふらつくような動きになったりする。</p></li>
+<li><p><strong>ジンバルロックが起きる。</strong></p></li>
+</ul>
+<p><strong>ジンバルロック</strong>は、ある軸の回転が特定の角度になると、残りの 2 つの軸が同じ向きにそろってしまい、回転の自由度が 1 つ失われる現象である。<code class="docutils literal notranslate"><span class="pre">quaternion.py</span></code> では、ロール（z 軸）→ ピッチ（x 軸）→ ヨー（y 軸）の順に回すオイラー角を使っている。ピッチを 90° にすると、ヨーとロールが同じ軸の回転になり、次の 3 つの角度の組がすべて同じ向きになる。</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-number">リスト 7.1 </span><span class="caption-text">quaternion.py の実行結果（一部）</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>yaw= 30, pitch=90, roll=  0: x 軸 -&gt; ( 0.866,  0.000, -0.500), y 軸 -&gt; ( 0.500,  0.000,  0.866)
+<span class="linenos">2</span>yaw=  0, pitch=90, roll=-30: x 軸 -&gt; ( 0.866,  0.000, -0.500), y 軸 -&gt; ( 0.500,  0.000,  0.866)
+<span class="linenos">3</span>yaw= 60, pitch=90, roll= 30: x 軸 -&gt; ( 0.866,  0.000, -0.500), y 軸 -&gt; ( 0.500,  0.000,  0.866)
+</pre></div>
+</div>
+</div>
+<p>この状態では、ヨーとロールのどちらを変えても同じ向きの回転しかできず、「機首を左右に振る」回転を表せない。角度の値は自由に変えられるのに、向きの変化の自由度が 2 つに減ってしまうのである。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">7.3. </span>回転軸と回転角<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>3D のどんな向きの変化も、「ある軸の周りに、ある角度だけ回す」1 回の回転で表せる（オイラーの回転定理）。この<strong>回転軸と回転角</strong>による表し方には、順序の問題もジンバルロックも無い。この考え方を、計算しやすい形にしたものがクォータニオンである。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">7.4. </span>クォータニオン<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><strong>クォータニオン</strong>（四元数）は、4 つの数の組 <span class="math notranslate nohighlight">\(q = (w, x, y, z)\)</span> である。回転を表すときは、回転軸の単位ベクトル <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> と回転角 <span class="math notranslate nohighlight">\(\theta\)</span> から、次のように作る。</p>
+<div class="math notranslate nohighlight">
+\[q = \left(\cos\frac{\theta}{2},\ u_x \sin\frac{\theta}{2},\ u_y \sin\frac{\theta}{2},\ u_z \sin\frac{\theta}{2}\right)\]</div>
+<p>角度が半分になっているのは、後述のベクトルの回転の式でクォータニオンを 2 回掛けるためである。このように作ったクォータニオンは長さが 1 になる。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 7.2 </span><span class="caption-text">examples/quaternion.py の Quat.from_axis_angle メソッド</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>    <span class="nd">@staticmethod</span>
+<span class="linenos">2</span>    <span class="k">def</span><span class="w"> </span><span class="nf">from_axis_angle</span><span class="p">(</span><span class="n">axis</span><span class="p">:</span> <span class="n">Vec3</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Quat</span><span class="p">:</span>
+<span class="linenos">3</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;回転軸 axis の周りに angle ラジアン回す回転。&quot;&quot;&quot;</span>
+<span class="linenos">4</span>        <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span> <span class="o">=</span> <span class="n">normalize3</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+<span class="linenos">5</span>        <span class="n">s</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">6</span>        <span class="k">return</span> <span class="n">Quat</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">ax</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">ay</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">az</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>クォータニオンの数学的な定義（虚数単位を 3 つに拡張した数）を深く理解しなくても、ゲームで使うには次の 3 つの操作を知っていれば十分である。本書では、クォータニオンを「回転を表すデータ」として扱う。</p>
+<section id="id6">
+<h3><span class="section-number">7.4.1. </span>回転の合成<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>2 つのクォータニオンの積 <span class="math notranslate nohighlight">\(q_1 q_2\)</span> は、「<span class="math notranslate nohighlight">\(q_2\)</span> で回してから <span class="math notranslate nohighlight">\(q_1\)</span> で回す」回転を表す。行列と同じく、右から順に適用され、掛ける順序を入れ替えると結果が変わる。積は次のように計算する。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 7.3 </span><span class="caption-text">examples/quaternion.py の Quat.__mul__ メソッド</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Quat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Quat</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;積 self * other。ベクトルに適用すると、other で回してから self で回したことになる。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>        <span class="k">return</span> <span class="n">Quat</span><span class="p">(</span>
+<span class="linenos">4</span>            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+<span class="linenos">5</span>            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+<span class="linenos">6</span>            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+<span class="linenos">7</span>            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span><span class="p">,</span>
+<span class="linenos">8</span>        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h3><span class="section-number">7.4.2. </span>ベクトルの回転<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>ベクトル <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> を、<span class="math notranslate nohighlight">\(w = 0\)</span> のクォータニオン <span class="math notranslate nohighlight">\((0, \mathbf{v})\)</span> とみなし、<span class="math notranslate nohighlight">\(q\)</span> とその<strong>共役</strong> <span class="math notranslate nohighlight">\(q^* = (w, -x, -y, -z)\)</span> で挟んで掛けると、回転したベクトルが得られる。</p>
+<div class="math notranslate nohighlight">
+\[(0, \mathbf{v}') = q \, (0, \mathbf{v}) \, q^*\]</div>
+<p>長さ 1 のクォータニオンでは、共役は逆回転を表す。</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-number">リスト 7.4 </span><span class="caption-text">examples/quaternion.py の Quat.rotate メソッド</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">Vec3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec3</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;ベクトル v を回転させる（q * v * q の共役）。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">Quat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span>
+<span class="linenos">4</span>        <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h3><span class="section-number">7.4.3. </span>正規化<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>回転を何度も掛け合わせると、浮動小数点数の誤差で長さが 1 からずれていく。長さがずれると、ベクトルを回したときに拡大縮小も起きてしまう。ときどき正規化（長さで割る）して長さを 1 に戻す。<code class="docutils literal notranslate"><span class="pre">cube_demo.py</span></code> では毎フレーム正規化している。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cube_demo.py</span></code> は、立方体の向きを 1 つのクォータニオンで持ち、キー入力に応じて小さな回転を掛け合わせる。どの向きからでも 3 つの軸の周りに自由に回せ、ジンバルロックは起きない（<a class="reference internal" href="#fig-screen-cube"><span class="std std-numref">図 7.1</span></a>）。</p>
+<figure class="align-default" id="id15">
+<span id="fig-screen-cube"></span><a class="reference internal image-reference" href="_images/screen_cube_demo.png"><img alt="cube_demo.py の画面" src="_images/screen_cube_demo.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 7.1 </span><span class="caption-text">cube_demo.py の画面。赤・緑・青の線は、立方体のローカルの x 軸・y 軸・z 軸</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>なお、<span class="math notranslate nohighlight">\(q\)</span> と <span class="math notranslate nohighlight">\(-q\)</span> は同じ回転を表す。<span class="math notranslate nohighlight">\(-q\)</span> は「反対向きの軸の周りに、<span class="math notranslate nohighlight">\(360^\circ - \theta\)</span> だけ回す」ことに当たり、結果の向きは同じになるからである。この性質は、次の補間で問題になる。</p>
+</section>
+</section>
+<section id="id9">
+<h2><span class="section-number">7.5. </span>球面線形補間<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>2 つの向き <span class="math notranslate nohighlight">\(a\)</span> と <span class="math notranslate nohighlight">\(b\)</span> の間を滑らかに回転させたい場面は多い。カメラを別の向きへ切り替える、キャラクターを目標の方へゆっくり振り向かせる、2 つのアニメーションをつなぐ、などである。</p>
+<p>クォータニオンの 4 つの成分を別々に線形補間してから正規化する方法（nlerp）でも、それらしい回転になる。ただし、<a class="reference internal" href="#fig-slerp"><span class="std std-numref">図 7.2</span></a> のように、補間の途中で回転の速さが一定にならない（中央付近で速くなる）。</p>
+<figure class="align-default" id="id16">
+<span id="fig-slerp"></span><a class="reference internal image-reference" href="_images/slerp.png"><img alt="slerp と線形補間して正規化する方法の比較" src="_images/slerp.png" style="width: 440px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 7.2 </span><span class="caption-text">球面線形補間（青）と、線形補間して正規化する方法（橙）。2 次元の単位円で示している</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>球面線形補間</strong>（slerp）は、2 つのクォータニオンを結ぶ「球面上の最短の弧」に沿って、一定の角速度で補間する。2 つのクォータニオンのなす角を <span class="math notranslate nohighlight">\(\Omega\)</span>（<span class="math notranslate nohighlight">\(\cos\Omega = a \cdot b\)</span>）とすると、次の式になる。</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{slerp}(a, b, t) = \frac{\sin((1 - t)\Omega)}{\sin\Omega} \, a + \frac{\sin(t\Omega)}{\sin\Omega} \, b\]</div>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 7.5 </span><span class="caption-text">examples/quaternion.py の slerp 関数</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">slerp</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Quat</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Quat</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Quat</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;a から b へ、一定の角速度で回転を補間する（球面線形補間）。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos"> 4</span>    <span class="k">if</span> <span class="n">cos_theta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="c1"># q と -q は同じ回転を表す。近い側を選ばないと遠回りになる</span>
+<span class="linenos"> 6</span>        <span class="n">b</span><span class="p">,</span> <span class="n">cos_theta</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="p">,</span> <span class="o">-</span><span class="n">cos_theta</span>
+<span class="linenos"> 7</span>    <span class="k">if</span> <span class="n">cos_theta</span> <span class="o">&gt;</span> <span class="mf">0.9995</span><span class="p">:</span>
+<span class="linenos"> 8</span>        <span class="c1"># ほとんど同じ向きのときは、0 に近い sin で割らないよう線形補間で代用する</span>
+<span class="linenos"> 9</span>        <span class="k">return</span> <span class="n">Quat</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span>
+<span class="linenos">10</span>                    <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+<span class="linenos">11</span>    <span class="n">theta</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">cos_theta</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="n">wa</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="linenos">13</span>    <span class="n">wb</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="k">return</span> <span class="n">Quat</span><span class="p">(</span><span class="n">wa</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="n">wb</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">wa</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">wb</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">wa</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">wb</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">wa</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">wb</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>実装では 2 つの点に注意している。</p>
+<ul class="simple">
+<li><p><strong>内積が負なら、片方の符号を反転する。</strong> <span class="math notranslate nohighlight">\(q\)</span> と <span class="math notranslate nohighlight">\(-q\)</span> は同じ回転なので、内積が負のときは <span class="math notranslate nohighlight">\(-b\)</span> の方が <span class="math notranslate nohighlight">\(a\)</span> に近い。反転しないと、360° に近い遠回りの回転になる。</p></li>
+<li><p><strong>2 つがほとんど同じ向きなら、線形補間で代用する。</strong> <span class="math notranslate nohighlight">\(\Omega\)</span> が 0 に近いと <span class="math notranslate nohighlight">\(\sin\Omega\)</span> も 0 に近くなり、0 に近い数で割って誤差が大きくなるからである。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">cube_demo.py</span></code> で R キーを押すと、そのときの向きから最初の向きへ、slerp で 1 秒かけて戻る。</p>
+</section>
+<section id="id10">
+<h2><span class="section-number">7.6. </span>ゲームエンジンでの回転の扱い<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>主要なゲームエンジンは、内部では回転をクォータニオンで持ち、エディターではオイラー角で表示・入力させることが多い。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 7.1 </span><span class="caption-text">ゲームエンジンでの 3D の回転</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>エンジン</p></th>
+<th class="head"><p>回転を表すクラス</p></th>
+<th class="head"><p>補間</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Unity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Quaternion</span></code>（<code class="docutils literal notranslate"><span class="pre">transform.rotation</span></code>）。エディターではオイラー角（<code class="docutils literal notranslate"><span class="pre">eulerAngles</span></code>）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Quaternion.Slerp</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Godot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Quaternion</span></code>、<code class="docutils literal notranslate"><span class="pre">Basis</span></code>（3×3 行列）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Quaternion.slerp</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>エンジンを使う場合は、クォータニオンの式を自分で書くことはまず無い。ただし、「オイラー角の値を少しずつ変えて回すとジンバルロックが起きることがある」「回転の合成は順序で結果が変わる」「補間には slerp を使う」の 3 点を知っていると、思いどおりに回らないときに原因を見つけやすい。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matrices.html" class="btn btn-neutral float-left" title="6. 行列と座標変換" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interpolation.html" class="btn btn-neutral float-right" title="8. 補間・イージング・曲線" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

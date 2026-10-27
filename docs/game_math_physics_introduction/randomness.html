@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9. 乱数と確率 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="10. 運動の物理" href="motion.html" />
+    <link rel="prev" title="8. 補間・イージング・曲線" href="interpolation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. 乱数と確率</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">9.1. 擬似乱数とシード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">9.2. 一様乱数から範囲・方向・円内の点を作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">9.3. 重み付き抽選</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">9.4. 偏りを減らす乱数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">9.5. 確率の期待値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">9.6. ノイズ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">9.6.1. バリューノイズ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">9.6.2. パーリンノイズ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">9.6.3. フラクタルノイズ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">9.6.4. ノイズで画面を揺らす</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">9. </span>乱数と確率</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">9. </span>乱数と確率<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>敵の行動、アイテムのドロップ、地形の生成、画面の揺れ。ゲームは「ほどよい予測できなさ」を乱数で作る。ただし、乱数を素朴に使うと、偏りや不公平感、再現できない不具合を生むことがある。この章では、ゲームで乱数を扱うための道具を整理する。</p>
+<section id="id2">
+<h2><span class="section-number">9.1. </span>擬似乱数とシード<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>コンピューターが作る乱数の多くは、決まった計算で「乱数らしく見える数の列」を作る<strong>擬似乱数</strong>である。計算の出発点となる値を<strong>シード</strong>と呼び、同じシードからは必ず同じ数の列が得られる。Python の <code class="docutils literal notranslate"><span class="pre">random</span></code> モジュールは、メルセンヌ・ツイスタという方法で擬似乱数を作る。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 9.1 </span><span class="caption-text">同じシードからは同じ列が出る（random_tools.py より）</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<span class="linenos">2</span>    <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">3</span>    <span class="nb">print</span><span class="p">([</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>  <span class="c1"># 2 回とも同じ 10 個の数が表示される</span>
+</pre></div>
+</div>
+</div>
+<p>ゲームでは、この「再現できる」性質が役に立つ。</p>
+<ul class="simple">
+<li><p><strong>デバッグ</strong>: 不具合が起きたときのシードを記録しておけば、同じ状況を何度でも再現できる。</p></li>
+<li><p><strong>リプレイ</strong>: シードとプレイヤーの入力だけを保存すれば、プレイ全体を再生できる。</p></li>
+<li><p><strong>生成されたマップの共有</strong>: マップを自動生成するゲームでは、シードを伝えるだけで同じマップを遊べる。</p></li>
+</ul>
+<p>本書のサンプルコードでは、<code class="docutils literal notranslate"><span class="pre">random.random()</span></code> のようなモジュールの関数を直接使わず、<code class="docutils literal notranslate"><span class="pre">random.Random(シード)</span></code> で乱数の生成器を作って使っている。用途ごとに生成器を分けておくと、たとえば「演出のパーティクルの数を変えたら、敵の行動まで変わってしまった」ということが起きない。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">9.2. </span>一様乱数から範囲・方向・円内の点を作る<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">rng.random()</span></code> は、0 以上 1 未満の<strong>一様乱数</strong>（どの値も同じ確率で出る乱数）を返す。これを変換して、さまざまな乱数を作る。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 9.1 </span><span class="caption-text">一様乱数からの変換</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>欲しいもの</p></th>
+<th class="head"><p>方法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a\)</span> 以上 <span class="math notranslate nohighlight">\(b\)</span> 未満の小数</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">(b</span> <span class="pre">-</span> <span class="pre">a)</span> <span class="pre">*</span> <span class="pre">rng.random()</span></code>（<code class="docutils literal notranslate"><span class="pre">rng.uniform(a,</span> <span class="pre">b)</span></code>）。線形補間そのものである</p></td>
+</tr>
+<tr class="row-odd"><td><p>ランダムな向き</p></td>
+<td><p>角度 <code class="docutils literal notranslate"><span class="pre">rng.uniform(0,</span> <span class="pre">math.tau)</span></code> を作り、<span class="math notranslate nohighlight">\((\cos\theta, \sin\theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>円の内部のランダムな点</p></td>
+<td><p>角度と、半径 <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">*</span> <span class="pre">math.sqrt(rng.random())</span></code> から作る（後述）</p></td>
+</tr>
+<tr class="row-odd"><td><p>長方形の内部のランダムな点</p></td>
+<td><p>x と y を別々に一様乱数で作る</p></td>
+</tr>
+</tbody>
+</table>
+<p>円の内部の点を作るとき、半径を一様乱数にすると、<a class="reference internal" href="#fig-circle-points"><span class="std std-numref">図 9.1</span></a> の左のように中心付近に点が集まってしまう。半径 <span class="math notranslate nohighlight">\(r\)</span> の円周の長さは <span class="math notranslate nohighlight">\(r\)</span> に比例するので、外側ほど点を多く置く必要があるのに、どの半径にも同じ数の点を置いてしまうからである。半径を一様乱数の平方根にすると、右のように一様に散らばる。</p>
+<figure class="align-default" id="id14">
+<span id="fig-circle-points"></span><img alt="円の内部に点を散らばらせる 2 つの方法の比較" src="_images/circle_points.png" />
+<figcaption>
+<p><span class="caption-number">図 9.1 </span><span class="caption-text">円の内部のランダムな点</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-number">リスト 9.2 </span><span class="caption-text">examples/random_tools.py の random_point_in_circle 関数</span><a class="headerlink" href="#id15" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">random_point_in_circle</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;半径 radius の円の内部から、一様に点を選ぶ。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">angle</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+<span class="linenos">4</span>    <span class="n">r</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>  <span class="c1"># 平方根を取らないと中心付近に偏る</span>
+<span class="linenos">5</span>    <span class="k">return</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>半径の 2 乗（面積に比例する量）が一様になるようにすれば、面積あたりの点の数がそろう、と考えると平方根の理由が分かる。爆発の破片を飛ばす位置や、敵を出現させる位置を決めるときに使える。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">9.3. </span>重み付き抽選<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>アイテムのドロップでは「ノーマル 80 %、レア 17 %、スーパーレア 3 %」のように、選択肢ごとに確率が異なる。このような抽選は、重みの<strong>累積和</strong>を使って行う。</p>
+<ol class="arabic simple">
+<li><p>重みを順に足した累積和を作る（80, 97, 100）。</p></li>
+<li><p>0 以上、重みの合計（100）未満の一様乱数 <span class="math notranslate nohighlight">\(r\)</span> を作る。</p></li>
+<li><p>累積和が初めて <span class="math notranslate nohighlight">\(r\)</span> を超える選択肢を選ぶ。</p></li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-number">リスト 9.3 </span><span class="caption-text">examples/random_tools.py の weighted_choice 関数</span><a class="headerlink" href="#id16" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">weighted_choice</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;重みに比例した確率で 1 つ選ぶ（random.choices と同じ考え方）。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">cumulative</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">weights</span><span class="p">))</span>  <span class="c1"># 重みの累積和</span>
+<span class="linenos">4</span>    <span class="n">r</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">cumulative</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 0 以上、重みの合計未満の一様乱数</span>
+<span class="linenos">5</span>    <span class="k">return</span> <span class="n">items</span><span class="p">[</span><span class="n">bisect</span><span class="o">.</span><span class="n">bisect_right</span><span class="p">(</span><span class="n">cumulative</span><span class="p">,</span> <span class="n">r</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(r\)</span> が 0 以上 80 未満ならノーマル、80 以上 97 未満ならレア、97 以上 100 未満ならスーパーレアになる。それぞれの区間の幅が重みに比例するので、重みどおりの確率になる。累積和はソートされているので、どの区間に入るかは二分探索（<code class="docutils literal notranslate"><span class="pre">bisect</span></code>）で素早く求められる。Python には、同じことをする <code class="docutils literal notranslate"><span class="pre">random.choices</span></code> も用意されている。</p>
+<p><code class="docutils literal notranslate"><span class="pre">random_tools.py</span></code> を実行すると、10 万回の抽選の結果がほぼ重みどおりになることを確かめられる。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">9.4. </span>偏りを減らす乱数<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>本当にランダムな抽選では、同じ結果が何回も続くことがある。確率 1/4 の結果が 3 回続く確率は 1/64 で、何十万人も遊ぶゲームでは毎日誰かに起きる。プレイヤーにとっては「偏っている」「不公平だ」と感じられやすい。</p>
+<p>そこで、あえて完全なランダムをやめ、偏りを抑えることがある。代表的な方法が<strong>袋方式</strong>である。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 9.4 </span><span class="caption-text">examples/random_tools.py の Bag クラス</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span><span class="w"> </span><span class="nc">Bag</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;袋から札を引くように選ぶ。袋が空になったら全部戻してよく混ぜる。同じものが長く出ない（または出続けない）。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">rng</span>
+<span class="linenos"> 6</span>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="linenos">10</span>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">:</span>
+<span class="linenos">11</span>            <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+<span class="linenos">12</span>            <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">)</span>  <span class="c1"># フィッシャー–イェーツのシャッフル</span>
+<span class="linenos">13</span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>すべての選択肢を袋に入れてよく混ぜ、1 つずつ取り出す。袋が空になったら、また全部入れて混ぜ直す。こうすると、選択肢が 4 つなら、4 回引くごとに必ず全種類が 1 回ずつ出る。同じものが出るのは最大 2 回連続（袋の最後と、次の袋の最初）までになる。落ち物パズルで次に落ちてくるブロックを決めるときなどに使われる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">rng.shuffle</span></code> は<strong>フィッシャー–イェーツのシャッフル</strong>と呼ばれる方法で、並べ方のすべての組み合わせが同じ確率で出るように混ぜる。自分でシャッフルを書くと偏りが生じやすいので、ライブラリーの関数を使うのが安全である。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">9.5. </span>確率の期待値<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>当たる確率が <span class="math notranslate nohighlight">\(p\)</span> の抽選を何回も行うとき、初めて当たるまでの回数の平均（<strong>期待値</strong>）は <span class="math notranslate nohighlight">\(1/p\)</span> 回である。確率 1 % なら、平均 100 回で初めて当たる。</p>
+<p>ただし、「100 回引けば当たる」わけではない。<span class="math notranslate nohighlight">\(n\)</span> 回引いて 1 回も当たらない確率は <span class="math notranslate nohighlight">\((1 - p)^n\)</span> なので、少なくとも 1 回当たる確率は次のようになる。</p>
+<div class="math notranslate nohighlight">
+\[P(n) = 1 - (1 - p)^n\]</div>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 9.5 </span><span class="caption-text">examples/random_tools.py の確率の計算</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">probability_at_least_once</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;確率 p で当たる抽選を n 回行ったとき、少なくとも 1 回当たる確率。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">def</span><span class="w"> </span><span class="nf">tries_needed</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;少なくとも 1 回当たる確率が target 以上になるのに必要な回数。&quot;&quot;&quot;</span>
+<span class="linenos"> 8</span>    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">))</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="#fig-gacha"><span class="std std-numref">図 9.2</span></a> は、<span class="math notranslate nohighlight">\(P(n)\)</span> のグラフである。確率 1 % の抽選を 100 回引いて少なくとも 1 回当たる確率は約 63 % にすぎない。半分の人が当たるのは 69 回、90 % の人が当たるのは 230 回、99 % の人が当たるのは 459 回である。平均は 100 回でも、運の悪い人は何百回も引くことになる。</p>
+<figure class="align-default" id="id19">
+<span id="fig-gacha"></span><a class="reference internal image-reference" href="_images/gacha.png"><img alt="抽選の回数と、少なくとも 1 回当たる確率のグラフ" src="_images/gacha.png" style="width: 520px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 9.2 </span><span class="caption-text">抽選の回数と、少なくとも 1 回当たる確率</span><a class="headerlink" href="#id19" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ゲームを設計する側は、平均だけでなく「運の悪い人がどれだけ待たされるか」も考える必要がある。外れが続くたびに確率を少しずつ上げる、一定の回数で必ず当たるようにする（いわゆる天井）、といった工夫は、この分布の裾を短くするためのものである。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">9.6. </span>ノイズ<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>一様乱数を毎フレーム新しく作ると、値は前のフレームと無関係に飛び回る。地形の高さやカメラの揺れのように、「ランダムだが、なめらかにつながっている」値が欲しいときは<strong>ノイズ</strong>を使う。<a class="reference internal" href="#fig-noise"><span class="std std-numref">図 9.3</span></a> の上の段は一様乱数をそのまま並べたもの、2 段目以降がノイズである。</p>
+<figure class="align-default" id="id20">
+<span id="fig-noise"></span><img alt="一様乱数、バリューノイズ、パーリンノイズ、フラクタルノイズの比較" src="_images/noise.png" />
+<figcaption>
+<p><span class="caption-number">図 9.3 </span><span class="caption-text">一様乱数とノイズの比較</span><a class="headerlink" href="#id20" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id8">
+<h3><span class="section-number">9.6.1. </span>バリューノイズ<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p><strong>バリューノイズ</strong>は、整数の位置（格子点）ごとに乱数の値を決め、その間を滑らかに補間したものである。格子点の値は、整数とシードから決まった値を返す関数（ハッシュ関数）で作る。同じ位置には常に同じ値が返るので、地形のある場所を何度読み出しても同じ高さになる。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-number">リスト 9.6 </span><span class="caption-text">examples/noise.py の value_noise 関数</span><a class="headerlink" href="#id21" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">value_noise</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;バリューノイズ。整数の格子点に乱数の値を置き、その間を滑らかに補間する。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">i</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">4</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">i</span>
+<span class="linenos">5</span>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">hash_to_unit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">seed</span><span class="p">),</span> <span class="n">hash_to_unit</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+<span class="linenos">6</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">smoothstep</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>補間の重みには、線形補間ではなく <code class="docutils literal notranslate"><span class="pre">smoothstep</span></code>（<span class="math notranslate nohighlight">\(3t^2 - 2t^3\)</span>）を使う。これは格子点で傾きが 0 になるイージング関数で、格子点で折れ曲がらないようにするためである。</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">9.6.2. </span>パーリンノイズ<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>バリューノイズは、格子点の値がそのまま山や谷になるので、格子の間隔が目立ちやすい。<strong>パーリンノイズ</strong>は、格子点に「値」ではなく「傾き」（勾配）を乱数で決め、格子点での値は 0 にする。各格子点からその傾きで引いた直線の高さを、滑らかに補間する。</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-number">リスト 9.7 </span><span class="caption-text">examples/noise.py の perlin_noise 関数</span><a class="headerlink" href="#id22" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">perlin_noise</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;1 次元のパーリンノイズ。格子点に乱数の傾き（勾配）を置き、その直線を補間する。格子点での値は 0。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">i</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">4</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">i</span>
+<span class="linenos">5</span>    <span class="n">g0</span><span class="p">,</span> <span class="n">g1</span> <span class="o">=</span> <span class="n">hash_to_unit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">seed</span><span class="p">),</span> <span class="n">hash_to_unit</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+<span class="linenos">6</span>    <span class="n">v0</span> <span class="o">=</span> <span class="n">g0</span> <span class="o">*</span> <span class="n">t</span>  <span class="c1"># 左の格子点の傾きで引いた直線の、x での高さ</span>
+<span class="linenos">7</span>    <span class="n">v1</span> <span class="o">=</span> <span class="n">g1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 右の格子点の傾きで引いた直線の、x での高さ</span>
+<span class="linenos">8</span>    <span class="k">return</span> <span class="p">(</span><span class="n">v0</span> <span class="o">+</span> <span class="p">(</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v0</span><span class="p">)</span> <span class="o">*</span> <span class="n">fade</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># おおよそ -1～1 に収まるよう 2 倍する</span>
+</pre></div>
+</div>
+</div>
+<p>補間の重みには、<code class="docutils literal notranslate"><span class="pre">smoothstep</span></code> よりさらに滑らかな 5 次式 <span class="math notranslate nohighlight">\(6t^5 - 15t^4 + 10t^3\)</span>（<code class="docutils literal notranslate"><span class="pre">fade</span></code> 関数）を使う。山や谷が格子点の間に来るので、格子が目立ちにくい自然な形になる。ここでは仕組みが分かりやすい 1 次元で実装したが、2 次元・3 次元でも同じ考え方で作れる。</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">9.6.3. </span>フラクタルノイズ<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>自然の地形は、大きな山の上に中くらいの起伏があり、さらに細かな凹凸がある。これを真似るため、周波数を 2 倍・振幅を半分にしたノイズを何枚も重ねる。重ねる 1 枚 1 枚を<strong>オクターブ</strong>と呼び、重ねたものを<strong>フラクタルノイズ</strong>と呼ぶ。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-number">リスト 9.8 </span><span class="caption-text">examples/noise.py の fractal_noise 関数</span><a class="headerlink" href="#id23" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">fractal_noise</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">octaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;周波数を 2 倍、振幅を半分にしたノイズを octaves 個重ねる。結果はおおよそ -1～1。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 4</span>    <span class="n">amplitude</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="linenos"> 5</span>    <span class="n">frequency</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="linenos"> 6</span>    <span class="n">norm</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 7</span>    <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">octaves</span><span class="p">):</span>
+<span class="linenos"> 8</span>        <span class="n">total</span> <span class="o">+=</span> <span class="n">perlin_noise</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">seed</span> <span class="o">+</span> <span class="n">octave</span><span class="p">)</span> <span class="o">*</span> <span class="n">amplitude</span>
+<span class="linenos"> 9</span>        <span class="n">norm</span> <span class="o">+=</span> <span class="n">amplitude</span>
+<span class="linenos">10</span>        <span class="n">amplitude</span> <span class="o">*=</span> <span class="mf">0.5</span>
+<span class="linenos">11</span>        <span class="n">frequency</span> <span class="o">*=</span> <span class="mf">2.0</span>
+<span class="linenos">12</span>    <span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">norm</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">noise.py</span></code> を実行し、上下キーでオクターブの数を変えると、地形の細かさが変わる様子を確かめられる。</p>
+</section>
+<section id="id11">
+<h3><span class="section-number">9.6.4. </span>ノイズで画面を揺らす<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p>爆発や被弾の演出で画面を揺らすとき、毎フレーム一様乱数でずらすと、ガタガタとした硬い揺れになる。ノイズで揺らすと、なめらかで自然な揺れになる。<code class="docutils literal notranslate"><span class="pre">noise.py</span></code> の下半分では、左の照準を一様乱数で、右の照準をノイズで揺らしている。</p>
+<p>揺れの強さは、時間とともに減っていく値（本書では <code class="docutils literal notranslate"><span class="pre">trauma</span></code> と呼ぶ）の 2 乗に比例させると、強い揺れが素早く収まり、弱い揺れが少し残る、自然な減り方になる。第 15 章の総合演習では、この方法でミスしたときに画面を揺らしている。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interpolation.html" class="btn btn-neutral float-left" title="8. 補間・イージング・曲線" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="motion.html" class="btn btn-neutral float-right" title="10. 運動の物理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

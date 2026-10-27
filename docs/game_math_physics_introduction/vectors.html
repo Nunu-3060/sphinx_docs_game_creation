@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. ベクトル &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="5. 角度と回転" href="angles.html" />
+    <link rel="prev" title="3. ゲームループと時間" href="game_loop.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. ベクトル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">4.1. ベクトルで位置・変位・速度を表す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">4.2. 足し算・引き算とスカラー倍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">4.3. 長さと正規化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">4.3.1. 斜め移動が速くなる問題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4.3.2. 一定の速さで目標へ近づく</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">4.4. 内積</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">4.4.1. 前か後ろかの判定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">4.4.2. 視界の判定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">4.4.3. 射影</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#d">4.5. 2D の外積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">4.6. 反射ベクトル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pygame-vector2">4.7. pygame.Vector2 を使う</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>ベクトル</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">4. </span>ベクトル<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームの数学で最もよく使う道具が<strong>ベクトル</strong>である。位置、移動量、速度、向き、力など、「大きさと向きを持つ量」はすべてベクトルで表せる。この章では、2 次元のベクトルの演算と、それぞれがゲームのどんな場面で役に立つかを見ていく。</p>
+<section id="id2">
+<h2><span class="section-number">4.1. </span>ベクトルで位置・変位・速度を表す<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>2 次元のベクトルは、2 つの数の組 <span class="math notranslate nohighlight">\(\mathbf{v} = (v_x, v_y)\)</span> である。ゲームでは、同じ「数の組」を次のような意味で使い分ける。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 4.1 </span><span class="caption-text">ゲームで使うベクトル</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>意味</p></th>
+<th class="head"><p>例</p></th>
+<th class="head"><p>単位</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>位置</p></td>
+<td><p>プレイヤーの位置 (120, 360)</p></td>
+<td><p>ピクセル</p></td>
+</tr>
+<tr class="row-odd"><td><p>変位</p></td>
+<td><p>1 フレームの移動量、自分から敵へのずれ</p></td>
+<td><p>ピクセル</p></td>
+</tr>
+<tr class="row-even"><td><p>速度</p></td>
+<td><p>右へ毎秒 200、上へ毎秒 50 で動く: (200, −50)</p></td>
+<td><p>ピクセル毎秒</p></td>
+</tr>
+<tr class="row-odd"><td><p>向き</p></td>
+<td><p>右向き (1, 0)。長さを 1 にそろえることが多い</p></td>
+<td><p>なし</p></td>
+</tr>
+</tbody>
+</table>
+<p>位置は「原点からの変位」とみなせるので、位置と変位は同じ計算で扱える。一方、向きを表すベクトルは長さが意味を持たないので、長さを 1 にそろえて使う（後述の正規化）。</p>
+<p>本書では、ベクトルの仕組みを理解するために、まず自前のクラス <code class="docutils literal notranslate"><span class="pre">Vec2</span></code> を作る。<a class="reference internal" href="#code-vec2-head"><span class="std std-numref">リスト 4.1</span></a> はその冒頭である。<code class="docutils literal notranslate"><span class="pre">dataclass(frozen=True)</span></code> にしているので、演算は元のベクトルを変更せず、新しいベクトルを返す。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<span id="code-vec2-head"></span><div class="code-block-caption"><span class="caption-number">リスト 4.1 </span><span class="caption-text">examples/vec2.py の Vec2 クラス（冒頭）</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="k">class</span><span class="w"> </span><span class="nc">Vec2</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 次元ベクトル。演算は新しい Vec2 を返し、元のベクトルは変更しない。&quot;&quot;&quot;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+<span class="linenos"> 6</span>    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Vec2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2</span><span class="p">:</span>
+<span class="linenos"> 9</span>        <span class="k">return</span> <span class="n">Vec2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Vec2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2</span><span class="p">:</span>
+<span class="linenos">12</span>        <span class="k">return</span> <span class="n">Vec2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="k">return</span> <span class="n">Vec2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2</span><span class="p">:</span>
+<span class="linenos">18</span>        <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">k</span>
+<span class="linenos">19</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">4.2. </span>足し算・引き算とスカラー倍<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ベクトルの足し算と引き算は、成分ごとに行う。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{a} + \mathbf{b} = (a_x + b_x,\ a_y + b_y), \qquad \mathbf{a} - \mathbf{b} = (a_x - b_x,\ a_y - b_y)\]</div>
+<p><a class="reference internal" href="#fig-vector-add"><span class="std std-numref">図 4.1</span></a> の左のように、足し算は矢印をつなげることに当たる。「今の位置」に「移動量」を足すと「次の位置」になる。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{p}_{\text{次}} = \mathbf{p}_{\text{今}} + \mathbf{v} \, \Delta t\]</div>
+<p>これは第 3 章の移動の式を、x と y をまとめてベクトルで書いたものである。</p>
+<p>引き算は、<a class="reference internal" href="#fig-vector-add"><span class="std std-numref">図 4.1</span></a> の右のように「a の先から b の先へ向かう矢印」になる。自分の位置 <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> から相手の位置 <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> を見た変位は <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{a}\)</span> である。追尾、照準、距離の計算など、2 つの物の関係を調べるときは、ほとんどの場合この引き算から始まる。</p>
+<figure class="align-default" id="id14">
+<span id="fig-vector-add"></span><img alt="ベクトルの足し算と引き算" src="_images/vector_add.png" />
+<figcaption>
+<p><span class="caption-number">図 4.1 </span><span class="caption-text">ベクトルの足し算（左）と引き算（右）</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ベクトルに数（<strong>スカラー</strong>）を掛けると、各成分にその数が掛かり、向きはそのままで長さが変わる。負の数を掛けると向きが反転する。</p>
+<div class="math notranslate nohighlight">
+\[k \, \mathbf{a} = (k a_x,\ k a_y)\]</div>
+</section>
+<section id="id4">
+<h2><span class="section-number">4.3. </span>長さと正規化<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ベクトルの<strong>長さ</strong>（大きさ）は、三平方の定理で求める。</p>
+<div class="math notranslate nohighlight">
+\[|\mathbf{a}| = \sqrt{a_x^2 + a_y^2}\]</div>
+<p>2 点 <span class="math notranslate nohighlight">\(\mathbf{a}\)</span>、<span class="math notranslate nohighlight">\(\mathbf{b}\)</span> の距離は、引き算したベクトルの長さ <span class="math notranslate nohighlight">\(|\mathbf{b} - \mathbf{a}|\)</span> である。</p>
+<p>距離を比べるだけなら、平方根を取らずに長さの 2 乗どうしを比べればよい。たとえば「距離が 100 以内か」は「長さの 2 乗が 10000 以内か」と同じである。平方根の計算は比較的重いので、たくさんの物について距離を調べるときに役立つ。</p>
+<p>長さが 1 のベクトルを<strong>単位ベクトル</strong>と呼び、ベクトルをその長さで割って単位ベクトルにすることを<strong>正規化</strong>と呼ぶ。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{a}} = \frac{\mathbf{a}}{|\mathbf{a}|}\]</div>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-number">リスト 4.2 </span><span class="caption-text">examples/vec2.py の Vec2.normalized メソッド</span><a class="headerlink" href="#id15" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">normalized</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;同じ向きで長さ 1 のベクトル（単位ベクトル）。長さ 0 のベクトルは向きが無いので、そのまま返す。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="linenos">4</span>        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">EPSILON</span><span class="p">:</span>
+<span class="linenos">5</span>            <span class="k">return</span> <span class="n">Vec2</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="linenos">6</span>        <span class="k">return</span> <span class="bp">self</span> <span class="o">/</span> <span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<p>長さ 0 のベクトルには向きが無いので正規化できない。0 で割らないよう、長さが非常に小さいときは特別に扱う。</p>
+<section id="id5">
+<h3><span class="section-number">4.3.1. </span>斜め移動が速くなる問題<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>正規化が必要になる代表的な場面が、キー入力による 8 方向の移動である。右キーで (1, 0)、下キーで (0, 1) の入力ベクトルを作り、速さを掛けて移動させるとする。右と下を同時に押すと入力ベクトルは (1, 1) になり、<a class="reference internal" href="#fig-diagonal"><span class="std std-numref">図 4.2</span></a> のように長さが <span class="math notranslate nohighlight">\(\sqrt{2} \approx 1.41\)</span> になる。そのため、斜めに移動すると約 1.41 倍速くなってしまう。</p>
+<figure class="align-default" id="id16">
+<span id="fig-diagonal"></span><img alt="斜めの入力ベクトルの長さ" src="_images/diagonal.png" />
+<figcaption>
+<p><span class="caption-number">図 4.2 </span><span class="caption-text">斜めの入力ベクトルは長さが √2 になる</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>入力ベクトルを正規化してから速さを掛ければ、どの向きにも同じ速さで動く。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 4.3 </span><span class="caption-text">examples/vectors_demo.py の移動の処理</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">direction</span> <span class="o">=</span> <span class="n">read_input</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">get_pressed</span><span class="p">())</span>
+<span class="linenos">2</span><span class="k">if</span> <span class="n">normalize_input</span> <span class="ow">and</span> <span class="n">direction</span><span class="o">.</span><span class="n">length_squared</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">3</span>    <span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="linenos">4</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">direction</span> <span class="o">*</span> <span class="n">PLAYER_SPEED</span>
+<span class="linenos">5</span><span class="n">player</span> <span class="o">+=</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">dt</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">vectors_demo.py</span></code> では、N キーで正規化の有無を切り替え、画面の上に表示される速さで違いを確かめられる。なお、ゲームパッドのスティックのように入力の大きさが連続的に変わる場合は、正規化すると「少し倒すとゆっくり歩く」ことができなくなる。その場合は、長さが 1 を超えたときだけ 1 に縮める。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">4.3.2. </span>一定の速さで目標へ近づく<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>追跡者が目標へ一定の速さで近づく処理も、引き算と正規化でできる。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 4.4 </span><span class="caption-text">examples/vectors_demo.py の move_toward 関数</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">move_toward</span><span class="p">(</span><span class="n">position</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">max_distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;position から target へ、最大 max_distance だけ近づいた位置を返す。行き過ぎない。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">offset</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="n">position</span>
+<span class="linenos">4</span>    <span class="n">distance</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="linenos">5</span>    <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="n">max_distance</span><span class="p">:</span>
+<span class="linenos">6</span>        <span class="k">return</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<span class="linenos">7</span>    <span class="k">return</span> <span class="n">position</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">max_distance</span>
+</pre></div>
+</div>
+</div>
+<p>目標までの距離が 1 フレームの移動量より短いときは、目標の位置に置く。こうしないと、目標を行き過ぎて戻る動きを毎フレーム繰り返し、目標の周りで震えてしまう。</p>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">4.4. </span>内積<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>2 つのベクトルの<strong>内積</strong>は、次のように成分の積の和で計算する。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{a} \cdot \mathbf{b} = a_x b_x + a_y b_y\]</div>
+<p>内積には、2 つのベクトルのなす角を <span class="math notranslate nohighlight">\(\theta\)</span> とすると、次の関係がある。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}| \, |\mathbf{b}| \cos\theta\]</div>
+<p>成分の掛け算と足し算だけで、角度の情報（<span class="math notranslate nohighlight">\(\cos\theta\)</span>）が得られるのが内積の便利なところである。ゲームでは主に次の 3 つの使い方をする。</p>
+<section id="id8">
+<h3><span class="section-number">4.4.1. </span>前か後ろかの判定<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(\cos\theta\)</span> は、<span class="math notranslate nohighlight">\(\theta\)</span> が 90° 未満なら正、90° より大きければ負になる。そのため、向いている方向 <span class="math notranslate nohighlight">\(\mathbf{f}\)</span> と、相手への変位 <span class="math notranslate nohighlight">\(\mathbf{d}\)</span> の内積の符号を見れば、相手が前方にいるか後方にいるかが分かる（<a class="reference internal" href="#fig-dot-product"><span class="std std-numref">図 4.3</span></a> の右）。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f} \cdot \mathbf{d} &gt; 0\)</span>: 前方にいる</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f} \cdot \mathbf{d} = 0\)</span>: 真横にいる</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f} \cdot \mathbf{d} &lt; 0\)</span>: 後方にいる</p></li>
+</ul>
+<p>背後からの攻撃にだけ大きなダメージを与える、といった判定に使える。</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">4.4.2. </span>視界の判定<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(\mathbf{f}\)</span> を単位ベクトルにし、<span class="math notranslate nohighlight">\(\mathbf{d}\)</span> も正規化すれば、内積はちょうど <span class="math notranslate nohighlight">\(\cos\theta\)</span> になる。これを視界の半分の角度の <span class="math notranslate nohighlight">\(\cos\)</span> と比べれば、扇形の視界に入っているかを判定できる。角度そのものを求める必要は無い。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-number">リスト 4.5 </span><span class="caption-text">examples/vectors_demo.py の is_in_view 関数</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">is_in_view</span><span class="p">(</span><span class="n">eye</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">facing</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;target が、eye から facing（単位ベクトル）の向きに広がる扇形の視界に入っているか。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">to_target</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="n">eye</span>
+<span class="linenos">4</span>    <span class="n">distance</span> <span class="o">=</span> <span class="n">to_target</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="linenos">5</span>    <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;</span> <span class="n">VIEW_DISTANCE</span><span class="p">:</span>
+<span class="linenos">6</span>        <span class="k">return</span> <span class="kc">False</span>
+<span class="linenos">7</span>    <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="mf">1e-9</span><span class="p">:</span>  <span class="c1"># 同じ位置にいる</span>
+<span class="linenos">8</span>        <span class="k">return</span> <span class="kc">True</span>
+<span class="linenos">9</span>    <span class="k">return</span> <span class="n">facing</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">to_target</span> <span class="o">/</span> <span class="n">distance</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">COS_VIEW_HALF_ANGLE</span>
+</pre></div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\cos\)</span> は角度が大きくなるほど小さくなるので、「なす角が 35° 以内」は「<span class="math notranslate nohighlight">\(\cos\theta \ge \cos 35^\circ\)</span>」と同じ意味になる。<code class="docutils literal notranslate"><span class="pre">COS_VIEW_HALF_ANGLE</span></code> はあらかじめ計算しておく。</p>
+<figure class="align-default" id="id20">
+<span id="fig-dot-product"></span><img alt="内積による射影と前後・視界の判定" src="_images/dot_product.png" />
+<figcaption>
+<p><span class="caption-number">図 4.3 </span><span class="caption-text">内積による射影（左）と、前後・視界の判定（右）</span><a class="headerlink" href="#id20" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id10">
+<h3><span class="section-number">4.4.3. </span>射影<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(\mathbf{b}\)</span> が単位ベクトルなら、内積 <span class="math notranslate nohighlight">\(\mathbf{a} \cdot \mathbf{b}\)</span> は「<span class="math notranslate nohighlight">\(\mathbf{a}\)</span> のうち <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> の方向の成分の長さ」になる（<a class="reference internal" href="#fig-dot-product"><span class="std std-numref">図 4.3</span></a> の左）。これに <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> を掛けたベクトルを、<span class="math notranslate nohighlight">\(\mathbf{a}\)</span> の <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> 方向への<strong>射影</strong>と呼ぶ。<span class="math notranslate nohighlight">\(\mathbf{b}\)</span> が単位ベクトルでない場合も含めると、次の式になる。</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{proj}_{\mathbf{b}} \mathbf{a} = \frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}} \, \mathbf{b}\]</div>
+<p>射影は、速度を「壁に垂直な成分」と「壁に沿った成分」に分けるときや、点から直線への最短距離を求めるときに使う。第 11 章と第 12 章で何度も登場する。</p>
+</section>
+</section>
+<section id="d">
+<h2><span class="section-number">4.5. </span>2D の外積<a class="headerlink" href="#d" title="Link to this heading"></a></h2>
+<p>3 次元のベクトルには、2 つのベクトルの両方に垂直なベクトルを作る<strong>外積</strong>という演算がある（第 7 章）。2 次元では、その z 成分にあたる次の値を「2D の外積」と呼んで使う。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{a} \times \mathbf{b} = a_x b_y - a_y b_x = |\mathbf{a}| \, |\mathbf{b}| \sin\theta\]</div>
+<p>内積が <span class="math notranslate nohighlight">\(\cos\theta\)</span> を与えるのに対し、2D の外積は <span class="math notranslate nohighlight">\(\sin\theta\)</span> を与える。<span class="math notranslate nohighlight">\(\sin\theta\)</span> の符号は、<span class="math notranslate nohighlight">\(\mathbf{b}\)</span> が <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> から見てどちら側にあるかで決まる。つまり、外積の符号で左右を判定できる。</p>
+<p>ただし、<a class="reference internal" href="#fig-cross-sign"><span class="std std-numref">図 4.4</span></a> のように、符号と左右の対応は座標系の向きによって逆になる。</p>
+<figure class="align-default" id="id21">
+<span id="fig-cross-sign"></span><img alt="座標系による外積の符号の違い" src="_images/cross_sign.png" />
+<figcaption>
+<p><span class="caption-number">図 4.4 </span><span class="caption-text">外積の符号と左右の関係は、y 軸の向きで逆になる</span><a class="headerlink" href="#id21" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id22">
+<caption><span class="caption-number">表 4.2 </span><span class="caption-text">2D の外積の符号の意味</span><a class="headerlink" href="#id22" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>外積 a × b</p></th>
+<th class="head"><p>数学の座標系（y 軸が上向き）</p></th>
+<th class="head"><p>画面座標（y 軸が下向き）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>正</p></td>
+<td><p>b は a の左（反時計回り側）</p></td>
+<td><p>b は a の右（画面上で時計回り側）</p></td>
+</tr>
+<tr class="row-odd"><td><p>負</p></td>
+<td><p>b は a の右</p></td>
+<td><p>b は a の左</p></td>
+</tr>
+</tbody>
+</table>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-number">リスト 4.6 </span><span class="caption-text">examples/vectors_demo.py の side_of 関数</span><a class="headerlink" href="#id23" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">side_of</span><span class="p">(</span><span class="n">facing</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">to_target</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;facing の向きから見て、to_target が左右どちらにあるか。画面座標（y 軸が下向き）での判定。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">c</span> <span class="o">=</span> <span class="n">facing</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">to_target</span><span class="p">)</span>
+<span class="linenos">4</span>    <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">5</span>        <span class="k">return</span> <span class="s1">&#39;right&#39;</span>
+<span class="linenos">6</span>    <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">7</span>        <span class="k">return</span> <span class="s1">&#39;left&#39;</span>
+<span class="linenos">8</span>    <span class="k">return</span> <span class="s1">&#39;straight&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>外積の使い道には、左右の判定のほか、旋回する向きの決定（目標が右にいれば右に曲がる）、点が多角形の内側にあるかの判定、三角形の面積の計算（外積の絶対値の半分）などがある。</p>
+<p><a class="reference internal" href="#fig-screen-vectors"><span class="std std-numref">図 4.5</span></a> は <code class="docutils literal notranslate"><span class="pre">vectors_demo.py</span></code> の画面である。見張り（黄）の扇形の視界にプレイヤー（白）が入ると、扇形が赤くなる。画面の上には、プレイヤーが見張りの左右どちらにいるかが表示される。</p>
+<figure class="align-default" id="id24">
+<span id="fig-screen-vectors"></span><a class="reference internal image-reference" href="_images/screen_vectors_demo.png"><img alt="vectors_demo.py の画面" src="_images/screen_vectors_demo.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 4.5 </span><span class="caption-text">vectors_demo.py の画面</span><a class="headerlink" href="#id24" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id11">
+<h2><span class="section-number">4.6. </span>反射ベクトル<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>ボールや弾が壁で跳ね返るときの向きは、射影を使って求められる。壁に垂直な単位ベクトル <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>（<strong>法線</strong>）を使うと、入ってくる速度 <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> は、壁に垂直な成分 <span class="math notranslate nohighlight">\((\mathbf{v} \cdot \mathbf{n}) \mathbf{n}\)</span> と、壁に沿った成分に分けられる。跳ね返るときは、壁に沿った成分はそのままで、垂直な成分だけが反転する。垂直な成分を 2 回引けば反転するので、反射したベクトル <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> は次の式になる（<a class="reference internal" href="#fig-reflection"><span class="std std-numref">図 4.6</span></a>）。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{r} = \mathbf{v} - 2 (\mathbf{v} \cdot \mathbf{n}) \, \mathbf{n}\]</div>
+<figure class="align-default" id="id25">
+<span id="fig-reflection"></span><img alt="反射ベクトルの求め方" src="_images/reflection.png" />
+<figcaption>
+<p><span class="caption-number">図 4.6 </span><span class="caption-text">反射ベクトル</span><a class="headerlink" href="#id25" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-number">リスト 4.7 </span><span class="caption-text">examples/reflect_demo.py の reflect 関数</span><a class="headerlink" href="#id26" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">reflect</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">normal</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;単位ベクトル normal を法線とする面で v を反射させる（pygame.Vector2.reflect と同じ結果になる）。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="n">v</span> <span class="o">-</span> <span class="n">normal</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>法線 <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> は長さ 1 でなければならない。また、<span class="math notranslate nohighlight">\(\mathbf{n}\)</span> を反対向きにしても結果は変わらない（式の中で <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> が 2 回掛かるため）。<code class="docutils literal notranslate"><span class="pre">reflect_demo.py</span></code> では、Q キーと E キーで鏡を回しながら、マウスの位置から飛ばした光線の反射を確かめられる。壁に垂直な速度の成分を「反転」ではなく「縮めて反転」すると、跳ね返りの弱いボールになる。これは第 12 章の反発係数につながる。</p>
+</section>
+<section id="pygame-vector2">
+<h2><span class="section-number">4.7. </span>pygame.Vector2 を使う<a class="headerlink" href="#pygame-vector2" title="Link to this heading"></a></h2>
+<p>ここまでの演算は、pygame-ce の <code class="docutils literal notranslate"><span class="pre">pygame.Vector2</span></code> にすべて用意されている。仕組みを理解したら、実際のゲームではライブラリーのクラスを使えばよい。本書のサンプルコードも、この章以降は <code class="docutils literal notranslate"><span class="pre">pygame.Vector2</span></code> を使う。</p>
+<table class="docutils align-default" id="id27">
+<caption><span class="caption-number">表 4.3 </span><span class="caption-text">Vec2 と pygame.Vector2 の対応</span><a class="headerlink" href="#id27" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>演算</p></th>
+<th class="head"><p>自作の Vec2</p></th>
+<th class="head"><p>pygame.Vector2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>長さ</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.length()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.length()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>長さの 2 乗</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.length_squared()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.length_squared()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>正規化</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.normalized()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.normalize()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>内積</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.dot(b)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.dot(b)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>2D の外積</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.cross(b)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.cross(b)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>射影</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.project_onto(b)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.project(b)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>反射</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.reflect(n)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.reflect(n)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>回転（第 5 章）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.rotated(角度)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v.rotate_rad(角度)</span></code>、<code class="docutils literal notranslate"><span class="pre">v.rotate(度)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>2 点の距離</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(b</span> <span class="pre">-</span> <span class="pre">a).length()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a.distance_to(b)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>注意点として、<code class="docutils literal notranslate"><span class="pre">pygame.Vector2</span></code> は <code class="docutils literal notranslate"><span class="pre">frozen</span></code> ではなく、<code class="docutils literal notranslate"><span class="pre">v.x</span> <span class="pre">=</span> <span class="pre">3</span></code> や <code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">+=</span> <span class="pre">w</span></code> のように中身を書き換えられる。同じベクトルを 2 か所で共有していると、片方の変更がもう片方に伝わってしまう。位置をコピーして保存したいときは <code class="docutils literal notranslate"><span class="pre">pygame.Vector2(v)</span></code> で新しいベクトルを作る。また、<code class="docutils literal notranslate"><span class="pre">pygame.Vector2.normalize</span></code> は長さ 0 のベクトルに対して例外を出すので、呼ぶ前に長さを確かめる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">test_vec2.py</span></code> では、自作の <code class="docutils literal notranslate"><span class="pre">Vec2</span></code> と <code class="docutils literal notranslate"><span class="pre">pygame.Vector2</span></code> の結果が一致することを確かめている。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="game_loop.html" class="btn btn-neutral float-left" title="3. ゲームループと時間" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="angles.html" class="btn btn-neutral float-right" title="5. 角度と回転" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 15 章 シーン管理とデータ &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 16 章 シェーダー入門" href="ch16_shaders.html" />
+    <link rel="prev" title="第 14 章 サウンド" href="ch14_audio.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 15 章　シーン管理とデータ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">シーンを切り替える</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">オートロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">独自のリソースでデータを定義する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">データを保存する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configfile">ConfigFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">サンプル</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 15 章　シーン管理とデータ</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch14_audio.html" class="btn btn-neutral float-left" title="第 14 章 サウンド" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch16_shaders.html" class="btn btn-neutral float-right" title="第 16 章 シェーダー入門" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch15">
+<span id="id1"></span><h1>第 15 章　シーン管理とデータ<a class="headerlink" href="#ch15" title="Link to this heading"></a></h1>
+<p>ゲームは、タイトル画面、ステージ、リザルト画面など、複数の画面で構成される。本章では、シーンを切り替える方法、シーンをまたいでデータを保持する方法、データを定義するリソースの作り方、セーブデータを保存する方法を説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter15</span></code> フォルダーにある。</p>
+<section id="id2">
+<h2>シーンを切り替える<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>実行中のシーンを別のシーンに切り替えるには、<code class="docutils literal notranslate"><span class="pre">SceneTree</span></code> の次のメソッドを使う。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 55 </span><span class="caption-text">シーンを切り替えるメソッド</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>メソッド</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_tree().change_scene_to_file(パス)</span></code></p></td>
+<td><p>シーンファイルのパスを指定して切り替える。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_tree().change_scene_to_packed(シーン)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">preload()</span></code> などで読み込んだ <code class="docutils literal notranslate"><span class="pre">PackedScene</span></code> に切り替える。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_tree().reload_current_scene()</span></code></p></td>
+<td><p>現在のシーンを最初からやり直す。リトライに使う。</p></td>
+</tr>
+</tbody>
+</table>
+<p>シーンを切り替えると、それまでのシーンのノードはすべて削除される。そのため、スコアのようにシーンをまたいで残したい値は、シーンの外に置く必要がある。</p>
+</section>
+<section id="id3">
+<h2>オートロード<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>オートロード（autoload）は、ゲームの起動時に自動で作られ、シーンを切り替えても削除されないノードである。<a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で見たように、シーンツリーの <code class="docutils literal notranslate"><span class="pre">root</span></code> の直下に、現在のシーンと並んで置かれる。登録した名前で、どのスクリプトからもアクセスできる。他の言語でいうシングルトンやグローバル変数に近い。</p>
+<p>オートロードは、次の手順で登録する。</p>
+<ol class="arabic simple">
+<li><p>登録したいスクリプト（またはシーン）を作る。サンプルでは <code class="docutils literal notranslate"><span class="pre">chapter15/game_state.gd</span></code> である。</p></li>
+<li><p>「プロジェクト」→「プロジェクト設定」の「グローバル」タブを開き、「自動読み込み」を選ぶ。</p></li>
+<li><p>「パス」にスクリプトを指定し、「ノード名」に <code class="docutils literal notranslate"><span class="pre">GameState</span></code> と入力して「追加」を押す。「グローバル変数」が有効になっていることを確認する。</p></li>
+</ol>
+<p>これで、どのスクリプトからも <code class="docutils literal notranslate"><span class="pre">GameState.score</span></code> のように使えるようになる。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-number">リスト 28 </span><span class="caption-text">chapter15/game_state.gd</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## シーンをまたいで保持するゲームの状態。プロジェクト設定でオートロードに登録して使う。</span>
+<span class="linenos"> 3</span><span class="c1">## どのスクリプトからも GameState という名前でアクセスできる。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">signal</span><span class="w"> </span><span class="n">score_changed</span><span class="p">(</span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">const</span><span class="w"> </span><span class="n">SAVE_PATH</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;user://chapter15_save.cfg&quot;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="k">var</span><span class="w"> </span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+<span class="linenos">10</span><span class="w">    </span><span class="n">set</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="linenos">11</span><span class="w">        </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span>
+<span class="linenos">12</span><span class="w">        </span><span class="n">score_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="linenos">13</span><span class="k">var</span><span class="w"> </span><span class="n">high_score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">load_game</span><span class="p">()</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="c1">## 今回のスコアが最高記録を超えていたら更新して保存する。更新したら true を返す。</span>
+<span class="linenos">21</span><span class="k">func</span><span class="w"> </span><span class="n">commit_score</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">high_score</span><span class="p">:</span>
+<span class="linenos">23</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">false</span>
+<span class="linenos">24</span><span class="w">    </span><span class="n">high_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">score</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">save_game</span><span class="p">()</span>
+<span class="linenos">26</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="bp">true</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="k">func</span><span class="w"> </span><span class="n">save_game</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">30</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">ConfigFile</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">31</span><span class="w">    </span><span class="n">config</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;record&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;high_score&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">high_score</span><span class="p">)</span>
+<span class="linenos">32</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">SAVE_PATH</span><span class="p">)</span>
+<span class="linenos">33</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">OK</span><span class="p">:</span>
+<span class="linenos">34</span><span class="w">        </span><span class="n">push_error</span><span class="p">(</span><span class="s2">&quot;セーブに失敗した: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">error_string</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="k">func</span><span class="w"> </span><span class="n">load_game</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">38</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">ConfigFile</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">39</span><span class="w">    </span><span class="c1"># 初回起動時はファイルがないので、読み込みに失敗しても既定値のまま進める。</span>
+<span class="linenos">40</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">SAVE_PATH</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">OK</span><span class="p">:</span>
+<span class="linenos">41</span><span class="w">        </span><span class="k">return</span>
+<span class="linenos">42</span><span class="w">    </span><span class="n">high_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;record&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;high_score&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="k">func</span><span class="w"> </span><span class="n">reset_record</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">46</span><span class="w">    </span><span class="n">high_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">47</span><span class="w">    </span><span class="n">save_game</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">score</span></code> にはセッター（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）を定義しており、値が変わるたびに <code class="docutils literal notranslate"><span class="pre">score_changed</span></code> シグナルを発行する。画面にスコアを表示するノードは、このシグナルに接続しておけば、スコアが変わったときだけ表示を更新できる。</p>
+<p>オートロードは便利だが、何でも入れるとどこからでも変更できる値が増え、不具合の原因を追いにくくなる。シーンをまたいで本当に必要な値（スコア、設定、進行状況など）や、共通の機能（効果音の再生、画面の切り替えの演出など）に絞って使うとよい。</p>
+</section>
+<section id="id4">
+<h2>独自のリソースでデータを定義する<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>アイテムの名前と得点、敵の体力と攻撃力のようなデータは、スクリプトに直接書くより、データとして分けて管理すると調整しやすい。Godot では、<code class="docutils literal notranslate"><span class="pre">Resource</span></code> を継承したクラスを作り、そのインスタンスを <code class="docutils literal notranslate"><span class="pre">.tres</span></code> ファイルとして保存する方法がよく使われる。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-number">リスト 29 </span><span class="caption-text">chapter15/item_data.gd</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">class_name</span><span class="w"> </span><span class="n">ItemData</span>
+<span class="linenos">2</span><span class="k">extends</span><span class="w"> </span><span class="n">Resource</span>
+<span class="linenos">3</span><span class="c1">## アイテムの定義データ。インスペクターで値を入力して .tres ファイルとして保存する。</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">display_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="linenos">6</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">points</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">7</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">color</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Color</span><span class="o">.</span><span class="n">WHITE</span>
+<span class="linenos">8</span><span class="nd">@export_multiline</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>このクラスのリソースは、次の手順で作る。</p>
+<ol class="arabic simple">
+<li><p>ファイルシステムドックで保存先のフォルダーを右クリックし、「新規リソース...」を選ぶ。</p></li>
+<li><p>一覧から <code class="docutils literal notranslate"><span class="pre">ItemData</span></code> を選んで作成し、<code class="docutils literal notranslate"><span class="pre">apple.tres</span></code> などの名前で保存する。</p></li>
+<li><p>保存したファイルを選ぶと、インスペクターに <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> を付けた変数が表示されるので、値を入力する。</p></li>
+</ol>
+<p>作られた <code class="docutils literal notranslate"><span class="pre">.tres</span></code> ファイルはテキスト形式である。</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-number">リスト 30 </span><span class="caption-text">chapter15/items/apple.tres</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">[gd_resource type=&quot;Resource&quot; script_class=&quot;ItemData&quot; format=3]</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">[ext_resource type=&quot;Script&quot; path=&quot;res://chapter15/item_data.gd&quot; id=&quot;1_item&quot;]</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">[resource]</span>
+<span class="linenos"> 6</span><span class="na">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ExtResource(&quot;1_item&quot;)</span>
+<span class="linenos"> 7</span><span class="na">display_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;りんご&quot;</span>
+<span class="linenos"> 8</span><span class="na">points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">10</span>
+<span class="linenos"> 9</span><span class="na">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Color(0.9, 0.2, 0.2, 1)</span>
+<span class="linenos">10</span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;よく見かける果物。&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>リソースは、<code class="docutils literal notranslate"><span class="pre">&#64;export</span> <span class="pre">var</span> <span class="pre">items:</span> <span class="pre">Array[ItemData]</span></code> のような変数に設定して使う。ゲームの調整をする人は、スクリプトを開かずにインスペクターだけで値を変えられる。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>同じリソースファイルを複数の場所で読み込むと、同じインスタンスが共有される。実行中にリソースの値を書き換えると、そのリソースを使うすべての場所に影響する。インスタンスごとに値を変えたい場合は、<code class="docutils literal notranslate"><span class="pre">duplicate()</span></code> で複製してから変更する。</p>
+</div>
+</section>
+<section id="id5">
+<h2>データを保存する<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>セーブデータや設定のように、ゲームを終了しても残したいデータはファイルに保存する。保存先には <code class="docutils literal notranslate"><span class="pre">user://</span></code> を使う（<a class="reference internal" href="ch04_editor.html#ch04"><span class="std std-ref">第 4 章　エディターの画面構成</span></a>）。<code class="docutils literal notranslate"><span class="pre">res://</span></code> はエクスポートしたゲームでは書き込めない。</p>
+<p><code class="docutils literal notranslate"><span class="pre">user://</span></code> の実際の場所は、エディターの「プロジェクト」→「ユーザーデータフォルダーを開く」で確認できる。Windows では <code class="docutils literal notranslate"><span class="pre">%APPDATA%\Godot\app_userdata\プロジェクト名</span></code> である。</p>
+<p>保存の方法には、主に次の 3 つがある。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 56 </span><span class="caption-text">データを保存する方法</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 39.0%" />
+<col style="width: 39.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>特徴</p></th>
+<th class="head"><p>向いている用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ConfigFile</span></code></p></td>
+<td><p>INI ファイルに似た「セクション」「キー」「値」の形式で保存する。<code class="docutils literal notranslate"><span class="pre">Vector2</span></code> や <code class="docutils literal notranslate"><span class="pre">Color</span></code> などの Godot の型もそのまま保存できる。</p></td>
+<td><p>設定、簡単なセーブデータ</p></td>
+</tr>
+<tr class="row-odd"><td><p>JSON</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">JSON.stringify()</span></code> で文字列に変換し、<code class="docutils literal notranslate"><span class="pre">FileAccess</span></code> で書き込む。ほかのプログラムでも読める。</p></td>
+<td><p>ほかのツールと連携するデータ、Web との通信</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ResourceSaver</span></code></p></td>
+<td><p>リソースをそのまま <code class="docutils literal notranslate"><span class="pre">.tres</span></code> や <code class="docutils literal notranslate"><span class="pre">.res</span></code> として保存する。</p></td>
+<td><p>複雑なデータ構造。ただし後述の注意がある。</p></td>
+</tr>
+</tbody>
+</table>
+<section id="configfile">
+<h3>ConfigFile<a class="headerlink" href="#configfile" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">game_state.gd</span></code> の <code class="docutils literal notranslate"><span class="pre">save_game()</span></code> と <code class="docutils literal notranslate"><span class="pre">load_game()</span></code> では、最高記録を <code class="docutils literal notranslate"><span class="pre">ConfigFile</span></code> で保存・読み込みしている。保存されるファイルの中身は次のようになる。</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">[record]</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="na">high_score</span><span class="o">=</span><span class="s">10</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">get_value()</span></code> の第 3 引数は、値がない場合の既定値である。初回起動時のようにファイルがない場合も、<code class="docutils literal notranslate"><span class="pre">load()</span></code> の戻り値を確認すれば安全に処理できる。</p>
+</section>
+<section id="json">
+<h3>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h3>
+<p>JSON で保存する場合は、<code class="docutils literal notranslate"><span class="pre">FileAccess</span></code> でファイルを開いて文字列を書き込む。ステージのスクリプトでは、最後のプレイの結果を JSON で保存している。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 31 </span><span class="caption-text">chapter15/stage.gd</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Control</span>
+<span class="linenos"> 2</span><span class="c1">## 制限時間内にアイテムのボタンを押して得点を集めるステージ。</span>
+<span class="linenos"> 3</span><span class="c1">## 終了するとスコアを JSON ファイルに書き出し、タイトル画面へ戻る。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="n">TITLE_SCENE</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;res://chapter15/title.tscn&quot;</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="n">RESULT_PATH</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;user://chapter15_last_result.json&quot;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1">## 登場するアイテム。.tres ファイルに保存した ItemData を読み込む。</span>
+<span class="linenos"> 9</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">items</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="p">[</span><span class="n">ItemData</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">var</span><span class="w"> </span><span class="n">_picked</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Dictionary</span><span class="p">[</span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_timer</span><span class="p">:</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GameTimer</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">17</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">items</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">Button</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">19</span><span class="w">        </span><span class="n">button</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">（</span><span class="si">%d</span><span class="s2"> 点）&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">points</span><span class="p">]</span>
+<span class="linenos">20</span><span class="w">        </span><span class="n">button</span><span class="o">.</span><span class="n">tooltip_text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">description</span>
+<span class="linenos">21</span><span class="w">        </span><span class="n">button</span><span class="o">.</span><span class="n">modulate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">color</span>
+<span class="linenos">22</span><span class="w">        </span><span class="n">button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_item_pressed</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+<span class="linenos">23</span><span class="w">        </span><span class="nv">%ItemList</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+<span class="linenos">24</span><span class="w">    </span><span class="n">GameState</span><span class="o">.</span><span class="n">score_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_score_changed</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">_on_score_changed</span><span class="p">(</span><span class="n">GameState</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+<span class="linenos">26</span><span class="w">    </span><span class="n">_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_game_timer_timeout</span><span class="p">)</span>
+<span class="linenos">27</span><span class="w">    </span><span class="n">_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">_delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">31</span><span class="w">    </span><span class="nv">%TimeLabel</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;残り時間: </span><span class="si">%.1f</span><span class="s2"> 秒&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">_timer</span><span class="o">.</span><span class="n">time_left</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="k">func</span><span class="w"> </span><span class="n">_on_item_pressed</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="n">ItemData</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">35</span><span class="w">    </span><span class="n">GameState</span><span class="o">.</span><span class="n">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">points</span>
+<span class="linenos">36</span><span class="w">    </span><span class="n">_picked</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">display_name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_picked</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="k">func</span><span class="w"> </span><span class="n">_on_score_changed</span><span class="p">(</span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">40</span><span class="w">    </span><span class="nv">%ScoreLabel</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;スコア: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">score</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="k">func</span><span class="w"> </span><span class="n">_on_game_timer_timeout</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">44</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">is_new_record</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">GameState</span><span class="o">.</span><span class="n">commit_score</span><span class="p">()</span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">_save_result</span><span class="p">(</span><span class="n">is_new_record</span><span class="p">)</span>
+<span class="linenos">46</span><span class="w">    </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">change_scene_to_file</span><span class="p">(</span><span class="n">TITLE_SCENE</span><span class="p">)</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span><span class="c1">## 今回の結果を JSON 形式で保存する。</span>
+<span class="linenos">50</span><span class="k">func</span><span class="w"> </span><span class="n">_save_result</span><span class="p">(</span><span class="n">is_new_record</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">51</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">52</span><span class="w">        </span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">GameState</span><span class="o">.</span><span class="n">score</span><span class="p">,</span>
+<span class="linenos">53</span><span class="w">        </span><span class="s2">&quot;new_record&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">is_new_record</span><span class="p">,</span>
+<span class="linenos">54</span><span class="w">        </span><span class="s2">&quot;picked&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">_picked</span><span class="p">,</span>
+<span class="linenos">55</span><span class="w">        </span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">Time</span><span class="o">.</span><span class="n">get_datetime_string_from_system</span><span class="p">(),</span>
+<span class="linenos">56</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">57</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">FileAccess</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">RESULT_PATH</span><span class="p">,</span><span class="w"> </span><span class="n">FileAccess</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
+<span class="linenos">58</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">:</span>
+<span class="linenos">59</span><span class="w">        </span><span class="n">push_error</span><span class="p">(</span><span class="s2">&quot;結果を保存できない: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">error_string</span><span class="p">(</span><span class="n">FileAccess</span><span class="o">.</span><span class="n">get_open_error</span><span class="p">()))</span>
+<span class="linenos">60</span><span class="w">        </span><span class="k">return</span>
+<span class="linenos">61</span><span class="w">    </span><span class="n">file</span><span class="o">.</span><span class="n">store_string</span><span class="p">(</span><span class="n">JSON</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;  &quot;</span><span class="p">))</span>
+<span class="linenos">62</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;結果を保存した: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ProjectSettings</span><span class="o">.</span><span class="n">globalize_path</span><span class="p">(</span><span class="n">RESULT_PATH</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">FileAccess.open()</span></code> は、開けなかった場合に <code class="docutils literal notranslate"><span class="pre">null</span></code> を返す。<code class="docutils literal notranslate"><span class="pre">FileAccess</span></code> のインスタンスは、使い終わって参照がなくなると自動で閉じられる。明示的に閉じる場合は <code class="docutils literal notranslate"><span class="pre">close()</span></code> を呼ぶ。</p>
+<p>JSON を読み込むときは <code class="docutils literal notranslate"><span class="pre">JSON.parse_string()</span></code> を使う。JSON の数値は、整数であっても <code class="docutils literal notranslate"><span class="pre">float</span></code> として読み込まれる点に注意する。<code class="docutils literal notranslate"><span class="pre">{&quot;score&quot;:</span> <span class="pre">10}</span></code> を読み込むと <code class="docutils literal notranslate"><span class="pre">10.0</span></code> になるので、整数として使う場合は <code class="docutils literal notranslate"><span class="pre">int()</span></code> で変換する。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">.tres</span></code> などのリソースファイルには、スクリプトを埋め込むことができる。インターネットから入手したセーブデータなど、信頼できないリソースファイルを <code class="docutils literal notranslate"><span class="pre">load()</span></code> で読み込むと、意図しないコードが実行される危険がある。プレイヤー間で共有される可能性があるデータは、<code class="docutils literal notranslate"><span class="pre">ConfigFile</span></code> や JSON で保存するほうが安全である。</p>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>サンプル<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>サンプルの <code class="docutils literal notranslate"><span class="pre">title.tscn</span></code> と <code class="docutils literal notranslate"><span class="pre">stage.tscn</span></code> は、ここまでの内容を組み合わせた小さなゲームである。タイトル画面で「ゲーム開始」を押すとステージに切り替わり、10 秒間アイテムのボタンを押して得点を集める。時間切れになると、最高記録を <code class="docutils literal notranslate"><span class="pre">ConfigFile</span></code> で、今回の結果を JSON で保存して、タイトル画面に戻る。</p>
+<figure class="align-default" id="id13">
+<div class="graphviz"><object data="../_images/graphviz-0e7f6e5cbc57a47a271deb5e367d60954172898d.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph flow {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fontsize=11];
+  title [label=&quot;title.tscn\n（タイトル画面）&quot;, fillcolor=&quot;#e8f0fe&quot;];
+  stage [label=&quot;stage.tscn\n（ステージ）&quot;, fillcolor=&quot;#e8f0fe&quot;];
+  gs [label=&quot;GameState\n（オートロード）\nscore、high_score&quot;, fillcolor=&quot;#fff3cd&quot;];
+  items [label=&quot;apple.tres\ngem.tres\n（ItemData）&quot;, fillcolor=&quot;#d4edda&quot;];
+  cfg [label=&quot;user://chapter15_save.cfg\n（ConfigFile）&quot;, shape=note, fillcolor=&quot;#f2f2f2&quot;];
+  json [label=&quot;user://chapter15_last_result.json\n（JSON）&quot;, shape=note, fillcolor=&quot;#f2f2f2&quot;];
+  title -&gt; stage [label=&quot;ゲーム開始&quot;];
+  stage -&gt; title [label=&quot;時間切れ&quot;];
+  title -&gt; gs [style=dashed];
+  stage -&gt; gs [style=dashed];
+  items -&gt; stage [label=&quot;&#64;export&quot;];
+  gs -&gt; cfg [label=&quot;save_game()&quot;];
+  stage -&gt; json [label=&quot;_save_result()&quot;];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 30 </span><span class="caption-text">サンプルのシーンとデータの流れ</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">stage.gd</span></code> の <code class="docutils literal notranslate"><span class="pre">items</span></code> 変数には、インスペクターで <code class="docutils literal notranslate"><span class="pre">apple.tres</span></code> と <code class="docutils literal notranslate"><span class="pre">gem.tres</span></code> を設定している。<code class="docutils literal notranslate"><span class="pre">_ready()</span></code> では、アイテムごとにボタンを作り、名前、得点、色をリソースから設定している。新しいアイテムを追加したいときは、<code class="docutils literal notranslate"><span class="pre">.tres</span></code> ファイルを作って <code class="docutils literal notranslate"><span class="pre">items</span></code> に加えるだけでよく、スクリプトを変更する必要はない。</p>
+<figure class="align-default" id="id14">
+<a class="screenshot reference internal image-reference" href="../_images/ch15_title.png"><img alt="../_images/ch15_title.png" class="screenshot" src="../_images/ch15_title.png" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 31 </span><span class="caption-text">title.tscn の実行結果</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch14_audio.html" class="btn btn-neutral float-left" title="第 14 章 サウンド" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch16_shaders.html" class="btn btn-neutral float-right" title="第 16 章 シェーダー入門" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

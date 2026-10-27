@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 10 章 2D の座標とベクトル &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 11 章 2D の物理と衝突" href="ch11_physics.html" />
+    <link rel="prev" title="第 9 章 入力" href="ch09_input.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 10 章　2D の座標とベクトル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2D の座標系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vector2">Vector2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ベクトルの基本的な計算</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">足し算と掛け算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">長さと正規化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2 点の差</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">角度と回転</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">内積</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">ローカル座標とグローバル座標</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 10 章　2D の座標とベクトル</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch09_input.html" class="btn btn-neutral float-left" title="第 9 章 入力" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch11_physics.html" class="btn btn-neutral float-right" title="第 11 章 2D の物理と衝突" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="d">
+<span id="ch10"></span><h1>第 10 章　2D の座標とベクトル<a class="headerlink" href="#d" title="Link to this heading"></a></h1>
+<p>ゲームでは、物体の位置、移動の向き、速さを常に計算している。これらを扱う道具がベクトルである。本章では、Godot の 2D 座標系と、ゲームでよく使うベクトルの計算を説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter10</span></code> フォルダーにある。</p>
+<section id="id1">
+<h2>2D の座標系<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Godot の 2D の座標は、ピクセルを単位とする。座標系は、数学で習う座標系と次の点が異なる。</p>
+<ul class="simple">
+<li><p>原点 (0, 0) は、画面の左上にある（カメラを使わない場合）。</p></li>
+<li><p>X 軸は右向きが正である（数学と同じ）。</p></li>
+<li><p><strong>Y 軸は下向きが正である</strong>（数学と逆）。</p></li>
+<li><p>回転の角度は、画面上で<strong>時計回り</strong>が正になる。角度の単位はラジアンである。</p></li>
+</ul>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="../_images/coordinates.png"><img alt="../_images/coordinates.png" src="../_images/coordinates.png" style="width: 85%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 16 </span><span class="caption-text">数学の座標系と Godot の 2D 座標系</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Y 軸が下向きなのは、画面の左上から右下へ順に描画するコンピューターの画面の慣習に合わせているためである。そのため、ジャンプのように上へ動かすときは Y を減らし、重力で落とすときは Y を増やす。<a class="reference internal" href="ch11_physics.html#ch11"><span class="std std-ref">第 11 章　2D の物理と衝突</span></a> のプレイヤーのジャンプの初速が負の値になっているのはこのためである。</p>
+<p>角度はラジアンで扱う。360 度が <span class="math notranslate nohighlight">\(2\pi\)</span> ラジアン（約 6.28）に相当する。度とラジアンの変換には、<code class="docutils literal notranslate"><span class="pre">deg_to_rad()</span></code> と <code class="docutils literal notranslate"><span class="pre">rad_to_deg()</span></code> を使う。定数 <code class="docutils literal notranslate"><span class="pre">PI</span></code> は <span class="math notranslate nohighlight">\(\pi\)</span>、<code class="docutils literal notranslate"><span class="pre">TAU</span></code> は <span class="math notranslate nohighlight">\(2\pi\)</span> である。</p>
+</section>
+<section id="vector2">
+<h2>Vector2<a class="headerlink" href="#vector2" title="Link to this heading"></a></h2>
+<p>2D の位置や速度は <code class="docutils literal notranslate"><span class="pre">Vector2</span></code> 型で表す。<code class="docutils literal notranslate"><span class="pre">Vector2(3,</span> <span class="pre">4)</span></code> は、X 成分が 3、Y 成分が 4 のベクトルである。<code class="docutils literal notranslate"><span class="pre">position</span></code> や <code class="docutils literal notranslate"><span class="pre">velocity</span></code> などのプロパティも <code class="docutils literal notranslate"><span class="pre">Vector2</span></code> である。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Vector2</span></code> には、よく使う向きを表す定数がある。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 36 </span><span class="caption-text">Vector2 の定数</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>定数</p></th>
+<th class="head"><p>値</p></th>
+<th class="head"><p>画面上の向き</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2.ZERO</span></code></p></td>
+<td><p>(0, 0)</p></td>
+<td><p>なし</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2.RIGHT</span></code></p></td>
+<td><p>(1, 0)</p></td>
+<td><p>右</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2.LEFT</span></code></p></td>
+<td><p>(-1, 0)</p></td>
+<td><p>左</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2.UP</span></code></p></td>
+<td><p>(0, -1)</p></td>
+<td><p>上</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2.DOWN</span></code></p></td>
+<td><p>(0, 1)</p></td>
+<td><p>下</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h2>ベクトルの基本的な計算<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="id3">
+<h3>足し算と掛け算<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>ベクトルどうしの足し算は、成分ごとの足し算である。位置に移動量を足すと、新しい位置になる。ベクトルに数（スカラー）を掛けると、向きを変えずに長さだけが変わる。</p>
+<div class="math notranslate nohighlight">
+\[(x_1, y_1) + (x_2, y_2) = (x_1 + x_2,\ y_1 + y_2), \qquad k(x, y) = (kx,\ ky)\]</div>
+<p>「速度 × 経過時間 = 移動量」なので、<code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">+=</span> <span class="pre">velocity</span> <span class="pre">*</span> <span class="pre">delta</span></code> と書けば、1 フレーム分だけ物体が動く。</p>
+</section>
+<section id="id4">
+<h3>長さと正規化<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>ベクトル <span class="math notranslate nohighlight">\(\mathbf{v} = (x, y)\)</span> の長さ（大きさ）は、三平方の定理で求める。<code class="docutils literal notranslate"><span class="pre">length()</span></code> で取得できる。</p>
+<div class="math notranslate nohighlight">
+\[|\mathbf{v}| = \sqrt{x^2 + y^2}\]</div>
+<p>ベクトルを自分の長さで割ると、向きが同じで長さが 1 のベクトル（単位ベクトル）になる。これを正規化と呼び、<code class="docutils literal notranslate"><span class="pre">normalized()</span></code> で求める。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{v}} = \frac{\mathbf{v}}{|\mathbf{v}|}\]</div>
+<p>単位ベクトルは「向き」だけを表す。これに速さを掛けると、決まった速さで決まった向きへ進む速度になる。</p>
+</section>
+<section id="id5">
+<h3>2 点の差<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>点 A から点 B へ向かうベクトルは、B - A で求める。その長さが 2 点間の距離、正規化したものが A から B への向きである。</p>
+<figure class="align-default" id="id12">
+<a class="reference internal image-reference" href="../_images/vector_operations.png"><img alt="../_images/vector_operations.png" src="../_images/vector_operations.png" style="width: 60%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 17 </span><span class="caption-text">A から B へのベクトルと、その正規化</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 18 </span><span class="caption-text">目標に向かって一定の速さで進む</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">var</span><span class="w"> </span><span class="n">to_target</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">target_position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">position</span><span class="w">   </span><span class="c1"># 自分から目標へのベクトル</span>
+<span class="linenos">2</span><span class="k">var</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">to_target</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="w">             </span><span class="c1"># 目標までの距離</span>
+<span class="linenos">3</span><span class="k">var</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">to_target</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span><span class="w">        </span><span class="c1"># 目標への向き（長さ 1）</span>
+<span class="linenos">4</span><span class="n">position</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SPEED</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span><span class="w">          </span><span class="c1"># 目標へ向かって進む</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">direction_to()</span></code> と <code class="docutils literal notranslate"><span class="pre">distance_to()</span></code> を使うと、同じ計算を 1 回の呼び出しで書ける。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 37 </span><span class="caption-text">Vector2 のよく使うメソッド</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>メソッド</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length()</span></code></p></td>
+<td><p>長さ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">normalized()</span></code></p></td>
+<td><p>長さを 1 にしたベクトル。長さ 0 のベクトルでは (0, 0) を返す。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">distance_to(b)</span></code></p></td>
+<td><p>点 b までの距離</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">direction_to(b)</span></code></p></td>
+<td><p>点 b への向き（長さ 1）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">angle()</span></code></p></td>
+<td><p>X 軸の正の向きからの角度（ラジアン）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rotated(angle)</span></code></p></td>
+<td><p>指定した角度だけ回転したベクトル</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dot(b)</span></code></p></td>
+<td><p>ベクトル b との内積（後述）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lerp(b,</span> <span class="pre">t)</span></code></p></td>
+<td><p>ベクトル b との間を割合 t で補間した値</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">move_toward(b,</span> <span class="pre">delta)</span></code></p></td>
+<td><p>b に向かって最大 delta だけ近づけた値。行き過ぎない。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">limit_length(max)</span></code></p></td>
+<td><p>長さが max を超えないように縮めたベクトル</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id6">
+<h3>角度と回転<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>角度 <span class="math notranslate nohighlight">\(\theta\)</span> の向きを表す単位ベクトルは <span class="math notranslate nohighlight">\((\cos\theta, \sin\theta)\)</span> である。GDScript では <code class="docutils literal notranslate"><span class="pre">Vector2.RIGHT.rotated(theta)</span></code> または <code class="docutils literal notranslate"><span class="pre">Vector2.from_angle(theta)</span></code> で求められる。逆に、ベクトルの向きを角度にするには <code class="docutils literal notranslate"><span class="pre">angle()</span></code> を使う。</p>
+<p>ノードを特定の点に向けるには、<code class="docutils literal notranslate"><span class="pre">look_at(点)</span></code> を使う。<code class="docutils literal notranslate"><span class="pre">look_at()</span></code> は、ノードの X 軸の正の向き（右向き）が目標を指すように回転させる。そのため、向きのある画像は、右向きに描いておくと扱いやすい。</p>
+</section>
+<section id="id7">
+<h3>内積<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>2 つのベクトルの内積は、次の式で定義される。<span class="math notranslate nohighlight">\(\theta\)</span> は 2 つのベクトルのなす角である。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{a} \cdot \mathbf{b} = a_x b_x + a_y b_y = |\mathbf{a}||\mathbf{b}|\cos\theta\]</div>
+<p>両方が単位ベクトルなら、内積は <span class="math notranslate nohighlight">\(\cos\theta\)</span> になる。同じ向きなら 1、直角なら 0、反対向きなら -1 である。この性質を使うと、「敵がプレイヤーの前方にいるか（内積が正）」「視野の範囲内か（内積がある値より大きいか）」を、角度を計算せずに判定できる。</p>
+</section>
+</section>
+<section id="id8">
+<h2>サンプル<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">vector_demo.tscn</span></code> は、ここまでの計算を目で確かめるサンプルである。画面中央の矢印はマウスの方向を向き、オレンジの円（追跡者）はマウスに向かって一定の速さで進む。</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-number">リスト 19 </span><span class="caption-text">chapter10/vector_demo.gd</span><a class="headerlink" href="#id15" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos"> 2</span><span class="c1">## ベクトルの基本演算を可視化するサンプル。</span>
+<span class="linenos"> 3</span><span class="c1">## 矢印はマウスの方向を向き、追跡者（オレンジの円）はマウスに向かって一定の速さで進む。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="n">CHASER_SPEED</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">150.0</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var</span><span class="w"> </span><span class="n">_chaser_position</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_arrow</span><span class="p">:</span><span class="w"> </span><span class="n">Node2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Arrow</span>
+<span class="linenos">10</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_info</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Info</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">14</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">get_global_mouse_position</span><span class="p">()</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="w">    </span><span class="c1"># 矢印をマウスの方向へ向ける。look_at() はノードの +X 方向を目標へ向ける。</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">_arrow</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">mouse</span><span class="p">)</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">    </span><span class="c1"># 追跡者からマウスへのベクトル = 目標の位置 - 自分の位置</span>
+<span class="linenos">20</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">to_mouse</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_chaser_position</span>
+<span class="linenos">21</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">to_mouse</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">5.0</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">        </span><span class="c1"># normalized() で長さを 1 にしてから速さを掛ける。</span>
+<span class="linenos">23</span><span class="w">        </span><span class="n">_chaser_position</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">to_mouse</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">CHASER_SPEED</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">    </span><span class="c1"># 矢印の正面の向きと「矢印から追跡者への向き」の内積で、追跡者が矢印の前にいるかを判定する。</span>
+<span class="linenos">26</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">forward</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="o">.</span><span class="n">RIGHT</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">_arrow</span><span class="o">.</span><span class="n">rotation</span><span class="p">)</span>
+<span class="linenos">27</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">dot</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">forward</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">_arrow</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">direction_to</span><span class="p">(</span><span class="n">_chaser_position</span><span class="p">))</span>
+<span class="linenos">28</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;前&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">dot</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;後ろ&quot;</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">_info</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos">30</span><span class="w">        </span><span class="s2">&quot;矢印の角度: </span><span class="si">%.1f</span><span class="s2"> 度  追跡者とマウスの距離: </span><span class="si">%.1f</span><span class="s2">  内積: </span><span class="si">%.2f</span><span class="s2">（追跡者は矢印の</span><span class="si">%s</span><span class="s2">）&quot;</span>
+<span class="linenos">31</span><span class="w">        </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">rad_to_deg</span><span class="p">(</span><span class="n">_arrow</span><span class="o">.</span><span class="n">rotation</span><span class="p">),</span><span class="w"> </span><span class="n">to_mouse</span><span class="o">.</span><span class="n">length</span><span class="p">(),</span><span class="w"> </span><span class="n">dot</span><span class="p">,</span><span class="w"> </span><span class="n">side</span><span class="p">]</span>
+<span class="linenos">32</span><span class="w">    </span><span class="p">)</span>
+<span class="linenos">33</span><span class="w">    </span><span class="n">queue_redraw</span><span class="p">()</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="k">func</span><span class="w"> </span><span class="n">_draw</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">37</span><span class="w">    </span><span class="n">draw_line</span><span class="p">(</span><span class="n">_chaser_position</span><span class="p">,</span><span class="w"> </span><span class="n">get_global_mouse_position</span><span class="p">(),</span><span class="w"> </span><span class="nb nb-Type">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">),</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span>
+<span class="linenos">38</span><span class="w">    </span><span class="n">draw_circle</span><span class="p">(</span><span class="n">_chaser_position</span><span class="p">,</span><span class="w"> </span><span class="mf">16.0</span><span class="p">,</span><span class="w"> </span><span class="nb nb-Type">Color</span><span class="o">.</span><span class="n">ORANGE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<figure class="align-default" id="id16">
+<a class="screenshot reference internal image-reference" href="../_images/ch10_vector.png"><img alt="../_images/ch10_vector.png" class="screenshot" src="../_images/ch10_vector.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 18 </span><span class="caption-text">vector_demo.tscn の実行結果</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>画面上部には、矢印の角度、追跡者とマウスの距離、矢印の正面の向きと「矢印から追跡者への向き」の内積が表示される。マウスを動かして矢印の向きを変えると、追跡者が矢印の前にいるときは内積が正、後ろにいるときは負になることを確かめられる。</p>
+</section>
+<section id="id9">
+<h2>ローカル座標とグローバル座標<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で説明したように、子ノードの位置は親ノードからの相対値で表される。ノードの <code class="docutils literal notranslate"><span class="pre">position</span></code> は親から見た座標（ローカル座標）で、<code class="docutils literal notranslate"><span class="pre">global_position</span></code> はゲームの世界の原点から見た座標（グローバル座標）である。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 38 </span><span class="caption-text">座標に関するプロパティとメソッド</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>名前</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>親ノードから見た位置</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">global_position</span></code></p></td>
+<td><p>ゲームの世界での位置</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rotation</span></code>、<code class="docutils literal notranslate"><span class="pre">global_rotation</span></code></p></td>
+<td><p>親ノードから見た回転、世界での回転（ラジアン）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
+<td><p>拡大率。<code class="docutils literal notranslate"><span class="pre">Vector2(2,</span> <span class="pre">2)</span></code> で 2 倍</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">to_global(点)</span></code></p></td>
+<td><p>このノードのローカル座標の点を、グローバル座標に変換する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">to_local(点)</span></code></p></td>
+<td><p>グローバル座標の点を、このノードのローカル座標に変換する。</p></td>
+</tr>
+</tbody>
+</table>
+<p>位置、回転、拡大率をまとめたものをトランスフォーム（transform）と呼び、2D では <code class="docutils literal notranslate"><span class="pre">Transform2D</span></code> 型で表す。<code class="docutils literal notranslate"><span class="pre">Transform2D</span></code> は、ノードの X 軸と Y 軸の向き（回転と拡大率を含む）と、原点の位置を持つ。親子関係があるノードのグローバルなトランスフォームは、親から順にトランスフォームを掛け合わせて求める。通常は <code class="docutils literal notranslate"><span class="pre">global_position</span></code> などのプロパティを使えば足り、<code class="docutils literal notranslate"><span class="pre">Transform2D</span></code> を直接計算する必要はあまりない。</p>
+<p>異なる親を持つノードどうしの位置を比べるときは、必ずグローバル座標を使う。例えば、敵とプレイヤーの距離を求めるなら <code class="docutils literal notranslate"><span class="pre">enemy.global_position.distance_to(player.global_position)</span></code> と書く。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch09_input.html" class="btn btn-neutral float-left" title="第 9 章 入力" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch11_physics.html" class="btn btn-neutral float-right" title="第 11 章 2D の物理と衝突" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

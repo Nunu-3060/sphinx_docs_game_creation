@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>付録 C 参考文献 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="付録 D サンプルコード一覧" href="examples.html" />
+    <link rel="prev" title="付録 B 用語集" href="glossary.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">付録 C 参考文献</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">書籍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">講演・論文</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ウェブ上の資料</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">関連する文書</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">付録 C 参考文献</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="c">
+<h1>付録 C 参考文献<a class="headerlink" href="#c" title="Link to this heading"></a></h1>
+<p>本書の内容をさらに詳しく学ぶための文献と資料を挙げる。ウェブページの内容は 2026 年 10 月時点で確認したものである。</p>
+<section id="id1">
+<h2>書籍<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文献</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Fletcher Dunn, Ian Parberry, <em>3D Math Primer for Graphics and Game Development</em>, 2nd ed., CRC Press, 2011.</p></td>
+<td><p>ゲームのためのベクトル・行列・回転（オイラー角、クォータニオン）を丁寧に解説している。第 4 章～第 7 章の発展。オンライン版が <a class="reference external" href="https://gamemath.com/">gamemath.com</a> で公開されている</p></td>
+</tr>
+<tr class="row-odd"><td><p>Eric Lengyel, <em>Mathematics for 3D Game Programming and Computer Graphics</em>, 3rd ed., Course Technology, 2011.</p></td>
+<td><p>3D のゲームと CG に必要な数学を、証明を含めて網羅的に扱っている</p></td>
+</tr>
+<tr class="row-even"><td><p>Christer Ericson, <em>Real-Time Collision Detection</em>, Morgan Kaufmann, 2004.</p></td>
+<td><p>衝突判定の定番の書籍。さまざまな形状の組み合わせの判定、分離軸定理、空間分割を詳しく扱っている。第 11 章の発展</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ian Millington, <em>Game Physics Engine Development</em>, 2nd ed., Morgan Kaufmann, 2010.</p></td>
+<td><p>物理エンジンを一から作りながら、剛体の運動と衝突応答を学べる。第 10 章・第 12 章・第 14 章の発展</p></td>
+</tr>
+<tr class="row-even"><td><p>Robert Nystrom, <em>Game Programming Patterns</em>, Genever Benning, 2014.</p></td>
+<td><p>ゲームループ、オブジェクトプールなど、ゲームのプログラムの設計パターン。<a class="reference external" href="https://gameprogrammingpatterns.com/">Web 版</a>が公開されている</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h2>講演・論文<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文献</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Kyle Pittman, &quot;Math for Game Programmers: Building a Better Jump&quot;, Game Developers Conference, 2016.</p></td>
+<td><p>ジャンプの高さと時間から重力と初速を求める方法、下降中の重力の調整など。第 10 章のジャンプの設計のもとになった考え方</p></td>
+</tr>
+<tr class="row-odd"><td><p>Squirrel Eiserloh, &quot;Math for Game Programmers: Juicing Your Cameras With Math&quot;, Game Developers Conference, 2016.</p></td>
+<td><p>trauma の 2 乗に比例させた画面の揺れ、ノイズによる揺れなど、カメラの演出の数学。第 9 章・第 15 章</p></td>
+</tr>
+<tr class="row-even"><td><p>Thomas Jakobsen, &quot;Advanced Character Physics&quot;, Game Developers Conference, 2001.</p></td>
+<td><p>位置ベルレ法と、位置を直接動かして拘束を満たす方法。第 13 章のロープと布のもとになった手法</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ken Perlin, &quot;Improving Noise&quot;, ACM Transactions on Graphics, 21(3), 2002.</p></td>
+<td><p>パーリンノイズの改良版。5 次の補間の重み 6t<sup>5</sup> − 15t<sup>4</sup> + 10t<sup>3</sup> が提案された。第 9 章</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>ウェブ上の資料<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>資料</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Glenn Fiedler, <a class="reference external" href="https://gafferongames.com/post/fix_your_timestep/">Fix Your Timestep!</a></p></td>
+<td><p>固定タイムステップと描画の補間について、最もよく参照される解説。第 3 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>Robert Nystrom, <a class="reference external" href="https://gameprogrammingpatterns.com/game-loop.html">Game Loop</a>（<em>Game Programming Patterns</em> より）</p></td>
+<td><p>ゲームループと時間の扱い方の比較。第 3 章</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://easings.net/">Easing Functions Cheat Sheet</a></p></td>
+<td><p>代表的なイージング関数のグラフと式の一覧。第 8 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>Amit Patel, <a class="reference external" href="https://www.redblobgames.com/">Red Blob Games</a></p></td>
+<td><p>ノイズによる地形の生成、グリッド、経路探索などを、動かせる図で解説している。第 9 章、第 15 章の「次のステップ」</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pyga.me/docs/">pygame-ce のドキュメント</a></p></td>
+<td><p>本書のサンプルコードで使った pygame-ce の公式ドキュメント</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.pymunk.org/">pymunk のドキュメント</a></p></td>
+<td><p>第 14 章で使った pymunk の公式ドキュメント</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://box2d.org/">Box2D</a></p></td>
+<td><p>2D の物理エンジン Box2D の公式サイト。作者の Erin Catto による物理エンジンの講演資料も公開されている。第 14 章</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.python.org/ja/3/library/random.html">random — 擬似乱数を生成する</a>（Python のドキュメント）</p></td>
+<td><p>Python の擬似乱数の使い方。第 9 章</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>関連する文書<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>本書の範囲から外れる内容や、前提となる内容は、次の文書で扱っている。</p>
+<ul class="simple">
+<li><p>「ゲーム作成入門」: ゲーム制作の全体の流れ（企画、エンジンの選定、アセット、公開）</p></li>
+<li><p>「コンピューターグラフィックス入門」: 3D の描画の仕組み</p></li>
+<li><p>「線形代数入門」: ベクトルと行列の数学的な理論</p></li>
+<li><p>「Python 入門」: 本書のサンプルコードを読むための Python の基礎</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="glossary.html" class="btn btn-neutral float-left" title="付録 B 用語集" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="付録 D サンプルコード一覧" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

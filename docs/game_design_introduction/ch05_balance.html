@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. ゲームバランス &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="6. 難易度と学習" href="ch06_difficulty.html" />
+    <link rel="prev" title="4. ゲームをシステムとして捉える" href="ch04_systems.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. ゲームバランス</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">5.1. バランスの目標</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">5.2. 成長曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">5.3. コストと価値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">5.4. 選択肢どうしの相性</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">5.4.1. 推移的な関係と支配</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">5.4.2. 非推移的な関係</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">5.5. 確率と期待値</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">5.5.1. 期待値で比べる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">5.5.2. プレイヤーが感じる確率</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">5.6. シミュレーションで検証する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">5.7. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>ゲームバランス</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">5. </span>ゲームバランス<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームバランスとは、ゲームの中の数値や選択肢の強さを調整し、狙った体験が得られる状態にすることである。この章では、成長曲線、コスト、選択肢どうしの相性、確率という 4 つの観点からバランスの考え方を学び、最後にシミュレーションで数値を検証する方法を紹介する。</p>
+<section id="id2">
+<h2><span class="section-number">5.1. </span>バランスの目標<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>「バランスがよい」と一口に言っても、目指すものは複数ある。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 5.1 </span><span class="caption-text">バランスの主な目標</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>目標</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>公平性</p></td>
+<td><p>対戦ゲームで、勝敗がプレイヤーの腕前と判断で決まり、どの陣営やキャラクターを選んだかで決まらない</p></td>
+</tr>
+<tr class="row-odd"><td><p>選択肢の多様性</p></td>
+<td><p>どの武器、キャラクター、戦略にも使い道があり、1 つの選択肢だけが選ばれ続けることがない</p></td>
+</tr>
+<tr class="row-even"><td><p>進行の手応え</p></td>
+<td><p>1 人用のゲームで、成長の速さや敵の強さが、プレイヤーに退屈も絶望も感じさせない</p></td>
+</tr>
+</tbody>
+</table>
+<p>公平性については、ゲームの構造が対称か非対称かで考え方が変わる。将棋やチェスのように両者が同じ駒とルールで戦うゲームは対称であり、先手と後手の差を除けば構造上は公平である。一方、対戦格闘ゲームのキャラクターや、ストラテジーゲームで性能の異なる陣営を選ぶ場合は非対称であり、異なる性能どうしの強さをつり合わせる作業が必要になる。非対称なゲームは調整が難しいが、選択の楽しさや多様な戦い方を生む。</p>
+<p>進行の手応えは難易度とも深く関わるため、第 6 章で改めて扱う。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">5.2. </span>成長曲線<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>RPG では、キャラクターのレベルを上げるのに必要な経験値を式で決めることが多い。式の形によって、成長の手応えは大きく変わる。この節では、キャラクターのレベルを単に「レベル」と書く。現在のレベルを <span class="math notranslate nohighlight">\(L\)</span>、次のレベルまでに必要な経験値を <span class="math notranslate nohighlight">\(E(L)\)</span> として、代表的な 3 つの式を比べる。</p>
+<div class="math notranslate nohighlight">
+\[E_{\text{線形}}(L) = 100L, \quad
+E_{\text{多項式}}(L) = 50L^2, \quad
+E_{\text{指数}}(L) = 100 \times 1.2^{L-1}\]</div>
+<figure class="align-center" id="id14">
+<img alt="成長曲線の比較" src="_images/growth_curves.png" />
+<figcaption>
+<p><span class="caption-number">図 5.1 </span><span class="caption-text">成長曲線の比較</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>線形の式では、必要な経験値が一定の量ずつ増える。多項式の式では増え方がしだいに大きくなる。指数の式では毎回一定の割合（この例では 20 %）ずつ増えるので、序盤はほとんど増えないが、レベルが上がると急激に増える。この例では、レベル 17 で線形の式を追い越し、図の範囲の外のレベル 37 で多項式の式も追い越す。</p>
+<p>ただし、成長の手応えを決めるのは必要な経験値そのものではない。プレイヤーが実感するのは「次のレベルまでに何回戦う必要があるか」である。敵 1 体から得られる経験値を <span class="math notranslate nohighlight">\(G(L)\)</span> とすると、次のレベルまでに必要な戦闘の回数 <span class="math notranslate nohighlight">\(N(L)\)</span> は次の式で表せる。</p>
+<div class="math notranslate nohighlight">
+\[N(L) = \frac{E(L)}{G(L)}\]</div>
+<p>敵の経験値も先へ進むほど増えるので、<span class="math notranslate nohighlight">\(E(L)\)</span> と <span class="math notranslate nohighlight">\(G(L)\)</span> の増え方の比で手応えが決まる。設計するときは、先に「レベル 10 では 5 回、レベル 30 では 15 回の戦闘で次のレベルに上がってほしい」のように <span class="math notranslate nohighlight">\(N(L)\)</span> を決め、そこから逆算して <span class="math notranslate nohighlight">\(E(L)\)</span> と <span class="math notranslate nohighlight">\(G(L)\)</span> を決めると、意図した手応えを作りやすい。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">5.3. </span>コストと価値<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>カードゲームやストラテジーゲームでは、カードやユニットに「使うための費用（コスト）」を設定し、強いものほどコストを高くする。このとき、性能をコストに換算する基準を作っておくと、バランスを保ちやすい。この基準をコストカーブと呼ぶ。</p>
+<p>例えば、攻撃力 1 と体力 1 をそれぞれ 1 点とし、コスト 1 につき 2 点分の性能を持たせる、と決める。特殊能力は効果に応じて点数を決める。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 5.2 </span><span class="caption-text">コストカーブによる評価の例</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 12.0%" />
+<col style="width: 12.0%" />
+<col style="width: 26.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>カード</p></th>
+<th class="head"><p>攻撃力</p></th>
+<th class="head"><p>体力</p></th>
+<th class="head"><p>特殊能力</p></th>
+<th class="head"><p>性能の合計</p></th>
+<th class="head"><p>コスト</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>見習い兵士</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>なし</p></td>
+<td><p>2 点</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>歩兵</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>なし</p></td>
+<td><p>4 点</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>弓兵</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p>離れた敵を攻撃できる（1 点）</p></td>
+<td><p>4 点</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>騎士</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>なし</p></td>
+<td><p>7 点</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+<p>この基準で見ると、騎士はコスト 3 に対して 7 点の性能を持ち、基準の 6 点を 1 点上回っている。こうした基準から外れたものは、ゲームの中で突出して強く（または弱く）なりやすい。基準はあくまで出発点であり、特殊能力の価値はゲームの状況によって変わるので、最終的にはプレイテストで確かめる。しかし基準が無ければ、どのカードが強すぎるのかを議論することもできない。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">5.4. </span>選択肢どうしの相性<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<section id="id6">
+<h3><span class="section-number">5.4.1. </span>推移的な関係と支配<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>選択肢 A が B より強く、B が C より強いなら A は C より強い、という関係を推移的な関係と呼ぶ。武器の性能がすべての面で一列に並ぶ場合、一番上の武器を持っていれば他を選ぶ理由が無い。</p>
+<p>ある選択肢が、どんな状況でも別の選択肢以上の結果をもたらすとき、前者は後者を支配するという。他のすべての選択肢を支配する選択肢があれば、それを選ぶのが常に最善であり、選択の楽しさは無くなる。このような戦略を支配戦略と呼ぶ。</p>
+<p>1 人用の RPG で、物語の進行とともに上位の武器に持ち替えていくのは、推移的な関係を意図的に使った設計である。この場合は、持ち替える瞬間の「強くなった」という手応えが目的であり、問題にはならない。問題になるのは、同時に選べる選択肢の中に支配戦略がある場合である。支配戦略を見つけたら、次のような方法で崩す。</p>
+<ul class="simple">
+<li><p>支配している選択肢のコストを上げる。</p></li>
+<li><p>支配している選択肢に弱点（特定の相手や状況に弱い）を加える。</p></li>
+<li><p>状況によって有利不利が入れ替わる要素を加える。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3><span class="section-number">5.4.2. </span>非推移的な関係<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>じゃんけんのように、A は B に強く、B は C に強く、C は A に強い、という関係を非推移的な関係と呼ぶ。非推移的な関係には支配戦略が無く、相手の出方を読む駆け引きが生まれる。ストラテジーゲームでよく使われる三すくみはその典型である。</p>
+<figure class="align-center" id="id16">
+<div class="graphviz"><img src="_images/graphviz-8a2ded723a8be8004648cb78bb67919943dab0de.png" alt="digraph rps {
+    layout=circo;
+    mindist=1.8;
+    node [shape=circle, style=filled, fillcolor=&quot;#eef3fb&quot;, width=0.9];
+    spear [label=&quot;槍兵&quot;];
+    cavalry [label=&quot;騎兵&quot;];
+    archer [label=&quot;弓兵&quot;];
+    spear -&gt; cavalry [label=&quot;強い&quot;];
+    cavalry -&gt; archer [label=&quot;強い&quot;];
+    archer -&gt; spear [label=&quot;強い&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 5.2 </span><span class="caption-text">兵種の三すくみ</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>非推移的な関係では、ある選択肢を少し強くしたときの影響が直感に反することがある。じゃんけんで、グーで勝ったときだけ 2 点、それ以外の勝ちは 1 点、負けは勝ちの点数分を失う、というルールに変えたとする。相手がグー、パー、チョキを出す確率をそれぞれ <span class="math notranslate nohighlight">\(r\)</span>、<span class="math notranslate nohighlight">\(p\)</span>、<span class="math notranslate nohighlight">\(s\)</span> とすると、自分が各手を出したときの得点の期待値は次のようになる。</p>
+<div class="math notranslate nohighlight">
+\[\text{グー}: 2s - p, \quad \text{パー}: r - s, \quad \text{チョキ}: p - 2r\]</div>
+<p>どの手を出しても期待値が同じ（この場合は 0）になるつり合いの状態を求めると、<span class="math notranslate nohighlight">\(r = 1/4\)</span>、<span class="math notranslate nohighlight">\(p = 1/2\)</span>、<span class="math notranslate nohighlight">\(s = 1/4\)</span> となる。グーを強くしたのに、つり合いの状態で最も多く出されるのはパーになり、グーが出される割合はむしろ減る。グーを警戒してパーが増え、パーに勝てるチョキも一定の割合で出されるためである。選択肢の相性が絡むと、個々の性能の調整がどう波及するかは計算やシミュレーションで確かめる必要がある。</p>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">5.5. </span>確率と期待値<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>多くのゲームは、攻撃の命中、アイテムの出現、カードの配り方などに乱数を使う。乱数を使うときは、期待値と、プレイヤーが感じる確率の両方を考える必要がある。</p>
+<section id="id9">
+<h3><span class="section-number">5.5.1. </span>期待値で比べる<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>命中率 <span class="math notranslate nohighlight">\(p_{\text{hit}}\)</span>、ダメージ <span class="math notranslate nohighlight">\(d\)</span>、会心率 <span class="math notranslate nohighlight">\(p_{\text{crit}}\)</span>、会心のダメージ倍率 <span class="math notranslate nohighlight">\(m\)</span> の攻撃が 1 回で与えるダメージの期待値は、次の式で表せる。</p>
+<div class="math notranslate nohighlight">
+\[E[\text{ダメージ}] = p_{\text{hit}} \times d \times \left\{1 + p_{\text{crit}} (m - 1)\right\}\]</div>
+<p>例えば、命中率 90 %、ダメージ 10、会心なしの攻撃の期待値は 9 である。命中率 95 %、ダメージ 8、会心率 20 %、倍率 2.5 の攻撃の期待値は <span class="math notranslate nohighlight">\(0.95 \times 8 \times (1 + 0.2 \times 1.5) = 9.88\)</span> となる。期待値を計算すると、見た目の数値が異なる攻撃どうしを同じ物差しで比べられる。</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">5.5.2. </span>プレイヤーが感じる確率<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>人は確率を正しく感じ取るのが苦手である。命中率 90 % と表示されると、多くのプレイヤーは「ほぼ必ず当たる」と感じる。しかし、攻撃を何度も繰り返せば外れは必ず起きる。<span class="math notranslate nohighlight">\(n\)</span> 回攻撃して少なくとも 1 回外れる確率は <span class="math notranslate nohighlight">\(1 - 0.9^n\)</span> である。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 5.3 </span><span class="caption-text">命中率 90 % の攻撃を n 回行ったときの確率</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>攻撃の回数 n</p></th>
+<th class="head"><p>少なくとも 1 回外れる確率</p></th>
+<th class="head"><p>2 回連続で外れる場面が少なくとも 1 回ある確率</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>約 41 %</p></td>
+<td><p>約 4 %</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>約 65 %</p></td>
+<td><p>約 8 %</p></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>約 96 %</p></td>
+<td><p>約 23 %</p></td>
+</tr>
+</tbody>
+</table>
+<p>1 回の戦闘で 10 回攻撃するゲームなら、3 回に 2 回の戦闘で「90 % なのに外れた」という経験をする。こうした経験が続くと、プレイヤーは「表示された確率はうそだ」と感じ始める。対策として、次のような方法が使われている。</p>
+<ul class="simple">
+<li><p><strong>命中率の補正</strong>：基準の命中率を表示値より少し低く設定しておき、外れが続くほど次の命中率を上げ、当たったら基準に戻す。長い目で見た命中率は表示値と同じにしたまま、連続した外れを起きにくくできる。</p></li>
+<li><p><strong>シャッフルバッグ</strong>：袋に決まった数の「当たり」と「外れ」を入れ、袋から順に取り出す。袋が空になったら補充する。多くのテトリスでは 7 種類のブロックを 1 組として順番を並べ替えて出すので、あるブロックが長い間来ないという状況は起こらない（同じブロックの間隔は最大でも 12 個）。</p></li>
+<li><p><strong>乱数を使わない</strong>：命中を確実にし、ダメージの幅だけを乱数にするなど、運の影響を小さくする。</p></li>
+</ul>
+<p>乱数はゲームに意外性と緊張感を与えるが、プレイヤーの努力や判断を台無しにすると不公平だと感じさせる。どこに乱数を使い、どこに使わないかは、作りたい体験から逆算して決める。</p>
+</section>
+</section>
+<section id="id11">
+<h2><span class="section-number">5.6. </span>シミュレーションで検証する<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>数値の調整は、期待値の計算だけでは不十分なことが多い。ここでは「戦士」と「盗賊」の 2 体のユニットを例に、モンテカルロ法（乱数を使って多数回の試行を行い、結果を統計的に調べる方法）で勝率を求める。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 5.4 </span><span class="caption-text">2 体のユニットの性能</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 14.0%" />
+<col style="width: 14.0%" />
+<col style="width: 14.0%" />
+<col style="width: 14.0%" />
+<col style="width: 14.0%" />
+<col style="width: 14.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ユニット</p></th>
+<th class="head"><p>体力</p></th>
+<th class="head"><p>ダメージ</p></th>
+<th class="head"><p>命中率</p></th>
+<th class="head"><p>会心率</p></th>
+<th class="head"><p>会心の倍率</p></th>
+<th class="head"><p>期待ダメージ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>戦士</p></td>
+<td><p>100</p></td>
+<td><p>10</p></td>
+<td><p>90 %</p></td>
+<td><p>なし</p></td>
+<td><p>なし</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>盗賊</p></td>
+<td><p>75</p></td>
+<td><p>8</p></td>
+<td><p>95 %</p></td>
+<td><p>調整する</p></td>
+<td><p>2.5</p></td>
+<td><p>会心率による</p></td>
+</tr>
+</tbody>
+</table>
+<p>ユニットの性能と攻撃の処理は <a class="reference internal" href="#list-balance-unit"><span class="std std-numref">リスト 5.1</span></a>、2 体を交互に攻撃させて勝敗を決める処理は <a class="reference internal" href="#list-balance-battle"><span class="std std-numref">リスト 5.2</span></a> のとおりである。</p>
+<div class="literal-block-wrapper docutils container" id="list-balance-unit">
+<div class="code-block-caption"><span class="caption-number">リスト 5.1 </span><span class="caption-text">balance_simulation.py（ユニットの性能と攻撃）</span><a class="headerlink" href="#list-balance-unit" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">21</span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">22</span><span class="k">class</span><span class="w"> </span><span class="nc">Unit</span><span class="p">:</span>
+<span class="linenos">23</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;戦闘ユニットの能力値。&quot;&quot;&quot;</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="linenos">26</span>    <span class="n">hp</span><span class="p">:</span> <span class="nb">int</span>
+<span class="linenos">27</span>    <span class="n">damage</span><span class="p">:</span> <span class="nb">int</span>
+<span class="linenos">28</span>    <span class="n">hit_rate</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># 攻撃が当たる確率</span>
+<span class="linenos">29</span>    <span class="n">crit_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># 当たったときに会心になる確率</span>
+<span class="linenos">30</span>    <span class="n">crit_multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 会心のときのダメージ倍率</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="k">def</span><span class="w"> </span><span class="nf">expected_damage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">33</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;1 回の攻撃で与えるダメージの期待値。&quot;&quot;&quot;</span>
+<span class="linenos">34</span>        <span class="n">crit_bonus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crit_rate</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crit_multiplier</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">35</span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hit_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">damage</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">crit_bonus</span><span class="p">)</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>    <span class="k">def</span><span class="w"> </span><span class="nf">attack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">38</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;1 回攻撃し、与えたダメージを返す。&quot;&quot;&quot;</span>
+<span class="linenos">39</span>        <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hit_rate</span><span class="p">:</span>
+<span class="linenos">40</span>            <span class="k">return</span> <span class="mi">0</span>
+<span class="linenos">41</span>        <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">crit_rate</span><span class="p">:</span>
+<span class="linenos">42</span>            <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">damage</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crit_multiplier</span><span class="p">)</span>
+<span class="linenos">43</span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">damage</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="list-balance-battle">
+<div class="code-block-caption"><span class="caption-number">リスト 5.2 </span><span class="caption-text">balance_simulation.py（1 回の戦闘）</span><a class="headerlink" href="#list-balance-battle" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">53</span><span class="k">def</span><span class="w"> </span><span class="nf">battle</span><span class="p">(</span><span class="n">first</span><span class="p">:</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">second</span><span class="p">:</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Unit</span><span class="p">:</span>
+<span class="linenos">54</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 体を交互に攻撃させ、勝ったほうを返す。&quot;&quot;&quot;</span>
+<span class="linenos">55</span>    <span class="n">hp</span> <span class="o">=</span> <span class="p">{</span><span class="n">first</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">first</span><span class="o">.</span><span class="n">hp</span><span class="p">,</span> <span class="n">second</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">second</span><span class="o">.</span><span class="n">hp</span><span class="p">}</span>
+<span class="linenos">56</span>    <span class="n">attacker</span><span class="p">,</span> <span class="n">defender</span> <span class="o">=</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span>
+<span class="linenos">57</span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="linenos">58</span>        <span class="n">hp</span><span class="p">[</span><span class="n">defender</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">-=</span> <span class="n">attacker</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+<span class="linenos">59</span>        <span class="k">if</span> <span class="n">hp</span><span class="p">[</span><span class="n">defender</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">60</span>            <span class="k">return</span> <span class="n">attacker</span>
+<span class="linenos">61</span>        <span class="n">attacker</span><span class="p">,</span> <span class="n">defender</span> <span class="o">=</span> <span class="n">defender</span><span class="p">,</span> <span class="n">attacker</span>
+</pre></div>
+</div>
+</div>
+<p>盗賊の会心率を 0 % から 50 % まで 5 % ずつ変え、それぞれ 5000 回戦わせた結果が次の図である。</p>
+<figure class="align-center" id="id19">
+<img alt="会心率と勝率" src="_images/balance_simulation.png" />
+<figcaption>
+<p><span class="caption-number">図 5.3 </span><span class="caption-text">盗賊の会心率と勝率</span><a class="headerlink" href="#id19" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>盗賊の期待ダメージが戦士と同じ 9.0 になるのは会心率が約 12 % のときだが、そのときの盗賊の勝率は 10 % 前後にすぎない。盗賊のほうが体力が低いので、期待ダメージが同じなら先に倒れるからである。公平にするには、相手を倒すまでに必要な攻撃の回数をそろえる必要がある。戦士は盗賊を平均 <span class="math notranslate nohighlight">\(75 / 9 \approx 8.3\)</span> 回の攻撃で倒すので、盗賊も戦士を同じくらいの回数で倒せる、つまり期待ダメージが約 12 になる必要がある。これは会心率約 39 % に当たり、図で勝率が 50 % をまたぐ位置とおおむね一致する。</p>
+<p>この例のように、単純な期待値の比較だけでは見落としがあり、ユニットどうしの相互作用を含めたシミュレーションで確かめることが大切である。また、シミュレーションは期待値だけでなく、ばらつきも明らかにする。会心に頼る盗賊は、勝ち負けが運に左右されやすい。どちらのユニットを選んだプレイヤーにも納得のいく結果になっているかは、最終的には実際に遊んで確かめる。</p>
+</section>
+<section id="id12">
+<h2><span class="section-number">5.7. </span>演習<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>成長曲線の 3 つの式について、キャラクターのレベル 1 から 30 まで上げるのに必要な経験値の合計をそれぞれ計算せよ。</p></li>
+<li><p>コストカーブの例で、騎士を基準どおりの性能にするには何を変えればよいか。複数の案を出せ。</p></li>
+<li><p>じゃんけんで、チョキで勝ったときだけ 3 点にした場合のつり合いの状態（グー、パー、チョキを出す確率）を求めよ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">balance_simulation.py</span></code> の盗賊の体力を 85 に変えて実行し、勝率が 50 % になる会心率がどう変わるかを確かめよ。結果を、必要な攻撃の回数の考え方で説明せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch04_systems.html" class="btn btn-neutral float-left" title="4. ゲームをシステムとして捉える" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch06_difficulty.html" class="btn btn-neutral float-right" title="6. 難易度と学習" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 7 章 GDScript の応用 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 8 章 ゲームループと時間" href="ch08_game_loop.html" />
+    <link rel="prev" title="第 6 章 GDScript の基礎" href="ch06_gdscript_basics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 7 章　GDScript の応用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">シグナル</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">エディターでシグナルを接続する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">独自のシグナルを定義して使う</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">関数を値として扱う</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">ラムダ式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bind">引数を追加する bind()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#await">await</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">列挙型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">セッターとゲッター</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#super">継承と super</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">静的型付けを活用する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">型の指定漏れを警告する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">型の変換と判定</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">エラーの扱い</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python の経験者がつまずきやすい点</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 7 章　GDScript の応用</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch06_gdscript_basics.html" class="btn btn-neutral float-left" title="第 6 章 GDScript の基礎" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch08_game_loop.html" class="btn btn-neutral float-right" title="第 8 章 ゲームループと時間" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gdscript">
+<span id="ch07"></span><h1>第 7 章　GDScript の応用<a class="headerlink" href="#gdscript" title="Link to this heading"></a></h1>
+<p>本章では、Godot のスクリプトで特に重要なシグナルと <code class="docutils literal notranslate"><span class="pre">await</span></code> を中心に、列挙型、関数オブジェクト、静的型付けの活用、エラーの扱い方を説明する。最後に、Python の経験者がつまずきやすい点をまとめる。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter07</span></code> フォルダーにある。</p>
+<section id="id1">
+<h2>シグナル<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>シグナル（signal）は、ノードが「何かが起きた」ことをほかのノードに知らせる仕組みである。デザインパターンのオブザーバーパターンや、GUI プログラミングのイベントに相当する。</p>
+<p>例えば、ボタンは押されたときに <code class="docutils literal notranslate"><span class="pre">pressed</span></code> シグナルを発行（emit）する。ボタンを押したときの処理を書きたいノードは、このシグナルに自分の関数を接続（connect）しておく。すると、ボタンが押されるたびにその関数が呼ばれる。ボタンの側は、誰が接続しているかを知らなくてよい。</p>
+<p>Godot のノードには、多くのシグナルがあらかじめ定義されている。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 28 </span><span class="caption-text">よく使う組み込みのシグナル</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>シグナル</p></th>
+<th class="head"><p>発行されるタイミング</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Button.pressed</span></code></p></td>
+<td><p>ボタンが押されたとき</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Timer.timeout</span></code></p></td>
+<td><p>タイマーが設定時間に達したとき</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Area2D.body_entered(body)</span></code></p></td>
+<td><p>物理的な物体が領域に入ったとき</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AnimationPlayer.animation_finished(anim_name)</span></code></p></td>
+<td><p>アニメーションの再生が終わったとき</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Node.tree_exited</span></code></p></td>
+<td><p>ノードがシーンツリーから取り除かれたとき</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id2">
+<h3>エディターでシグナルを接続する<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> の <code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> では、<code class="docutils literal notranslate"><span class="pre">Area2D</span></code> の <code class="docutils literal notranslate"><span class="pre">body_entered</span></code> シグナルを、エディターで <code class="docutils literal notranslate"><span class="pre">coin.gd</span></code> の <code class="docutils literal notranslate"><span class="pre">_on_body_entered()</span></code> に接続している。手順は次のとおりである。</p>
+<ol class="arabic simple">
+<li><p>シーンドックで <code class="docutils literal notranslate"><span class="pre">Coin</span></code> ノードを選び、インスペクターの右にある「シグナル」ドックを開く。</p></li>
+<li><p>シグナルの一覧から <code class="docutils literal notranslate"><span class="pre">body_entered(body:</span> <span class="pre">Node2D)</span></code> をダブルクリックする。</p></li>
+<li><p>「メソッドにシグナルを接続」ダイアログで、接続先のノード（ここでは <code class="docutils literal notranslate"><span class="pre">Coin</span></code> 自身）を選び、「接続」を押す。</p></li>
+</ol>
+<p>スクリプトに <code class="docutils literal notranslate"><span class="pre">_on_body_entered(body:</span> <span class="pre">Node2D)</span></code> という関数がなければ、自動で作られる。接続の情報はシーンファイルの <code class="docutils literal notranslate"><span class="pre">[connection]</span></code> に保存される。接続されている関数の行には、スクリプトエディターの左端に緑色のアイコンが表示される。</p>
+</section>
+<section id="id3">
+<h3>独自のシグナルを定義して使う<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>シグナルは自分で定義することもできる。次の <code class="docutils literal notranslate"><span class="pre">Health</span></code> は、体力を管理するだけのノードである。体力が変化したときと 0 になったときに、シグナルを発行する。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 13 </span><span class="caption-text">chapter07/health.gd</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class_name</span><span class="w"> </span><span class="n">Health</span>
+<span class="linenos"> 2</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 3</span><span class="c1">## 体力を管理するコンポーネント。体力が変化したときと 0 になったときにシグナルを発行する。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1">## 体力が変化したときに発行する。</span>
+<span class="linenos"> 6</span><span class="k">signal</span><span class="w"> </span><span class="n">health_changed</span><span class="p">(</span><span class="n">current</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">maximum</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="c1">## 体力が 0 になったときに発行する。</span>
+<span class="linenos"> 8</span><span class="k">signal</span><span class="w"> </span><span class="n">died</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">max_health</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">var</span><span class="w"> </span><span class="n">current_health</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">current_health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_health</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="k">func</span><span class="w"> </span><span class="n">take_damage</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">current_health</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">        </span><span class="k">return</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">current_health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxi</span><span class="p">(</span><span class="n">current_health</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">amount</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">23</span><span class="w">    </span><span class="n">health_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">current_health</span><span class="p">,</span><span class="w"> </span><span class="n">max_health</span><span class="p">)</span>
+<span class="linenos">24</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">current_health</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+<span class="linenos">25</span><span class="w">        </span><span class="n">died</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="k">func</span><span class="w"> </span><span class="n">heal</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">current_health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mini</span><span class="p">(</span><span class="n">current_health</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">amount</span><span class="p">,</span><span class="w"> </span><span class="n">max_health</span><span class="p">)</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">health_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">current_health</span><span class="p">,</span><span class="w"> </span><span class="n">max_health</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>シグナルは <code class="docutils literal notranslate"><span class="pre">signal</span> <span class="pre">名前(引数)</span></code> で定義し、<code class="docutils literal notranslate"><span class="pre">名前.emit(引数)</span></code> で発行する。<code class="docutils literal notranslate"><span class="pre">Health</span></code> は、誰が体力の変化に関心を持っているかを知らない。体力の表示を更新するのか、効果音を鳴らすのか、ゲームオーバーにするのかは、シグナルを受け取る側が決める。こうしておくと、<code class="docutils literal notranslate"><span class="pre">Health</span></code> をプレイヤーにも敵にも使い回せる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Health</span></code> を使う側のスクリプトは次のとおりである。体力をプログレスバーで表示し、ボタンでダメージと回復を与える。</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-number">リスト 14 </span><span class="caption-text">chapter07/signal_demo.gd</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Control</span>
+<span class="linenos"> 2</span><span class="c1">## シグナル、await、enum、ラムダ式の例。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">## キャラクターの状態</span>
+<span class="linenos"> 5</span><span class="k">enum</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ALIVE</span><span class="p">,</span><span class="w"> </span><span class="n">DEAD</span><span class="w"> </span><span class="p">}</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">const</span><span class="w"> </span><span class="n">RESPAWN_SECONDS</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="k">var</span><span class="w"> </span><span class="n">state</span><span class="p">:</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="o">.</span><span class="n">ALIVE</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_health</span><span class="p">:</span><span class="w"> </span><span class="n">Health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Health</span>
+<span class="linenos">12</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_bar</span><span class="p">:</span><span class="w"> </span><span class="n">ProgressBar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%HealthBar</span>
+<span class="linenos">13</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_status</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%StatusLabel</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">17</span><span class="w">    </span><span class="c1"># コードでシグナルを接続する。接続先には関数そのもの（Callable）を渡す。</span>
+<span class="linenos">18</span><span class="w">    </span><span class="n">_health</span><span class="o">.</span><span class="n">health_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_health_changed</span><span class="p">)</span>
+<span class="linenos">19</span><span class="w">    </span><span class="n">_health</span><span class="o">.</span><span class="n">died</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_died</span><span class="p">)</span>
+<span class="linenos">20</span><span class="w">    </span><span class="c1"># 小さな処理はラムダ式（名前のない関数）で書ける。</span>
+<span class="linenos">21</span><span class="w">    </span><span class="nv">%DamageButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">func</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span><span class="w"> </span><span class="n">_health</span><span class="o">.</span><span class="n">take_damage</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<span class="linenos">22</span><span class="w">    </span><span class="nv">%HealButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">func</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span><span class="w"> </span><span class="n">_health</span><span class="o">.</span><span class="n">heal</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+<span class="linenos">23</span><span class="w">    </span><span class="n">_on_health_changed</span><span class="p">(</span><span class="n">_health</span><span class="o">.</span><span class="n">max_health</span><span class="p">,</span><span class="w"> </span><span class="n">_health</span><span class="o">.</span><span class="n">max_health</span><span class="p">)</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="k">func</span><span class="w"> </span><span class="n">_on_health_changed</span><span class="p">(</span><span class="n">current</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">maximum</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">27</span><span class="w">    </span><span class="n">_bar</span><span class="o">.</span><span class="n">max_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maximum</span>
+<span class="linenos">28</span><span class="w">    </span><span class="n">_bar</span><span class="o">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">_status</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;HP </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">current</span><span class="p">,</span><span class="w"> </span><span class="n">maximum</span><span class="p">]</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="k">func</span><span class="w"> </span><span class="n">_on_died</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">33</span><span class="w">    </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="o">.</span><span class="n">DEAD</span>
+<span class="linenos">34</span><span class="w">    </span><span class="n">_status</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;倒れた。</span><span class="si">%d</span><span class="s2"> 秒後に復活する...&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">RESPAWN_SECONDS</span>
+<span class="linenos">35</span><span class="w">    </span><span class="c1"># await はシグナルが発行されるまで、この関数の実行を一時停止する。</span>
+<span class="linenos">36</span><span class="w">    </span><span class="c1"># その間もゲーム全体は止まらない。</span>
+<span class="linenos">37</span><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">RESPAWN_SECONDS</span><span class="p">)</span><span class="o">.</span><span class="n">timeout</span>
+<span class="linenos">38</span><span class="w">    </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="o">.</span><span class="n">ALIVE</span>
+<span class="linenos">39</span><span class="w">    </span><span class="n">_health</span><span class="o">.</span><span class="n">heal</span><span class="p">(</span><span class="n">_health</span><span class="o">.</span><span class="n">max_health</span><span class="p">)</span>
+<span class="linenos">40</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;復活した。状態: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="n">state</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>18 行目と 19 行目で、<code class="docutils literal notranslate"><span class="pre">Health</span></code> のシグナルをコードで接続している。<code class="docutils literal notranslate"><span class="pre">connect()</span></code> には、呼び出してほしい関数を渡す。<code class="docutils literal notranslate"><span class="pre">_on_health_changed</span></code> のように括弧を付けずに関数名を書くと、関数を呼び出すのではなく、関数そのものを表す値（<code class="docutils literal notranslate"><span class="pre">Callable</span></code>）になる。</p>
+<figure class="align-default" id="id15">
+<div class="graphviz"><object data="../_images/graphviz-08dda37892c4d56351997666b3c3fcd55d89cda9.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph signals {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  edge [fontsize=10];
+  button [label=&quot;DamageButton\n（Button）&quot;];
+  demo [label=&quot;SignalDemo\n（signal_demo.gd）&quot;];
+  health [label=&quot;Health\n（health.gd）&quot;];
+  bar [label=&quot;HealthBar と\nStatusLabel&quot;];
+  button -&gt; demo [label=&quot;pressed&quot;];
+  demo -&gt; health [label=&quot;take_damage(30)\nを呼ぶ&quot;, style=dashed];
+  health -&gt; demo [label=&quot;health_changed\ndied&quot;];
+  demo -&gt; bar [label=&quot;表示を更新&quot;, style=dashed];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 9 </span><span class="caption-text">signal_demo.tscn でのシグナルの流れ</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>図の実線はシグナル、破線はメソッドの呼び出しである。親（<code class="docutils literal notranslate"><span class="pre">SignalDemo</span></code>）は子（<code class="docutils literal notranslate"><span class="pre">Health</span></code>）のメソッドを直接呼び、子は親にシグナルで知らせている。<a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で説明した「呼び出しは下へ、通知は上へ」の形になっている。</p>
+<figure class="align-default" id="id16">
+<a class="screenshot reference internal image-reference" href="../_images/ch07_signal.png"><img alt="../_images/ch07_signal.png" class="screenshot" src="../_images/ch07_signal.png" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 10 </span><span class="caption-text">signal_demo.tscn の実行結果</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="id4">
+<h2>関数を値として扱う<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>GDScript では、関数を <code class="docutils literal notranslate"><span class="pre">Callable</span></code> という型の値として変数に入れたり、引数として渡したりできる。</p>
+<section id="id5">
+<h3>ラムダ式<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">func(引数)</span> <span class="pre">-&gt;</span> <span class="pre">戻り値の型:</span> <span class="pre">処理</span></code> の形で、名前のない関数（ラムダ式）を書ける。<code class="docutils literal notranslate"><span class="pre">signal_demo.gd</span></code> の 21 行目と 22 行目では、ボタンの <code class="docutils literal notranslate"><span class="pre">pressed</span></code> シグナルにラムダ式を接続している。1 行で書ける短い処理を、わざわざ別の関数として定義せずに済む。</p>
+<p>ラムダ式は複数行にもできる。その場合は、通常の関数と同じようにインデントして本体を書く。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">var</span><span class="w"> </span><span class="n">doubled</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">v</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># [2, 4, 6]</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">func</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">4</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;押された&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="w">    </span><span class="n">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ラムダ式は、作られた時点のローカル変数の値を取り込む。取り込んだ後に元の変数へ別の値を代入しても、ラムダ式の中の値は変わらない。この点は Python のクロージャー（変数そのものを参照する）と異なる。ただし、配列や辞書のように参照で扱われる値は、中身の変更が共有される。</p>
+</section>
+<section id="bind">
+<h3>引数を追加する bind()<a class="headerlink" href="#bind" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Callable</span></code> の <code class="docutils literal notranslate"><span class="pre">bind()</span></code> を使うと、呼び出し時に渡す引数を追加できる。同じ関数を複数のシグナルに接続し、どこから呼ばれたかを引数で区別したい場合に便利である。<a class="reference internal" href="ch14_audio.html#ch14"><span class="std std-ref">第 14 章　サウンド</span></a> のサンプルでは、3 つのボタンを 1 つの関数に接続し、鳴らす音を <code class="docutils literal notranslate"><span class="pre">bind()</span></code> で渡している。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="o">%</span><span class="n">JumpButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_play_se</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://assets/jump.wav&quot;</span><span class="p">)))</span>
+<span class="linenos">2</span><span class="nv">%CoinButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_play_se</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://assets/coin.wav&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="await">
+<h2>await<a class="headerlink" href="#await" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">await</span></code> は、シグナルが発行されるまで関数の実行を一時停止する。<code class="docutils literal notranslate"><span class="pre">signal_demo.gd</span></code> の <code class="docutils literal notranslate"><span class="pre">_on_died()</span></code> は、倒れたことを表示してから 2 秒待ち、体力を回復する。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">await</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">RESPAWN_SECONDS</span><span class="p">)</span><span class="o">.</span><span class="n">timeout</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">get_tree().create_timer()</span></code> は、指定した秒数が過ぎると <code class="docutils literal notranslate"><span class="pre">timeout</span></code> シグナルを発行する使い捨てのタイマーを作る。<code class="docutils literal notranslate"><span class="pre">await</span></code> はこのシグナルを待つ。</p>
+<p><code class="docutils literal notranslate"><span class="pre">await</span></code> で一時停止している間も、ゲームは止まらない。<code class="docutils literal notranslate"><span class="pre">_on_died()</span></code> を呼び出した側には、<code class="docutils literal notranslate"><span class="pre">await</span></code> の時点で制御が戻る。2 秒後にシグナルが発行されると、<code class="docutils literal notranslate"><span class="pre">await</span></code> の次の行から実行が再開される。Python の <code class="docutils literal notranslate"><span class="pre">async</span></code> と <code class="docutils literal notranslate"><span class="pre">await</span></code> に似ているが、GDScript では関数に <code class="docutils literal notranslate"><span class="pre">async</span></code> を付ける必要はない。</p>
+<p><code class="docutils literal notranslate"><span class="pre">await</span></code> を使うと、時間の経過を伴う一連の処理（演出、チュートリアルの進行、敵の行動パターンなど）を上から順に書ける。ただし、待っている間にノードが削除されると、再開されない。また、同じ関数が待っている間に再び呼ばれると、複数の実行が同時に進行する。こうした状況が起こりうる場合は、状態を表す変数を確認するなどの対策が必要になる。</p>
+</section>
+<section id="id6">
+<h2>列挙型<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">enum</span></code> で列挙型を定義できる。<code class="docutils literal notranslate"><span class="pre">signal_demo.gd</span></code> では、キャラクターの状態を <code class="docutils literal notranslate"><span class="pre">State</span></code> として定義している。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">enum</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ALIVE</span><span class="p">,</span><span class="w"> </span><span class="n">DEAD</span><span class="w"> </span><span class="p">}</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">var</span><span class="w"> </span><span class="n">state</span><span class="p">:</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="o">.</span><span class="n">ALIVE</span>
+</pre></div>
+</div>
+<p>列挙型の値の実体は整数で、先頭から 0、1、2 と番号が振られる。<code class="docutils literal notranslate"><span class="pre">State.keys()</span></code> で名前の配列を取得できるので、デバッグ時に <code class="docutils literal notranslate"><span class="pre">State.keys()[state]</span></code> で名前を表示できる。変数の型を <code class="docutils literal notranslate"><span class="pre">State</span></code> にすると、エディターが補完で候補を示してくれる。<code class="docutils literal notranslate"><span class="pre">&#64;export</span> <span class="pre">var</span> <span class="pre">state:</span> <span class="pre">State</span></code> とすれば、インスペクターにドロップダウンとして表示される。</p>
+</section>
+<section id="id7">
+<h2>セッターとゲッター<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>変数への代入や参照のときに処理を挟みたい場合は、セッター（<code class="docutils literal notranslate"><span class="pre">set</span></code>）とゲッター（<code class="docutils literal notranslate"><span class="pre">get</span></code>）を定義する。Python のプロパティ（<code class="docutils literal notranslate"><span class="pre">&#64;property</span></code>）に相当する。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 15 </span><span class="caption-text">値が変わるたびにシグナルを発行する変数（chapter15/game_state.gd より）</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">signal</span><span class="w"> </span><span class="n">score_changed</span><span class="p">(</span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">var</span><span class="w"> </span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+<span class="linenos">4</span><span class="w">    </span><span class="n">set</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="linenos">5</span><span class="w">        </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span>
+<span class="linenos">6</span><span class="w">        </span><span class="n">score_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">score</span> <span class="pre">=</span> <span class="pre">10</span></code> や <code class="docutils literal notranslate"><span class="pre">score</span> <span class="pre">+=</span> <span class="pre">5</span></code> と書くと、セッターが呼ばれてシグナルが発行される。セッターの中で <code class="docutils literal notranslate"><span class="pre">score</span></code> に代入しても、セッターは再帰的には呼ばれない。</p>
+</section>
+<section id="super">
+<h2>継承と super<a class="headerlink" href="#super" title="Link to this heading"></a></h2>
+<p>スクリプトは、別のスクリプトを継承できる。<code class="docutils literal notranslate"><span class="pre">extends</span></code> には、組み込みのクラス名のほか、<code class="docutils literal notranslate"><span class="pre">class_name</span></code> で登録したクラス名や、スクリプトのパスを書ける。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">class_name</span><span class="w"> </span><span class="n">Boss</span>
+<span class="linenos">2</span><span class="k">extends</span><span class="w"> </span><span class="n">Enemy</span><span class="w">  </span><span class="c1"># class_name Enemy を付けたスクリプトを継承する</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="k">func</span><span class="w"> </span><span class="n">take_damage</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">6</span><span class="w">    </span><span class="k">super</span><span class="p">(</span><span class="n">maxi</span><span class="p">(</span><span class="n">amount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">  </span><span class="c1"># ダメージを 5 減らして、親クラスの take_damage() を呼ぶ</span>
+</pre></div>
+</div>
+<p>親クラスの同じ名前の関数を呼ぶには <code class="docutils literal notranslate"><span class="pre">super()</span></code> を使う。親クラスの別の関数は <code class="docutils literal notranslate"><span class="pre">super.関数名()</span></code> で呼べる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">_ready()</span></code> などのライフサイクル関数は、親クラスと子クラスの両方に定義されていても、子クラスのものだけが呼ばれる。親クラスの処理も必要なら、子クラスの関数の中で <code class="docutils literal notranslate"><span class="pre">super()</span></code> を呼ぶ。</p>
+<p>ただし、<a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で述べたとおり、Godot では継承を深くするよりも、ノードの組み合わせで機能を作るほうが扱いやすいことが多い。</p>
+</section>
+<section id="id8">
+<h2>静的型付けを活用する<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="ch06_gdscript_basics.html#ch06"><span class="std std-ref">第 6 章　GDScript の基礎</span></a> で説明したように、GDScript では型を省略できるが、型を書くことでエディターがより多くの誤りを見つけてくれる。</p>
+<section id="id9">
+<h3>型の指定漏れを警告する<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>プロジェクト設定で、型を指定していない宣言を警告にできる。「プロジェクト設定」の右上にある「高度な設定」をオンにし、「デバッグ」→「GDScript」の「Untyped Declaration」を「Warn」にする（この項目名は日本語に翻訳されていない）。本書のサンプルプロジェクトでは、この設定を有効にしている。</p>
+<p>型が確定している行は、スクリプトエディターの行番号が緑色で表示される。型が分からないまま実行される行は、行番号が灰色のままになる。</p>
+</section>
+<section id="id10">
+<h3>型の変換と判定<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$</span></code> や <code class="docutils literal notranslate"><span class="pre">get_node()</span></code> で取得したノードは、型が <code class="docutils literal notranslate"><span class="pre">Node</span></code> として扱われる。具体的な型として使うには、型を指定した変数に代入するか、<code class="docutils literal notranslate"><span class="pre">as</span></code> で変換する。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">bar</span><span class="p">:</span><span class="w"> </span><span class="n">ProgressBar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%HealthBar</span><span class="w">   </span><span class="c1"># 型を指定した変数に代入する</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">var</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">collision</span><span class="o">.</span><span class="n">get_collider</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">RigidBody2D</span><span class="w">   </span><span class="c1"># as で変換する</span>
+<span class="linenos">4</span><span class="k">if</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">:</span><span class="w">   </span><span class="c1"># 変換できなかった場合は null になる</span>
+<span class="linenos">5</span><span class="w">    </span><span class="n">body</span><span class="o">.</span><span class="n">apply_central_impulse</span><span class="p">(</span><span class="nb nb-Type">Vector2</span><span class="o">.</span><span class="n">UP</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.0</span><span class="p">)</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="k">if</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">CharacterBody2D</span><span class="p">:</span><span class="w">   </span><span class="c1"># is で型を判定する</span>
+<span class="linenos">8</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;キャラクターである&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">as</span></code> は、変換できない場合にエラーにはならず <code class="docutils literal notranslate"><span class="pre">null</span></code> を返す。<code class="docutils literal notranslate"><span class="pre">is</span></code> は、継承元のクラスも含めて型が一致するかを調べる。Python の <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> に相当する。</p>
+</section>
+</section>
+<section id="id11">
+<h2>エラーの扱い<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>GDScript には例外（<code class="docutils literal notranslate"><span class="pre">try</span></code>、<code class="docutils literal notranslate"><span class="pre">except</span></code>）がない。失敗する可能性のある処理は、成功したかどうかを戻り値で知らせる。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">var</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">ConfigFile</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">2</span><span class="k">var</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;user://settings.cfg&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="k">if</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">OK</span><span class="p">:</span>
+<span class="linenos">4</span><span class="w">    </span><span class="n">push_error</span><span class="p">(</span><span class="s2">&quot;設定を読み込めない: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">error_string</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+<span class="linenos">5</span><span class="w">    </span><span class="k">return</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Error</span></code> 型の戻り値は、成功なら <code class="docutils literal notranslate"><span class="pre">OK</span></code>、失敗なら <code class="docutils literal notranslate"><span class="pre">ERR_FILE_NOT_FOUND</span></code> などのエラーコードである。<code class="docutils literal notranslate"><span class="pre">error_string()</span></code> でエラーコードを説明文に変換できる。オブジェクトを返す関数は、失敗すると <code class="docutils literal notranslate"><span class="pre">null</span></code> を返すことが多い。</p>
+<p>実行中に致命的な誤り（<code class="docutils literal notranslate"><span class="pre">null</span></code> のメソッド呼び出しなど）が起きると、エディターから実行している場合はゲームが一時停止し、スクリプトエディターにエラーの行が表示される。エクスポートしたゲームでは、エラーを出力したうえで、その関数の残りの処理を飛ばして実行を続ける。エラー処理については <a class="reference internal" href="ch18_debug_and_optimization.html#ch18"><span class="std std-ref">第 18 章　デバッグと最適化</span></a> でも説明する。</p>
+</section>
+<section id="python">
+<h2>Python の経験者がつまずきやすい点<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
+<p>最後に、Python に慣れた人が GDScript で間違えやすい点をまとめる。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 29 </span><span class="caption-text">Python と GDScript の違いで注意する点</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>注意する点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>変数の宣言</p></td>
+<td><p>初めて使う変数には <code class="docutils literal notranslate"><span class="pre">var</span></code> が必要。<code class="docutils literal notranslate"><span class="pre">var</span></code> を付け忘れると、未定義の変数としてエラーになる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">print()</span></code></p></td>
+<td><p>複数の引数を区切り文字なしで連結して出力する。<code class="docutils literal notranslate"><span class="pre">print(&quot;a&quot;,</span> <span class="pre">1)</span></code> は <code class="docutils literal notranslate"><span class="pre">a1</span></code> になる。空白で区切りたい場合は <code class="docutils literal notranslate"><span class="pre">prints()</span></code> を使う。</p></td>
+</tr>
+<tr class="row-even"><td><p>文字列の連結</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;点数:</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">10</span></code> はエラーになる。<code class="docutils literal notranslate"><span class="pre">&quot;点数:</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">str(10)</span></code> のように変換するか、<code class="docutils literal notranslate"><span class="pre">%</span></code> で書式指定する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>長さ</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">len()</span></code> はない。配列や辞書は <code class="docutils literal notranslate"><span class="pre">size()</span></code>、文字列は <code class="docutils literal notranslate"><span class="pre">length()</span></code> を使う。</p></td>
+</tr>
+<tr class="row-even"><td><p>整数の割り算と剰余</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-7</span> <span class="pre">/</span> <span class="pre">2</span></code> は -3、<code class="docutils literal notranslate"><span class="pre">-7</span> <span class="pre">%</span> <span class="pre">3</span></code> は -1 になる（<a class="reference internal" href="ch06_gdscript_basics.html#ch06"><span class="std std-ref">第 6 章　GDScript の基礎</span></a>）。</p></td>
+</tr>
+<tr class="row-odd"><td><p>小数から整数への変換</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int(-3.7)</span></code> は -3（0 の方向へ切り捨て）。小さい方向へ切り捨てるには <code class="docutils literal notranslate"><span class="pre">floori()</span></code> を使う。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">None</span></code> の判定</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code> との比較は <code class="docutils literal notranslate"><span class="pre">==</span> <span class="pre">null</span></code> で行う。<code class="docutils literal notranslate"><span class="pre">is</span></code> は型の判定に使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>タプル</p></td>
+<td><p>タプルはない。複数の値を返したい場合は、配列や辞書、またはクラスを使う。</p></td>
+</tr>
+<tr class="row-even"><td><p>例外</p></td>
+<td><p>例外はない。戻り値でエラーを確認する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ラムダ式の変数の取り込み</p></td>
+<td><p>ラムダ式は作られた時点のローカル変数の値を取り込む。後から変数を変更しても反映されない。</p></td>
+</tr>
+<tr class="row-even"><td><p>スクリプトの読み込み</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">import</span></code> はない。<code class="docutils literal notranslate"><span class="pre">class_name</span></code> を付けたクラスはどこからでも使える。付けていないスクリプトは <code class="docutils literal notranslate"><span class="pre">preload(&quot;res://...&quot;)</span></code> で読み込む。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch06_gdscript_basics.html" class="btn btn-neutral float-left" title="第 6 章 GDScript の基礎" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch08_game_loop.html" class="btn btn-neutral float-right" title="第 8 章 ゲームループと時間" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

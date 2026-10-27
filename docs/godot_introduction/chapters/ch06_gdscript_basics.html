@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 6 章 GDScript の基礎 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 7 章 GDScript の応用" href="ch07_gdscript_advanced.html" />
+    <link rel="prev" title="第 5 章 ノードとシーン" href="ch05_nodes_and_scenes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 6 章　GDScript の基礎</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python との対応</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">スクリプトの基本構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">変数と型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">型の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">数値の演算で注意する点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">組み込みの型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">文字列の書式指定</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">制御構文</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">配列と辞書</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">クラス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">ライフサイクル関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#export-onready">&#64;export と &#64;onready</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 6 章　GDScript の基礎</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch05_nodes_and_scenes.html" class="btn btn-neutral float-left" title="第 5 章 ノードとシーン" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch07_gdscript_advanced.html" class="btn btn-neutral float-right" title="第 7 章 GDScript の応用" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gdscript">
+<span id="ch06"></span><h1>第 6 章　GDScript の基礎<a class="headerlink" href="#gdscript" title="Link to this heading"></a></h1>
+<p>本章では、Godot のスクリプト言語 GDScript の基本的な文法を、Python と比較しながら説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter06</span></code> フォルダーにある。<code class="docutils literal notranslate"><span class="pre">basics.tscn</span></code> を実行すると、本章で紹介するコードの実行結果が「出力」パネルに表示される。</p>
+<section id="python">
+<h2>Python との対応<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
+<p>GDScript は Python によく似ているが、ゲームエンジン用の言語として設計されているため、いくつかの違いがある。まず全体像として、主な対応関係を表にまとめる。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 24 </span><span class="caption-text">Python と GDScript の主な対応</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 38.0%" />
+<col style="width: 38.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>Python</p></th>
+<th class="head"><p>GDScript</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ブロック</p></td>
+<td><p>インデント</p></td>
+<td><p>インデント。Godot のエディターでは、既定でタブ文字を使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>変数の宣言</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">1</span></code>。宣言には <code class="docutils literal notranslate"><span class="pre">var</span></code> が必要</p></td>
+</tr>
+<tr class="row-even"><td><p>定数</p></td>
+<td><p>慣習として大文字の変数</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">MAX_HP</span> <span class="pre">=</span> <span class="pre">100</span></code>。再代入するとエラーになる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>型ヒント</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></code>。型を指定すると、実行時にも型が強制される。</p></td>
+</tr>
+<tr class="row-even"><td><p>関数</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">f(a:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">int:</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">func</span> <span class="pre">f(a:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">int:</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>真偽値、空の値</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code>、<code class="docutils literal notranslate"><span class="pre">False</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>、<code class="docutils literal notranslate"><span class="pre">false</span></code>、<code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>論理演算子</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">and</span></code>、<code class="docutils literal notranslate"><span class="pre">or</span></code>、<code class="docutils literal notranslate"><span class="pre">not</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">and</span></code>、<code class="docutils literal notranslate"><span class="pre">or</span></code>、<code class="docutils literal notranslate"><span class="pre">not</span></code>。<code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>、<code class="docutils literal notranslate"><span class="pre">||</span></code>、<code class="docutils literal notranslate"><span class="pre">!</span></code> も使える。</p></td>
+</tr>
+<tr class="row-odd"><td><p>整数の割り算</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7</span> <span class="pre">//</span> <span class="pre">2</span></code> は 3、<code class="docutils literal notranslate"><span class="pre">-7</span> <span class="pre">//</span> <span class="pre">2</span></code> は -4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7</span> <span class="pre">/</span> <span class="pre">2</span></code> は 3、<code class="docutils literal notranslate"><span class="pre">-7</span> <span class="pre">/</span> <span class="pre">2</span></code> は -3（0 の方向へ切り捨て）</p></td>
+</tr>
+<tr class="row-even"><td><p>リスト、辞書</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list</span></code>、<code class="docutils literal notranslate"><span class="pre">dict</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Array</span></code>、<code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>クラス</p></td>
+<td><p>1 つのファイルに複数のクラスを書ける。</p></td>
+<td><p>1 つのファイルが 1 つのクラスになる。</p></td>
+</tr>
+<tr class="row-even"><td><p>コンストラクター</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__init__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_init</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>文字列への変換</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__str__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_to_string</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>モジュールの読み込み</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">import</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">class_name</span></code> で登録したクラスはどこからでも使える。ファイルは <code class="docutils literal notranslate"><span class="pre">preload()</span></code> または <code class="docutils literal notranslate"><span class="pre">load()</span></code> で読み込む。</p></td>
+</tr>
+<tr class="row-odd"><td><p>例外</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">try</span></code>、<code class="docutils literal notranslate"><span class="pre">except</span></code>、<code class="docutils literal notranslate"><span class="pre">raise</span></code></p></td>
+<td><p>なし。エラーは戻り値（<code class="docutils literal notranslate"><span class="pre">Error</span></code> 型）で知らせる。</p></td>
+</tr>
+<tr class="row-even"><td><p>リスト内包表記</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">a]</span></code></p></td>
+<td><p>なし。<code class="docutils literal notranslate"><span class="pre">a.map(func(x):</span> <span class="pre">return</span> <span class="pre">x</span> <span class="pre">*</span> <span class="pre">2)</span></code> のように書く。</p></td>
+</tr>
+<tr class="row-odd"><td><p>タプルの展開</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span> <span class="pre">=</span> <span class="pre">b,</span> <span class="pre">a</span></code></p></td>
+<td><p>なし</p></td>
+</tr>
+</tbody>
+</table>
+<p>以降の節で、それぞれを詳しく見ていく。</p>
+</section>
+<section id="id1">
+<h2>スクリプトの基本構造<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>GDScript のファイル（<code class="docutils literal notranslate"><span class="pre">.gd</span></code>）は、それ自体が 1 つのクラスである。ファイルの先頭の <code class="docutils literal notranslate"><span class="pre">extends</span></code> で継承元のクラスを指定する。ノードに付けるスクリプトは、そのノードの種類（またはその継承元）を <code class="docutils literal notranslate"><span class="pre">extends</span></code> で指定する。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 5 </span><span class="caption-text">スクリプトの構造（Godot 公式のスタイルガイドが推奨する順序）</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class_name</span><span class="w"> </span><span class="n">Player</span><span class="w">   </span><span class="c1"># クラス名を登録する（省略可能）</span>
+<span class="linenos"> 2</span><span class="k">extends</span><span class="w"> </span><span class="n">CharacterBody2D</span><span class="w">   </span><span class="c1"># 継承元のクラス</span>
+<span class="linenos"> 3</span><span class="c1">## ドキュメントコメント（クラスの説明）</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">signal</span><span class="w"> </span><span class="n">died</span><span class="w">   </span><span class="c1"># シグナル（第 7 章）</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">enum</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">IDLE</span><span class="p">,</span><span class="w"> </span><span class="n">RUN</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="c1"># 列挙型（第 7 章）</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="k">const</span><span class="w"> </span><span class="n">SPEED</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="w">   </span><span class="c1"># 定数</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">max_hp</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w">   </span><span class="c1"># インスペクターに表示する変数</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">var</span><span class="w"> </span><span class="n">hp</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span><span class="c1"># 通常の変数（メンバー変数）</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">sprite</span><span class="p">:</span><span class="w"> </span><span class="n">Sprite2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Sprite2D</span><span class="w">   </span><span class="c1"># ノードの準備ができたときに初期化する変数</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span><span class="w">   </span><span class="c1"># Godot が呼び出す組み込みの関数</span>
+<span class="linenos">19</span><span class="w">    </span><span class="n">hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_hp</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="k">func</span><span class="w"> </span><span class="n">take_damage</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span><span class="w">   </span><span class="c1"># 自分で定義する関数</span>
+<span class="linenos">23</span><span class="w">    </span><span class="n">hp</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">amount</span>
+</pre></div>
+</div>
+</div>
+<p>関数と関数の間は 2 行空ける。名前は、クラス名が <code class="docutils literal notranslate"><span class="pre">PascalCase</span></code>、関数名と変数名が <code class="docutils literal notranslate"><span class="pre">snake_case</span></code>、定数が <code class="docutils literal notranslate"><span class="pre">CONSTANT_CASE</span></code> である。先頭に <code class="docutils literal notranslate"><span class="pre">_</span></code> を付けた名前は、クラスの外から使うことを想定していないことを表す（Python と同じく慣習であり、外から使うことは禁止されていない）。</p>
+</section>
+<section id="id2">
+<h2>変数と型<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-number">リスト 6 </span><span class="caption-text">chapter06/variables.gd</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## 変数、定数、型、文字列の書式指定の例。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="n">MAX_HP</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w">  </span><span class="c1"># 定数。値を変更できない</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">var</span><span class="w"> </span><span class="n">player_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ゴドー&quot;</span><span class="w">  </span><span class="c1"># 型を明示した変数</span>
+<span class="linenos"> 7</span><span class="k">var</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mf">200.0</span><span class="w">  </span><span class="c1"># := で右辺から型を推論する（float になる）</span>
+<span class="linenos"> 8</span><span class="k">var</span><span class="w"> </span><span class="n">target</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="w">  </span><span class="c1"># オブジェクト型は null を代入できる</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 変数と型 ---&quot;</span><span class="p">)</span>
+<span class="linenos">13</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">hp</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MAX_HP</span>
+<span class="linenos">14</span><span class="w">    </span><span class="n">hp</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">30</span>
+<span class="linenos">15</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">player_name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; の HP: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; / &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">MAX_HP</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;speed の型: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type_string</span><span class="p">(</span><span class="nb">typeof</span><span class="p">(</span><span class="n">speed</span><span class="p">)))</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;target は null か: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">)</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">    </span><span class="c1"># 整数どうしの割り算は整数になる（小数点以下は 0 の方向へ切り捨て）。</span>
+<span class="linenos">20</span><span class="w">    </span><span class="c1"># エディターは警告を出すが、ここでは結果を確かめるために @warning_ignore で抑えている。</span>
+<span class="linenos">21</span><span class="w">    </span><span class="nd">@warning_ignore</span><span class="p">(</span><span class="s2">&quot;integer_division&quot;</span><span class="p">)</span>
+<span class="linenos">22</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7 / 2 = &quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;、7.0 / 2 = &quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">7.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">23</span><span class="w">    </span><span class="nd">@warning_ignore</span><span class="p">(</span><span class="s2">&quot;integer_division&quot;</span><span class="p">)</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-7 / 2 = &quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">7</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;（Python の -7 // 2 は -4）&quot;</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-7 % 3 = &quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">7</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;、posmod(-7, 3) = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">posmod</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="w">    </span><span class="c1"># 文字列の書式指定</span>
+<span class="linenos">28</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> のスコアは </span><span class="si">%05d</span><span class="s2"> 点&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">player_name</span><span class="p">,</span><span class="w"> </span><span class="mi">420</span><span class="p">])</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;{name} は {x}, {y} にいる&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">player_name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">}))</span>
+<span class="linenos">30</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;円周率は約 </span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="bp">PI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>実行結果は次のとおりである。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>--- 変数と型 ---
+<span class="linenos"> 2</span>ゴドー の HP: 70 / 100
+<span class="linenos"> 3</span>speed の型: float
+<span class="linenos"> 4</span>target は null か: true
+<span class="linenos"> 5</span>7 / 2 = 3、7.0 / 2 = 3.5
+<span class="linenos"> 6</span>-7 / 2 = -3（Python の -7 // 2 は -4）
+<span class="linenos"> 7</span>-7 % 3 = -1、posmod(-7, 3) = 2
+<span class="linenos"> 8</span>ゴドー のスコアは 00420 点
+<span class="linenos"> 9</span>ゴドー は 10, 20 にいる
+<span class="linenos">10</span>円周率は約 3.14
+</pre></div>
+</div>
+<section id="id3">
+<h3>型の指定<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>変数の型は次の 3 通りで書ける。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 25 </span><span class="caption-text">変数の型の書き方</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>書き方</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code></p></td>
+<td><p>型を指定しない。後から別の型の値も代入できる（動的型付け）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">b:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></code></p></td>
+<td><p>型を明示する。<code class="docutils literal notranslate"><span class="pre">int</span></code> 以外の値を代入しようとするとエラーになる。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">c</span> <span class="pre">:=</span> <span class="pre">1</span></code></p></td>
+<td><p>右辺の値から型を推論する。この例では <code class="docutils literal notranslate"><span class="pre">int</span></code> になり、以降は <code class="docutils literal notranslate"><span class="pre">b</span></code> と同じく型が固定される。</p></td>
+</tr>
+</tbody>
+</table>
+<p>Python の型ヒントは実行時には無視されるが、GDScript の型指定は実行時にも有効である。型を指定すると、次の利点がある。</p>
+<ul class="simple">
+<li><p>間違った型の代入を、エディターが実行前に指摘してくれる。</p></li>
+<li><p>コード補完が正確になる。</p></li>
+<li><p>型が決まっている演算は、Godot が最適化した命令で実行するので速くなる。</p></li>
+</ul>
+<p>本書のサンプルでは、すべての変数、引数、戻り値に型を指定している。型を指定する習慣については <a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a> でもう一度説明する。</p>
+</section>
+<section id="id4">
+<h3>数値の演算で注意する点<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>GDScript の <code class="docutils literal notranslate"><span class="pre">int</span></code> は 64 ビットの整数、<code class="docutils literal notranslate"><span class="pre">float</span></code> は 64 ビットの浮動小数点数である。数値の演算は Python とほぼ同じだが、次の点が異なる。</p>
+<ul class="simple">
+<li><p><strong>整数どうしの割り算</strong>：<code class="docutils literal notranslate"><span class="pre">/</span></code> の両辺が整数なら、結果も整数になる。小数点以下は 0 の方向へ切り捨てられるので、負の数では Python の <code class="docutils literal notranslate"><span class="pre">//</span></code> と結果が異なる。小数の結果が欲しい場合は、どちらかを <code class="docutils literal notranslate"><span class="pre">float</span></code> にする（<code class="docutils literal notranslate"><span class="pre">7.0</span> <span class="pre">/</span> <span class="pre">2</span></code> や <code class="docutils literal notranslate"><span class="pre">float(a)</span> <span class="pre">/</span> <span class="pre">b</span></code>）。エディターは整数どうしの割り算に警告を出すので、意図した割り算であることを確かめる手がかりにするとよい。</p></li>
+<li><p><strong>剰余</strong>：<code class="docutils literal notranslate"><span class="pre">%</span></code> の結果の符号は左辺と同じになる。Python のように常に 0 以上の値が欲しい場合は <code class="docutils literal notranslate"><span class="pre">posmod()</span></code> を使う。浮動小数点数の剰余は <code class="docutils literal notranslate"><span class="pre">fmod()</span></code> または <code class="docutils literal notranslate"><span class="pre">fposmod()</span></code> を使う。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>組み込みの型<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>GDScript には、ゲームでよく使う値を表す型が組み込まれている。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 26 </span><span class="caption-text">よく使う組み込みの型</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>型</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code>、<code class="docutils literal notranslate"><span class="pre">float</span></code>、<code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p>整数、浮動小数点数、真偽値</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p>文字列。<code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code> と <code class="docutils literal notranslate"><span class="pre">'...'</span></code> のどちらでも書ける。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2</span></code>、<code class="docutils literal notranslate"><span class="pre">Vector2i</span></code></p></td>
+<td><p>2 次元のベクトル（位置や速度）。<code class="docutils literal notranslate"><span class="pre">Vector2i</span></code> は整数版</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Vector3</span></code></p></td>
+<td><p>3 次元のベクトル</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Color</span></code></p></td>
+<td><p>色。赤、緑、青、不透明度を 0.0 ～ 1.0 で持つ。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Rect2</span></code></p></td>
+<td><p>長方形（位置と大きさ）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Array</span></code>、<code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p>配列、辞書</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PackedInt32Array</span></code>、<code class="docutils literal notranslate"><span class="pre">PackedVector2Array</span></code> など</p></td>
+<td><p>要素の型が決まった、メモリー効率の良い配列</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Callable</span></code></p></td>
+<td><p>関数への参照（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Signal</span></code></p></td>
+<td><p>シグナルへの参照（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NodePath</span></code>、<code class="docutils literal notranslate"><span class="pre">StringName</span></code></p></td>
+<td><p>ノードのパスと、比較が高速な文字列。<code class="docutils literal notranslate"><span class="pre">^&quot;Path/To/Node&quot;</span></code>、<code class="docutils literal notranslate"><span class="pre">&amp;&quot;name&quot;</span></code> と書く。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Object</span></code> を継承したクラス</p></td>
+<td><p>ノードやリソースなど。<code class="docutils literal notranslate"><span class="pre">null</span></code> を代入できる。</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">int</span></code> や <code class="docutils literal notranslate"><span class="pre">Vector2</span></code> などの組み込みの型は値として扱われ、代入するとコピーされる。<code class="docutils literal notranslate"><span class="pre">Array</span></code>、<code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>、<code class="docutils literal notranslate"><span class="pre">Object</span></code> は参照として扱われる（後述）。</p>
+</section>
+<section id="id6">
+<h3>文字列の書式指定<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">%</span></code> 演算子による書式指定は、Python の古い書式指定と同じように書ける。<code class="docutils literal notranslate"><span class="pre">format()</span></code> メソッドを使うと、<code class="docutils literal notranslate"><span class="pre">{名前}</span></code> の部分を辞書の値で置き換えられる。Python の f 文字列に相当する機能はない。単純に連結する場合は <code class="docutils literal notranslate"><span class="pre">+</span></code> を使うが、数値は <code class="docutils literal notranslate"><span class="pre">str()</span></code> で文字列に変換してから連結する。</p>
+</section>
+</section>
+<section id="id7">
+<h2>制御構文<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 7 </span><span class="caption-text">chapter06/control_flow.gd</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## if、for、while、match の例。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 制御構文 ---&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">75</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">80</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;評価 A&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">60</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;評価 B&quot;</span><span class="p">)</span>
+<span class="linenos">12</span><span class="w">    </span><span class="k">else</span><span class="p">:</span>
+<span class="linenos">13</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;評価 C&quot;</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="w">    </span><span class="c1"># range() は Python と同じく終端を含まない。</span>
+<span class="linenos">16</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="linenos">17</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;for: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">    </span><span class="c1"># 数値を直接書くと range() と同じ意味になる。</span>
+<span class="linenos">20</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;for (省略形): &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">fruit</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;りんご&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;みかん&quot;</span><span class="p">]:</span>
+<span class="linenos">24</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;果物: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fruit</span><span class="p">)</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">count</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">27</span><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span>
+<span class="linenos">28</span><span class="w">        </span><span class="n">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;while の結果: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">)</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="w">    </span><span class="c1"># match は他言語の switch 文に相当する。</span>
+<span class="linenos">32</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">command</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;jump&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;attack&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dance&quot;</span><span class="p">]:</span>
+<span class="linenos">33</span><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">command</span><span class="p">:</span>
+<span class="linenos">34</span><span class="w">            </span><span class="s2">&quot;jump&quot;</span><span class="p">:</span>
+<span class="linenos">35</span><span class="w">                </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ジャンプする&quot;</span><span class="p">)</span>
+<span class="linenos">36</span><span class="w">            </span><span class="s2">&quot;attack&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;shoot&quot;</span><span class="p">:</span>
+<span class="linenos">37</span><span class="w">                </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;攻撃する&quot;</span><span class="p">)</span>
+<span class="linenos">38</span><span class="w">            </span><span class="n">_</span><span class="p">:</span>
+<span class="linenos">39</span><span class="w">                </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;知らないコマンド: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">command</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">if</span></code>、<code class="docutils literal notranslate"><span class="pre">elif</span></code>、<code class="docutils literal notranslate"><span class="pre">else</span></code>、<code class="docutils literal notranslate"><span class="pre">for</span></code>、<code class="docutils literal notranslate"><span class="pre">while</span></code>、<code class="docutils literal notranslate"><span class="pre">break</span></code>、<code class="docutils literal notranslate"><span class="pre">continue</span></code> は Python と同じように使える。<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">3:</span></code> のように整数を直接書くと、<code class="docutils literal notranslate"><span class="pre">range(3)</span></code> と同じ意味になる。<code class="docutils literal notranslate"><span class="pre">for</span></code> の変数にも <code class="docutils literal notranslate"><span class="pre">fruit:</span> <span class="pre">String</span></code> のように型を指定できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code> は、値に応じて処理を分ける構文で、他の言語の <code class="docutils literal notranslate"><span class="pre">switch</span></code> 文に相当する。<code class="docutils literal notranslate"><span class="pre">&quot;attack&quot;,</span> <span class="pre">&quot;shoot&quot;:</span></code> のようにカンマで区切ると、いずれかに一致した場合に実行される。<code class="docutils literal notranslate"><span class="pre">_</span></code> はどの値にも一致する。Python の <code class="docutils literal notranslate"><span class="pre">match</span></code> と異なり、分岐の先頭に <code class="docutils literal notranslate"><span class="pre">case</span></code> は書かない。</p>
+</section>
+<section id="id8">
+<h2>関数<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 8 </span><span class="caption-text">chapter06/functions.gd</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## 関数の定義と呼び出しの例。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 関数 ---&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;合計: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;挨拶: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">greet</span><span class="p">(</span><span class="s2">&quot;ゴドー&quot;</span><span class="p">))</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;挨拶: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">greet</span><span class="p">(</span><span class="s2">&quot;ゴドー&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;こんばんは&quot;</span><span class="p">))</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2 点間の距離: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">distance</span><span class="p">(</span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)))</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="c1">## 2 つの整数の和を返す。</span>
+<span class="linenos">14</span><span class="k">func</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">:</span>
+<span class="linenos">15</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="c1">## 既定値を持つ引数は、呼び出し時に省略できる。</span>
+<span class="linenos">19</span><span class="k">func</span><span class="w"> </span><span class="n">greet</span><span class="p">(</span><span class="n">target_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;こんにちは&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">、</span><span class="si">%s</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">target_name</span><span class="p">]</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="c1">## static を付けた関数は、インスタンスを作らずに呼び出せる。</span>
+<span class="linenos">24</span><span class="k">static</span><span class="w"> </span><span class="k">func</span><span class="w"> </span><span class="n">distance</span><span class="p">(</span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">:</span>
+<span class="linenos">25</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">from</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>関数は <code class="docutils literal notranslate"><span class="pre">func</span></code> で定義する。引数と戻り値の型は Python の型ヒントと同じ形で書く。戻り値がない関数は <code class="docutils literal notranslate"><span class="pre">-&gt;</span> <span class="pre">void</span></code> とする。引数には既定値を指定できる。Python のキーワード引数（<code class="docutils literal notranslate"><span class="pre">greet(message=&quot;やあ&quot;)</span></code> のような呼び出し方）はない。</p>
+<p><code class="docutils literal notranslate"><span class="pre">static</span></code> を付けた関数（静的関数）は、インスタンスを作らずに <code class="docutils literal notranslate"><span class="pre">クラス名.関数名()</span></code> の形で呼び出せる。静的関数の中では、メンバー変数は使えない。</p>
+</section>
+<section id="id9">
+<h2>配列と辞書<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-number">リスト 9 </span><span class="caption-text">chapter06/collections.gd</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## 配列と辞書の例。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 配列と辞書 ---&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">items</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="p">[</span><span class="nb nb-Type">String</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;剣&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;盾&quot;</span><span class="p">]</span><span class="w">  </span><span class="c1"># 要素の型を指定した配列</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;薬草&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;持ち物: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">items</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;（&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">items</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="s2">&quot; 個）&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;先頭: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;、末尾: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">prices</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Dictionary</span><span class="p">[</span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;剣&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;盾&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">}</span><span class="w">  </span><span class="c1"># キーと値の型を指定した辞書</span>
+<span class="linenos">13</span><span class="w">    </span><span class="n">prices</span><span class="p">[</span><span class="s2">&quot;薬草&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
+<span class="linenos">14</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">prices</span><span class="p">:</span>
+<span class="linenos">15</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; は &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">prices</span><span class="p">[</span><span class="n">item</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot; G&quot;</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;鎧の値段: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">prices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;鎧&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">    </span><span class="c1"># 配列や辞書は参照で扱われる。代入しても複製されない。</span>
+<span class="linenos">19</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">copied</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">items</span>
+<span class="linenos">20</span><span class="w">    </span><span class="n">copied</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;鍵&quot;</span><span class="p">)</span>
+<span class="linenos">21</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;元の配列も変わる: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">items</span><span class="p">)</span>
+<span class="linenos">22</span><span class="w">    </span><span class="c1"># 複製が必要なときは duplicate() を使う。</span>
+<span class="linenos">23</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">cloned</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">.</span><span class="n">duplicate</span><span class="p">()</span>
+<span class="linenos">24</span><span class="w">    </span><span class="n">cloned</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="linenos">25</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;duplicate() した配列を消しても元は残る: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Array</span></code> は Python のリスト、<code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> は Python の辞書に相当する。<code class="docutils literal notranslate"><span class="pre">Array[String]</span></code> のように要素の型を指定すると、異なる型の値を追加しようとしたときにエラーになる。辞書も <code class="docutils literal notranslate"><span class="pre">Dictionary[String,</span> <span class="pre">int]</span></code> のようにキーと値の型を指定できる。</p>
+<p>辞書は Python と同じく、要素を追加した順番を保つ。存在しないキーを <code class="docutils literal notranslate"><span class="pre">prices[&quot;鎧&quot;]</span></code> のように参照するとエラーになるので、あるかどうか分からない場合は <code class="docutils literal notranslate"><span class="pre">get()</span></code> で既定値を指定するか、<code class="docutils literal notranslate"><span class="pre">has()</span></code> で確認する。</p>
+<p>配列と辞書は参照で扱われる。<code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">copied</span> <span class="pre">:=</span> <span class="pre">items</span></code> は同じ配列を指す別名を作るだけで、複製はしない。この点は Python と同じである。複製が必要な場合は <code class="docutils literal notranslate"><span class="pre">duplicate()</span></code> を使う。入れ子になった配列や辞書まで複製する場合は <code class="docutils literal notranslate"><span class="pre">duplicate(true)</span></code> とする。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Array</span></code> には <code class="docutils literal notranslate"><span class="pre">map()</span></code>、<code class="docutils literal notranslate"><span class="pre">filter()</span></code>、<code class="docutils literal notranslate"><span class="pre">reduce()</span></code>、<code class="docutils literal notranslate"><span class="pre">any()</span></code>、<code class="docutils literal notranslate"><span class="pre">all()</span></code> などのメソッドがある。これらは関数（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a> で説明する <code class="docutils literal notranslate"><span class="pre">Callable</span></code>）を引数に取り、Python のリスト内包表記や組み込み関数の代わりに使える。</p>
+</section>
+<section id="id10">
+<h2>クラス<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>GDScript では、1 つのファイルが 1 つのクラスになる。先頭に <code class="docutils literal notranslate"><span class="pre">class_name</span></code> を書くと、そのクラスがプロジェクト全体に登録され、どのスクリプトからもクラス名で使えるようになる。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-number">リスト 10 </span><span class="caption-text">chapter06/enemy_stats.gd</span><a class="headerlink" href="#id20" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class_name</span><span class="w"> </span><span class="n">EnemyStats</span>
+<span class="linenos"> 2</span><span class="k">extends</span><span class="w"> </span><span class="n">RefCounted</span>
+<span class="linenos"> 3</span><span class="c1">## 敵の能力値を表すクラス。class_name を付けたので、どのスクリプトからも EnemyStats という名前で使える。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">var</span><span class="w"> </span><span class="n">enemy_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span>
+<span class="linenos"> 6</span><span class="k">var</span><span class="w"> </span><span class="n">hp</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span>
+<span class="linenos"> 7</span><span class="k">var</span><span class="w"> </span><span class="n">attack</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="c1">## new() に渡した引数は _init() で受け取る。</span>
+<span class="linenos">11</span><span class="k">func</span><span class="w"> </span><span class="n">_init</span><span class="p">(</span><span class="n">new_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="n">new_hp</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">new_attack</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">enemy_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_name</span>
+<span class="linenos">13</span><span class="w">    </span><span class="n">hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_hp</span>
+<span class="linenos">14</span><span class="w">    </span><span class="n">attack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_attack</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">func</span><span class="w"> </span><span class="n">is_alive</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">func</span><span class="w"> </span><span class="n">take_damage</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxi</span><span class="p">(</span><span class="n">hp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">amount</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="c1">## print() に渡したときの表示を決める。Python の __str__ に相当する。</span>
+<span class="linenos">26</span><span class="k">func</span><span class="w"> </span><span class="n">_to_string</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="linenos">27</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (HP </span><span class="si">%d</span><span class="s2">)&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">enemy_name</span><span class="p">,</span><span class="w"> </span><span class="n">hp</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">RefCounted</span></code> は、参照カウントで自動的に解放されるオブジェクトの基底クラスである。ノードではないデータだけのクラスを作るときに使う。<code class="docutils literal notranslate"><span class="pre">extends</span></code> を省略した場合も <code class="docutils literal notranslate"><span class="pre">RefCounted</span></code> を継承する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">_init()</span></code> はコンストラクターで、<code class="docutils literal notranslate"><span class="pre">EnemyStats.new(&quot;スライム&quot;,</span> <span class="pre">10,</span> <span class="pre">2)</span></code> のように <code class="docutils literal notranslate"><span class="pre">new()</span></code> に渡した引数を受け取る。メソッドの中でメンバー変数を使うときは、Python のように <code class="docutils literal notranslate"><span class="pre">self.</span></code> を付ける必要はない（付けてもよい）。引数とメンバー変数の名前が同じだと区別しにくくなるので、この例では引数を <code class="docutils literal notranslate"><span class="pre">new_name</span></code> のように別の名前にしている。</p>
+<p>このクラスを使う側のスクリプトは次のとおりである。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-number">リスト 11 </span><span class="caption-text">chapter06/classes.gd</span><a class="headerlink" href="#id21" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## クラスの利用例。class_name を付けたクラスと内部クラスを使う。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1">## 内部クラス。このスクリプトの中でだけ使う小さなクラスを定義できる。</span>
+<span class="linenos"> 6</span><span class="k">class</span><span class="w"> </span><span class="n">Counter</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="k">func</span><span class="w"> </span><span class="n">increment</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">10</span><span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">14</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- クラス ---&quot;</span><span class="p">)</span>
+<span class="linenos">15</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">slime</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">EnemyStats</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;スライム&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">slime</span><span class="o">.</span><span class="n">take_damage</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">slime</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; 生存: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">slime</span><span class="o">.</span><span class="n">is_alive</span><span class="p">())</span>
+<span class="linenos">18</span><span class="w">    </span><span class="n">slime</span><span class="o">.</span><span class="n">take_damage</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">slime</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; 生存: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">slime</span><span class="o">.</span><span class="n">is_alive</span><span class="p">())</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">Counter</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">counter</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
+<span class="linenos">23</span><span class="w">    </span><span class="n">counter</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;カウンター: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>6 行目の <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">Counter:</span></code> は内部クラス（inner class）である。そのスクリプトの中でだけ使う小さなクラスは、このように 1 つのファイルの中に定義できる。</p>
+</section>
+<section id="id11">
+<h2>ライフサイクル関数<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>ノードに付けたスクリプトには、Godot が決まったタイミングで呼び出す関数を定義できる。これらの関数は名前が <code class="docutils literal notranslate"><span class="pre">_</span></code> で始まり、ライフサイクル関数（または仮想関数）と呼ばれる。</p>
+<table class="docutils align-default" id="id22">
+<caption><span class="caption-number">表 27 </span><span class="caption-text">主なライフサイクル関数</span><a class="headerlink" href="#id22" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>関数</p></th>
+<th class="head"><p>呼ばれるタイミング</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">_init()</span></code></p></td>
+<td><p>オブジェクトが作られたとき。まだシーンツリーには入っていない。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">_enter_tree()</span></code></p></td>
+<td><p>ノードがシーンツリーに追加されたとき</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">_ready()</span></code></p></td>
+<td><p>ノードとそのすべての子ノードの準備ができたとき。最初の 1 回だけ呼ばれる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">_process(delta)</span></code></p></td>
+<td><p>毎フレーム（描画のたびに）呼ばれる。<code class="docutils literal notranslate"><span class="pre">delta</span></code> は前のフレームからの経過秒数</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">_physics_process(delta)</span></code></p></td>
+<td><p>物理演算の更新のたびに、一定の間隔（既定では 1 秒に 60 回）で呼ばれる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">_input(event)</span></code>、<code class="docutils literal notranslate"><span class="pre">_unhandled_input(event)</span></code></p></td>
+<td><p>キーやマウスなどの入力があったとき（<a class="reference internal" href="ch09_input.html#ch09"><span class="std std-ref">第 9 章　入力</span></a>）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">_exit_tree()</span></code></p></td>
+<td><p>ノードがシーンツリーから取り除かれるとき</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">chapter06/lifecycle.tscn</span></code> は、親ノード <code class="docutils literal notranslate"><span class="pre">Parent</span></code> と子ノード <code class="docutils literal notranslate"><span class="pre">Child</span></code> の両方に同じスクリプトを付けて、呼ばれる順番を表示するサンプルである。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-number">リスト 12 </span><span class="caption-text">chapter06/lifecycle.gd</span><a class="headerlink" href="#id23" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## ライフサイクル関数が呼ばれる順番を確認するスクリプト。</span>
+<span class="linenos"> 3</span><span class="c1">## 親ノードと子ノードの両方にこのスクリプトを付けて実行する。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">var</span><span class="w"> </span><span class="n">_frame_count</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">func</span><span class="w"> </span><span class="n">_init</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="c1"># この時点ではまだシーンツリーに入っていないので、名前も決まっていない。</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;_init&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">func</span><span class="w"> </span><span class="n">_enter_tree</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">14</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;: _enter_tree&quot;</span><span class="p">)</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;: _ready&quot;</span><span class="p">)</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">    </span><span class="c1"># 毎フレーム呼ばれる。出力が多くなりすぎないよう最初の 3 回だけ表示する。</span>
+<span class="linenos">23</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">_frame_count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span>
+<span class="linenos">24</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;: _process delta=</span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">_frame_count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="k">func</span><span class="w"> </span><span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">29</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">_frame_count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span>
+<span class="linenos">30</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;: _physics_process delta=</span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="k">func</span><span class="w"> </span><span class="n">_exit_tree</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">34</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;: _exit_tree&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>実行すると、次のように出力される（<code class="docutils literal notranslate"><span class="pre">delta</span></code> の値は環境によって異なる）。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>_init
+<span class="linenos"> 2</span>_init
+<span class="linenos"> 3</span>Parent: _enter_tree
+<span class="linenos"> 4</span>Child: _enter_tree
+<span class="linenos"> 5</span>Child: _ready
+<span class="linenos"> 6</span>Parent: _ready
+<span class="linenos"> 7</span>Parent: _physics_process delta=0.0167
+<span class="linenos"> 8</span>Child: _physics_process delta=0.0167
+<span class="linenos"> 9</span>Parent: _process delta=0.0487
+<span class="linenos">10</span>Child: _process delta=0.0487
+<span class="linenos">11</span>（中略）
+<span class="linenos">12</span>Child: _exit_tree
+<span class="linenos">13</span>Parent: _exit_tree
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">_enter_tree()</span></code> は親から子の順に呼ばれるが、<code class="docutils literal notranslate"><span class="pre">_ready()</span></code> は子から親の順に呼ばれる。つまり、親の <code class="docutils literal notranslate"><span class="pre">_ready()</span></code> が呼ばれた時点で、子ノードの準備はすべて終わっている。そのため、子ノードを使う初期化処理は <code class="docutils literal notranslate"><span class="pre">_ready()</span></code> に書く。</p>
+<p><code class="docutils literal notranslate"><span class="pre">_process()</span></code> と <code class="docutils literal notranslate"><span class="pre">_physics_process()</span></code> の違いは、<a class="reference internal" href="ch08_game_loop.html#ch08"><span class="std std-ref">第 8 章　ゲームループと時間</span></a> で説明する。</p>
+</section>
+<section id="export-onready">
+<h2>&#64;export と &#64;onready<a class="headerlink" href="#export-onready" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;</span></code> で始まる記述はアノテーションと呼ばれ、変数や関数に追加の意味を与える。特によく使うのが <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> と <code class="docutils literal notranslate"><span class="pre">&#64;onready</span></code> である。</p>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> を付けた変数はインスペクターに表示され、エディターで値を設定できる。設定した値はシーンファイルに保存される。同じシーンの複数のインスタンスで値を変えたい場合や、プログラマー以外の人が調整する値に使う。<code class="docutils literal notranslate"><span class="pre">&#64;export_range(0,</span> <span class="pre">100)</span></code> や <code class="docutils literal notranslate"><span class="pre">&#64;export_multiline</span></code> のように、入力方法を指定する種類もある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;onready</span></code> を付けた変数は、<code class="docutils literal notranslate"><span class="pre">_ready()</span></code> が呼ばれる直前に初期化される。子ノードを取得して変数に入れておく場合によく使う。</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># 誤り：スクリプトの初期化時点では子ノードがまだ使えないので、null になる</span>
+<span class="linenos">2</span><span class="k">var</span><span class="w"> </span><span class="n">sprite</span><span class="p">:</span><span class="w"> </span><span class="n">Sprite2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Sprite2D</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="c1"># 正しい：_ready() の直前に取得する</span>
+<span class="linenos">5</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">sprite</span><span class="p">:</span><span class="w"> </span><span class="n">Sprite2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Sprite2D</span>
+</pre></div>
+</div>
+<p>ノードを毎回 <code class="docutils literal notranslate"><span class="pre">$Sprite2D</span></code> で取得することもできるが、<code class="docutils literal notranslate"><span class="pre">&#64;onready</span></code> の変数に型を付けて保存しておくと、補完が効き、実行時の検索も 1 回で済む。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch05_nodes_and_scenes.html" class="btn btn-neutral float-left" title="第 5 章 ノードとシーン" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch07_gdscript_advanced.html" class="btn btn-neutral float-right" title="第 7 章 GDScript の応用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

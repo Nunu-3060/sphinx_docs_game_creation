@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 11 章 2D の物理と衝突 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 12 章 描画とアニメーション" href="ch12_graphics_and_animation.html" />
+    <link rel="prev" title="第 10 章 2D の座標とベクトル" href="ch10_vectors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 11 章　2D の物理と衝突</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">物理ボディの種類</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">衝突形状</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#characterbody2d">CharacterBody2D でキャラクターを動かす</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">ジャンプの高さ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">衝突の情報を調べる</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rigidbody2d">RigidBody2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#area2d">Area2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">コリジョンレイヤーとマスク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">サンプル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 11 章　2D の物理と衝突</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch10_vectors.html" class="btn btn-neutral float-left" title="第 10 章 2D の座標とベクトル" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch12_graphics_and_animation.html" class="btn btn-neutral float-right" title="第 12 章 描画とアニメーション" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="d">
+<span id="ch11"></span><h1>第 11 章　2D の物理と衝突<a class="headerlink" href="#d" title="Link to this heading"></a></h1>
+<p>キャラクターが床の上を歩く、壁にぶつかって止まる、アイテムに触れると取れる。こうした処理には、物体どうしの衝突判定が必要になる。本章では、Godot の 2D 物理演算の仕組みと、物体の種類ごとの使い分けを説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter11</span></code> フォルダーにある。</p>
+<section id="id1">
+<h2>物理ボディの種類<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Godot では、衝突判定に参加する物体をノードの種類で区別する。2D では次のノードを使う。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 39 </span><span class="caption-text">2D の物理に関わるノード</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード</p></th>
+<th class="head"><p>動き方</p></th>
+<th class="head"><p>使用例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">StaticBody2D</span></code></p></td>
+<td><p>動かない。ほかの物体がぶつかると止められる。</p></td>
+<td><p>床、壁、地形</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CharacterBody2D</span></code></p></td>
+<td><p>スクリプトで速度を決めて動かす。ぶつかったら止まったり滑ったりする。</p></td>
+<td><p>プレイヤー、敵キャラクター</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code></p></td>
+<td><p>物理演算（重力、衝突の反発、摩擦）に従って動く。スクリプトでは力を加えて動かす。</p></td>
+<td><p>木箱、ボール、転がる岩</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AnimatableBody2D</span></code></p></td>
+<td><p>アニメーションやスクリプトで動かす。上に乗った物体を一緒に運ぶ。</p></td>
+<td><p>動く床、エレベーター</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Area2D</span></code></p></td>
+<td><p>物体を止めない。ほかの物体が入ったこと、出たことを検出する。</p></td>
+<td><p>アイテム、ダメージを受ける範囲、ゴール地点</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">StaticBody2D</span></code>、<code class="docutils literal notranslate"><span class="pre">CharacterBody2D</span></code>、<code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code>、<code class="docutils literal notranslate"><span class="pre">AnimatableBody2D</span></code> をまとめて物理ボディ（physics body）と呼ぶ。物理ボディどうしはぶつかると互いにすり抜けない。<code class="docutils literal notranslate"><span class="pre">Area2D</span></code> は「領域」であり、すり抜けるが、重なったことを知らせる。</p>
+</section>
+<section id="id2">
+<h2>衝突形状<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>物理ボディと <code class="docutils literal notranslate"><span class="pre">Area2D</span></code> は、それだけでは形を持たない。子ノードとして <code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code> を追加し、その「シェイプ」（shape）に形状のリソースを設定して、当たり判定の形を決める。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 40 </span><span class="caption-text">よく使う形状</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>形状</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RectangleShape2D</span></code></p></td>
+<td><p>長方形。床、壁、箱</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CircleShape2D</span></code></p></td>
+<td><p>円。ボール、コイン、弾</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CapsuleShape2D</span></code></p></td>
+<td><p>カプセル（長方形の両端が半円）。角に引っかかりにくいので、人型のキャラクターによく使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SegmentShape2D</span></code></p></td>
+<td><p>線分</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ConvexPolygonShape2D</span></code></p></td>
+<td><p>凸多角形</p></td>
+</tr>
+</tbody>
+</table>
+<p>多角形の形状を描きたい場合は、<code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">CollisionPolygon2D</span></code> を使い、ビューポート上で頂点をクリックして形を作ることもできる。</p>
+<p>当たり判定の形は、見た目の画像と完全に一致させる必要はない。むしろ、画像より少し小さめにしておくと、プレイヤーが「当たっていないのに当たった」と感じる理不尽さを減らせる。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>物理ボディや衝突形状のノードの「スケール」（scale）を変えて大きさを調整してはいけない。特に縦と横で異なる拡大率にすると、衝突判定が正しく動かないことがある。大きさは、形状のリソースの「サイズ」（size）や「半径」（radius）で調整する。</p>
+</div>
+<p>実行中に衝突形状を確認するには、エディターの「デバッグ」メニューで「コリジョン形状を表示」をオンにしてから実行する。当たり判定が画面に重ねて表示される。</p>
+</section>
+<section id="characterbody2d">
+<h2>CharacterBody2D でキャラクターを動かす<a class="headerlink" href="#characterbody2d" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">CharacterBody2D</span></code> は、プレイヤーのように思いどおりに動かしたい物体に使う。<code class="docutils literal notranslate"><span class="pre">velocity</span></code> プロパティに速度を設定し、<code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code> を呼ぶと、その速度で移動する。途中で壁や床にぶつかると、ぶつかった面に沿って滑るように動く。</p>
+<p>サンプルの <code class="docutils literal notranslate"><span class="pre">chapter11/player.tscn</span></code> は、横スクロールアクションの基本的なプレイヤーである。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-number">リスト 20 </span><span class="caption-text">chapter11/player.gd</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">CharacterBody2D</span>
+<span class="linenos"> 2</span><span class="c1">## 横スクロールアクションの基本的なプレイヤー操作。</span>
+<span class="linenos"> 3</span><span class="c1">## 左右移動、重力、ジャンプを行い、ぶつかった木箱を押す。</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="n">SPEED</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="w">  </span><span class="c1"># 左右の移動速度 [ピクセル/秒]</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="n">JUMP_VELOCITY</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">500.0</span><span class="w">  </span><span class="c1"># ジャンプの初速。画面の上方向は Y がマイナス</span>
+<span class="linenos"> 7</span><span class="k">const</span><span class="w"> </span><span class="n">PUSH_FORCE</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">40.0</span><span class="w">  </span><span class="c1"># 木箱を押す強さ</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1"># プロジェクト設定の重力（既定値は 980 ピクセル/秒²）を使う。</span>
+<span class="linenos">10</span><span class="k">var</span><span class="w"> </span><span class="n">gravity</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProjectSettings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s2">&quot;physics/2d/default_gravity&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">func</span><span class="w"> </span><span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">14</span><span class="w">    </span><span class="c1"># 空中にいる間は重力で下向きに加速する。</span>
+<span class="linenos">15</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">is_on_floor</span><span class="p">():</span>
+<span class="linenos">16</span><span class="w">        </span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">gravity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s2">&quot;jump&quot;</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">is_on_floor</span><span class="p">():</span>
+<span class="linenos">19</span><span class="w">        </span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JUMP_VELOCITY</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="s2">&quot;move_left&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_right&quot;</span><span class="p">)</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SPEED</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="w">    </span><span class="c1"># velocity に従って移動し、壁や床に当たったら沿うように滑らせる。</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">move_and_slide</span><span class="p">()</span>
+<span class="linenos">26</span><span class="w">    </span><span class="n">_push_rigid_bodies</span><span class="p">()</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="c1">## 移動中にぶつかった RigidBody2D に力を加えて押す。</span>
+<span class="linenos">30</span><span class="k">func</span><span class="w"> </span><span class="n">_push_rigid_bodies</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">31</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">get_slide_collision_count</span><span class="p">():</span>
+<span class="linenos">32</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">collision</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">get_slide_collision</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="linenos">33</span><span class="w">        </span><span class="k">var</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">collision</span><span class="o">.</span><span class="n">get_collider</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">RigidBody2D</span>
+<span class="linenos">34</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">:</span>
+<span class="linenos">35</span><span class="w">            </span><span class="n">body</span><span class="o">.</span><span class="n">apply_central_impulse</span><span class="p">(</span><span class="o">-</span><span class="n">collision</span><span class="o">.</span><span class="n">get_normal</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PUSH_FORCE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">_physics_process()</span></code> の中で、次の順に処理している。</p>
+<ol class="arabic simple">
+<li><p>床の上にいなければ（<code class="docutils literal notranslate"><span class="pre">is_on_floor()</span></code> が <code class="docutils literal notranslate"><span class="pre">false</span></code> なら）、重力によって下向きの速度を増やす。</p></li>
+<li><p>床の上でジャンプのアクションが押されたら、上向き（Y がマイナス）の速度を与える。</p></li>
+<li><p>左右の入力に応じて、横向きの速度を決める。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code> で移動する。</p></li>
+<li><p>ぶつかった <code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code>（木箱）があれば、押す。</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">is_on_floor()</span></code> は、直前の <code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code> で床に接していたかを返す。どの面を床とみなすかは「上方方向」（up_direction）プロパティで決まり、既定では画面の上向き（<code class="docutils literal notranslate"><span class="pre">Vector2.UP</span></code>）である。同様に、<code class="docutils literal notranslate"><span class="pre">is_on_wall()</span></code>、<code class="docutils literal notranslate"><span class="pre">is_on_ceiling()</span></code> で壁や天井との接触を判定できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code> は <code class="docutils literal notranslate"><span class="pre">delta</span></code> を引数に取らない。速度に経過時間を掛ける計算は、<code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code> の内部で行われる。一方、重力で速度を変える計算（加速度 × 時間）は自分で <code class="docutils literal notranslate"><span class="pre">delta</span></code> を掛ける必要がある。</p>
+<section id="id3">
+<h3>ジャンプの高さ<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>重力加速度を <span class="math notranslate nohighlight">\(g\)</span>、ジャンプの初速を <span class="math notranslate nohighlight">\(v_0\)</span> とすると、ジャンプしてから <span class="math notranslate nohighlight">\(t\)</span> 秒後の高さ <span class="math notranslate nohighlight">\(h\)</span> は、等加速度運動の式で表される。</p>
+<div class="math notranslate nohighlight">
+\[h(t) = v_0 t - \frac{1}{2} g t^2\]</div>
+<p>最高点の高さは <span class="math notranslate nohighlight">\(h_{\max} = \dfrac{v_0^2}{2g}\)</span> である。サンプルでは <span class="math notranslate nohighlight">\(g = 980\)</span>、<span class="math notranslate nohighlight">\(v_0 = 500\)</span> なので、最高点は約 128 ピクセルになる。実際の計算はフレームごとに少しずつ行われるので、この値よりわずかに低くなる。</p>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="../_images/jump_trajectory.png"><img alt="../_images/jump_trajectory.png" src="../_images/jump_trajectory.png" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 19 </span><span class="caption-text">ジャンプしてからの高さの変化（g = 980、v0 = 500 の場合）</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>高く跳ばせたい場合は初速を大きくし、ふわっとした動きにしたい場合は重力を小さくする。重力の既定値は、プロジェクト設定の「物理」→「2D」にある「デフォルト重力」（physics/2d/default_gravity）で 980 ピクセル/秒² に設定されている。</p>
+</section>
+<section id="id4">
+<h3>衝突の情報を調べる<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code> の後で <code class="docutils literal notranslate"><span class="pre">get_slide_collision_count()</span></code> と <code class="docutils literal notranslate"><span class="pre">get_slide_collision(i)</span></code> を使うと、移動中にぶつかった相手と、ぶつかった面の向き（法線）を取得できる。<code class="docutils literal notranslate"><span class="pre">player.gd</span></code> の <code class="docutils literal notranslate"><span class="pre">_push_rigid_bodies()</span></code> では、ぶつかった相手が <code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code> なら、法線と反対向きに力を加えて押している。</p>
+</section>
+</section>
+<section id="rigidbody2d">
+<h2>RigidBody2D<a class="headerlink" href="#rigidbody2d" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code> は、物理演算に任せて動かす物体である。重力で落ち、ほかの物体にぶつかると跳ね返ったり転がったりする。インスペクターで「質量」（mass）、重力の効き具合（gravity_scale）、摩擦と反発の強さ（「物理マテリアルのオーバーライド」）などを設定できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code> の <code class="docutils literal notranslate"><span class="pre">position</span></code> を毎フレーム書き換えると、物理演算と矛盾して不自然な動きになる。動かしたい場合は、力を加える。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 41 </span><span class="caption-text">RigidBody2D に力を加えるメソッド</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>メソッド</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">apply_central_impulse(impulse)</span></code></p></td>
+<td><p>瞬間的な力（撃力）を加える。ジャンプ、爆発で吹き飛ぶなど</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">apply_central_force(force)</span></code></p></td>
+<td><p>継続的な力を加える。毎フレーム呼んで、エンジンの推進力などを表す。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">apply_torque_impulse(torque)</span></code></p></td>
+<td><p>回転させる瞬間的な力を加える。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="area2d">
+<h2>Area2D<a class="headerlink" href="#area2d" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Area2D</span></code> は、ほかの物体が領域に入ったり出たりしたことを、シグナルで知らせる。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 42 </span><span class="caption-text">Area2D の主なシグナル</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>シグナル</p></th>
+<th class="head"><p>発行されるタイミング</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">body_entered(body)</span></code></p></td>
+<td><p>物理ボディが領域に入ったとき</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">body_exited(body)</span></code></p></td>
+<td><p>物理ボディが領域から出たとき</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">area_entered(area)</span></code></p></td>
+<td><p>ほかの <code class="docutils literal notranslate"><span class="pre">Area2D</span></code> が領域に入ったとき</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">area_exited(area)</span></code></p></td>
+<td><p>ほかの <code class="docutils literal notranslate"><span class="pre">Area2D</span></code> が領域から出たとき</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> のコインは <code class="docutils literal notranslate"><span class="pre">Area2D</span></code> で、<code class="docutils literal notranslate"><span class="pre">body_entered</span></code> シグナルで触れた物体を受け取り、それがプレイヤーなら自分を削除していた。今どの物体が領域内にあるかは、<code class="docutils literal notranslate"><span class="pre">get_overlapping_bodies()</span></code> で取得することもできる。</p>
+</section>
+<section id="id5">
+<h2>コリジョンレイヤーとマスク<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>ゲームには、「プレイヤーはコインに触れるが、敵はコインに触れない」「敵の弾は敵自身には当たらない」といった決まりがある。これを実現するのが、コリジョンレイヤー（collision layer）とコリジョンマスク（collision mask）である。</p>
+<ul class="simple">
+<li><p><strong>レイヤー</strong>：自分がどのグループに属するか</p></li>
+<li><p><strong>マスク</strong>：どのグループの相手を検出するか</p></li>
+</ul>
+<p>物体 A のマスクに物体 B のレイヤーが含まれていれば、A は B を検出する。レイヤーは 1 ～ 32 の番号で、インスペクターの「コリジョン」の項目で、番号のマスを押して選ぶ。番号には、プロジェクト設定の「レイヤー名」→「2D物理」で名前を付けられる。</p>
+<p>サンプルプロジェクトでは、次のように名前を付けて使っている。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 43 </span><span class="caption-text">サンプルプロジェクトのコリジョンレイヤー</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 20.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>番号</p></th>
+<th class="head"><p>名前</p></th>
+<th class="head"><p>属する物体</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>world</p></td>
+<td><p>床、壁、地形、木箱</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>player</p></td>
+<td><p>プレイヤー</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>enemy</p></td>
+<td><p>敵、障害物（<a class="reference internal" href="ch17_tutorial.html#ch17"><span class="std std-ref">第 17 章　チュートリアル：岩よけゲームを作る</span></a> の岩）</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>item</p></td>
+<td><p>コイン</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 44 </span><span class="caption-text">サンプルの物体のレイヤーとマスク</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>物体</p></th>
+<th class="head"><p>レイヤー</p></th>
+<th class="head"><p>マスク（検出する相手）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>プレイヤー（<code class="docutils literal notranslate"><span class="pre">chapter11/player.tscn</span></code>）</p></td>
+<td><p>2（player）</p></td>
+<td><p>1（world）</p></td>
+</tr>
+<tr class="row-odd"><td><p>木箱（<code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code>）</p></td>
+<td><p>1（world）</p></td>
+<td><p>1（world）、2（player）</p></td>
+</tr>
+<tr class="row-even"><td><p>コイン（<code class="docutils literal notranslate"><span class="pre">chapter05/coin.tscn</span></code>）</p></td>
+<td><p>4（item）</p></td>
+<td><p>2（player）</p></td>
+</tr>
+</tbody>
+</table>
+<p>プレイヤーのマスクは world だけなので、プレイヤーは床や木箱にはぶつかるが、コインにはぶつからずに通り抜ける。一方、コインのマスクは player なので、コインはプレイヤーが入ってきたことを検出できる。</p>
+<p>シーンファイルやスクリプトでは、レイヤーは各番号を 1 ビットとする整数で表される。番号 <span class="math notranslate nohighlight">\(n\)</span> のビットの値は <span class="math notranslate nohighlight">\(2^{n-1}\)</span> で、<code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> の <code class="docutils literal notranslate"><span class="pre">collision_layer</span> <span class="pre">=</span> <span class="pre">8</span></code> は番号 4 を表す。スクリプトで設定する場合は、<code class="docutils literal notranslate"><span class="pre">set_collision_mask_value(4,</span> <span class="pre">true)</span></code> のように番号で指定するメソッドを使うと分かりやすい。</p>
+</section>
+<section id="id6">
+<h2>サンプル<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">platformer.tscn</span></code> は、ここまでの内容をまとめたサンプルである。プレイヤーを左右に動かしてジャンプし、木箱を押し、コインを集められる。</p>
+<figure class="align-default" id="id15">
+<div class="graphviz"><object data="../_images/graphviz-2958ad25d682099cc8b9fca9e739855122f16100.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph platformer {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  root [label=&quot;Platformer\n（Node2D）&quot;];
+  floor [label=&quot;Floor、Platform1、Platform2、\nWallLeft、WallRight\n（StaticBody2D）&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  player [label=&quot;Player\n（player.tscn のインスタンス）&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  box [label=&quot;Box1、Box2\n（RigidBody2D）&quot;, fillcolor=&quot;#fff3cd&quot;];
+  coins [label=&quot;Coins\n（Node2D）&quot;];
+  coin [label=&quot;Coin1 ～ Coin3\n（coin.tscn のインスタンス）&quot;, fillcolor=&quot;#d4edda&quot;];
+  info [label=&quot;Info、Help\n（Label）&quot;];
+  root -&gt; floor;
+  root -&gt; player;
+  root -&gt; box;
+  root -&gt; coins;
+  coins -&gt; coin;
+  root -&gt; info;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 20 </span><span class="caption-text">platformer.tscn のノードの構成</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id16">
+<a class="screenshot reference internal image-reference" href="../_images/ch11_platformer.png"><img alt="../_images/ch11_platformer.png" class="screenshot" src="../_images/ch11_platformer.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 21 </span><span class="caption-text">platformer.tscn の実行結果</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>床や台は、<code class="docutils literal notranslate"><span class="pre">StaticBody2D</span></code> の子として <code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code>（当たり判定）と <code class="docutils literal notranslate"><span class="pre">ColorRect</span></code>（見た目の長方形）を置いている。コインは <a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> の <code class="docutils literal notranslate"><span class="pre">coin.tscn</span></code> をそのままインスタンス化し、<code class="docutils literal notranslate"><span class="pre">coins</span></code> グループに追加している。画面上部の表示は、親の <code class="docutils literal notranslate"><span class="pre">platformer.gd</span></code> が毎フレーム更新している。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 21 </span><span class="caption-text">chapter11/platformer.gd</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos"> 2</span><span class="c1">## 物理と衝突のサンプルの画面表示を更新する。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_player</span><span class="p">:</span><span class="w"> </span><span class="n">CharacterBody2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Player</span>
+<span class="linenos"> 5</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_info</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Info</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">_delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">coins_left</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">get_nodes_in_group</span><span class="p">(</span><span class="s2">&quot;coins&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="linenos">10</span><span class="w">    </span><span class="n">_info</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos">11</span><span class="w">        </span><span class="s2">&quot;速度: (</span><span class="si">%.0f</span><span class="s2">, </span><span class="si">%.0f</span><span class="s2">)  床の上: </span><span class="si">%s</span><span class="s2">  残りのコイン: </span><span class="si">%d</span><span class="s2">&quot;</span>
+<span class="linenos">12</span><span class="w">        </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">_player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">_player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">_player</span><span class="o">.</span><span class="n">is_on_floor</span><span class="p">(),</span><span class="w"> </span><span class="n">coins_left</span><span class="p">]</span>
+<span class="linenos">13</span><span class="w">    </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch10_vectors.html" class="btn btn-neutral float-left" title="第 10 章 2D の座標とベクトル" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch12_graphics_and_animation.html" class="btn btn-neutral float-right" title="第 12 章 描画とアニメーション" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

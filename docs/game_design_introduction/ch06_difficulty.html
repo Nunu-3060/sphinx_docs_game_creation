@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. 難易度と学習 &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="7. 操作感とフィードバック" href="ch07_game_feel.html" />
+    <link rel="prev" title="5. ゲームバランス" href="ch05_balance.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. 難易度と学習</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">6.1. 難易度とは何か</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">6.2. 難易度曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">6.3. 学習を設計する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">6.3.1. 新しい要素を 1 つずつ教える</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">6.3.2. 説明するより体験させる</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">6.4. 失敗を設計する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">6.4.1. 公平だと感じさせる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">6.4.2. ペナルティの重さ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">6.5. 動的難易度調整</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">6.6. 難易度の選択とアクセシビリティ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">6.6.1. アクセシビリティ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">6.7. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>難易度と学習</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">6. </span>難易度と学習<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 3 章のフロー理論で見たように、挑戦の難しさとプレイヤーの能力がつり合っているとき、プレイヤーは没頭しやすい。プレイヤーの能力は遊ぶにつれて上がるので、ゲームは難しさを少しずつ上げると同時に、プレイヤーの能力を上げる手助けもしなければならない。この章では、難易度の上げ方と、プレイヤーに遊び方を学んでもらう方法を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">6.1. </span>難易度とは何か<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームの難易度は、課題が求める能力とプレイヤーが持っている能力の差である。同じ課題でも、初めて遊ぶ人には難しく、慣れた人には易しい。また、ゲームが求める能力には複数の種類がある。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 6.1 </span><span class="caption-text">難しさの種類</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>操作の難しさ</p></td>
+<td><p>正確に、素早く入力する必要がある</p></td>
+<td><p>狭い足場へのジャンプ、リズムゲームの速い譜面</p></td>
+</tr>
+<tr class="row-odd"><td><p>判断の難しさ</p></td>
+<td><p>状況を読み、よい選択をする必要がある</p></td>
+<td><p>将棋の次の一手、限られた資源の使い道</p></td>
+</tr>
+<tr class="row-even"><td><p>知識の難しさ</p></td>
+<td><p>ルールや敵の性質を知っている必要がある</p></td>
+<td><p>特定の敵の弱点、隠された仕組み</p></td>
+</tr>
+<tr class="row-odd"><td><p>時間の難しさ</p></td>
+<td><p>限られた時間の中で処理する必要がある</p></td>
+<td><p>制限時間、迫ってくる壁</p></td>
+</tr>
+</tbody>
+</table>
+<p>難易度を調整するときは、どの種類の難しさを上げるのかを意識する。ゲームが重視する楽しさと関係のない種類の難しさは、プレイヤーにとって単なるストレスになる。例えば、じっくり考えるパズルゲームに厳しい制限時間を加えると、判断の楽しさよりも焦りが勝ってしまう。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">6.2. </span>難易度曲線<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ゲームの進行に沿って難易度がどう変わるかを表したグラフを、難易度曲線と呼ぶ。代表的な 3 つの型を次の図に示す。</p>
+<figure class="align-center" id="id15">
+<img alt="難易度曲線の 3 つの型" src="_images/difficulty_curve.png" />
+<figcaption>
+<p><span class="caption-number">図 6.1 </span><span class="caption-text">難易度曲線の 3 つの型</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 6.2 </span><span class="caption-text">難易度曲線の型</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>型</p></th>
+<th class="head"><p>特徴</p></th>
+<th class="head"><p>注意点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>単調増加型</p></td>
+<td><p>一定の割合で難しくなる。最も単純な考え方</p></td>
+<td><p>緩みが無いので、プレイヤーが疲れやすい</p></td>
+</tr>
+<tr class="row-odd"><td><p>のこぎり型</p></td>
+<td><p>レベルの中で難しくなり、次のレベルの最初で少し易しくなる</p></td>
+<td><p>新しいレベルの冒頭で一息つける。下げ幅が大きすぎると退屈になる</p></td>
+</tr>
+<tr class="row-even"><td><p>波型</p></td>
+<td><p>山と谷を繰り返しながら、全体として難しくなる</p></td>
+<td><p>緊張と緩和のリズムが作れる。谷の位置と深さの設計が必要になる</p></td>
+</tr>
+</tbody>
+</table>
+<p>実際のゲームの難易度曲線は、のこぎり型や波型に近いものが多い。新しい要素が登場した直後は難易度を下げて慣れてもらい、慣れたところで難易度を上げる、という繰り返しが基本になる。</p>
+<p><a class="reference internal" href="#list-difficulty-sawtooth"><span class="std std-numref">リスト 6.1</span></a> は、図ののこぎり型の曲線を計算する関数である。</p>
+<div class="literal-block-wrapper docutils container" id="list-difficulty-sawtooth">
+<div class="code-block-caption"><span class="caption-number">リスト 6.1 </span><span class="caption-text">difficulty_curve.py（のこぎり型の難易度曲線）</span><a class="headerlink" href="#list-difficulty-sawtooth" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="k">def</span><span class="w"> </span><span class="nf">sawtooth</span><span class="p">(</span><span class="n">progress</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">29</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;レベルの中では難易度が上がり、レベルが変わると上がった分の半分だけ下がる。&quot;&quot;&quot;</span>
+<span class="linenos">30</span>    <span class="n">position</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">progress</span> <span class="o">*</span> <span class="n">LEVELS</span><span class="p">,</span> <span class="n">LEVELS</span> <span class="o">-</span> <span class="mf">1e-9</span><span class="p">)</span>
+<span class="linenos">31</span>    <span class="n">level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+<span class="linenos">32</span>    <span class="n">within</span> <span class="o">=</span> <span class="n">position</span> <span class="o">-</span> <span class="n">level</span>  <span class="c1"># レベル内の進行度（0〜1）</span>
+<span class="linenos">33</span>    <span class="n">rise</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">/</span> <span class="p">(</span><span class="n">LEVELS</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1 レベルの中で上がる量</span>
+<span class="linenos">34</span>    <span class="n">start</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="n">level</span> <span class="o">*</span> <span class="n">rise</span>
+<span class="linenos">35</span>    <span class="k">return</span> <span class="n">start</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">rise</span> <span class="o">*</span> <span class="n">within</span>
+</pre></div>
+</div>
+</div>
+<p>難易度曲線は、デザイナーが意図を整理し、チームで共有するための道具である。実際にプレイヤーが感じる難しさは、プレイテストで確かめる必要がある。プレイヤーがどこで何回失敗したかを記録すれば、実際に難しいと感じられている場所が分かる。失敗の多い場所を可視化する方法は第 11 章で扱う。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">6.3. </span>学習を設計する<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>難易度を上げるには、プレイヤーが上達していることが前提になる。ゲームは、遊び方をプレイヤーに教える仕組みを持たなければならない。</p>
+<section id="id5">
+<h3><span class="section-number">6.3.1. </span>新しい要素を 1 つずつ教える<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>人が一度に覚えられることには限りがある。新しい操作、敵、仕掛けは、一度に 1 つずつ登場させるのが原則である。新しい要素が 2 つ同時に登場すると、失敗したときにどちらが原因なのかが分からなくなる。</p>
+<p>新しい要素は、次のような段階を踏んで見せるとよい。第 9 章では、この 4 つの段階を導入、練習、応用、結びと呼び、レベルの構成方法として詳しく扱う。</p>
+<ol class="arabic simple">
+<li><p>失敗しても損害の小さい安全な場所で、新しい要素に出会わせる。</p></li>
+<li><p>新しい要素だけに集中できる場面で練習させる。</p></li>
+<li><p>既に知っている要素と組み合わせたり、意外な使い方を見せたりして、理解を深めさせる。</p></li>
+<li><p>学んだことを確かめさせ、達成感とともに区切りを付ける。</p></li>
+</ol>
+</section>
+<section id="id6">
+<h3><span class="section-number">6.3.2. </span>説明するより体験させる<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>遊び方を教える方法には、文章で説明する方法から、レベルの構造で自然に気付かせる方法まで、さまざまなものがある。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 6.3 </span><span class="caption-text">遊び方を教える方法</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 40.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>長所と短所</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>文章や画像で説明する</p></td>
+<td><p>操作方法やルールを画面に表示する</p></td>
+<td><p>確実に伝わるが、読み飛ばされやすく、遊びが中断する</p></td>
+</tr>
+<tr class="row-odd"><td><p>指示に従わせる</p></td>
+<td><p>「ジャンプボタンを押せ」のように、指示どおりに操作させる</p></td>
+<td><p>操作は確実に覚えるが、やらされている感じが強い</p></td>
+</tr>
+<tr class="row-even"><td><p>レベルの構造で気付かせる</p></td>
+<td><p>進むためには新しい操作を使うしかない場所を用意する</p></td>
+<td><p>自分で気付いた喜びがあるが、設計に手間がかかり、気付かない人への備えも必要になる</p></td>
+</tr>
+</tbody>
+</table>
+<p>自分で気付いたことは記憶に残りやすく、第 3 章で述べた自律性や有能感も満たす。レベルの構造で気付かせる方法を基本にし、気付かないプレイヤーのために、しばらく進めない場合にだけヒントを表示するなどの補助を用意するのがよい。</p>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">6.4. </span>失敗を設計する<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>挑戦のあるゲームでは、プレイヤーは何度も失敗する。失敗したときの体験は、成功したときの体験と同じくらい重要である。</p>
+<section id="id8">
+<h3><span class="section-number">6.4.1. </span>公平だと感じさせる<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>プレイヤーが失敗を受け入れられるのは、失敗が公平だと感じられるときである。公平だと感じさせるには、次の点が重要になる。</p>
+<ul class="simple">
+<li><p>失敗の原因が分かる。何に当たったのか、なぜ間に合わなかったのかが見て分かる。</p></li>
+<li><p>危険が事前に予告されている。敵の攻撃には予備動作があり、落とし穴には見た目の手がかりがある。</p></li>
+<li><p>次はどうすればよいかが想像できる。原因が分かれば、プレイヤーは「次こそは」と思える。</p></li>
+</ul>
+<p>画面の外から突然現れた敵に倒されたり、当たっていないように見える攻撃で倒されたりすると、プレイヤーは自分の腕ではなくゲームのせいだと感じる。</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">6.4.2. </span>ペナルティの重さ<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>失敗したときに失うものの大きさ（ペナルティ）は、ゲームの緊張感と遊びやすさの両方を左右する。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 6.4 </span><span class="caption-text">失敗のペナルティの例</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ペナルティ</p></th>
+<th class="head"><p>効果</p></th>
+<th class="head"><p>向いているゲーム</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>その場からすぐやり直せる</p></td>
+<td><p>試行錯誤しやすい。1 回の失敗の重みは軽い</p></td>
+<td><p>難しい操作を何度も試すアクションゲーム、パズルゲーム</p></td>
+</tr>
+<tr class="row-odd"><td><p>チェックポイントまで戻る</p></td>
+<td><p>区間ごとの緊張感が生まれる。戻る距離で重さを調整できる</p></td>
+<td><p>多くのアクションゲーム</p></td>
+</tr>
+<tr class="row-even"><td><p>所持品や経験値の一部を失う</p></td>
+<td><p>慎重な行動を促す。取り戻す機会を用意することもある</p></td>
+<td><p>RPG、探索型のアクションゲーム</p></td>
+</tr>
+<tr class="row-odd"><td><p>最初からやり直す</p></td>
+<td><p>1 回 1 回の挑戦が重くなり、強い緊張感が生まれる</p></td>
+<td><p>ローグライク、短時間で 1 回が終わるゲーム</p></td>
+</tr>
+</tbody>
+</table>
+<p>ペナルティを決めるときは、やり直すまでにかかる時間にも注意する。失敗するたびに長い演出を見せられたり、同じ易しい区間を何度も通らされたりすると、プレイヤーは挑戦する意欲を失う。難しい場所ほど、やり直しを速くするのが基本である。</p>
+</section>
+</section>
+<section id="id10">
+<h2><span class="section-number">6.5. </span>動的難易度調整<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>プレイヤーの成績に応じて、ゲームが自動的に難易度を変える仕組みを、動的難易度調整と呼ぶ。何度も失敗しているプレイヤーには敵を弱くし、順調なプレイヤーには敵を強くする、といった調整を行う。</p>
+<table class="docutils align-default" id="id19">
+<caption><span class="caption-number">表 6.5 </span><span class="caption-text">動的難易度調整の例</span><a class="headerlink" href="#id19" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>失敗の回数に応じて補助を出す</p></td>
+<td><p>同じ場所で何度も失敗したら、無敵になるアイテムや追加のチェックポイントを用意する</p></td>
+</tr>
+<tr class="row-odd"><td><p>成績に応じて敵の強さを変える</p></td>
+<td><p>被ダメージや命中率を記録し、敵の数や攻撃力を内部で増減させる</p></td>
+</tr>
+<tr class="row-even"><td><p>順位に応じて手助けする</p></td>
+<td><p>レースゲームで、後ろを走るプレイヤーほど強いアイテムを出す（第 4 章の負のフィードバック）</p></td>
+</tr>
+</tbody>
+</table>
+<p>動的難易度調整は、幅広い腕前のプレイヤーをフローチャンネルにとどめるのに役立つ。一方で、次のような問題も起こりうる。</p>
+<ul class="simple">
+<li><p>調整に気付いたプレイヤーが、手加減されていると感じて達成感を失う。</p></li>
+<li><p>わざと失敗して難易度を下げる、という攻略法が生まれる。</p></li>
+<li><p>上達しても難しさが変わらないように感じ、成長の手応えが薄れる。</p></li>
+</ul>
+<p>そのため、調整はプレイヤーに気付かれない範囲で緩やかに行うか、逆に「補助を使うかどうか」をプレイヤー自身に選ばせることが多い。</p>
+</section>
+<section id="id11">
+<h2><span class="section-number">6.6. </span>難易度の選択とアクセシビリティ<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>プレイヤーの腕前や事情はさまざまなので、1 つの難易度ですべての人を満足させることはできない。多くのゲームでは、最初に難易度（易しい、普通、難しいなど）を選ばせる。</p>
+<p>難易度の選択肢を作るときは、名前の付け方にも気を配る。「易しい」を選ぶことに抵抗を感じるプレイヤーもいるので、「物語を楽しむ」「歯ごたえを楽しむ」のように、何を楽しみたいかで選べる名前にする方法もある。</p>
+<section id="id12">
+<h3><span class="section-number">6.6.1. </span>アクセシビリティ<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<p>アクセシビリティとは、障害の有無や身体的な条件にかかわらず、多くの人が遊べるようにすることである。難易度の調整と並んで、次のような配慮が一般的になっている。</p>
+<table class="docutils align-default" id="id20">
+<caption><span class="caption-number">表 6.6 </span><span class="caption-text">アクセシビリティの配慮の例</span><a class="headerlink" href="#id20" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分野</p></th>
+<th class="head"><p>配慮の例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>視覚</p></td>
+<td><p>文字の大きさを変えられる。色だけで情報を区別しない（形や模様も使う）。色覚の特性に合わせた配色を選べる</p></td>
+</tr>
+<tr class="row-odd"><td><p>聴覚</p></td>
+<td><p>台詞に字幕を付ける。重要な効果音（背後からの足音など）を画面上の表示でも伝える</p></td>
+</tr>
+<tr class="row-even"><td><p>運動</p></td>
+<td><p>ボタンの割り当てを変えられる。連打や長押しを、1 回の押下や切り替えに変えられる</p></td>
+</tr>
+<tr class="row-odd"><td><p>認知</p></td>
+<td><p>目的や操作方法をいつでも確認できる。ゲームの速度を遅くできる</p></td>
+</tr>
+</tbody>
+</table>
+<p>アクション性の高いゲームでも、ゲームの速度を下げる、無敵にするなどの補助を選べるようにした例がある。2018 年に発売された「Celeste」は、難しいアクションゲームでありながら、ゲームの速度や無敵の有無などを個別に設定できる「アシストモード」を備えたことで知られる。</p>
+<p>アクセシビリティの指針としては、ゲーム開発者や研究者がまとめた <a class="reference external" href="https://gameaccessibilityguidelines.com/">Game accessibility guidelines</a> が参考になる。</p>
+</section>
+</section>
+<section id="id13">
+<h2><span class="section-number">6.7. </span>演習<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>好きなゲームを 1 つ選び、そのゲームが求める難しさの種類（操作、判断、知識、時間）を、重要な順に並べよ。</p></li>
+<li><p>遊んだことのあるゲームで、新しい要素の教え方が上手だと感じた場面と、下手だと感じた場面を 1 つずつ挙げ、理由を説明せよ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">difficulty_curve.py</span></code> に、序盤だけ急に難しくなり、その後は緩やかになる難易度曲線を追加して表示せよ。そのような曲線を持つゲームでは、プレイヤーにどのような体験が生じるかを考えよ。</p></li>
+<li><p>自分の作りたいゲームについて、失敗したときのペナルティを決め、その理由を説明せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch05_balance.html" class="btn btn-neutral float-left" title="5. ゲームバランス" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch07_game_feel.html" class="btn btn-neutral float-right" title="7. 操作感とフィードバック" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

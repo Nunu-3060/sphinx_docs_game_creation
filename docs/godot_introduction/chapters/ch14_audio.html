@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 14 章 サウンド &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 15 章 シーン管理とデータ" href="ch15_scenes_and_data.html" />
+    <link rel="prev" title="第 13 章 UI" href="ch13_ui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 14 章　サウンド</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">音声ファイルの形式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">音を再生するノード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">オーディオバス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">デシベル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">サンプル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 14 章　サウンド</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch13_ui.html" class="btn btn-neutral float-left" title="第 13 章 UI" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch15_scenes_and_data.html" class="btn btn-neutral float-right" title="第 15 章 シーン管理とデータ" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch14">
+<span id="id1"></span><h1>第 14 章　サウンド<a class="headerlink" href="#ch14" title="Link to this heading"></a></h1>
+<p>効果音と BGM は、ゲームの手応えと雰囲気を大きく左右する。本章では、音を再生するノード、音量をまとめて管理するオーディオバス、音量の単位であるデシベルについて説明する。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter14</span></code> フォルダーにある。</p>
+<section id="id2">
+<h2>音声ファイルの形式<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Godot は、次の形式の音声ファイルをインポートできる。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 52 </span><span class="caption-text">対応する音声ファイルの形式</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>形式</p></th>
+<th class="head"><p>特徴と用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>WAV</p></td>
+<td><p>圧縮しない形式。再生の負荷が小さく、遅延も少ない。短い効果音に向く。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ogg Vorbis</p></td>
+<td><p>圧縮した形式。ファイルが小さい。BGM や長い音声に向く。</p></td>
+</tr>
+<tr class="row-even"><td><p>MP3</p></td>
+<td><p>圧縮した形式。Ogg Vorbis と同様に BGM などに使える。</p></td>
+</tr>
+</tbody>
+</table>
+<p>BGM を繰り返し再生（ループ）するかどうかは、音声ファイルのインポート設定で決める。ファイルシステムドックでファイルを選び、「インポート」ドックで WAV なら「Loop Mode」、Ogg Vorbis と MP3 なら「ループ」を設定して、「再インポート」を押す。</p>
+<p>本書のサンプルの音声は、<code class="docutils literal notranslate"><span class="pre">tools/generate_assets.py</span></code> で作った WAV ファイルで、ループしない設定で読み込んでいる。そのため、BGM は再生が終わったときに発行される <code class="docutils literal notranslate"><span class="pre">finished</span></code> シグナルで、最初から再生し直している。</p>
+</section>
+<section id="id3">
+<h2>音を再生するノード<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>音を再生するには、次のノードを使う。「ストリーム」（stream）に音声ファイルを設定し、<code class="docutils literal notranslate"><span class="pre">play()</span></code> で再生する。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 53 </span><span class="caption-text">音を再生するノード</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード</p></th>
+<th class="head"><p>特徴</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer</span></code></p></td>
+<td><p>位置を持たない。どこで鳴っても同じ音量で聞こえる。BGM や UI の効果音に使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer2D</span></code></p></td>
+<td><p>2D 空間の位置を持つ。画面の中心（カメラ）からの距離に応じて音量が下がり、左右の位置に応じて聞こえる方向が変わる。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer3D</span></code></p></td>
+<td><p>3D 空間の位置を持つ。</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 54 </span><span class="caption-text">AudioStreamPlayer のよく使うプロパティ</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>プロパティ</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ストリーム（stream）</p></td>
+<td><p>再生する音声</p></td>
+</tr>
+<tr class="row-odd"><td><p>ボリューム dB（volume_db）</p></td>
+<td><p>音量。単位はデシベル（後述）</p></td>
+</tr>
+<tr class="row-even"><td><p>ピッチスケール（pitch_scale）</p></td>
+<td><p>再生速度と音の高さ。2.0 で 1 オクターブ高く、速くなる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>自動再生（autoplay）</p></td>
+<td><p>シーンの開始時に自動で再生する。</p></td>
+</tr>
+<tr class="row-even"><td><p>バス（bus）</p></td>
+<td><p>出力先のオーディオバス（後述）</p></td>
+</tr>
+<tr class="row-odd"><td><p>max_polyphony</p></td>
+<td><p>同時に重ねて再生できる数。既定値は 1 で、再生中に <code class="docutils literal notranslate"><span class="pre">play()</span></code> を呼ぶと最初から鳴り直す。</p></td>
+</tr>
+</tbody>
+</table>
+<p>効果音を素早く連続して鳴らすと、<code class="docutils literal notranslate"><span class="pre">max_polyphony</span></code> が 1 のままでは前の音が途切れる。重ねて鳴らしたい場合は、この値を大きくする。同じ効果音を毎回少しずつ変えたい場合は、<code class="docutils literal notranslate"><span class="pre">pitch_scale</span></code> を <code class="docutils literal notranslate"><span class="pre">randf_range(0.9,</span> <span class="pre">1.1)</span></code> のようにランダムにすると、単調さを抑えられる。</p>
+</section>
+<section id="id4">
+<h2>オーディオバス<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>オーディオバス（audio bus）は、音の通り道である。各プレイヤーの音はいずれかのバスに送られ、バスで音量の調整やエフェクトの処理を受けてから、最終的に <code class="docutils literal notranslate"><span class="pre">Master</span></code> バスに集められて出力される。</p>
+<figure class="align-default" id="id10">
+<div class="graphviz"><object data="../_images/graphviz-0fd9e539d3da4a0a9356ff74d4cc5b83e531cedf.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph buses {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fontsize=11];
+  bgm_player [label=&quot;BGMPlayer\n（AudioStreamPlayer）&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  se_player [label=&quot;SEPlayer\n（AudioStreamPlayer）&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  bgm [label=&quot;BGM バス&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  se [label=&quot;SE バス&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  master [label=&quot;Master バス&quot;, fillcolor=&quot;#d4edda&quot;];
+  out [label=&quot;スピーカー&quot;, shape=ellipse, fillcolor=&quot;#ffffff&quot;];
+  bgm_player -&gt; bgm;
+  se_player -&gt; se;
+  bgm -&gt; master;
+  se -&gt; master;
+  master -&gt; out;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 27 </span><span class="caption-text">サンプルプロジェクトのオーディオバスの構成</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>BGM と効果音を別のバスに分けておくと、設定画面で「BGM の音量」と「効果音の音量」を別々に変えられる。バスは、下部パネルの「オーディオ」で「バスを追加」を押して作る。バスにはリバーブ（残響）やコンプレッサーなどのエフェクトも追加できる。バスの構成はプロジェクトのフォルダーの <code class="docutils literal notranslate"><span class="pre">default_bus_layout.tres</span></code> に保存される。</p>
+</section>
+<section id="id5">
+<h2>デシベル<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>Godot の音量は、デシベル（dB）で表す。0 dB が元の音量で、マイナスにすると小さくなる。デシベルと、元の音量に対する割合（振幅の比）の関係は次の式で表される。</p>
+<div class="math notranslate nohighlight">
+\[\text{dB} = 20 \log_{10}(\text{割合})\]</div>
+<p>割合が 0.5（半分）のとき約 -6 dB、0.1 のとき -20 dB になる。割合が 0 に近づくと、デシベルはマイナス無限大に向かう。</p>
+<figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="../_images/linear_to_db.png"><img alt="../_images/linear_to_db.png" src="../_images/linear_to_db.png" style="width: 60%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 28 </span><span class="caption-text">音量の割合とデシベルの関係</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>設定画面のスライダーは 0 ～ 1 の割合で扱うほうが分かりやすいので、<code class="docutils literal notranslate"><span class="pre">linear_to_db()</span></code> で割合をデシベルに変換してから設定する。逆の変換は <code class="docutils literal notranslate"><span class="pre">db_to_linear()</span></code> で行う。なお、プレイヤーの <code class="docutils literal notranslate"><span class="pre">volume_linear</span></code> プロパティや、<code class="docutils literal notranslate"><span class="pre">AudioServer.set_bus_volume_linear()</span></code> を使うと、割合のまま設定することもできる。</p>
+</section>
+<section id="id6">
+<h2>サンプル<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">audio_demo.tscn</span></code> は、3 種類の効果音のボタン、BGM の再生・停止の切り替え、バスごとの音量のスライダーを並べたサンプルである。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 27 </span><span class="caption-text">chapter14/audio_demo.gd</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Control</span>
+<span class="linenos"> 2</span><span class="c1">## 効果音と BGM を鳴らし、オーディオバスごとに音量を変えるサンプル。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_bgm_player</span><span class="p">:</span><span class="w"> </span><span class="n">AudioStreamPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$BGMPlayer</span>
+<span class="linenos"> 5</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_se_player</span><span class="p">:</span><span class="w"> </span><span class="n">AudioStreamPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$SEPlayer</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nv">%JumpButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_play_se</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://assets/jump.wav&quot;</span><span class="p">)))</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nv">%CoinButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_play_se</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://assets/coin.wav&quot;</span><span class="p">)))</span>
+<span class="linenos">11</span><span class="w">    </span><span class="nv">%HitButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_play_se</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://assets/hit.wav&quot;</span><span class="p">)))</span>
+<span class="linenos">12</span><span class="w">    </span><span class="nv">%BGMButton</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_bgm_toggled</span><span class="p">)</span>
+<span class="linenos">13</span><span class="w">    </span><span class="nv">%BGMVolume</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_set_bus_volume</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;BGM&quot;</span><span class="p">))</span>
+<span class="linenos">14</span><span class="w">    </span><span class="nv">%SEVolume</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_set_bus_volume</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;SE&quot;</span><span class="p">))</span>
+<span class="linenos">15</span><span class="w">    </span><span class="c1"># BGM の素材はループしない設定で読み込まれるので、再生が終わったら最初から流し直す。</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">_bgm_player</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_bgm_player</span><span class="o">.</span><span class="n">play</span><span class="p">)</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="k">func</span><span class="w"> </span><span class="n">_play_se</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span><span class="w"> </span><span class="n">AudioStream</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">    </span><span class="n">_se_player</span><span class="o">.</span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span>
+<span class="linenos">21</span><span class="w">    </span><span class="n">_se_player</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="k">func</span><span class="w"> </span><span class="n">_on_bgm_toggled</span><span class="p">(</span><span class="n">enabled</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">25</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">enabled</span><span class="p">:</span>
+<span class="linenos">26</span><span class="w">        </span><span class="n">_bgm_player</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+<span class="linenos">27</span><span class="w">    </span><span class="k">else</span><span class="p">:</span>
+<span class="linenos">28</span><span class="w">        </span><span class="n">_bgm_player</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="c1">## スライダーの値（0 から 1 の割合）をデシベルに変換してバスの音量に設定する。</span>
+<span class="linenos">32</span><span class="k">func</span><span class="w"> </span><span class="n">_set_bus_volume</span><span class="p">(</span><span class="n">ratio</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">,</span><span class="w"> </span><span class="n">bus_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">33</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">bus_index</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">AudioServer</span><span class="o">.</span><span class="n">get_bus_index</span><span class="p">(</span><span class="n">bus_name</span><span class="p">)</span>
+<span class="linenos">34</span><span class="w">    </span><span class="n">AudioServer</span><span class="o">.</span><span class="n">set_bus_volume_db</span><span class="p">(</span><span class="n">bus_index</span><span class="p">,</span><span class="w"> </span><span class="n">linear_to_db</span><span class="p">(</span><span class="n">ratio</span><span class="p">))</span>
+<span class="linenos">35</span><span class="w">    </span><span class="n">AudioServer</span><span class="o">.</span><span class="n">set_bus_mute</span><span class="p">(</span><span class="n">bus_index</span><span class="p">,</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>9 行目から 11 行目では、3 つのボタンの <code class="docutils literal notranslate"><span class="pre">pressed</span></code> シグナルを同じ <code class="docutils literal notranslate"><span class="pre">_play_se()</span></code> に接続し、鳴らす音声を <code class="docutils literal notranslate"><span class="pre">bind()</span></code> で渡している（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）。音量のスライダーも同様に、<code class="docutils literal notranslate"><span class="pre">bind()</span></code> でバスの名前を渡している。シグナルの引数（スライダーの値）が先に渡され、<code class="docutils literal notranslate"><span class="pre">bind()</span></code> で追加した引数はその後ろに渡される。</p>
+<p><code class="docutils literal notranslate"><span class="pre">_set_bus_volume()</span></code> では、<code class="docutils literal notranslate"><span class="pre">AudioServer.get_bus_index()</span></code> でバスの名前から番号を求め、<code class="docutils literal notranslate"><span class="pre">set_bus_volume_db()</span></code> で音量を設定している。割合が 0 のときは <code class="docutils literal notranslate"><span class="pre">linear_to_db()</span></code> がマイナス無限大を返すので、念のためバスをミュートしている。</p>
+<figure class="align-default" id="id13">
+<a class="screenshot reference internal image-reference" href="../_images/ch14_audio.png"><img alt="../_images/ch14_audio.png" class="screenshot" src="../_images/ch14_audio.png" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 29 </span><span class="caption-text">audio_demo.tscn の実行結果</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch13_ui.html" class="btn btn-neutral float-left" title="第 13 章 UI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch15_scenes_and_data.html" class="btn btn-neutral float-right" title="第 15 章 シーン管理とデータ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

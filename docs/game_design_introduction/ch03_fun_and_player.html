@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. 楽しさとプレイヤー &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="4. ゲームをシステムとして捉える" href="ch04_systems.html" />
+    <link rel="prev" title="2. ゲームとは何か" href="ch02_what_is_game.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. 楽しさとプレイヤー</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.1. 楽しさは 1 種類ではない</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.2. プレイヤータイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3.3. 動機付け</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.3.1. 報酬の与え方とその倫理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">3.4. フロー理論</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">3.5. 意味のある選択</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">3.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>楽しさとプレイヤー</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">3. </span>楽しさとプレイヤー<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 2 章では、デザイナーが最終的に作りたいのはプレイヤーの体験（エステティクス）だと述べた。この章では、その体験の中身である「楽しさ」をいくつかの種類に分け、楽しさを感じる側であるプレイヤーの違いと心理を整理する。</p>
+<section id="id2">
+<h2><span class="section-number">3.1. </span>楽しさは 1 種類ではない<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>「このゲームは楽しい」と言うとき、その楽しさの中身はゲームによって大きく異なる。難しいパズルを解いた達成感と、美しい景色の中を散歩する心地よさは、どちらも楽しさだが別物である。MDA フレームワークの論文では、エステティクスの例として次の 8 種類を挙げている（論文では、これで全てではないと断っている）。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 3.1 </span><span class="caption-text">8 種類の楽しさ（MDA のエステティクス）</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>感覚（Sensation）</p></td>
+<td><p>見る、聞く、触れることそのものの心地よさ</p></td>
+<td><p>美しいグラフィック、気持ちのよい効果音、コントローラーの振動</p></td>
+</tr>
+<tr class="row-odd"><td><p>空想（Fantasy）</p></td>
+<td><p>現実とは別の世界や、別の自分を体験する</p></td>
+<td><p>魔法使いになる、宇宙船を操縦する</p></td>
+</tr>
+<tr class="row-even"><td><p>物語（Narrative）</p></td>
+<td><p>ドラマの展開を追い、登場人物に感情移入する</p></td>
+<td><p>物語を重視したアドベンチャーゲーム</p></td>
+</tr>
+<tr class="row-odd"><td><p>挑戦（Challenge）</p></td>
+<td><p>困難を乗り越え、上達する</p></td>
+<td><p>難しいアクションゲーム、対戦ゲーム</p></td>
+</tr>
+<tr class="row-even"><td><p>仲間（Fellowship）</p></td>
+<td><p>他の人と協力したり、交流したりする</p></td>
+<td><p>協力プレイ、パーティーゲーム</p></td>
+</tr>
+<tr class="row-odd"><td><p>発見（Discovery）</p></td>
+<td><p>未知の場所や仕組みを見つける</p></td>
+<td><p>探索型のゲーム、隠し要素</p></td>
+</tr>
+<tr class="row-even"><td><p>表現（Expression）</p></td>
+<td><p>自分の考えや好みを形にする</p></td>
+<td><p>建築ゲーム、キャラクターの外見のカスタマイズ</p></td>
+</tr>
+<tr class="row-odd"><td><p>気晴らし（Submission）</p></td>
+<td><p>何も考えずに時間を過ごせる気晴らし</p></td>
+<td><p>単純な作業を繰り返す放置型のゲーム</p></td>
+</tr>
+</tbody>
+</table>
+<p>1 つのゲームは複数の楽しさを含むが、特に重視する楽しさは限られる。設計の最初に「このゲームで最も大事にする楽しさはどれか」を決めておくと、後でルールやレベルの判断に迷ったときの基準になる。例えば「挑戦」を重視するなら難しさの調整に力を入れ、「発見」を重視するなら隠し要素や探索の余地を増やす、といった具合である。</p>
+<p>ゲームデザイナーのニコール・ラザロは、プレイヤーの表情や行動の観察から、楽しさを 4 つにまとめた分類も提案している。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 3.2 </span><span class="caption-text">ラザロによる 4 つの楽しさ</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ハードファン（Hard Fun）</p></td>
+<td><p>難しい目標に挑み、失敗を重ねた末に達成する楽しさ</p></td>
+</tr>
+<tr class="row-odd"><td><p>イージーファン（Easy Fun）</p></td>
+<td><p>好奇心のままに探索したり、試したりする楽しさ</p></td>
+</tr>
+<tr class="row-even"><td><p>シリアスファン（Serious Fun）</p></td>
+<td><p>遊ぶことで気分が変わったり、現実の何かがよくなったりする楽しさ</p></td>
+</tr>
+<tr class="row-odd"><td><p>ピープルファン（People Fun）</p></td>
+<td><p>他の人と競ったり、協力したり、話したりする楽しさ</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2><span class="section-number">3.2. </span>プレイヤータイプ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>同じゲームでも、プレイヤーによって楽しみ方は異なる。研究者のリチャード・バートルは、多人数で遊ぶ初期のオンラインゲーム（MUD）のプレイヤーを観察し、2 つの軸で 4 つのタイプに分類した。</p>
+<figure class="align-center" id="id11">
+<img alt="バートルのプレイヤータイプ" src="_images/player_types.png" />
+<figcaption>
+<p><span class="caption-number">図 3.1 </span><span class="caption-text">バートルのプレイヤータイプ</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>横軸は関心の対象が「他のプレイヤー」か「ゲームの世界」か、縦軸は対象に「働きかける」か「交流する」かを表す。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 3.3 </span><span class="caption-text">バートルの 4 つのプレイヤータイプ</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>タイプ</p></th>
+<th class="head"><p>楽しみ方</p></th>
+<th class="head"><p>満足させる要素の例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>アチーバー（Achiever）</p></td>
+<td><p>得点、キャラクターのレベル、収集などの目標を達成する</p></td>
+<td><p>実績、ランキング、収集要素</p></td>
+</tr>
+<tr class="row-odd"><td><p>エクスプローラー（Explorer）</p></td>
+<td><p>世界の隅々を調べ、仕組みを理解する</p></td>
+<td><p>隠し部屋、広いマップ、奥深いシステム</p></td>
+</tr>
+<tr class="row-even"><td><p>ソーシャライザー（Socializer）</p></td>
+<td><p>他のプレイヤーとの会話や交流を楽しむ</p></td>
+<td><p>チャット、ギルド、協力プレイ</p></td>
+</tr>
+<tr class="row-odd"><td><p>キラー（Killer）</p></td>
+<td><p>他のプレイヤーに勝ち、影響を与える</p></td>
+<td><p>対戦、ランキングの上位争い</p></td>
+</tr>
+</tbody>
+</table>
+<p>この分類は、性格診断のように人を 1 つのタイプに決めつけるためのものではない。1 人のプレイヤーの中にも複数のタイプの傾向があり、遊ぶ日の気分によっても変わる。また、元は MUD の観察から生まれた分類なので、1 人で遊ぶゲームにそのまま当てはまるとは限らない。それでも「自分のゲームはどのタイプの楽しみ方に応えているか」「どのタイプを取りこぼしているか」を考える手がかりとして役に立つ。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">3.3. </span>動機付け<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>プレイヤーはなぜゲームを遊び続けるのか。心理学の自己決定理論では、人が自分から進んで行動する（内発的に動機付けられる）ためには、次の 3 つの欲求が満たされる必要があると考える。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 3.4 </span><span class="caption-text">自己決定理論の 3 つの欲求とゲーム</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>欲求</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>ゲームでの満たし方の例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>自律性</p></td>
+<td><p>自分で選び、自分で決めていると感じたい</p></td>
+<td><p>攻略の順番や方法を選べる。強制されるチュートリアルを短くする</p></td>
+</tr>
+<tr class="row-odd"><td><p>有能感</p></td>
+<td><p>自分には能力があり、上達していると感じたい</p></td>
+<td><p>適度な難しさ。上達が数値や演出で分かる</p></td>
+</tr>
+<tr class="row-even"><td><p>関係性</p></td>
+<td><p>他者とつながっていると感じたい</p></td>
+<td><p>協力プレイ、仲間のキャラクター、プレイヤー同士の交流</p></td>
+</tr>
+</tbody>
+</table>
+<p>これに対して、得点、アイテム、称号のように行動の外から与えられる報酬を外発的な報酬と呼ぶ。外発的な報酬は行動のきっかけとして強力だが、使い方を誤ると逆効果になる。もともと楽しんでいた活動に報酬を与えると、報酬が無くなったときに以前より意欲が下がることがある。これはアンダーマイニング効果と呼ばれる。ゲームでは、報酬のために遊ぶ状態が続くと、報酬の魅力が薄れたときに遊ぶ理由が無くなってしまう。報酬は、遊びそのものの楽しさを支える脇役として使うのがよい。</p>
+<section id="id5">
+<h3><span class="section-number">3.3.1. </span>報酬の与え方とその倫理<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>行動心理学では、報酬をどのような規則で与えるかを強化スケジュールと呼ぶ。代表的なものを次の表に示す。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 3.5 </span><span class="caption-text">主な強化スケジュール</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 40.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>スケジュール</p></th>
+<th class="head"><p>報酬の与え方</p></th>
+<th class="head"><p>ゲームの例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>固定比率</p></td>
+<td><p>決まった回数の行動ごとに報酬を与える</p></td>
+<td><p>敵を 10 体倒すとアイテムがもらえる</p></td>
+</tr>
+<tr class="row-odd"><td><p>変動比率</p></td>
+<td><p>平均すると一定の回数ごとだが、何回目かは予測できない</p></td>
+<td><p>敵を倒すと低い確率で珍しいアイテムが出る</p></td>
+</tr>
+<tr class="row-even"><td><p>固定間隔</p></td>
+<td><p>決まった時間が経つと報酬を受け取れる</p></td>
+<td><p>毎日のログインボーナス</p></td>
+</tr>
+</tbody>
+</table>
+<p>変動比率のスケジュールは、行動を最も強く、長く続けさせることが知られている。いつ当たるか分からないからこそ「次こそは」と思わせる力がある。これはゲームを面白くする道具になる一方で、プレイヤーの意思に反して遊び続けさせたり、お金を使わせたりする道具にもなる。</p>
+<p>ゲームの中で実際のお金を使ってランダムにアイテムを得る仕組み（いわゆるガチャやルートボックス）は、各国で規制の議論の対象になっている。日本でも 2012 年に、特定の組み合わせをそろえると景品がもらえる「コンプリートガチャ」が景品表示法に違反するとの見解を消費者庁が示した。プレイヤーの不利益になるように誘導する設計はダークパターンと呼ばれる。デザイナーは、自分が作る仕組みがプレイヤーの時間とお金を尊重しているかを常に問う必要がある。</p>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">3.4. </span>フロー理論<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>心理学者のミハイ・チクセントミハイは、人が活動に完全に没頭し、時間を忘れるほど集中している状態をフローと名付けた。フローは、挑戦の難しさと本人の能力がつり合っているときに生じやすい。</p>
+<figure class="align-center" id="id15">
+<img alt="フローチャンネル" src="_images/flow_channel.png" />
+<figcaption>
+<p><span class="caption-number">図 3.2 </span><span class="caption-text">挑戦の難しさと能力の関係（フローチャンネル）</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>挑戦が能力に比べて難しすぎると不安になり、易しすぎると退屈になる。両者がつり合っている帯状の領域をフローチャンネルと呼ぶ。プレイヤーの能力は遊ぶにつれて上がるので、ゲームは挑戦の難しさを少しずつ上げて、プレイヤーをこの帯の中にとどめる必要がある。</p>
+<p>図の折れ線のように、実際の体験は帯の中で上下に揺れるほうがよい。新しい挑戦で少し不安側に寄り、それを乗り越えると能力が上がって少し退屈側に寄る。この揺れが緊張と緩和のリズムを作る。難易度の上げ方は第 6 章で、レベルの中での緊張と緩和は第 9 章で詳しく扱う。</p>
+<p>フローが生じやすい条件として、チクセントミハイは次のようなものを挙げている。</p>
+<ul class="simple">
+<li><p>目標が明確である</p></li>
+<li><p>行動の結果がすぐに分かる（フィードバックがある）</p></li>
+<li><p>自分が状況をコントロールしているという感覚がある</p></li>
+<li><p>注意を妨げるものが少ない</p></li>
+</ul>
+<p>これらは、第 2 章で述べたゲームの特徴（目的、フィードバック、自発的な参加）とよく重なる。ゲームはフローを生みやすい形をしているといえる。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">3.5. </span>意味のある選択<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>ゲームデザイナーのシド・マイヤーは「ゲームとは興味深い選択の連続である」という趣旨の言葉で知られる。プレイヤーが選択に悩み、その結果を受け止めることが、ゲームを遊ぶことの中心にあるという考え方である。</p>
+<p>サレンとジマーマンは、プレイヤーの行動とゲームの結果の関係が次の 2 つの条件を満たすとき、その遊びは意味のあるものになると述べている。</p>
+<ul class="simple">
+<li><p><strong>識別できる</strong>：行動の結果がプレイヤーに分かる形で示される。</p></li>
+<li><p><strong>統合されている</strong>：その行動が、後の展開やゲーム全体の結果に影響する。</p></li>
+</ul>
+<p>興味深い選択にするための条件と、つまらない選択の典型を次の表にまとめる。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 3.6 </span><span class="caption-text">選択の良し悪し</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>観点</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>トレードオフがある</p></td>
+<td><p>どの選択肢にも長所と短所がある。攻撃力の高い剣は重く、軽い剣は攻撃力が低い</p></td>
+</tr>
+<tr class="row-odd"><td><p>判断材料がある</p></td>
+<td><p>結果をある程度予測できるだけの情報が与えられている</p></td>
+</tr>
+<tr class="row-even"><td><p>結果が見える</p></td>
+<td><p>選んだ結果が、後で分かる形で返ってくる</p></td>
+</tr>
+<tr class="row-odd"><td><p>（悪い例）自明な選択</p></td>
+<td><p>一方が常に優れている選択肢は、選択ではなく作業である</p></td>
+</tr>
+<tr class="row-even"><td><p>（悪い例）情報の無い選択</p></td>
+<td><p>判断材料の無い二択は、くじ引きと変わらない</p></td>
+</tr>
+<tr class="row-odd"><td><p>（悪い例）影響の無い選択</p></td>
+<td><p>どれを選んでも結果が変わらないなら、選ぶ意味が無い</p></td>
+</tr>
+</tbody>
+</table>
+<p>ただし、選択肢は多ければよいわけではない。一度に考えるべき選択肢が多すぎると、プレイヤーは疲れて考えるのをやめてしまう。序盤は少ない選択肢から始め、慣れるにつれて増やしていくのがよい。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">3.6. </span>演習<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>好きなゲームを 1 つ選び、8 種類の楽しさのうち、そのゲームが特に重視しているものを 2 つ挙げよ。その根拠となるメカニクスも書け。</p></li>
+<li><p>同じゲームが、バートルの 4 つのプレイヤータイプそれぞれにどう応えているか（または応えていないか）を考えよ。</p></li>
+<li><p>遊んでいて退屈になった、または不安になった経験を思い出し、フローチャンネルの図のどこにいたかを説明せよ。</p></li>
+<li><p>ゲームの中で「つまらない選択」だと感じた場面を挙げ、興味深い選択にするにはどう変えればよいかを提案せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch02_what_is_game.html" class="btn btn-neutral float-left" title="2. ゲームとは何か" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch04_systems.html" class="btn btn-neutral float-right" title="4. ゲームをシステムとして捉える" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

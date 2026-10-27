@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. 補間・イージング・曲線 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="9. 乱数と確率" href="randomness.html" />
+    <link rel="prev" title="7. 3D の回転とクォータニオン" href="rotation3d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 補間・イージング・曲線</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">8.1. 線形補間と逆補間</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">8.2. イージング関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">8.3. フレームレートに依存しない滑らかな追従</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">8.4. ベジェ曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#catmull-rom">8.5. Catmull-Rom スプライン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">8.6. 等速で曲線上を移動させる</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>補間・イージング・曲線</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">8. </span>補間・イージング・曲線<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームの「手触り」の多くは、値が A から B へどう変わるかで決まる。ボタンを押すとメニューが滑らかに出てくる、カメラがプレイヤーに遅れてついてくる、敵が決められた経路をなぞって飛ぶ。この章では、こうした動きを作る補間の道具を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">8.1. </span>線形補間と逆補間<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p><strong>線形補間</strong>（lerp、linear interpolation）は、2 つの値 <span class="math notranslate nohighlight">\(a\)</span> と <span class="math notranslate nohighlight">\(b\)</span> の間を、割合 <span class="math notranslate nohighlight">\(t\)</span> で結ぶ計算である。</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{lerp}(a, b, t) = a + (b - a)\,t\]</div>
+<p><span class="math notranslate nohighlight">\(t = 0\)</span> なら <span class="math notranslate nohighlight">\(a\)</span>、<span class="math notranslate nohighlight">\(t = 1\)</span> なら <span class="math notranslate nohighlight">\(b\)</span>、<span class="math notranslate nohighlight">\(t = 0.5\)</span> ならちょうど中間になる。数だけでなく、位置（ベクトル）や色にもそのまま使える。第 3 章の描画の補間も線形補間である。</p>
+<p>その逆に、値 <span class="math notranslate nohighlight">\(v\)</span> が <span class="math notranslate nohighlight">\(a\)</span> から <span class="math notranslate nohighlight">\(b\)</span> までのどの割合の位置にあるかを求めるのが<strong>逆補間</strong>である。2 つを組み合わせると、ある範囲の値を別の範囲の値に変換（<strong>リマップ</strong>）できる。</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-number">リスト 8.1 </span><span class="caption-text">examples/easing.py の lerp、inverse_lerp、remap 関数</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">lerp</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;線形補間。t = 0 で a、t = 1 で b になる。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">def</span><span class="w"> </span><span class="nf">inverse_lerp</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;lerp の逆。value が a から b までのどの割合の位置にあるかを返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 8</span>    <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">def</span><span class="w"> </span><span class="nf">remap</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">in_a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">in_b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_b</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;範囲 [in_a, in_b] の値を、範囲 [out_a, out_b] の対応する値に変換する。&quot;&quot;&quot;</span>
+<span class="linenos">13</span>    <span class="k">return</span> <span class="n">lerp</span><span class="p">(</span><span class="n">out_a</span><span class="p">,</span> <span class="n">out_b</span><span class="p">,</span> <span class="n">inverse_lerp</span><span class="p">(</span><span class="n">in_a</span><span class="p">,</span> <span class="n">in_b</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+</pre></div>
+</div>
+</div>
+<p>リマップは、ゲームのパラメーターの調整でよく使う。たとえば「敵との距離が 300 ピクセルから 50 ピクセルに近づくにつれて、警告音の音量を 0 から 1 に上げる」なら <code class="docutils literal notranslate"><span class="pre">remap(distance,</span> <span class="pre">300,</span> <span class="pre">50,</span> <span class="pre">0,</span> <span class="pre">1)</span></code> と書ける（範囲の外では <code class="docutils literal notranslate"><span class="pre">clamp</span></code> で 0～1 に収める）。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">8.2. </span>イージング関数<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>物を A から B へ 1 秒かけて動かすとき、<span class="math notranslate nohighlight">\(t\)</span> を時間に比例させて線形補間すると、等速で動いて急に止まる。機械的で硬い印象になる。そこで、時間の割合 <span class="math notranslate nohighlight">\(t\)</span> を 0～1 の別の値に変換する関数 <span class="math notranslate nohighlight">\(f(t)\)</span> を挟み、<span class="math notranslate nohighlight">\(\mathrm{lerp}(a, b, f(t))\)</span> で動かす。この関数を<strong>イージング関数</strong>と呼ぶ。<span class="math notranslate nohighlight">\(f(0) = 0\)</span>、<span class="math notranslate nohighlight">\(f(1) = 1\)</span> であれば、始点と終点は変わらず、途中の速さの変化だけが変わる。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-number">リスト 8.2 </span><span class="caption-text">examples/easing.py のイージング関数</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">ease_in_quad</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;ゆっくり動き出して加速する。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="k">return</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">def</span><span class="w"> </span><span class="nf">ease_out_quad</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;速く動き出して減速しながら止まる。&quot;&quot;&quot;</span>
+<span class="linenos"> 8</span>    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">def</span><span class="w"> </span><span class="nf">ease_in_out_cubic</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;ゆっくり動き出し、途中で速くなり、ゆっくり止まる。&quot;&quot;&quot;</span>
+<span class="linenos">13</span>    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="linenos">14</span>        <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+<span class="linenos">15</span>    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">def</span><span class="w"> </span><span class="nf">ease_out_back</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">19</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;目標を少し行き過ぎてから戻る。&quot;&quot;&quot;</span>
+<span class="linenos">20</span>    <span class="n">c1</span> <span class="o">=</span> <span class="mf">1.70158</span>
+<span class="linenos">21</span>    <span class="n">c3</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="linenos">22</span>    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">c3</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">c1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="#fig-easing-curves"><span class="std std-numref">図 8.1</span></a> は、それぞれの関数のグラフである。グラフの傾きが速さを表す。</p>
+<figure class="align-default" id="id9">
+<span id="fig-easing-curves"></span><a class="reference internal image-reference" href="_images/easing_curves.png"><img alt="イージング関数のグラフ" src="_images/easing_curves.png" style="width: 520px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 8.1 </span><span class="caption-text">イージング関数</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 8.1 </span><span class="caption-text">イージング関数の使い分け</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>関数</p></th>
+<th class="head"><p>向いている場面</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ease-out（減速して止まる）</p></td>
+<td><p>画面に入ってくる UI、カメラの移動。素早く反応しつつ、柔らかく止まる</p></td>
+</tr>
+<tr class="row-odd"><td><p>ease-in（加速しながら動く）</p></td>
+<td><p>画面から出ていく UI、落下し始める物</p></td>
+</tr>
+<tr class="row-even"><td><p>ease-in-out（ゆっくり始まりゆっくり止まる）</p></td>
+<td><p>場面の切り替え、2 点間を往復する足場</p></td>
+</tr>
+<tr class="row-odd"><td><p>back（行き過ぎて戻る）</p></td>
+<td><p>ボタンやアイコンの登場。弾むような楽しい印象を与える</p></td>
+</tr>
+</tbody>
+</table>
+<p>ease_out_back の定数 1.70158 は、目標を約 10 % 行き過ぎるように選ばれた値である。イージング関数の名前と式は、Robert Penner がまとめたものが広く使われている。<code class="docutils literal notranslate"><span class="pre">easing.py</span></code> の上の 5 行で、それぞれの動きを見比べられる。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">8.3. </span>フレームレートに依存しない滑らかな追従<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>カメラがプレイヤーを追いかけるとき、目標の位置が毎フレーム変わるので、イージング関数（始点と終点が決まっている）は使えない。よく使われるのは、毎フレーム「残りの距離の一定の割合だけ近づく」方法である。</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-number">リスト 8.3 </span><span class="caption-text">フレームレートに依存する追従</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">camera_x</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">camera_x</span><span class="p">,</span> <span class="n">target_x</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># 毎フレーム残りの 10 % だけ近づく</span>
+</pre></div>
+</div>
+</div>
+<p>この書き方は簡単で、近づくほど遅くなる自然な動きになる。しかし、「1 フレームあたり」の割合なので、第 3 章と同じくフレームレートによって追従の速さが変わってしまう（<a class="reference internal" href="#fig-damp-fps"><span class="std std-numref">図 8.2</span></a> の左）。</p>
+<p>1 フレームで残りの距離が <span class="math notranslate nohighlight">\((1 - 0.1)\)</span> 倍になるとすると、1 秒後には <span class="math notranslate nohighlight">\((1 - 0.1)^{\text{FPS}}\)</span> 倍になる。これを、フレームレートによらず「1 秒あたり一定の割合で減る」ように直すには、指数関数を使う。</p>
+<div class="math notranslate nohighlight">
+\[x_{\text{次}} = \mathrm{lerp}\left(x_{\text{今}},\ x_{\text{目標}},\ 1 - e^{-k\,\Delta t}\right)\]</div>
+<p>残りの距離は 1 回の更新で <span class="math notranslate nohighlight">\(e^{-k\,\Delta t}\)</span> 倍になる。<span class="math notranslate nohighlight">\(\Delta t\)</span> を 2 回に分けて更新しても <span class="math notranslate nohighlight">\(e^{-k\,\Delta t/2} \times e^{-k\,\Delta t/2} = e^{-k\,\Delta t}\)</span> 倍になり、分け方によらず同じ結果になる。<span class="math notranslate nohighlight">\(k\)</span> は追従の速さで、残りの距離は 1 秒で <span class="math notranslate nohighlight">\(e^{-k}\)</span> 倍になる。この方法を<strong>指数関数的減衰</strong>と呼び、本書では <code class="docutils literal notranslate"><span class="pre">damp</span></code> という関数にしている。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 8.4 </span><span class="caption-text">examples/easing.py の damp 関数</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">damp</span><span class="p">(</span><span class="n">current</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;current を target へ指数関数的に近づける。dt の分け方によらず、同じ時間で同じ位置に着く。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="n">lerp</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">rate</span> <span class="o">*</span> <span class="n">dt</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<figure class="align-default" id="id13">
+<span id="fig-damp-fps"></span><img alt="毎フレームの線形補間と damp の比較" src="_images/damp_fps.png" />
+<figcaption>
+<p><span class="caption-number">図 8.2 </span><span class="caption-text">毎フレーム残りの 10 % 近づく方法（左）と damp（右）。目標は 100</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">easing.py</span></code> の下の 2 つの四角は、マウスの x 座標を 2 つの方法で追いかける。1 キーで 20 FPS にすると、橙の四角だけ追いつくのが遅くなる。第 15 章の総合演習のカメラも <code class="docutils literal notranslate"><span class="pre">damp</span></code> で追従させている。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">8.4. </span>ベジェ曲線<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>弾の軌道や敵の移動経路を、なめらかな曲線で作りたいことがある。ゲームで最もよく使われる曲線が<strong>ベジェ曲線</strong>である。</p>
+<p>ベジェ曲線は、線形補間を何段も重ねて作る。<a class="reference internal" href="#fig-bezier"><span class="std std-numref">図 8.3</span></a> の 4 つの<strong>制御点</strong> <span class="math notranslate nohighlight">\(P_0\)</span> ～ <span class="math notranslate nohighlight">\(P_3\)</span> による 3 次ベジェ曲線では、次のように点を求める。</p>
+<ol class="arabic simple">
+<li><p>隣り合う制御点の間を、割合 <span class="math notranslate nohighlight">\(t\)</span> で線形補間する（橙の 3 点）。</p></li>
+<li><p>その 3 点の隣どうしを、さらに <span class="math notranslate nohighlight">\(t\)</span> で線形補間する（緑の 2 点）。</p></li>
+<li><p>その 2 点を <span class="math notranslate nohighlight">\(t\)</span> で線形補間した点が、曲線上の点 <span class="math notranslate nohighlight">\(B(t)\)</span> である（赤）。</p></li>
+</ol>
+<figure class="align-default" id="id14">
+<span id="fig-bezier"></span><a class="reference internal image-reference" href="_images/bezier.png"><img alt="3 次ベジェ曲線の作図" src="_images/bezier.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 8.3 </span><span class="caption-text">3 次ベジェ曲線と、t = 0.4 の点の求め方</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>この求め方を<strong>ド・カステリョのアルゴリズム</strong>と呼ぶ。<span class="math notranslate nohighlight">\(t\)</span> を 0 から 1 まで動かすと、点は <span class="math notranslate nohighlight">\(P_0\)</span> から出発して <span class="math notranslate nohighlight">\(P_3\)</span> に着く。<span class="math notranslate nohighlight">\(P_1\)</span> と <span class="math notranslate nohighlight">\(P_2\)</span> は曲線を引き寄せるが、曲線は通らない。</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-number">リスト 8.5 </span><span class="caption-text">examples/curves.py の cubic_bezier 関数</span><a class="headerlink" href="#id15" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">cubic_bezier</span><span class="p">(</span><span class="n">p0</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">p3</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span>
+<span class="linenos">2</span>                 <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos">3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;3 次ベジェ曲線。線形補間を 3 段重ねる。&quot;&quot;&quot;</span>
+<span class="linenos">4</span>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">lerp_point</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">lerp_point</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">lerp_point</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="linenos">5</span>    <span class="k">return</span> <span class="n">lerp_point</span><span class="p">(</span><span class="n">lerp_point</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">lerp_point</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>展開すると、次の式になる。</p>
+<div class="math notranslate nohighlight">
+\[B(t) = (1 - t)^3 P_0 + 3(1 - t)^2 t\,P_1 + 3(1 - t)t^2 P_2 + t^3 P_3\]</div>
+<p>制御点が 3 つの 2 次ベジェ曲線は、放物線の弾道を「発射点、頂点付近、着弾点」の 3 点で指定したいときに便利である。ベジェ曲線は、ドローソフトのパスやフォントの輪郭にも使われている。</p>
+</section>
+<section id="catmull-rom">
+<h2><span class="section-number">8.5. </span>Catmull-Rom スプライン<a class="headerlink" href="#catmull-rom" title="Link to this heading"></a></h2>
+<p>ベジェ曲線は、間の制御点を曲線が通らない。敵に「この点とこの点とこの点を順に通って飛んでほしい」という場合は、すべての点を通る曲線の方が扱いやすい。そのような曲線の代表が <strong>Catmull-Rom スプライン</strong>である。</p>
+<p>Catmull-Rom スプラインは、通過点 <span class="math notranslate nohighlight">\(P_1\)</span> から <span class="math notranslate nohighlight">\(P_2\)</span> までの区間を、前後の点 <span class="math notranslate nohighlight">\(P_0\)</span> と <span class="math notranslate nohighlight">\(P_3\)</span> を使って決める。区間の端での曲線の向きを「前後の点を結ぶ向き」にそろえるので、区間どうしが滑らかにつながる。</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-number">リスト 8.6 </span><span class="caption-text">examples/curves.py の catmull_rom 関数</span><a class="headerlink" href="#id16" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">catmull_rom</span><span class="p">(</span><span class="n">p0</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">p3</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span>
+<span class="linenos">2</span>                <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos">3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;p1 から p2 までの区間の Catmull-Rom スプライン。p0 と p3 は区間の両端での向きを決めるのに使う。&quot;&quot;&quot;</span>
+<span class="linenos">4</span>    <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+<span class="linenos">5</span>    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">+</span> <span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p0</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">p2</span> <span class="o">-</span> <span class="n">p3</span><span class="p">)</span> <span class="o">*</span> <span class="n">t2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span><span class="p">)</span> <span class="o">*</span> <span class="n">t3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">curves.py</span></code> では、6 つの通過点をこの曲線で結んで閉じた経路を作っている。区間 <span class="math notranslate nohighlight">\(i\)</span> の点を求めるとき、前後の点は番号を通過点の数で割った余りで選ぶので、最後の点の次は最初の点に戻る。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">8.6. </span>等速で曲線上を移動させる<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>曲線のパラメーター <span class="math notranslate nohighlight">\(t\)</span>（複数の区間をつないだ曲線では <span class="math notranslate nohighlight">\(u\)</span>）を一定の速さで増やしても、曲線上を一定の速さで動くとは限らない。<a class="reference internal" href="#fig-catmull-rom"><span class="std std-numref">図 8.4</span></a> の左は、<span class="math notranslate nohighlight">\(u\)</span> を等間隔に取った点である。通過点の間隔が広い区間では点がまばらになり、狭い区間では密になっている。つまり、広い区間では速く、狭い区間では遅く動く。</p>
+<figure class="align-default" id="id17">
+<span id="fig-catmull-rom"></span><img alt="パラメーターを等間隔に取った場合と、弧長を等間隔に取った場合の比較" src="_images/catmull_rom.png" />
+<figcaption>
+<p><span class="caption-number">図 8.4 </span><span class="caption-text">Catmull-Rom スプライン上で、u を等間隔に取った点（左）と、弧長を等間隔に取った点（右）</span><a class="headerlink" href="#id17" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>一定の速さで動かすには、曲線に沿った距離（<strong>弧長</strong>）から <span class="math notranslate nohighlight">\(u\)</span> を逆算する。弧長を式で求めるのは難しいので、次のように数値的に表を作る。</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(u\)</span> を細かく区切り、隣り合う点の距離を足していって、各 <span class="math notranslate nohighlight">\(u\)</span> までの弧長の表を作る。</p></li>
+<li><p>進みたい距離が表のどこにあるかを二分探索で探し、前後の値から <span class="math notranslate nohighlight">\(u\)</span> を線形補間で求める。</p></li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 8.7 </span><span class="caption-text">examples/curves.py の ArcLengthTable クラス</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span><span class="w"> </span><span class="nc">ArcLengthTable</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;曲線を細かく区切って測った長さの表。曲線に沿った距離から、パラメーター u を逆引きする。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">],</span> <span class="n">u_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">[</span><span class="n">u_max</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">samples</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="linenos"> 6</span>        <span class="bp">self</span><span class="o">.</span><span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="linenos"> 7</span>        <span class="n">previous</span> <span class="o">=</span> <span class="n">curve</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="linenos"> 8</span>        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<span class="linenos"> 9</span>            <span class="n">point</span> <span class="o">=</span> <span class="n">curve</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="linenos">10</span>            <span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">previous</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">point</span><span class="p">))</span>
+<span class="linenos">11</span>            <span class="n">previous</span> <span class="o">=</span> <span class="n">point</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="nd">@property</span>
+<span class="linenos">14</span>    <span class="k">def</span><span class="w"> </span><span class="nf">total</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">15</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;曲線全体の長さ。&quot;&quot;&quot;</span>
+<span class="linenos">16</span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="k">def</span><span class="w"> </span><span class="nf">u_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">19</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;始点から曲線に沿って distance だけ進んだ位置のパラメーター u。&quot;&quot;&quot;</span>
+<span class="linenos">20</span>        <span class="n">distance</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">distance</span><span class="p">))</span>
+<span class="linenos">21</span>        <span class="n">i</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect_left</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>
+<span class="linenos">22</span>        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">23</span>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="linenos">24</span>        <span class="c1"># 表の間は直線とみなして補間する</span>
+<span class="linenos">25</span>        <span class="n">d0</span><span class="p">,</span> <span class="n">d1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="linenos">26</span>        <span class="n">ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">distance</span> <span class="o">-</span> <span class="n">d0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d1</span> <span class="o">-</span> <span class="n">d0</span><span class="p">)</span> <span class="k">if</span> <span class="n">d1</span> <span class="o">&gt;</span> <span class="n">d0</span> <span class="k">else</span> <span class="mf">0.0</span>
+<span class="linenos">27</span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">ratio</span>
+</pre></div>
+</div>
+</div>
+<p>距離を時間に比例させて増やし、<code class="docutils literal notranslate"><span class="pre">u_at</span></code> で <span class="math notranslate nohighlight">\(u\)</span> に変換すれば、<a class="reference internal" href="#fig-catmull-rom"><span class="std std-numref">図 8.4</span></a> の右のように一定の間隔で進む。<code class="docutils literal notranslate"><span class="pre">curves.py</span></code> を実行すると、橙の点（<span class="math notranslate nohighlight">\(u\)</span> が一定の速さ）と水色の点（距離が一定の速さ）の動きの違いがよく分かる。表は経路を作ったときに 1 回だけ作ればよい。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rotation3d.html" class="btn btn-neutral float-left" title="7. 3D の回転とクォータニオン" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="randomness.html" class="btn btn-neutral float-right" title="9. 乱数と確率" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

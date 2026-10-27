@@ -1,0 +1,557 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. ゲームをシステムとして捉える &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="5. ゲームバランス" href="ch05_balance.html" />
+    <link rel="prev" title="3. 楽しさとプレイヤー" href="ch03_fun_and_player.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. ゲームをシステムとして捉える</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">4.1. コアループ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.1.1. 入れ子になったループ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">4.2. 状態機械</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">4.2.1. キャラクターの状態</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">4.3. 資源の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">4.4. フィードバックループ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">4.4.1. シミュレーションで確かめる</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">4.5. 創発</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">4.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>ゲームをシステムとして捉える</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">4. </span>ゲームをシステムとして捉える<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームは、状態と、状態を変える規則と、プレイヤーの入力からなるシステムである。この見方はエンジニアにはなじみやすく、ゲームの構造を図や数式やプログラムで表して検討できるという利点がある。この章では、コアループ、状態機械、資源の流れ、フィードバックループという 4 つの道具でゲームの構造を表す方法を学ぶ。</p>
+<section id="id2">
+<h2><span class="section-number">4.1. </span>コアループ<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>プレイヤーがゲームの中で何度も繰り返す一連の行動を、コアループと呼ぶ。コアループはゲームの遊びの中心であり、「このゲームは何をするゲームか」に対する最も短い答えである。</p>
+<p>例えば、敵を倒して成長するアクション RPG のコアループは次のように表せる。</p>
+<figure class="align-center" id="id11">
+<div class="graphviz"><img src="_images/graphviz-d71503ed8ba9d359594719c7ba6581e02ab58d42.png" alt="digraph core_loop {
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    explore [label=&quot;探索する&quot;];
+    fight [label=&quot;敵と戦う&quot;];
+    reward [label=&quot;経験値と\nアイテムを得る&quot;];
+    grow [label=&quot;キャラクターを\n強化する&quot;];
+    explore -&gt; fight -&gt; reward -&gt; grow -&gt; explore;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 4.1 </span><span class="caption-text">アクション RPG のコアループ</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>コアループを図にすると、次の点を確認できる。</p>
+<ul class="simple">
+<li><p>ループの各段階に、プレイヤーが判断する余地や上達する余地があるか。</p></li>
+<li><p>1 周にかかる時間は適切か。アクションゲームなら数秒から数十秒、ストラテジーゲームなら数分から数十分と、ジャンルによって大きく異なる。</p></li>
+<li><p>1 周するたびに何かが変わるか。同じことの繰り返しに見えても、キャラクターが強くなる、新しい場所に行けるなどの変化があると、プレイヤーは繰り返しに飽きにくい。</p></li>
+</ul>
+<section id="id3">
+<h3><span class="section-number">4.1.1. </span>入れ子になったループ<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>多くのゲームは、時間の長さが異なる複数のループを入れ子にしている。</p>
+<figure class="align-center" id="id12">
+<div class="graphviz"><img src="_images/graphviz-56f91df2febe1daae132c25eb64c7538ac1bd62d.png" alt="digraph nested_loops {
+    rankdir=LR;
+    node [shape=box, style=&quot;rounded,filled&quot;];
+    subgraph cluster_meta {
+        label=&quot;メタループ（数時間〜）&quot;;
+        style=&quot;rounded&quot;; color=&quot;#a0a0a0&quot;;
+        subgraph cluster_session {
+            label=&quot;二次ループ（数分〜数十分）&quot;;
+            color=&quot;#7090c0&quot;;
+            subgraph cluster_core {
+                label=&quot;コアループ（数秒〜数十秒）&quot;;
+                color=&quot;#c07070&quot;;
+                move [label=&quot;移動&quot;, fillcolor=&quot;#fbeeee&quot;];
+                attack [label=&quot;攻撃&quot;, fillcolor=&quot;#fbeeee&quot;];
+                move -&gt; attack -&gt; move;
+            }
+            clear [label=&quot;レベルを\nクリアする&quot;, fillcolor=&quot;#eef3fb&quot;];
+            equip [label=&quot;装備を\n整える&quot;, fillcolor=&quot;#eef3fb&quot;];
+            attack -&gt; clear -&gt; equip;
+        }
+        story [label=&quot;物語を\n進める&quot;, fillcolor=&quot;#f3f3f3&quot;];
+        unlock [label=&quot;新しい地域が\n開放される&quot;, fillcolor=&quot;#f3f3f3&quot;];
+        equip -&gt; story -&gt; unlock;
+    }
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 4.2 </span><span class="caption-text">時間の長さが異なるループの入れ子</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>一番内側のコアループが面白くなければ、外側のループをどれだけ作り込んでもゲームは面白くならない。設計と試作は、まずコアループから始めるのが原則である。外側のループは、コアループに変化と目標を与え、長く遊び続ける理由を作る役割を持つ。</p>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">4.2. </span>状態機械<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ゲームの多くの部分は、有限状態機械で表せる。有限状態機械は、状態遷移図として図に描ける。有限状態機械は、有限個の状態と、どのイベントでどの状態に移るかを表す遷移からなる。ゲームでは、画面の遷移やキャラクターの行動の管理によく使われる。</p>
+<p>次の図は、ゲームの画面の遷移を表したものである。</p>
+<figure class="align-center" id="id13">
+<div class="graphviz"><img src="_images/graphviz-109040e803a0f408645aa4350bc94ab22d2f8943.png" alt="digraph scenes {
+    rankdir=LR;
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    start [shape=point, width=0.15];
+    TITLE [label=&quot;タイトル&quot;];
+    PLAYING [label=&quot;プレイ中&quot;];
+    PAUSED [label=&quot;ポーズ&quot;];
+    GAME_OVER [label=&quot;ゲームオーバー&quot;];
+    start -&gt; TITLE;
+    TITLE -&gt; PLAYING [label=&quot;START&quot;];
+    PLAYING -&gt; PAUSED [label=&quot;PAUSE&quot;];
+    PAUSED -&gt; PLAYING [label=&quot;RESUME&quot;];
+    PLAYING -&gt; GAME_OVER [label=&quot;PLAYER_DIED&quot;];
+    GAME_OVER -&gt; TITLE [label=&quot;CONFIRM&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 4.3 </span><span class="caption-text">ゲーム画面の状態遷移</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>この状態遷移を Python で書いたものが <a class="reference internal" href="#list-state-machine"><span class="std std-numref">リスト 4.1</span></a> である。遷移を辞書（遷移表）で表しているので、表に無い組み合わせのイベントは自動的に無視される。例えば、ポーズ中に「プレイヤーが倒された」というイベントが届いても、ゲームオーバーにはならない。</p>
+<div class="literal-block-wrapper docutils container" id="list-state-machine">
+<div class="code-block-caption"><span class="caption-number">リスト 4.1 </span><span class="caption-text">state_machine.py（画面の状態遷移）</span><a class="headerlink" href="#list-state-machine" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;ゲーム画面の状態遷移を表す有限状態機械のサンプル。</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="sd">タイトル → プレイ → ポーズ → ゲームオーバー → タイトル という画面の流れを、</span>
+<span class="linenos"> 4</span><span class="sd">「状態」と「イベント」と「遷移表」で表す。遷移表に無い組み合わせのイベントは無視する。</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="sd">実行例:</span>
+<span class="linenos"> 7</span><span class="sd">    python state_machine.py</span>
+<span class="linenos"> 8</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">class</span><span class="w"> </span><span class="nc">Scene</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="linenos">16</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;ゲーム画面（状態）。&quot;&quot;&quot;</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="n">TITLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">19</span>    <span class="n">PLAYING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">20</span>    <span class="n">PAUSED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">21</span>    <span class="n">GAME_OVER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="k">class</span><span class="w"> </span><span class="nc">Event</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="linenos">25</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;状態を変えるきっかけ（イベント）。&quot;&quot;&quot;</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>    <span class="n">START</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">28</span>    <span class="n">PAUSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">29</span>    <span class="n">RESUME</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">30</span>    <span class="n">PLAYER_DIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">31</span>    <span class="n">CONFIRM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="c1"># (現在の状態, イベント) → 次の状態</span>
+<span class="linenos">35</span><span class="n">TRANSITIONS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Scene</span><span class="p">,</span> <span class="n">Event</span><span class="p">],</span> <span class="n">Scene</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">36</span>    <span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">START</span><span class="p">):</span> <span class="n">Scene</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">,</span>
+<span class="linenos">37</span>    <span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">PAUSE</span><span class="p">):</span> <span class="n">Scene</span><span class="o">.</span><span class="n">PAUSED</span><span class="p">,</span>
+<span class="linenos">38</span>    <span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">PAUSED</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">RESUME</span><span class="p">):</span> <span class="n">Scene</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">,</span>
+<span class="linenos">39</span>    <span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">PLAYER_DIED</span><span class="p">):</span> <span class="n">Scene</span><span class="o">.</span><span class="n">GAME_OVER</span><span class="p">,</span>
+<span class="linenos">40</span>    <span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">GAME_OVER</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">CONFIRM</span><span class="p">):</span> <span class="n">Scene</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span>
+<span class="linenos">41</span><span class="p">}</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="k">class</span><span class="w"> </span><span class="nc">SceneMachine</span><span class="p">:</span>
+<span class="linenos">45</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;遷移表に従って現在の画面を切り替える。&quot;&quot;&quot;</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">:</span> <span class="n">Scene</span> <span class="o">=</span> <span class="n">Scene</span><span class="o">.</span><span class="n">TITLE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">48</span>        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">initial</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span>    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="linenos">51</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;イベントを処理する。状態が変わったら True を返す。&quot;&quot;&quot;</span>
+<span class="linenos">52</span>        <span class="n">next_scene</span> <span class="o">=</span> <span class="n">TRANSITIONS</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span>
+<span class="linenos">53</span>        <span class="k">if</span> <span class="n">next_scene</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">54</span>            <span class="k">return</span> <span class="kc">False</span>
+<span class="linenos">55</span>        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">next_scene</span>
+<span class="linenos">56</span>        <span class="k">return</span> <span class="kc">True</span>
+<span class="linenos">57</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">60</span>    <span class="n">machine</span> <span class="o">=</span> <span class="n">SceneMachine</span><span class="p">()</span>
+<span class="linenos">61</span>    <span class="c1"># プレイ中でないのに PLAYER_DIED が届く、といった不正なイベントも混ぜておく。</span>
+<span class="linenos">62</span>    <span class="n">events</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">63</span>        <span class="n">Event</span><span class="o">.</span><span class="n">PLAYER_DIED</span><span class="p">,</span>
+<span class="linenos">64</span>        <span class="n">Event</span><span class="o">.</span><span class="n">START</span><span class="p">,</span>
+<span class="linenos">65</span>        <span class="n">Event</span><span class="o">.</span><span class="n">PAUSE</span><span class="p">,</span>
+<span class="linenos">66</span>        <span class="n">Event</span><span class="o">.</span><span class="n">PLAYER_DIED</span><span class="p">,</span>
+<span class="linenos">67</span>        <span class="n">Event</span><span class="o">.</span><span class="n">RESUME</span><span class="p">,</span>
+<span class="linenos">68</span>        <span class="n">Event</span><span class="o">.</span><span class="n">PLAYER_DIED</span><span class="p">,</span>
+<span class="linenos">69</span>        <span class="n">Event</span><span class="o">.</span><span class="n">CONFIRM</span><span class="p">,</span>
+<span class="linenos">70</span>    <span class="p">]</span>
+<span class="linenos">71</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;開始: </span><span class="si">{</span><span class="n">machine</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">72</span>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+<span class="linenos">73</span>        <span class="n">before</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">current</span>
+<span class="linenos">74</span>        <span class="n">changed</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+<span class="linenos">75</span>        <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">before</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">machine</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">changed</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">before</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> のまま（無視）&quot;</span>
+<span class="linenos">76</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">name</span><span class="si">:</span><span class="s2">12s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">77</span>
+<span class="linenos">78</span>
+<span class="linenos">79</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">80</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>実行すると次のように表示される。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>開始: TITLE
+<span class="linenos">2</span>PLAYER_DIED : TITLE のまま（無視）
+<span class="linenos">3</span>START       : TITLE -&gt; PLAYING
+<span class="linenos">4</span>PAUSE       : PLAYING -&gt; PAUSED
+<span class="linenos">5</span>PLAYER_DIED : PAUSED のまま（無視）
+<span class="linenos">6</span>RESUME      : PAUSED -&gt; PLAYING
+<span class="linenos">7</span>PLAYER_DIED : PLAYING -&gt; GAME_OVER
+<span class="linenos">8</span>CONFIRM     : GAME_OVER -&gt; TITLE
+</pre></div>
+</div>
+<p>状態機械で設計を表すと、「この状態でこのイベントが起きたらどうなるか」をすべての組み合わせについて検討できる。仕様の抜けや矛盾を早い段階で見つけられるので、デザイナーとプログラマーの間で仕様を確認する道具としても有効である。</p>
+<section id="id5">
+<h3><span class="section-number">4.2.1. </span>キャラクターの状態<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>キャラクターの行動も状態機械で表せる。次の図は、横スクロールのアクションゲームのキャラクターの例である。</p>
+<figure class="align-center" id="id14">
+<div class="graphviz"><img src="_images/graphviz-9aed45f47bd73e541663261eb1de720776f977e7.png" alt="digraph character {
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    idle [label=&quot;立ち&quot;];
+    run [label=&quot;走り&quot;];
+    jump [label=&quot;上昇&quot;];
+    fall [label=&quot;落下&quot;];
+    damage [label=&quot;やられ&quot;];
+    idle -&gt; run [label=&quot;左右キー&quot;];
+    run -&gt; idle [label=&quot;キーを離す&quot;];
+    idle -&gt; jump [label=&quot;ジャンプ&quot;];
+    run -&gt; jump [label=&quot;ジャンプ&quot;];
+    run -&gt; fall [label=&quot;足場から出る&quot;];
+    jump -&gt; fall [label=&quot;速度が下向き&quot;];
+    fall -&gt; idle [label=&quot;着地&quot;];
+    idle -&gt; damage [label=&quot;敵に触れる&quot;];
+    run -&gt; damage;
+    jump -&gt; damage;
+    fall -&gt; damage;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 4.4 </span><span class="caption-text">キャラクターの状態遷移</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>図にすると「落下中にジャンプボタンを押したらどうなるか」「やられ状態から戻るのはどの状態か」といった、仕様で決めるべき点が見えてくる。落下中のジャンプは、第 7 章で扱うコヨーテタイムや先行入力の設計に関わる。</p>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">4.3. </span>資源の流れ<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>多くのゲームには、金貨、体力、弾薬、木材のように、増えたり減ったりする量（資源）がある。資源の増減を流れとして図に表すと、ゲームの経済を設計しやすくなる。ゲームデザイナーのヨリス・ドルマンスは、こうした図を描いてシミュレーションするための記法「Machinations」を提案した。ここでは、その考え方を借りて、資源の流れを次の 4 つの要素で表す。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 4.1 </span><span class="caption-text">資源の流れを表す要素</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>要素</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ソース（湧き出し口）</p></td>
+<td><p>資源を生み出す</p></td>
+<td><p>敵を倒すと金貨が出る。時間とともに体力が回復する</p></td>
+</tr>
+<tr class="row-odd"><td><p>プール（貯まる場所）</p></td>
+<td><p>資源を貯めておく</p></td>
+<td><p>所持金、所持アイテム、体力の残量</p></td>
+</tr>
+<tr class="row-even"><td><p>シンク（吸い込み口）</p></td>
+<td><p>資源を消す</p></td>
+<td><p>店での買い物、修理費、ダメージ</p></td>
+</tr>
+<tr class="row-odd"><td><p>変換器</p></td>
+<td><p>ある資源を別の資源に変える</p></td>
+<td><p>鉱石を武器に加工する。経験値でスキルを習得する</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-center" id="id16">
+<div class="graphviz"><img src="_images/graphviz-1378758430a5d3440ac49dcac0797120a787ddd3.png" alt="digraph economy {
+    rankdir=LR;
+    node [style=filled];
+    enemy [label=&quot;敵を倒す\n（ソース）&quot;, shape=triangle, fillcolor=&quot;#d8f0d8&quot;];
+    quest [label=&quot;依頼の報酬\n（ソース）&quot;, shape=triangle, fillcolor=&quot;#d8f0d8&quot;];
+    wallet [label=&quot;所持金\n（プール）&quot;, shape=circle, fillcolor=&quot;#fff4c8&quot;];
+    shop [label=&quot;武器を買う\n（変換器）&quot;, shape=box, fillcolor=&quot;#eef3fb&quot;];
+    inn [label=&quot;宿代・修理費\n（シンク）&quot;, shape=invtriangle, fillcolor=&quot;#f8dada&quot;];
+    power [label=&quot;攻撃力\n（プール）&quot;, shape=circle, fillcolor=&quot;#fff4c8&quot;];
+    enemy -&gt; wallet;
+    quest -&gt; wallet;
+    wallet -&gt; shop;
+    shop -&gt; power;
+    wallet -&gt; inn;
+    power -&gt; enemy [style=dashed, label=&quot;倒す速さが上がる&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 4.5 </span><span class="caption-text">RPG の金貨の流れ</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ソースとシンクのつり合いが崩れると、ゲームの経済は破綻する。ソースが強すぎると資源が余り、買い物で悩むという選択の面白さが失われる。オンラインゲームでは、プレイヤー全体の通貨が増え続けて物価が上がるインフレーションがよく問題になる。逆にシンクが強すぎると、プレイヤーは常に資源不足に悩まされ、窮屈に感じる。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">4.4. </span>フィードバックループ<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>上の図で、攻撃力から「敵を倒す」へ戻る点線の矢印に注目してほしい。金貨で強い武器を買うと敵を速く倒せるようになり、さらに金貨が貯まりやすくなる。このように、ある量の変化が巡り巡って同じ量をさらに変化させる構造を、フィードバックループと呼ぶ。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 4.2 </span><span class="caption-text">2 種類のフィードバックループ</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>働き</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>正のフィードバック</p></td>
+<td><p>差を広げる。勝っている側がさらに有利になる</p></td>
+<td><p>モノポリーで土地を多く持つ人ほど収入が増え、さらに土地を買える</p></td>
+</tr>
+<tr class="row-odd"><td><p>負のフィードバック</p></td>
+<td><p>差を縮める。負けている側が追いつきやすくなる</p></td>
+<td><p>レースゲームで後ろを走るほど強いアイテムが出る</p></td>
+</tr>
+</tbody>
+</table>
+<p>正のフィードバックは、ゲームを決着に向かわせる力になる。序盤の小さな有利が拡大していく感覚は気持ちがよく、ゲームが際限なく長引くことも防ぐ。しかし強すぎると、序盤で勝負が決まり、負けている側は残りの時間を消化試合として過ごすことになる。</p>
+<p>負のフィードバックは、ゲームを接戦に保つ力になる。最後まで逆転の可能性が残るので、全員が最後まで真剣に遊べる。しかし強すぎると、序盤にどれだけ頑張っても結果に影響しなくなり、努力が報われないと感じさせる。負けている側を助ける仕組みは、輪ゴムで引き戻すような働きにたとえてラバーバンドとも呼ばれる。</p>
+<section id="id8">
+<h3><span class="section-number">4.4.1. </span>シミュレーションで確かめる<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>フィードバックの効果は、シミュレーションで確かめるとよく分かる。<a class="reference internal" href="#list-resource-flow"><span class="std std-numref">リスト 4.2</span></a> は、2 人のプレイヤーが毎ターンさいころを振って金貨を得るという単純な経済で、次の 3 つのルールを比べるプログラムである。</p>
+<ul class="simple">
+<li><p><strong>fixed</strong>：収入はさいころの目だけ（フィードバックなし）</p></li>
+<li><p><strong>positive</strong>：所持金の 10 % が利子として増える（正のフィードバック）</p></li>
+<li><p><strong>rubber</strong>：positive に加え、負けている側が差の 20 % を補助として受け取る（負のフィードバック）</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="list-resource-flow">
+<div class="code-block-caption"><span class="caption-number">リスト 4.2 </span><span class="caption-text">resource_flow.py（ルールとシミュレーションの部分）</span><a class="headerlink" href="#list-resource-flow" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">23</span><span class="n">TURNS</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="linenos">24</span><span class="n">RUNS</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="linenos">25</span><span class="n">INTEREST_RATE</span> <span class="o">=</span> <span class="mf">0.10</span>
+<span class="linenos">26</span><span class="n">CATCH_UP_RATE</span> <span class="o">=</span> <span class="mf">0.20</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="c1"># 1 ターン分の更新処理: (自分の所持金, 相手の所持金, さいころの目) → 新しい所持金</span>
+<span class="linenos">29</span><span class="n">Rule</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="k">def</span><span class="w"> </span><span class="nf">fixed_income</span><span class="p">(</span><span class="n">gold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rival</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dice</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">33</span>    <span class="k">return</span> <span class="n">gold</span> <span class="o">+</span> <span class="n">dice</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="k">def</span><span class="w"> </span><span class="nf">positive_feedback</span><span class="p">(</span><span class="n">gold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rival</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dice</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">37</span>    <span class="k">return</span> <span class="n">gold</span> <span class="o">+</span> <span class="n">dice</span> <span class="o">+</span> <span class="n">gold</span> <span class="o">*</span> <span class="n">INTEREST_RATE</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span><span class="k">def</span><span class="w"> </span><span class="nf">rubber_band</span><span class="p">(</span><span class="n">gold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rival</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dice</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">41</span>    <span class="n">bonus</span> <span class="o">=</span> <span class="p">(</span><span class="n">rival</span> <span class="o">-</span> <span class="n">gold</span><span class="p">)</span> <span class="o">*</span> <span class="n">CATCH_UP_RATE</span> <span class="k">if</span> <span class="n">gold</span> <span class="o">&lt;</span> <span class="n">rival</span> <span class="k">else</span> <span class="mf">0.0</span>
+<span class="linenos">42</span>    <span class="k">return</span> <span class="n">positive_feedback</span><span class="p">(</span><span class="n">gold</span><span class="p">,</span> <span class="n">rival</span><span class="p">,</span> <span class="n">dice</span><span class="p">)</span> <span class="o">+</span> <span class="n">bonus</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="n">RULES</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Rule</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">46</span>    <span class="s2">&quot;fixed（フィードバックなし）&quot;</span><span class="p">:</span> <span class="n">fixed_income</span><span class="p">,</span>
+<span class="linenos">47</span>    <span class="s2">&quot;positive（正のフィードバック）&quot;</span><span class="p">:</span> <span class="n">positive_feedback</span><span class="p">,</span>
+<span class="linenos">48</span>    <span class="s2">&quot;rubber（正＋負のフィードバック）&quot;</span><span class="p">:</span> <span class="n">rubber_band</span><span class="p">,</span>
+<span class="linenos">49</span><span class="p">}</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="k">def</span><span class="w"> </span><span class="nf">simulate_gap</span><span class="p">(</span><span class="n">rule</span><span class="p">:</span> <span class="n">Rule</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="linenos">53</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;1 回のゲームを最後まで進め、各ターン終了時の所持金の差を返す。&quot;&quot;&quot;</span>
+<span class="linenos">54</span>    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">55</span>    <span class="n">gaps</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">56</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TURNS</span><span class="p">):</span>
+<span class="linenos">57</span>        <span class="n">dice_a</span><span class="p">,</span> <span class="n">dice_b</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="linenos">58</span>        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dice_a</span><span class="p">),</span> <span class="n">rule</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dice_b</span><span class="p">)</span>  <span class="c1"># 2 人を同時に更新する</span>
+<span class="linenos">59</span>        <span class="n">gaps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+<span class="linenos">60</span>    <span class="k">return</span> <span class="n">gaps</span>
+<span class="linenos">61</span>
+<span class="linenos">62</span>
+<span class="linenos">63</span><span class="k">def</span><span class="w"> </span><span class="nf">average_gap</span><span class="p">(</span><span class="n">rule</span><span class="p">:</span> <span class="n">Rule</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="linenos">64</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;RUNS 回のゲームについて、ターンごとの差の平均を求める。&quot;&quot;&quot;</span>
+<span class="linenos">65</span>    <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="linenos">66</span>    <span class="n">totals</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">TURNS</span>
+<span class="linenos">67</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">RUNS</span><span class="p">):</span>
+<span class="linenos">68</span>        <span class="k">for</span> <span class="n">turn</span><span class="p">,</span> <span class="n">gap</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">simulate_gap</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">rng</span><span class="p">)):</span>
+<span class="linenos">69</span>            <span class="n">totals</span><span class="p">[</span><span class="n">turn</span><span class="p">]</span> <span class="o">+=</span> <span class="n">gap</span>
+<span class="linenos">70</span>    <span class="k">return</span> <span class="p">[</span><span class="n">total</span> <span class="o">/</span> <span class="n">RUNS</span> <span class="k">for</span> <span class="n">total</span> <span class="ow">in</span> <span class="n">totals</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>各ルールで 2000 回ずつゲームを行い、ターンごとの所持金の差を平均した結果が次の図である。</p>
+<figure class="align-center" id="id18">
+<img alt="フィードバックループと所持金の差" src="_images/resource_flow.png" />
+<figcaption>
+<p><span class="caption-number">図 4.6 </span><span class="caption-text">フィードバックループと所持金の差</span><a class="headerlink" href="#id18" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>フィードバックの無いルールでは、差はさいころの運によって少しずつ広がる程度である。正のフィードバックを加えると、運によって生じた小さな差が利子によって拡大し、30 ターン後には 7 倍近い差になる。負のフィードバックを組み合わせると、差はほとんど広がらなくなる。</p>
+<p>どれが正しいということはなく、作りたい体験によって選ぶ。運よりも戦略で決着してほしいなら正のフィードバックを抑えめにし、接戦を楽しんでほしいなら負のフィードバックを加える。重要なのは、こうした効果を「なんとなく」ではなく、シミュレーションで数値として確かめられることである。</p>
+</section>
+</section>
+<section id="id9">
+<h2><span class="section-number">4.5. </span>創発<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>少数の単純なルールが組み合わさって、ルールからは直接予想できない複雑な振る舞いが生じることを、創発と呼ぶ。囲碁のルールは数行で説明できるが、そこから生まれる戦略は何千年もの間研究されても尽きない。</p>
+<p>研究者のユールは、ゲームの構造を 2 つの型に分けた。</p>
+<table class="docutils align-default" id="id19">
+<caption><span class="caption-number">表 4.3 </span><span class="caption-text">創発型と進行型</span><a class="headerlink" href="#id19" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>型</p></th>
+<th class="head"><p>特徴</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>創発型</p></td>
+<td><p>少数のルールの組み合わせから多様な状況が生まれる。遊ぶたびに展開が変わる</p></td>
+<td><p>囲碁、将棋、テトリス、多くの対戦ゲーム</p></td>
+</tr>
+<tr class="row-odd"><td><p>進行型</p></td>
+<td><p>デザイナーが用意した出来事を順番に体験していく。展開はほぼ決まっている</p></td>
+<td><p>物語を重視したアドベンチャーゲーム</p></td>
+</tr>
+</tbody>
+</table>
+<p>多くのビデオゲームは両方の要素を持つ。アクションゲームのレベルは、デザイナーが用意した順番で進む（進行型）が、敵とプレイヤーの動きの組み合わせはその場で生まれる（創発型）。</p>
+<p>創発は、デザイナーが予想しなかった面白い遊びを生む源泉である。一方で、予想しなかった攻略法（バランスを壊す必勝法や、レベルの一部を飛ばす近道）も生む。ルールを組み合わせたときにどのような振る舞いが起きうるかを、実際に遊んだりシミュレーションしたりして確かめることが欠かせない。</p>
+</section>
+<section id="id10">
+<h2><span class="section-number">4.6. </span>演習<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>好きなゲームのコアループを図に描け。入れ子になった外側のループがあれば、それも描け。</p></li>
+<li><p>同じゲームの資源を 1 つ選び、ソース、プール、シンク、変換器を書き出せ。</p></li>
+<li><p><a class="reference internal" href="#list-resource-flow"><span class="std std-numref">リスト 4.2</span></a> の <code class="docutils literal notranslate"><span class="pre">INTEREST_RATE</span></code> と <code class="docutils literal notranslate"><span class="pre">CATCH_UP_RATE</span></code> を変えて実行し、所持金の差がどう変わるかを確かめよ。差がほとんど広がらず、それでいて先行した側がわずかに有利であり続けるような値を探せ。</p></li>
+<li><p>正のフィードバックが強すぎて、序盤で勝負が決まってしまうゲームの例を挙げ、負のフィードバックを加える方法を提案せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch03_fun_and_player.html" class="btn btn-neutral float-left" title="3. 楽しさとプレイヤー" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch05_balance.html" class="btn btn-neutral float-right" title="5. ゲームバランス" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

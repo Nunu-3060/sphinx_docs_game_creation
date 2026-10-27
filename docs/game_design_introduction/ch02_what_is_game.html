@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. ゲームとは何か &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="3. 楽しさとプレイヤー" href="ch03_fun_and_player.html" />
+    <link rel="prev" title="1. はじめに" href="ch01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. ゲームとは何か</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1. ゲームの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.2. 遊びとゲーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.3. ジャンルの見取り図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mda">2.4. MDA フレームワーク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.5. MDA でゲームを分析する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>ゲームとは何か</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">2. </span>ゲームとは何か<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームを設計するには、まず「ゲームとは何か」をある程度はっきりさせておく必要がある。この章では、研究者やデザイナーによるゲームの定義を手がかりにゲームの構成要素を整理し、ゲームを分析するための枠組みである MDA フレームワークを紹介する。</p>
+<section id="id2">
+<h2><span class="section-number">2.1. </span>ゲームの定義<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームの定義には多くの提案があり、決定版と呼べるものは無い。ここでは代表的なものを 3 つ紹介する。</p>
+<ul class="simple">
+<li><p>哲学者のバーナード・スーツは、ゲームを遊ぶことを「不必要な障害を自発的に乗り越えようとする試み」と表現した。ゴルフで言えば、ボールを手で運んでカップに入れれば簡単だが、それを禁じてクラブだけを使うという不必要な障害を、プレイヤーは自分から受け入れている。</p></li>
+<li><p>ゲームデザイナーのケイティ・サレンとエリック・ジマーマンは、ゲームを「プレイヤーがルールで定められた人工的な対立に参加し、数量化できる結果に至るシステム」と定義した。</p></li>
+<li><p>研究者のイェスパー・ユールは、ルール、変化しうる数量化可能な結果、結果に対する価値付け、プレイヤーの努力、プレイヤーと結果の結び付き、交渉可能な帰結（現実の生活に影響を与えるかどうかを選べる）という 6 つの特徴でゲームを説明した。</p></li>
+</ul>
+<p>定義はそれぞれ異なるが、共通する要素がある。ゲームデザイナーのジェイン・マクゴニガルは、すべてのゲームに共通する特徴として次の 4 つを挙げている。本書ではこの 4 つを出発点にする。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 2.1 </span><span class="caption-text">ゲームの 4 つの特徴</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>特徴</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>テトリスの場合</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>目的</p></td>
+<td><p>プレイヤーが達成しようとする結果。プレイヤーの注意を向け、行動の方向を決める</p></td>
+<td><p>列をそろえて消し、できるだけ長く生き残る</p></td>
+</tr>
+<tr class="row-odd"><td><p>ルール</p></td>
+<td><p>目的を達成する方法に加える制限。制限があることで工夫の余地が生まれる</p></td>
+<td><p>ブロックは回転と左右の移動しかできず、置いたら動かせない</p></td>
+</tr>
+<tr class="row-even"><td><p>フィードバック</p></td>
+<td><p>目的にどれだけ近づいたかをプレイヤーに伝える仕組み</p></td>
+<td><p>列が消える演出、得点、積み上がったブロックの高さ</p></td>
+</tr>
+<tr class="row-odd"><td><p>自発的な参加</p></td>
+<td><p>プレイヤーが目的、ルール、フィードバックを知ったうえで、自分の意思で遊ぶこと</p></td>
+<td><p>遊ぶことを強制されず、いつでもやめられる</p></td>
+</tr>
+</tbody>
+</table>
+<p>4 つ目の「自発的な参加」は見落とされやすいが重要である。同じ作業でも、強制されれば労働になり、自分から選べば遊びになる。ゲームデザイナーは、プレイヤーが「やらされている」と感じないように気を配る必要がある。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">2.2. </span>遊びとゲーム<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ゲームは「遊び」の一部である。社会学者のロジェ・カイヨワは、遊びを次の 4 つに分類した。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 2.2 </span><span class="caption-text">カイヨワによる遊びの分類</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分類</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>ゲームの例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>アゴン（競争）</p></td>
+<td><p>能力を競い、優劣を決める</p></td>
+<td><p>対戦格闘ゲーム、スポーツゲーム、将棋</p></td>
+</tr>
+<tr class="row-odd"><td><p>アレア（偶然）</p></td>
+<td><p>運に身を任せ、結果を待つ</p></td>
+<td><p>すごろく、ルーレット、ガチャ</p></td>
+</tr>
+<tr class="row-even"><td><p>ミミクリ（模擬）</p></td>
+<td><p>自分以外の何者かになりきる</p></td>
+<td><p>ロールプレイングゲーム、ごっこ遊び</p></td>
+</tr>
+<tr class="row-odd"><td><p>イリンクス（めまい）</p></td>
+<td><p>知覚を揺さぶられる感覚を楽しむ</p></td>
+<td><p>レースゲーム、ジェットコースター、ブランコ</p></td>
+</tr>
+</tbody>
+</table>
+<p>多くのゲームは、これらを組み合わせている。例えばトランプのポーカーは、配られる札という偶然（アレア）と、駆け引きによる競争（アゴン）を組み合わせたものである。</p>
+<p>カイヨワは、遊びにはもう 1 つの軸があるとも述べている。ルールの無い自由な遊び（パイディア）と、ルールに従って技能を磨く遊び（ルドゥス）である。砂場で山を作るのはパイディアに近く、砂山を崩さずに棒を立て続ける「棒倒し」はルドゥスに近い。ゲームは主にルドゥス側にあるが、オープンワールドのゲームで目的も無く景色を眺めて歩き回るように、パイディアの楽しみを含むゲームも多い。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">2.3. </span>ジャンルの見取り図<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ゲームのジャンルは、プレイヤーが主に何をするかで分けられることが多い。代表的なジャンルを次の表に示す。ジャンルの境界はあいまいで、複数のジャンルの特徴を併せ持つゲームも多い。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 2.3 </span><span class="caption-text">代表的なジャンル</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ジャンル</p></th>
+<th class="head"><p>プレイヤーが主にすること</p></th>
+<th class="head"><p>主に求められる能力</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>アクション</p></td>
+<td><p>キャラクターを直接操作し、障害物や敵を避けたり倒したりする</p></td>
+<td><p>反応の速さ、正確な操作</p></td>
+</tr>
+<tr class="row-odd"><td><p>シューティング</p></td>
+<td><p>弾を撃って敵を倒し、敵の攻撃を避ける</p></td>
+<td><p>反応の速さ、空間の把握</p></td>
+</tr>
+<tr class="row-even"><td><p>パズル</p></td>
+<td><p>規則に従って盤面を操作し、問題を解く</p></td>
+<td><p>論理的な思考、ひらめき</p></td>
+</tr>
+<tr class="row-odd"><td><p>ロールプレイング（RPG）</p></td>
+<td><p>キャラクターを成長させながら物語を進める</p></td>
+<td><p>計画、資源の管理</p></td>
+</tr>
+<tr class="row-even"><td><p>シミュレーション・ストラテジー</p></td>
+<td><p>資源や部隊を管理し、長期的な目標を達成する</p></td>
+<td><p>計画、状況の判断</p></td>
+</tr>
+<tr class="row-odd"><td><p>アドベンチャー</p></td>
+<td><p>探索や会話によって物語の謎を解き明かす</p></td>
+<td><p>推理、観察</p></td>
+</tr>
+<tr class="row-even"><td><p>リズム</p></td>
+<td><p>音楽に合わせてタイミングよく入力する</p></td>
+<td><p>リズム感、反応の速さ</p></td>
+</tr>
+<tr class="row-odd"><td><p>ローグライク</p></td>
+<td><p>毎回異なる構造のマップを探索する。失敗すると最初からやり直しになることが多い</p></td>
+<td><p>状況の判断、知識の蓄積</p></td>
+</tr>
+</tbody>
+</table>
+<p>ジャンルは「どんな遊びか」を短く伝えるには便利だが、設計の出発点としては粗すぎる。次に紹介する MDA フレームワークを使うと、ゲームをより細かく分析できる。</p>
+</section>
+<section id="mda">
+<h2><span class="section-number">2.4. </span>MDA フレームワーク<a class="headerlink" href="#mda" title="Link to this heading"></a></h2>
+<p>MDA フレームワークは、ロビン・ハニック、マーク・ルブラン、ロバート・ズベックが 2004 年に発表した、ゲームを分析・設計するための枠組みである。ゲームを次の 3 つの層に分けて考える。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 2.4 </span><span class="caption-text">MDA の 3 つの層</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>層</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>テトリスの場合</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>メカニクス（Mechanics）</p></td>
+<td><p>ゲームを構成するルール、データ、アルゴリズム。デザイナーが直接決められる部分</p></td>
+<td><p>7 種類のブロック、落下の速度、列がそろうと消えるルール</p></td>
+</tr>
+<tr class="row-odd"><td><p>ダイナミクス（Dynamics）</p></td>
+<td><p>プレイヤーの入力とメカニクスが組み合わさって、遊んでいる間に生じる振る舞い</p></td>
+<td><p>長い棒が来るまで 1 列分の隙間を空けて積む、という戦略</p></td>
+</tr>
+<tr class="row-even"><td><p>エステティクス（Aesthetics）</p></td>
+<td><p>ゲームを遊んだときにプレイヤーが感じる情動的な反応。「楽しさ」の中身</p></td>
+<td><p>速くなる落下に追い立てられる緊張感、4 列を一度に消したときの爽快感</p></td>
+</tr>
+</tbody>
+</table>
+<p>MDA で重要なのは、デザイナーとプレイヤーでは見る方向が逆になるという指摘である。</p>
+<figure class="align-center" id="id11">
+<div class="graphviz"><img src="_images/graphviz-66233c0755f4b930289f25ced5d439bdea3d6d19.png" alt="digraph mda {
+    rankdir=LR;
+    nodesep=0.3;
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    subgraph cluster_designer {
+        label=&quot;デザイナーの視点（作る順番）&quot;;
+        color=&quot;#3060c0&quot;; fontcolor=&quot;#3060c0&quot;; style=rounded;
+        dm [label=&quot;メカニクス\n（ルール）&quot;];
+        dd [label=&quot;ダイナミクス\n（振る舞い）&quot;];
+        da [label=&quot;エステティクス\n（体験）&quot;];
+        dm -&gt; dd -&gt; da [color=&quot;#3060c0&quot;];
+    }
+    subgraph cluster_player {
+        label=&quot;プレイヤーの視点（感じる順番）&quot;;
+        color=&quot;#c04040&quot;; fontcolor=&quot;#c04040&quot;; style=rounded;
+        pa [label=&quot;エステティクス\n（体験）&quot;];
+        pd [label=&quot;ダイナミクス\n（振る舞い）&quot;];
+        pm [label=&quot;メカニクス\n（ルール）&quot;];
+        pa -&gt; pd -&gt; pm [color=&quot;#c04040&quot;];
+    }
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 2.1 </span><span class="caption-text">デザイナーとプレイヤーの視点</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>デザイナーはメカニクスしか直接作れない。ダイナミクスはメカニクスとプレイヤーの行動から生まれ、エステティクスはダイナミクスからプレイヤーの心の中に生まれる。一方、プレイヤーはまずエステティクス（楽しい、退屈だ）を感じ、遊び込むにつれてダイナミクス（こう動くと有利だ）やメカニクス（こういうルールになっている）を理解していく。</p>
+<p>この構造から、ゲームデザインの難しさが分かる。デザイナーが作りたいのはエステティクス（体験）なのに、直接いじれるのはメカニクス（ルール）だけである。そのため、ルールを変えたときに体験がどう変わるかを予測し、実際に遊んで確かめる作業が欠かせない。この作業の進め方は第 11 章で扱う。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">2.5. </span>MDA でゲームを分析する<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>MDA を使って、よく知られたゲームを分析してみる。ここでは「鬼ごっこ」を例にする。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 2.5 </span><span class="caption-text">鬼ごっこの MDA 分析</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>層</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>メカニクス</p></td>
+<td><p>鬼が 1 人いる。鬼に触られた人が次の鬼になる。決められた範囲の外に出てはいけない</p></td>
+</tr>
+<tr class="row-odd"><td><p>ダイナミクス</p></td>
+<td><p>鬼から距離を取る。障害物を挟んで回り込む。鬼は逃げ場の少ない隅に追い込む。わざと鬼に近づいて挑発する人が現れる</p></td>
+</tr>
+<tr class="row-even"><td><p>エステティクス</p></td>
+<td><p>追われる緊張感、ぎりぎりで逃げ切ったときの興奮、仲間との一体感</p></td>
+</tr>
+</tbody>
+</table>
+<p>ここで「その場で止まっている間は、鬼に触られても鬼にならない」というルールを 1 つ加えたとする。メカニクスの小さな変更だが、ダイナミクスは大きく変わる。鬼の近くでわざと止まるという行動が生まれ、追いかける緊張感は弱まるだろう。このように、メカニクスとエステティクスの間にはダイナミクスが挟まっているため、ルールの変更が体験に与える影響は直感的に予測しにくい。</p>
+<p>エステティクスにどのような種類があるかは、次の第 3 章で詳しく扱う。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">2.6. </span>演習<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>好きなゲームを 1 つ選び、ゲームの 4 つの特徴（目的、ルール、フィードバック、自発的な参加）がそれぞれ何に当たるかを書き出せ。</p></li>
+<li><p>同じゲームについて、メカニクス、ダイナミクス、エステティクスを表にまとめよ。</p></li>
+<li><p>そのゲームのメカニクスを 1 つだけ変更したとき、ダイナミクスとエステティクスがどう変わるかを予想せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch01_introduction.html" class="btn btn-neutral float-left" title="1. はじめに" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch03_fun_and_player.html" class="btn btn-neutral float-right" title="3. 楽しさとプレイヤー" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

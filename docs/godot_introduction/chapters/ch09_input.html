@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 9 章 入力 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 10 章 2D の座標とベクトル" href="ch10_vectors.html" />
+    <link rel="prev" title="第 8 章 ゲームループと時間" href="ch08_game_loop.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 9 章　入力</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">入力アクション</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">インプットマップで定義する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">物理キーコード</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">入力を受け取る 2 つの方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">ポーリング</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">イベント</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">入力イベントが伝わる順番</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">マウスの位置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 9 章　入力</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch08_game_loop.html" class="btn btn-neutral float-left" title="第 8 章 ゲームループと時間" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch10_vectors.html" class="btn btn-neutral float-right" title="第 10 章 2D の座標とベクトル" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch09">
+<span id="id1"></span><h1>第 9 章　入力<a class="headerlink" href="#ch09" title="Link to this heading"></a></h1>
+<p>本章では、キーボード、マウス、ゲームパッドからの入力を受け取る方法を説明する。Godot では、具体的なキーではなく「入力アクション」という抽象的な操作の名前を使って入力を扱うのが基本である。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter09</span></code> フォルダーにある。</p>
+<section id="id2">
+<h2>入力アクション<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームの操作は、キーボードの矢印キーと WASD キー、ゲームパッドのスティックなど、複数の入力装置で同じことができるようにすることが多い。スクリプトの中で「矢印キーの左か、A キーか、スティックの左なら」と毎回書くのは面倒で、後から操作方法を変えるのも大変である。</p>
+<p>そこで Godot では、「左へ移動」「ジャンプ」のような操作に名前を付けた入力アクション（input action）を定義し、そこに実際のキーやボタンを割り当てる。スクリプトはアクション名だけを使う。</p>
+<figure class="align-default" id="id11">
+<div class="graphviz"><object data="../_images/graphviz-c14b819af6e25346bc128a8fee97e7245e2f8e39.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph actions {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fontsize=11];
+  a [label=&quot;A キー&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  left [label=&quot;← キー&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  stick [label=&quot;左スティックを左に倒す&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  space [label=&quot;スペースキー&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  pad_a [label=&quot;ゲームパッドの A ボタン&quot;, fillcolor=&quot;#f2f2f2&quot;];
+  move_left [label=&quot;move_left&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  jump [label=&quot;jump&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  script [label=&quot;スクリプト\nInput.is_action_pressed(\&quot;jump\&quot;)&quot;, fillcolor=&quot;#d4edda&quot;];
+  a -&gt; move_left;
+  left -&gt; move_left;
+  stick -&gt; move_left;
+  space -&gt; jump;
+  pad_a -&gt; jump;
+  move_left -&gt; script;
+  jump -&gt; script;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 14 </span><span class="caption-text">入力アクションと実際の入力の対応</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id3">
+<h3>インプットマップで定義する<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>入力アクションは、「プロジェクト設定」の「インプットマップ」タブで定義する。</p>
+<ol class="arabic simple">
+<li><p>上部の「新しいアクションの追加」欄にアクション名（例：<code class="docutils literal notranslate"><span class="pre">jump</span></code>）を入力し、「追加」を押す。</p></li>
+<li><p>追加されたアクションの右にある「+」ボタンを押すと、「イベントの設定」ダイアログが開く。</p></li>
+<li><p>割り当てたいキーを押すか、ゲームパッドのボタンを押す。入力が検出されたら「OK」を押す。</p></li>
+</ol>
+<p>「組み込みアクションを表示」をオンにすると、Godot があらかじめ定義している <code class="docutils literal notranslate"><span class="pre">ui_accept</span></code>（決定）、<code class="docutils literal notranslate"><span class="pre">ui_cancel</span></code>（キャンセル）、<code class="docutils literal notranslate"><span class="pre">ui_left</span></code> などのアクションが表示される。これらは UI の操作に使われるもので、自分のゲームの操作には独自のアクションを定義するとよい。</p>
+<p>本書のサンプルプロジェクトでは、次のアクションを定義している。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 33 </span><span class="caption-text">サンプルプロジェクトの入力アクション</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>アクション名</p></th>
+<th class="head"><p>キーボード</p></th>
+<th class="head"><p>ゲームパッド</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">move_left</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">A</kbd>、<kbd class="kbd docutils literal notranslate">←</kbd></p></td>
+<td><p>左スティック（左）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">move_right</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">D</kbd>、<kbd class="kbd docutils literal notranslate">→</kbd></p></td>
+<td><p>左スティック（右）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">move_up</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">W</kbd>、<kbd class="kbd docutils literal notranslate">↑</kbd></p></td>
+<td><p>左スティック（上）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">move_down</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">S</kbd>、<kbd class="kbd docutils literal notranslate">↓</kbd></p></td>
+<td><p>左スティック（下）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">jump</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Space</kbd></p></td>
+<td><p>A ボタン（下側のボタン）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pause</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">P</kbd></p></td>
+<td><p>スタートボタン</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">back_to_launcher</span></code></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">Esc</kbd></p></td>
+<td><p>なし</p></td>
+</tr>
+</tbody>
+</table>
+<p>インプットマップの内容は <code class="docutils literal notranslate"><span class="pre">project.godot</span></code> の <code class="docutils literal notranslate"><span class="pre">[input]</span></code> セクションに保存される。</p>
+</section>
+<section id="id4">
+<h3>物理キーコード<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>キーを割り当てるとき、「イベントの設定」ダイアログでは、キーの指定方法を「物理キーコード」「キーコード」「キーラベル」から選べる。</p>
+<ul class="simple">
+<li><p><strong>物理キーコード</strong>：キーボード上のキーの位置で判定する。US 配列で W の位置にあるキーは、フランス語の AZERTY 配列では Z だが、どちらも同じキーとして扱われる。WASD のように位置に意味がある操作に向く。</p></li>
+<li><p><strong>キーコード</strong>：キーボードの配列に応じた、キーの意味で判定する。</p></li>
+</ul>
+<p>本書のサンプルでは、すべて物理キーコードで割り当てている。</p>
+</section>
+</section>
+<section id="id5">
+<h2>入力を受け取る 2 つの方法<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>スクリプトで入力を受け取る方法には、ポーリングとイベントの 2 種類がある。</p>
+<section id="id6">
+<h3>ポーリング<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>ポーリング（polling）は、<code class="docutils literal notranslate"><span class="pre">_process()</span></code> や <code class="docutils literal notranslate"><span class="pre">_physics_process()</span></code> の中で、毎フレーム「今アクションが押されているか」を問い合わせる方法である。押している間ずっと続く操作（移動など）に向く。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 34 </span><span class="caption-text">Input の主なメソッド</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>メソッド</p></th>
+<th class="head"><p>戻り値</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Input.is_action_pressed(&quot;jump&quot;)</span></code></p></td>
+<td><p>押されている間 <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Input.is_action_just_pressed(&quot;jump&quot;)</span></code></p></td>
+<td><p>押された瞬間のフレームだけ <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Input.is_action_just_released(&quot;jump&quot;)</span></code></p></td>
+<td><p>離された瞬間のフレームだけ <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Input.get_action_strength(&quot;move_right&quot;)</span></code></p></td>
+<td><p>押し込みの強さ（0.0 ～ 1.0）。キーなら 0 か 1、スティックなら倒した量</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Input.get_axis(&quot;move_left&quot;,</span> <span class="pre">&quot;move_right&quot;)</span></code></p></td>
+<td><p>2 つのアクションから -1.0 ～ 1.0 の値を作る。左右移動に便利</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Input.get_vector(&quot;move_left&quot;,</span> <span class="pre">&quot;move_right&quot;,</span> <span class="pre">&quot;move_up&quot;,</span> <span class="pre">&quot;move_down&quot;)</span></code></p></td>
+<td><p>4 つのアクションから、長さが 1 以下の <code class="docutils literal notranslate"><span class="pre">Vector2</span></code> を作る。上下左右の移動に便利</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">get_vector()</span></code> は、斜めに入力したときにベクトルの長さが 1 を超えないように調整する。単純に左右と上下の値を組み合わせると、斜め移動のときだけ約 1.41 倍速くなってしまうが、<code class="docutils literal notranslate"><span class="pre">get_vector()</span></code> を使えばその問題は起きない。</p>
+</section>
+<section id="id7">
+<h3>イベント<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>イベント（event）は、入力が発生したときに Godot から呼び出してもらう方法である。キーを押した、マウスをクリックした、といった 1 回きりの出来事に向く。</p>
+<p>イベントは、<code class="docutils literal notranslate"><span class="pre">_input(event)</span></code> や <code class="docutils literal notranslate"><span class="pre">_unhandled_input(event)</span></code> で受け取る。引数の <code class="docutils literal notranslate"><span class="pre">event</span></code> は <code class="docutils literal notranslate"><span class="pre">InputEvent</span></code> を継承したクラスのインスタンスで、入力の種類に応じて次のクラスが使われる。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 35 </span><span class="caption-text">主な InputEvent のクラス</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>クラス</p></th>
+<th class="head"><p>入力の種類</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">InputEventKey</span></code></p></td>
+<td><p>キーボードのキー</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">InputEventMouseButton</span></code></p></td>
+<td><p>マウスのボタン、ホイール</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">InputEventMouseMotion</span></code></p></td>
+<td><p>マウスの移動</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">InputEventJoypadButton</span></code></p></td>
+<td><p>ゲームパッドのボタン</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">InputEventJoypadMotion</span></code></p></td>
+<td><p>ゲームパッドのスティック、トリガー</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">InputEventScreenTouch</span></code></p></td>
+<td><p>タッチパネルへのタッチ</p></td>
+</tr>
+</tbody>
+</table>
+<p>アクションかどうかは、<code class="docutils literal notranslate"><span class="pre">event.is_action_pressed(&quot;jump&quot;)</span></code> で判定する。種類ごとの情報（クリックした位置など）が必要な場合は、<code class="docutils literal notranslate"><span class="pre">event</span> <span class="pre">is</span> <span class="pre">InputEventMouseButton</span></code> のように型を確認してから使う。</p>
+</section>
+</section>
+<section id="id8">
+<h2>サンプル<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">input_demo.tscn</span></code> は、ポーリングで上下左右に移動し、イベントでジャンプの回数を数え、クリックした位置へ瞬間移動するサンプルである。</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-number">リスト 17 </span><span class="caption-text">chapter09/input_demo.gd</span><a class="headerlink" href="#id15" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node2D</span>
+<span class="linenos"> 2</span><span class="c1">## 入力の 2 つの受け取り方（ポーリングとイベント）を試すサンプル。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="n">SPEED</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">var</span><span class="w"> </span><span class="n">_jump_count</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_player</span><span class="p">:</span><span class="w"> </span><span class="n">Sprite2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Player</span>
+<span class="linenos"> 9</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_info</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Info</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">13</span><span class="w">    </span><span class="c1"># ポーリング：毎フレーム「今どのキーが押されているか」を問い合わせる。</span>
+<span class="linenos">14</span><span class="w">    </span><span class="c1"># get_vector() は 4 つのアクションから長さ 1 以下の方向ベクトルを作る。</span>
+<span class="linenos">15</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">get_vector</span><span class="p">(</span><span class="s2">&quot;move_left&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_right&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_up&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_down&quot;</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">_player</span><span class="o">.</span><span class="n">position</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SPEED</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">_info</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;方向: </span><span class="si">%s</span><span class="s2">  ジャンプ回数: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">direction</span><span class="p">,</span><span class="w"> </span><span class="n">_jump_count</span><span class="p">]</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">func</span><span class="w"> </span><span class="n">_unhandled_input</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">InputEvent</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">    </span><span class="c1"># イベント：入力が発生したときに 1 回だけ呼ばれる。</span>
+<span class="linenos">22</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;jump&quot;</span><span class="p">):</span>
+<span class="linenos">23</span><span class="w">        </span><span class="n">_jump_count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">24</span><span class="w">        </span><span class="n">get_viewport</span><span class="p">()</span><span class="o">.</span><span class="n">set_input_as_handled</span><span class="p">()</span>
+<span class="linenos">25</span><span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">InputEventMouseButton</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">event</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">():</span>
+<span class="linenos">26</span><span class="w">        </span><span class="c1"># アクションを介さず、イベントの種類を直接調べることもできる。</span>
+<span class="linenos">27</span><span class="w">        </span><span class="n">_player</span><span class="o">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">InputEventMouseButton</span><span class="p">)</span><span class="o">.</span><span class="n">position</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">_process()</span></code> では <code class="docutils literal notranslate"><span class="pre">get_vector()</span></code> で方向を取得し、速さと <code class="docutils literal notranslate"><span class="pre">delta</span></code> を掛けて移動している。<code class="docutils literal notranslate"><span class="pre">_unhandled_input()</span></code> では、<code class="docutils literal notranslate"><span class="pre">jump</span></code> アクションが押されたときに回数を数えている。</p>
+<p>ジャンプのように「押した瞬間」に反応させたい処理は、ポーリングで <code class="docutils literal notranslate"><span class="pre">is_action_just_pressed()</span></code> を使っても、イベントで <code class="docutils literal notranslate"><span class="pre">is_action_pressed()</span></code> を使っても書ける。キャラクターの物理的な動きと一緒に処理するならポーリング（<a class="reference internal" href="ch11_physics.html#ch11"><span class="std std-ref">第 11 章　2D の物理と衝突</span></a> の例）、メニューを開くなどの独立した操作ならイベント、と使い分けるとよい。</p>
+</section>
+<section id="id9">
+<h2>入力イベントが伝わる順番<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>入力イベントは、次の順番でノードに渡される。どこかで「処理済み」とされると、それ以降には渡されない。</p>
+<figure class="align-default" id="id16">
+<div class="graphviz"><object data="../_images/graphviz-d2227e3b2bcd880cd17676c89628c5a802847acf.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph propagation {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  i [label=&quot;_input()&quot;];
+  g [label=&quot;UI（Control）の\n_gui_input()&quot;];
+  s [label=&quot;_shortcut_input()&quot;];
+  k [label=&quot;_unhandled_key_input()&quot;];
+  u [label=&quot;_unhandled_input()&quot;];
+  i -&gt; g -&gt; s -&gt; k -&gt; u;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 15 </span><span class="caption-text">入力イベントが伝わる順番</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ボタンやテキストボックスなどの UI は、途中の <code class="docutils literal notranslate"><span class="pre">_gui_input()</span></code> でイベントを受け取り、処理済みにする。例えば、テキストボックスに文字を入力している間にスペースキーを押しても、ゲームのキャラクターがジャンプしてはいけない。ゲームの操作を <code class="docutils literal notranslate"><span class="pre">_unhandled_input()</span></code> で受け取るようにしておけば、UI が使った入力は届かないので、この問題を避けられる。</p>
+<p>自分でイベントを処理済みにするには、<code class="docutils literal notranslate"><span class="pre">get_viewport().set_input_as_handled()</span></code> を呼ぶ。<code class="docutils literal notranslate"><span class="pre">input_demo.gd</span></code> の 24 行目がその例である。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>ゲームの操作は <code class="docutils literal notranslate"><span class="pre">_unhandled_input()</span></code> で受け取るのが基本である。<code class="docutils literal notranslate"><span class="pre">_input()</span></code> は、UI より先に必ず受け取る必要がある場合（デバッグ用のキーなど）に使う。</p>
+</div>
+</section>
+<section id="id10">
+<h2>マウスの位置<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>マウスの位置には、2 種類の座標がある。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">InputEventMouse</span></code> の <code class="docutils literal notranslate"><span class="pre">position</span></code>：ゲームのウィンドウ（ビューポート）上の座標。左上が (0, 0) である。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_global_mouse_position()</span></code>：ゲームの世界での座標。<code class="docutils literal notranslate"><span class="pre">Camera2D</span></code> で画面がスクロールしている場合は、ビューポート上の座標とずれる。</p></li>
+</ul>
+<p>ゲームの世界にある物体とマウスの位置を比べる場合は、<code class="docutils literal notranslate"><span class="pre">get_global_mouse_position()</span></code> を使う。<a class="reference internal" href="ch10_vectors.html#ch10"><span class="std std-ref">第 10 章　2D の座標とベクトル</span></a> のサンプルで使っている。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch08_game_loop.html" class="btn btn-neutral float-left" title="第 8 章 ゲームループと時間" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch10_vectors.html" class="btn btn-neutral float-right" title="第 10 章 2D の座標とベクトル" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

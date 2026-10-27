@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11. 衝突判定 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="12. 衝突応答" href="response.html" />
+    <link rel="prev" title="10. 運動の物理" href="motion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">11. 衝突判定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">11.1. 衝突判定の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">11.2. 点・円・長方形</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">11.2.1. 円と円</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">11.2.2. 軸に平行な長方形どうし</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">11.2.3. 円と長方形</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">11.2.4. 点と線分の距離</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">11.3. レイキャスト</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">11.3.1. レイと円</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">11.3.2. レイと長方形（スラブ法）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">11.4. 回転した長方形と凸多角形</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">11.5. タイルマップとの衝突判定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">11.6. すり抜けと連続衝突判定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">11.7. 判定の高速化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">11. </span>衝突判定</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">11. </span>衝突判定<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>弾が敵に当たったか、キャラクターが壁にぶつかったか、コインを取ったか。物どうしが重なっているかを調べる処理を<strong>衝突判定</strong>と呼ぶ。ゲームの現場では「当たり判定」とも呼ぶ。この章では、よく使う図形の組み合わせごとの判定方法と、たくさんの物を効率よく調べる方法を扱う。判定した後に物を押し戻したり跳ね返らせたりする処理（衝突応答）は、次の章で扱う。</p>
+<section id="id2">
+<h2><span class="section-number">11.1. </span>衝突判定の流れ<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームのキャラクターの見た目は複雑な形をしているが、衝突判定では円や長方形のような単純な図形で近似する。この図形を<strong>コリジョン形状</strong>と呼ぶ。見た目より少し小さめにすると、「かすっただけで当たった」という理不尽さが減る。</p>
+<p>物の数が多いと、すべての組み合わせを調べるのは大変である。100 個の物なら 4950 組、1000 個なら約 50 万組になる。そこで、<a class="reference internal" href="#fig-collision-pipeline"><span class="std std-numref">図 11.1</span></a> のように 2 段階に分けて調べる。</p>
+<figure class="align-center" id="id15">
+<span id="fig-collision-pipeline"></span><div class="graphviz"><img src="_images/graphviz-c0bc2ee701227b2426b4b0bf70d2f66040dc5481.png" alt="digraph pipeline {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  edge [fontsize=10];
+  all [label=&quot;すべての物&quot;];
+  broad [label=&quot;ブロードフェーズ\n近くにいる組だけを\n大まかに選ぶ&quot;];
+  narrow [label=&quot;ナローフェーズ\n選んだ組を\n正確に判定する&quot;];
+  resp [label=&quot;衝突応答\n（第 12 章）&quot;];
+  all -&gt; broad [label=&quot;n 個&quot;];
+  broad -&gt; narrow [label=&quot;候補の組&quot;];
+  narrow -&gt; resp [label=&quot;接触情報&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 11.1 </span><span class="caption-text">衝突判定の 2 段階</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>ブロードフェーズ</strong>: 空間を区切るなどして、ぶつかる可能性のある組だけを素早く選ぶ（後述）。</p></li>
+<li><p><strong>ナローフェーズ</strong>: 選んだ組について、図形の形に応じた正確な判定を行う。</p></li>
+</ul>
+<p>衝突判定の関数は、重なっているかどうか（真か偽か）だけでなく、押し戻すための情報も返すと便利である。本書の <code class="docutils literal notranslate"><span class="pre">collision.py</span></code> では、重なっている場合に<strong>接触情報</strong>として、次の 2 つの組を返す。</p>
+<ul class="simple">
+<li><p><strong>法線</strong>: 1 つ目の図形から 2 つ目の図形へ向かう向きの単位ベクトル。2 つ目の図形をこの向きに動かせば、重なりが解消する。</p></li>
+<li><p><strong>めり込みの深さ</strong>: 法線の向きにどれだけ動かせば重なりが解消するか。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2><span class="section-number">11.2. </span>点・円・長方形<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>最もよく使う 3 つの判定を<a class="reference internal" href="#fig-overlap-tests"><span class="std std-numref">図 11.2</span></a> に示す。</p>
+<figure class="align-default" id="id16">
+<span id="fig-overlap-tests"></span><img alt="円と円、長方形どうし、円と長方形の判定" src="_images/overlap_tests.png" />
+<figcaption>
+<p><span class="caption-number">図 11.2 </span><span class="caption-text">円と円（左）、長方形どうし（中央）、円と長方形（右）の判定</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id4">
+<h3><span class="section-number">11.2.1. </span>円と円<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>2 つの円は、中心間の距離が半径の和より小さいときに重なっている。第 4 章で述べたように、平方根を避けて 2 乗どうしで比べる。</p>
+<div class="math notranslate nohighlight">
+\[|\mathbf{c}_2 - \mathbf{c}_1|^2 &lt; (r_1 + r_2)^2\]</div>
+<p>接触情報も必要な場合は、中心間の距離 <span class="math notranslate nohighlight">\(d\)</span> を求め、法線を中心から中心への単位ベクトル、めり込みの深さを <span class="math notranslate nohighlight">\(r_1 + r_2 - d\)</span> とする。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 11.1 </span><span class="caption-text">examples/collision.py の circle_circle_contact 関数</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">circle_circle_contact</span><span class="p">(</span><span class="n">c1</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">r1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">r2</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Contact</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの円の接触情報。重なっていなければ None。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">offset</span> <span class="o">=</span> <span class="n">c2</span> <span class="o">-</span> <span class="n">c1</span>
+<span class="linenos">4</span>    <span class="n">distance</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="linenos">5</span>    <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;=</span> <span class="n">r1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">:</span>
+<span class="linenos">6</span>        <span class="k">return</span> <span class="kc">None</span>
+<span class="linenos">7</span>    <span class="n">normal</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">/</span> <span class="n">distance</span> <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;</span> <span class="n">EPSILON</span> <span class="k">else</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 中心が一致したら向きは決められない</span>
+<span class="linenos">8</span>    <span class="k">return</span> <span class="n">normal</span><span class="p">,</span> <span class="n">r1</span> <span class="o">+</span> <span class="n">r2</span> <span class="o">-</span> <span class="n">distance</span>
+</pre></div>
+</div>
+</div>
+<p>2 つの中心が完全に一致すると向きが決められないので、適当な向き（ここでは右向き）を返している。円は回転しても形が変わらないので、判定が簡単で速い。弾、ボール、丸い敵などに向いている。</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">11.2.2. </span>軸に平行な長方形どうし<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>辺が x 軸と y 軸に平行な長方形を <strong>AABB</strong>（Axis-Aligned Bounding Box）と呼ぶ。2 つの AABB は、x 方向の区間と y 方向の区間が<strong>両方とも</strong>重なっているときに重なっている（<a class="reference internal" href="#fig-overlap-tests"><span class="std std-numref">図 11.2</span></a> の中央）。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 11.2 </span><span class="caption-text">examples/collision.py の aabbs_overlap 関数</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">aabbs_overlap</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">AABB</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">AABB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;x 方向と y 方向の両方で区間が重なっていれば、長方形どうしが重なっている。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> <span class="n">b</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> <span class="n">a</span><span class="o">.</span><span class="n">top</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">bottom</span> <span class="ow">and</span> <span class="n">b</span><span class="o">.</span><span class="n">top</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="n">bottom</span>
+</pre></div>
+</div>
+</div>
+<p>比較 4 回だけで判定できるので非常に速い。タイルマップのゲームでは、キャラクターも壁も AABB で表すことが多い。pygame-ce の <code class="docutils literal notranslate"><span class="pre">Rect.colliderect</span></code> も同じ判定をしている。</p>
+<p>接触情報は、x 方向と y 方向の重なりの幅を求め、幅が小さい方の軸に押し戻すとする。めり込みが浅い方向へ戻すのが、最も少ない移動で重なりを解消する方法だからである。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-number">リスト 11.3 </span><span class="caption-text">examples/collision.py の aabb_contact 関数</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">aabb_contact</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">AABB</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">AABB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Contact</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの長方形の接触情報。めり込みが浅い方の軸を押し戻す向きとする。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">overlap_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+<span class="linenos"> 4</span>    <span class="n">overlap_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">bottom</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">bottom</span><span class="p">)</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+<span class="linenos"> 5</span>    <span class="k">if</span> <span class="n">overlap_x</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">overlap_y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 6</span>        <span class="k">return</span> <span class="kc">None</span>
+<span class="linenos"> 7</span>    <span class="n">d</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">center</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">center</span>
+<span class="linenos"> 8</span>    <span class="k">if</span> <span class="n">overlap_x</span> <span class="o">&lt;</span> <span class="n">overlap_y</span><span class="p">:</span>
+<span class="linenos"> 9</span>        <span class="k">return</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">overlap_x</span>
+<span class="linenos">10</span>    <span class="k">return</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">overlap_y</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h3><span class="section-number">11.2.3. </span>円と長方形<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>円と AABB の判定では、まず長方形の上で円の中心に最も近い点を求める。これは、円の中心の座標を長方形の範囲に収める（クランプする）だけで求まる。その点と円の中心の距離が半径より小さければ重なっている（<a class="reference internal" href="#fig-overlap-tests"><span class="std std-numref">図 11.2</span></a> の右）。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-number">リスト 11.4 </span><span class="caption-text">examples/collision.py の closest_point_on_aabb 関数</span><a class="headerlink" href="#id20" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">closest_point_on_aabb</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">box</span><span class="p">:</span> <span class="n">AABB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;長方形の上（内部を含む）で、点 p に最も近い点。各成分を範囲に収めるだけで求まる。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="n">Vector2</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="n">box</span><span class="o">.</span><span class="n">right</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">top</span><span class="p">),</span> <span class="n">box</span><span class="o">.</span><span class="n">bottom</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>円の中心が長方形の内部に入り込んでいる場合は、最も近い点が中心そのものになり、距離が 0 になって法線が決められない。<code class="docutils literal notranslate"><span class="pre">circle_aabb_contact</span></code> では、この場合は最も近い辺の外側へ押し出すようにしている。</p>
+</section>
+<section id="id7">
+<h3><span class="section-number">11.2.4. </span>点と線分の距離<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>点から線分への最短距離は、第 4 章の射影を使って求める。点を線分を含む直線に射影し、その位置を線分の範囲（割合 0～1）に収めれば、線分上で最も近い点になる。カプセル形（線分を太らせた形）の判定や、レーザーとの判定に使える。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-number">リスト 11.5 </span><span class="caption-text">examples/collision.py の closest_point_on_segment 関数</span><a class="headerlink" href="#id21" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">closest_point_on_segment</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector2</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;線分 ab の上で、点 p に最も近い点。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">ab</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+<span class="linenos">4</span>    <span class="n">length_sq</span> <span class="o">=</span> <span class="n">ab</span><span class="o">.</span><span class="n">length_squared</span><span class="p">()</span>
+<span class="linenos">5</span>    <span class="k">if</span> <span class="n">length_sq</span> <span class="o">&lt;</span> <span class="n">EPSILON</span><span class="p">:</span>
+<span class="linenos">6</span>        <span class="k">return</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">7</span>    <span class="n">t</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ab</span><span class="p">)</span> <span class="o">/</span> <span class="n">length_sq</span><span class="p">))</span>  <span class="c1"># p を直線 ab に射影した位置の割合</span>
+<span class="linenos">8</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">ab</span> <span class="o">*</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">11.3. </span>レイキャスト<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>ある点からある向きにまっすぐ伸ばした半直線を<strong>レイ</strong>と呼び、レイが最初に何に当たるかを調べることを<strong>レイキャスト</strong>と呼ぶ。射撃の弾道（弾を物体として飛ばさない場合）、敵の視線が壁で遮られているかの判定、足元の地面までの距離の測定などに使う。</p>
+<p>レイ上の点は、始点 <span class="math notranslate nohighlight">\(\mathbf{o}\)</span> と向き <span class="math notranslate nohighlight">\(\mathbf{d}\)</span> を使って <span class="math notranslate nohighlight">\(\mathbf{o} + t\,\mathbf{d}\)</span>（<span class="math notranslate nohighlight">\(t \ge 0\)</span>）と表せる。レイキャストでは、図形に初めて触れる <span class="math notranslate nohighlight">\(t\)</span> を求める。</p>
+<section id="id9">
+<h3><span class="section-number">11.3.1. </span>レイと円<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>レイ上の点が円周上にある条件 <span class="math notranslate nohighlight">\(|\mathbf{o} + t\,\mathbf{d} - \mathbf{c}|^2 = r^2\)</span> を展開すると、<span class="math notranslate nohighlight">\(t\)</span> の 2 次方程式になる。2 つの解のうち小さい方が、レイが円に入る点である。判別式が負なら、レイは円を通らない。</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-number">リスト 11.6 </span><span class="caption-text">examples/collision.py の ray_circle 関数</span><a class="headerlink" href="#id22" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">ray_circle</span><span class="p">(</span><span class="n">origin</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">center</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点 origin + t * direction（t &gt;= 0）が初めて円に触れる t。当たらなければ None。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="sd">    |origin + t d - center|^2 = r^2 を t の 2 次方程式として解く。</span>
+<span class="linenos"> 5</span><span class="sd">    direction の長さが 1 なら t は距離になり、移動量なら t = 1 が移動の終点になる。</span>
+<span class="linenos"> 6</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos"> 7</span>    <span class="n">m</span> <span class="o">=</span> <span class="n">origin</span> <span class="o">-</span> <span class="n">center</span>
+<span class="linenos"> 8</span>    <span class="n">a</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+<span class="linenos"> 9</span>    <span class="n">b</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+<span class="linenos">10</span>    <span class="n">c</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span>
+<span class="linenos">11</span>    <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">12</span>        <span class="k">return</span> <span class="mf">0.0</span>  <span class="c1"># 始点がすでに円の中にある</span>
+<span class="linenos">13</span>    <span class="n">discriminant</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+<span class="linenos">14</span>    <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">discriminant</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># 円から遠ざかっている、または直線が円を通らない</span>
+<span class="linenos">16</span>    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">discriminant</span><span class="p">))</span> <span class="o">/</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{d}\)</span> が単位ベクトルなら、<span class="math notranslate nohighlight">\(t\)</span> は始点からの距離になる。</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">11.3.2. </span>レイと長方形（スラブ法）<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>AABB は「x 方向の帯（スラブ）」と「y 方向の帯」が重なった部分である。レイが各帯に入る時刻と出る時刻を求めると、レイが長方形の中にいるのは「すべての帯の中にいる」間なので、次のようになる（<a class="reference internal" href="#fig-ray-slab"><span class="std std-numref">図 11.3</span></a>）。</p>
+<ul class="simple">
+<li><p>長方形に入る時刻 = 各帯に入る時刻の<strong>最大値</strong></p></li>
+<li><p>長方形から出る時刻 = 各帯から出る時刻の<strong>最小値</strong></p></li>
+</ul>
+<p>入る時刻が出る時刻より後なら、レイは長方形に当たらない。</p>
+<figure class="align-default" id="id23">
+<span id="fig-ray-slab"></span><a class="reference internal image-reference" href="_images/ray_slab.png"><img alt="スラブ法によるレイと長方形の判定" src="_images/ray_slab.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 11.3 </span><span class="caption-text">スラブ法。赤い丸が、長方形に入る点と出る点</span><a class="headerlink" href="#id23" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-number">リスト 11.7 </span><span class="caption-text">examples/collision.py の ray_aabb 関数</span><a class="headerlink" href="#id24" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">ray_aabb</span><span class="p">(</span><span class="n">origin</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">box</span><span class="p">:</span> <span class="n">AABB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点 origin + t * direction（t &gt;= 0）が初めて長方形に触れる t（スラブ法）。当たらなければ None。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">t_enter</span><span class="p">,</span> <span class="n">t_exit</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+<span class="linenos"> 4</span>    <span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="ow">in</span> <span class="p">((</span><span class="n">origin</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">direction</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">right</span><span class="p">),</span> <span class="p">(</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">direction</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">bottom</span><span class="p">)):</span>
+<span class="linenos"> 5</span>        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">EPSILON</span><span class="p">:</span>
+<span class="linenos"> 6</span>            <span class="k">if</span> <span class="n">o</span> <span class="o">&lt;</span> <span class="n">lo</span> <span class="ow">or</span> <span class="n">o</span> <span class="o">&gt;</span> <span class="n">hi</span><span class="p">:</span>
+<span class="linenos"> 7</span>                <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># この軸に平行で、範囲の外を通る</span>
+<span class="linenos"> 8</span>            <span class="k">continue</span>
+<span class="linenos"> 9</span>        <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">-</span> <span class="n">o</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">o</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span>
+<span class="linenos">10</span>        <span class="n">t_enter</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">t_enter</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>  <span class="c1"># すべての軸で範囲に入った時刻</span>
+<span class="linenos">11</span>        <span class="n">t_exit</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">t_exit</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>  <span class="c1"># どれか 1 つの軸で範囲から出た時刻</span>
+<span class="linenos">12</span>        <span class="k">if</span> <span class="n">t_enter</span> <span class="o">&gt;</span> <span class="n">t_exit</span><span class="p">:</span>
+<span class="linenos">13</span>            <span class="k">return</span> <span class="kc">None</span>
+<span class="linenos">14</span>    <span class="k">return</span> <span class="n">t_enter</span>
+</pre></div>
+</div>
+</div>
+<p>レイがある軸に平行（向きの成分が 0）なら、その軸の帯に入る時刻は求められない。この場合は、始点がその帯の中にあれば常に帯の中、外にあれば決して当たらない、として扱う。</p>
+</section>
+</section>
+<section id="id11">
+<h2><span class="section-number">11.4. </span>回転した長方形と凸多角形<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>回転した長方形や三角形など、凸多角形どうしの判定には<strong>分離軸定理</strong>（SAT、Separating Axis Theorem）を使う。分離軸定理は、次のように言い表せる。</p>
+<blockquote>
+<div><p>2 つの凸図形が重なっていないなら、2 つの図形の影が重ならないような向き（分離軸）が必ず存在する。</p>
+</div></blockquote>
+<p>ある軸に 2 つの図形を射影（第 4 章）して、それぞれの影の区間を求める。どれか 1 つの軸で影が離れていれば、図形は重なっていない（<a class="reference internal" href="#fig-sat"><span class="std std-numref">図 11.4</span></a>）。凸多角形の場合、調べる軸は「両方の多角形の各辺の法線」だけで十分であることが知られている。すべての軸で影が重なっていれば、図形は重なっている。</p>
+<figure class="align-default" id="id25">
+<span id="fig-sat"></span><a class="reference internal image-reference" href="_images/sat.png"><img alt="分離軸定理" src="_images/sat.png" style="width: 440px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 11.4 </span><span class="caption-text">分離軸定理。この軸に射影した影が離れているので、2 つの図形は重なっていない</span><a class="headerlink" href="#id25" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-number">リスト 11.8 </span><span class="caption-text">examples/collision.py の polygon_contact 関数</span><a class="headerlink" href="#id26" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">polygon_contact</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Vector2</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Vector2</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Contact</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの凸多角形の接触情報（分離軸定理）。どれか 1 つの軸で影が離れていれば、重なっていない。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">best_depth</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+<span class="linenos"> 4</span>    <span class="n">best_axis</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+<span class="linenos"> 5</span>    <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">polygon_axes</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">polygon_axes</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 6</span>        <span class="n">min_a</span><span class="p">,</span> <span class="n">max_a</span> <span class="o">=</span> <span class="n">project_polygon</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="n">min_b</span><span class="p">,</span> <span class="n">max_b</span> <span class="o">=</span> <span class="n">project_polygon</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+<span class="linenos"> 8</span>        <span class="n">depth</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_a</span><span class="p">,</span> <span class="n">max_b</span><span class="p">)</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_a</span><span class="p">,</span> <span class="n">min_b</span><span class="p">)</span>
+<span class="linenos"> 9</span>        <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">10</span>            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># 分離軸が見つかった</span>
+<span class="linenos">11</span>        <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="n">best_depth</span><span class="p">:</span>
+<span class="linenos">12</span>            <span class="n">best_depth</span><span class="p">,</span> <span class="n">best_axis</span> <span class="o">=</span> <span class="n">depth</span><span class="p">,</span> <span class="n">axis</span>
+<span class="linenos">13</span>    <span class="n">center_a</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="n">center_b</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos">15</span>    <span class="k">if</span> <span class="n">best_axis</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">center_b</span> <span class="o">-</span> <span class="n">center_a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">16</span>        <span class="n">best_axis</span> <span class="o">=</span> <span class="o">-</span><span class="n">best_axis</span>  <span class="c1"># a から b へ向かう向きにそろえる</span>
+<span class="linenos">17</span>    <span class="k">return</span> <span class="n">best_axis</span><span class="p">,</span> <span class="n">best_depth</span>
+</pre></div>
+</div>
+</div>
+<p>重なっている場合、影の重なりの幅が最も小さい軸の向きに、その幅だけ押し戻せば重なりが解消する。この押し戻しのベクトルを<strong>最小移動ベクトル</strong>（MTV、Minimum Translation Vector）と呼ぶ。</p>
+<p><code class="docutils literal notranslate"><span class="pre">collision_demo.py</span></code> では、1 キー～4 キーで判定の種類を切り替え、マウスで図形を動かして判定の結果を確かめられる（<a class="reference internal" href="#fig-screen-collision"><span class="std std-numref">図 11.5</span></a>）。重なると図形が赤くなり、黄色の矢印が法線とめり込みの深さを、細い輪郭が押し戻した後の位置を示す。</p>
+<figure class="align-default" id="id27">
+<span id="fig-screen-collision"></span><a class="reference internal image-reference" href="_images/screen_collision_demo.png"><img alt="collision_demo.py の画面" src="_images/screen_collision_demo.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 11.5 </span><span class="caption-text">collision_demo.py の画面（円と円の判定）</span><a class="headerlink" href="#id27" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id12">
+<h2><span class="section-number">11.5. </span>タイルマップとの衝突判定<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<p>2D のアクションゲームの地形は、マス目状に並べたタイルで作ることが多い。キャラクターと地形の判定では、すべてのタイルを調べる必要は無い。キャラクターの AABB が重なっているタイルは、座標をタイルの大きさで割れば求まる。</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-number">リスト 11.9 </span><span class="caption-text">examples/collision.py の tiles_overlapping 関数</span><a class="headerlink" href="#id28" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">tiles_overlapping</span><span class="p">(</span><span class="n">box</span><span class="p">:</span> <span class="n">AABB</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">range</span><span class="p">,</span> <span class="nb">range</span><span class="p">]:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;長方形が重なっているタイルの列番号と行番号の範囲。右端・下端ちょうどのタイルは含めない。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="n">first_col</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">left</span> <span class="o">/</span> <span class="n">tile_size</span><span class="p">)</span>
+<span class="linenos">4</span>    <span class="n">last_col</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">right</span> <span class="o">/</span> <span class="n">tile_size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="linenos">5</span>    <span class="n">first_row</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">top</span> <span class="o">/</span> <span class="n">tile_size</span><span class="p">)</span>
+<span class="linenos">6</span>    <span class="n">last_row</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">bottom</span> <span class="o">/</span> <span class="n">tile_size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="linenos">7</span>    <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="n">first_col</span><span class="p">,</span> <span class="n">last_col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">first_row</span><span class="p">,</span> <span class="n">last_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>右端と下端には <code class="docutils literal notranslate"><span class="pre">math.ceil(...)</span> <span class="pre">-</span> <span class="pre">1</span></code> を使っている。こうすると、AABB の右端がちょうどタイルの境界にあるとき、隣のタイルを含めない。床の上にぴったり立っているキャラクターが、床のタイルと「重なっている」と判定されないようにするためである。見つかったタイルのうち壁のものとだけ、AABB どうしの判定と押し戻しを行う。押し戻しの方法は次の章で扱い、第 15 章で実装する。</p>
+</section>
+<section id="id13">
+<h2><span class="section-number">11.6. </span>すり抜けと連続衝突判定<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<p>ここまでの判定は、ある瞬間の位置だけを見て重なりを調べる<strong>離散的な判定</strong>である。速く動く物では、<a class="reference internal" href="#fig-tunneling"><span class="std std-numref">図 11.6</span></a> の左のように、前のステップでは壁の手前、次のステップでは壁の向こう側にいて、どちらの瞬間にも壁と重ならないことがある。これを<strong>すり抜け</strong>（トンネリング）と呼ぶ。</p>
+<figure class="align-default" id="id29">
+<span id="fig-tunneling"></span><img alt="すり抜けと連続衝突判定" src="_images/tunneling.png" />
+<figcaption>
+<p><span class="caption-number">図 11.6 </span><span class="caption-text">離散的な判定ではすり抜ける（左）。移動の経路全体で判定すれば防げる（右）</span><a class="headerlink" href="#id29" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>対策は次のとおりである。</p>
+<ul class="simple">
+<li><p><strong>1 ステップの移動量を小さくする</strong>: 速さの上限を決め、1 ステップの移動量が最も薄い壁より小さくなるようにする。固定タイムステップで物理の刻みを細かくするのも有効である。</p></li>
+<li><p><strong>移動の経路全体で判定する（連続衝突判定）</strong>: 前の位置から次の位置までの移動を 1 本の線とみなし、途中で何かに当たるかを調べる。</p></li>
+</ul>
+<p>移動する円と止まっている円の連続衝突判定は、レイキャストに置き換えられる。動く円の半径を 0 に縮め、その分だけ止まっている円の半径を広げると、「点の移動（レイ）」と「半径 <span class="math notranslate nohighlight">\(r_1 + r_2\)</span> の円」の判定になる。</p>
+<div class="literal-block-wrapper docutils container" id="id30">
+<div class="code-block-caption"><span class="caption-number">リスト 11.10 </span><span class="caption-text">examples/collision.py の sweep_circle_circle 関数</span><a class="headerlink" href="#id30" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">sweep_circle_circle</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">motion</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">rq</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;半径 r の円が p から p + motion まで動くとき、静止した円（中心 q、半径 rq）に初めて触れる割合（0～1）。</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="sd">    動く円を点に縮め、止まっている円の半径を r + rq に広げれば、レイと円の判定になる。</span>
+<span class="linenos">5</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">6</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">ray_circle</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">motion</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="n">rq</span><span class="p">)</span>
+<span class="linenos">7</span>    <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="linenos">8</span>        <span class="k">return</span> <span class="kc">None</span>
+<span class="linenos">9</span>    <span class="k">return</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<p>結果は、移動のうちどの割合の時点で接触したか（0～1）である。その時点まで動かしてから衝突応答を行えば、すり抜けを防げる。物理エンジンには、弾のような速い物にだけ連続衝突判定を有効にする設定が用意されていることが多い。</p>
+</section>
+<section id="id14">
+<h2><span class="section-number">11.7. </span>判定の高速化<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<p>ブロードフェーズの代表的な方法が<strong>一様グリッド</strong>である。空間を一定の大きさのマス目に区切り、各物をそれが重なるマスに登録する。同じマスに登録された物どうしだけを、ナローフェーズで調べればよい（<a class="reference internal" href="#fig-grid"><span class="std std-numref">図 11.7</span></a>）。</p>
+<figure class="align-default" id="id31">
+<span id="fig-grid"></span><a class="reference internal image-reference" href="_images/grid.png"><img alt="一様グリッドによるブロードフェーズ" src="_images/grid.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 11.7 </span><span class="caption-text">一様グリッド。青い物は、自分が重なる橙のマスにいる物とだけ判定する</span><a class="headerlink" href="#id31" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id32">
+<div class="code-block-caption"><span class="caption-number">リスト 11.11 </span><span class="caption-text">examples/spatial_grid.py の UniformGrid クラス</span><a class="headerlink" href="#id32" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span><span class="w"> </span><span class="nc">UniformGrid</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;物の外接長方形が重なるマスすべてに、その物の番号を登録する。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span> <span class="o">=</span> <span class="n">cell_size</span>
+<span class="linenos"> 6</span>        <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="k">def</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">circle</span><span class="p">:</span> <span class="n">Circle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 9</span>        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">circle</span>
+<span class="linenos">10</span>        <span class="k">for</span> <span class="n">cx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="linenos">11</span>            <span class="k">for</span> <span class="n">cy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">y</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="linenos">12</span>                <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">def</span><span class="w"> </span><span class="nf">candidate_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="linenos">15</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;同じマスに登録された物の組。複数のマスにまたがる組は 1 回だけ数える。&quot;&quot;&quot;</span>
+<span class="linenos">16</span>        <span class="n">pairs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="linenos">17</span>        <span class="k">for</span> <span class="n">members</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+<span class="linenos">18</span>            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+<span class="linenos">19</span>                <span class="n">pairs</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)))</span>
+<span class="linenos">20</span>        <span class="k">return</span> <span class="n">pairs</span>
+</pre></div>
+</div>
+</div>
+<p>マスの大きさは、最大の物の直径くらいにするのが目安である。小さすぎると 1 つの物が多くのマスに登録されて無駄が増え、大きすぎると 1 つのマスに多くの物が入って候補が絞れない。</p>
+<p><code class="docutils literal notranslate"><span class="pre">spatial_grid.py</span></code> では、4000×4000 の空間に 2000 個の円をばらまき、重なっている組を探す。総当たりでは約 200 万組を調べて約 1 秒かかるが、一様グリッドでは約 1000 組を調べるだけで済み、100 倍以上速い（実行時間は環境によって異なる）。どちらも同じ 257 組を見つける。</p>
+<div class="literal-block-wrapper docutils container" id="id33">
+<div class="code-block-caption"><span class="caption-number">リスト 11.12 </span><span class="caption-text">spatial_grid.py の実行結果の例</span><a class="headerlink" href="#id33" title="Link to this code"></a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>総当たり     調べた組: 1,999,000  重なっていた組:  257  時間:  1012.5 ms
+<span class="linenos">2</span>一様グリッド   調べた組:     1,008  重なっていた組:  257  時間:     7.8 ms
+</pre></div>
+</div>
+</div>
+<p>物の大きさがまちまちだったり、一部の場所に集中していたりする場合は、空間を 4 分割し、物が多い区画だけをさらに 4 分割していく<strong>四分木</strong>（3D では 8 分割の八分木）が使われる。物理エンジンでは、物を包む AABB を木構造にまとめた <strong>AABB ツリー</strong>（動的 AABB ツリー）もよく使われる。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="motion.html" class="btn btn-neutral float-left" title="10. 運動の物理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="response.html" class="btn btn-neutral float-right" title="12. 衝突応答" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

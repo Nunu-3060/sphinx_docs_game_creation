@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 1 章 はじめに &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 2 章 Godot の概要" href="ch02_overview.html" />
+    <link rel="prev" title="Godot 入門" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 1 章　はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">本書の目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">対象読者と前提知識</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">本書の構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">動作環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">表記の決まり</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">サンプルコード</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">サンプルコードの検査</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 1 章　はじめに</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Godot 入門" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch02_overview.html" class="btn btn-neutral float-right" title="第 2 章 Godot の概要" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch01">
+<span id="id1"></span><h1>第 1 章　はじめに<a class="headerlink" href="#ch01" title="Link to this heading"></a></h1>
+<p>本章では、本書の目的と対象読者、構成、表記の決まり、サンプルコードの使い方を説明する。</p>
+<section id="id2">
+<h2>本書の目的<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Godot（ゴドー）は、2D と 3D のゲームを作れるオープンソースのゲームエンジンである。軽量で起動が速く、インストール不要の実行ファイル 1 つで動く。ライセンスは MIT ライセンスで、作ったゲームの売上に対する使用料もかからない。</p>
+<p>本書の目的は、ゲーム制作が初めての読者が Godot の基本的な考え方を理解し、小さな 2D ゲームを自力で完成させられるようになることである。そのために、次の 3 点を重視する。</p>
+<ul class="simple">
+<li><p><strong>ゲーム特有の考え方を説明する</strong>：ゲームループ、フレーム、物理演算、座標系など、業務システムの開発ではあまりなじみのない概念を、なぜ必要なのかから説明する。</p></li>
+<li><p><strong>Python の知識を活かす</strong>：Godot の主要なスクリプト言語である GDScript は、Python によく似た文法を持つ。似ている点と違う点を対比しながら説明する。</p></li>
+<li><p><strong>動くサンプルで確かめる</strong>：各章の内容は、そのまま実行できるサンプルプロジェクトで確認できる。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>対象読者と前提知識<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>本書は次のような読者を想定している。</p>
+<ul class="simple">
+<li><p>Python などのプログラミング言語で、関数やクラスを使ったプログラムを書いた経験がある。</p></li>
+<li><p>ゲーム制作の経験はない。ゲームエンジンを使ったこともない。</p></li>
+<li><p>高校程度の数学（ベクトル、三角関数）を、聞いたことはある。</p></li>
+</ul>
+<p>ベクトルや三角関数は、必要になった時点で使い方を中心に説明する。数学の深い知識は必要ない。</p>
+</section>
+<section id="id4">
+<h2>本書の構成<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>本書は 4 つの部と付録で構成する。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 1 </span><span class="caption-text">本書の構成</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>部</p></th>
+<th class="head"><p>章</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>第 I 部　準備</p></td>
+<td><p>第 1 章 ～ 第 4 章</p></td>
+<td><p>Godot の概要、環境構築、エディターの画面構成を説明する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 II 部　基本概念</p></td>
+<td><p>第 5 章 ～ 第 8 章</p></td>
+<td><p>ノードとシーン、GDScript、ゲームループという Godot の中心となる考え方を学ぶ。</p></td>
+</tr>
+<tr class="row-even"><td><p>第 III 部　ゲームの構成要素</p></td>
+<td><p>第 9 章 ～ 第 15 章</p></td>
+<td><p>入力、座標とベクトル、物理、描画とアニメーション、UI、サウンド、シーン管理とデータ保存を順に学ぶ。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 IV 部　実践と発展</p></td>
+<td><p>第 16 章 ～ 第 21 章</p></td>
+<td><p>シェーダーを学んだあと、それまでの知識を使って 1 本のゲームを完成させる。続いてデバッグ、エクスポート、3D の入り口、次に学ぶべきことを紹介する。</p></td>
+</tr>
+<tr class="row-even"><td><p>付録</p></td>
+<td><p>付録 A ～ 付録 E</p></td>
+<td><p>用語集、ショートカットキー一覧、トラブルシューティング、参考文献、サンプルファイル一覧</p></td>
+</tr>
+</tbody>
+</table>
+<p>第 II 部までは順番に読むことを勧める。第 III 部の各章は比較的独立しているので、必要な章から読んでもよい。第 17 章のチュートリアルは第 III 部までの内容を前提とする。</p>
+</section>
+<section id="id5">
+<h2>動作環境<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>本書の内容は、次の環境で動作を確認している。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 2 </span><span class="caption-text">動作確認環境</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>OS</p></td>
+<td><p>Windows 11</p></td>
+</tr>
+<tr class="row-odd"><td><p>Godot</p></td>
+<td><p>Godot 4.7.2（標準版。.NET 版ではない）</p></td>
+</tr>
+<tr class="row-even"><td><p>レンダラー</p></td>
+<td><p>互換性（Compatibility）。理由は <a class="reference internal" href="ch03_setup.html#ch03"><span class="std std-ref">第 3 章　環境構築</span></a> で説明する。</p></td>
+</tr>
+</tbody>
+</table>
+<p>Godot 4 系は、マイナーバージョン（4.6、4.7 など）の間でも機能の追加や名前の変更がある。異なるバージョンを使う場合は、エディターの表示やプロパティ名が本書と異なることがある。Godot 3 系とは互換性がなく、本書の内容はそのままでは使えない。</p>
+</section>
+<section id="id6">
+<h2>表記の決まり<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>本書では次のように表記する。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 3 </span><span class="caption-text">表記の決まり</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>表記</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>「インスペクター」</p></td>
+<td><p>エディターの画面上の名前（ドック、メニュー、ボタンなど）。Godot エディターを日本語で表示したときの名前を使い、必要に応じて英語の名前を括弧内に添える。</p></td>
+</tr>
+<tr class="row-odd"><td><p>「位置（position）」</p></td>
+<td><p>インスペクターに表示されるプロパティの名前。括弧内はスクリプトから参照するときの名前である。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">move_and_slide()</span></code></p></td>
+<td><p>コード中の識別子、ファイル名、入力する文字列</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">Ctrl</kbd> + <kbd class="kbd docutils literal notranslate">S</kbd></p></td>
+<td><p>キーボードのキー。<kbd class="kbd docutils literal notranslate">Ctrl</kbd> を押しながら <kbd class="kbd docutils literal notranslate">S</kbd> を押すことを表す。</p></td>
+</tr>
+<tr class="row-even"><td><p>「シーン」→「新規シーン」</p></td>
+<td><p>メニューを順にたどる操作</p></td>
+</tr>
+</tbody>
+</table>
+<p>Godot エディターの表示言語は、既定では OS の言語設定に従う。Windows を日本語で使っていれば、エディターも日本語で表示される。英語で表示したい場合の切り替え方は <a class="reference internal" href="ch03_setup.html#ch03"><span class="std std-ref">第 3 章　環境構築</span></a> で説明する。</p>
+</section>
+<section id="id7">
+<h2>サンプルコード<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>本書のサンプルは、1 つの Godot プロジェクトにまとめている。次のリンクから zip ファイルをダウンロードできる。</p>
+<ul class="simple">
+<li><p><a class="reference download internal" download="" href="../_downloads/3b2e61e522f5f537bf83bd0bdce612ef/godot_introduction_examples.zip"><code class="xref download docutils literal notranslate"><span class="pre">サンプルプロジェクト一式（zip</span> <span class="pre">ファイル）</span></code></a></p></li>
+</ul>
+<p>zip ファイルを展開すると、<code class="docutils literal notranslate"><span class="pre">godot_introduction_examples</span></code> フォルダーができる。<a class="reference internal" href="ch03_setup.html#ch03"><span class="std std-ref">第 3 章　環境構築</span></a> の手順で Godot をインストールしたあと、プロジェクトマネージャーの「インポート」でこのフォルダー内の <code class="docutils literal notranslate"><span class="pre">project.godot</span></code> を選ぶと、プロジェクトとして開ける。</p>
+<p>プロジェクトを実行（<kbd class="kbd docutils literal notranslate">F5</kbd>）すると、サンプルの一覧（ランチャー）が表示される。ボタンを押すとそのサンプルが起動し、実行中に <kbd class="kbd docutils literal notranslate">Esc</kbd> キーを押すと一覧に戻る。</p>
+<figure class="align-default" id="id12">
+<a class="screenshot reference internal image-reference" href="../_images/launcher.png"><img alt="../_images/launcher.png" class="screenshot" src="../_images/launcher.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 1 </span><span class="caption-text">サンプルの一覧（ランチャー）</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>サンプルプロジェクトのフォルダー構成は次のとおりである。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 4 </span><span class="caption-text">サンプルプロジェクトのフォルダー構成</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>フォルダー・ファイル</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">project.godot</span></code></p></td>
+<td><p>プロジェクトの設定ファイル。入力アクションやオートロードの設定を含む。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">launcher/</span></code></p></td>
+<td><p>サンプルの一覧を表示するランチャー</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">chapter03/</span></code> ～ <code class="docutils literal notranslate"><span class="pre">chapter20/</span></code></p></td>
+<td><p>各章のサンプル。フォルダー名の数字が章番号に対応する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">assets/</span></code></p></td>
+<td><p>画像と効果音。すべて <code class="docutils literal notranslate"><span class="pre">tools/generate_assets.py</span></code> で生成したもので、外部の素材は使っていない。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tools/</span></code></p></td>
+<td><p>素材を生成する Python スクリプト</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gdlintrc</span></code>、<code class="docutils literal notranslate"><span class="pre">gdformatrc</span></code>、<code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code></p></td>
+<td><p>サンプルコードを検査するツールの設定ファイル（後述）</p></td>
+</tr>
+</tbody>
+</table>
+<p>各ファイルを個別に閲覧・ダウンロードするには、<a class="reference internal" href="../appendix/examples.html#examples-list"><span class="std std-ref">付録 E　サンプルファイル一覧</span></a> を使う。</p>
+<p>本文中のコードには行番号を付けている。行番号はコードの一部ではないので、入力する必要はない。</p>
+<section id="id8">
+<h3>サンプルコードの検査<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>サンプルの GDScript は、Godot 公式の GDScript スタイルガイドに沿って書いている。また、次の方法で検査している。</p>
+<ul class="simple">
+<li><p>すべての変数、引数、戻り値に型を指定する。型の指定漏れはエディターが警告する設定にしている（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a> を参照）。</p></li>
+<li><p>GDScript の静的解析ツール gdtoolkit（<code class="docutils literal notranslate"><span class="pre">gdlint</span></code> と <code class="docutils literal notranslate"><span class="pre">gdformat</span></code>）で、命名規則や書式に違反がないことを確認する。設定は <code class="docutils literal notranslate"><span class="pre">gdlintrc</span></code> と <code class="docutils literal notranslate"><span class="pre">gdformatrc</span></code> に書いており、1 行の長さの上限は 120 文字とした。</p></li>
+<li><p>Python のスクリプト（<code class="docutils literal notranslate"><span class="pre">tools/generate_assets.py</span></code>）は、flake8 と mypy（<code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">True</span></code>）で検査する。設定は <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> に書いている。</p></li>
+</ul>
+<p>gdtoolkit は Python のパッケージとして提供されている。自分で検査する場合は、サンプルプロジェクトのフォルダーで次のコマンドを実行する。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="go">pip install &quot;gdtoolkit==4.*&quot; flake8 mypy pillow</span>
+<span class="linenos">2</span><span class="go">gdlint .</span>
+<span class="linenos">3</span><span class="go">gdformat --check .</span>
+<span class="linenos">4</span><span class="go">flake8</span>
+<span class="linenos">5</span><span class="go">mypy tools</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Godot 入門" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch02_overview.html" class="btn btn-neutral float-right" title="第 2 章 Godot の概要" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

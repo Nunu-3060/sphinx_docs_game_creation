@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. 運動の物理 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="11. 衝突判定" href="collision.html" />
+    <link rel="prev" title="9. 乱数と確率" href="randomness.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. 運動の物理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">10.1. 位置・速度・加速度</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">10.2. ニュートンの運動の法則と力</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">10.3. 重力と放物運動</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">10.3.1. ジャンプの高さと滞空時間から重力を決める</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">10.4. ゲームらしいジャンプ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">10.4.1. 下降中に重力を強める</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">10.4.2. ボタンを押す長さで高さを変える</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">10.4.3. 足場から落ちた直後もジャンプを受け付ける</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">10.4.4. 着地の直前に押したジャンプを覚えておく</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">10.5. 摩擦と空気抵抗</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">10.6. 数値積分</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dt">10.7. dt が大きいと何が起きるか</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">10. </span>運動の物理</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">10. </span>運動の物理<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ここから物理の章に入る。この章では、物の動きを決める位置・速度・加速度の関係と、ニュートンの運動の法則を確認し、それを使ってジャンプや走りを作る。最後に、運動の式をコンピューターで計算するための数値積分を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">10.1. </span>位置・速度・加速度<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>物の<strong>位置</strong> <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> が時間とともに変わる割合が<strong>速度</strong> <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>、速度が時間とともに変わる割合が<strong>加速度</strong> <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> である。微分で書くと次のようになる。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v} = \frac{d\mathbf{x}}{dt}, \qquad \mathbf{a} = \frac{d\mathbf{v}}{dt}\]</div>
+<p>ゲームでは時間を <span class="math notranslate nohighlight">\(\Delta t\)</span> ずつ区切って進めるので、微分を差分で近似する。<span class="math notranslate nohighlight">\(\Delta t\)</span> が小さければ、次の式が成り立つとみなせる。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v}_{\text{次}} = \mathbf{v}_{\text{今}} + \mathbf{a} \, \Delta t, \qquad \mathbf{x}_{\text{次}} = \mathbf{x}_{\text{今}} + \mathbf{v} \, \Delta t\]</div>
+<p>第 3 章の「位置に速度×デルタタイムを足す」に、「速度に加速度×デルタタイムを足す」が加わった形である。速度を直接変えるのではなく、加速度を通して速度を変えることで、徐々に速くなる・徐々に遅くなるという、重さを感じる動きになる。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">10.2. </span>ニュートンの運動の法則と力<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>加速度は、物に働く<strong>力</strong>で決まる。ニュートンの運動の法則は、次の 3 つである。</p>
+<ol class="arabic simple">
+<li><p><strong>慣性の法則</strong>: 力が働かなければ、物は同じ速度で動き続ける（止まっている物は止まったまま）。</p></li>
+<li><p><strong>運動方程式</strong>: 物の加速度は、働く力に比例し、質量に反比例する。<span class="math notranslate nohighlight">\(\mathbf{F} = m\,\mathbf{a}\)</span></p></li>
+<li><p><strong>作用・反作用の法則</strong>: 物 A が物 B に力を及ぼすと、B も A に同じ大きさで逆向きの力を及ぼす。</p></li>
+</ol>
+<p>運動方程式から、加速度は <span class="math notranslate nohighlight">\(\mathbf{a} = \mathbf{F} / m\)</span> で求められる。同じ力を受けても、重い物ほど加速しにくい。物理エンジンは、物に働くすべての力（重力、ばねの力、摩擦力など）を足し合わせ、この式で加速度を求めて速度と位置を進めている。</p>
+<p>ゲームでよく使う力を次の表にまとめる。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 10.1 </span><span class="caption-text">ゲームでよく使う力</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>力</p></th>
+<th class="head"><p>式</p></th>
+<th class="head"><p>性質</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>重力</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{F} = m\,\mathbf{g}\)</span></p></td>
+<td><p>加速度 <span class="math notranslate nohighlight">\(\mathbf{g}\)</span> は質量によらず一定。重い物も軽い物も同じように落ちる</p></td>
+</tr>
+<tr class="row-odd"><td><p>ばねの力</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{F} = -k\,(\mathbf{x} - \mathbf{x}_0)\)</span></p></td>
+<td><p>自然な位置 <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span> からのずれに比例し、戻す向きに働く（第 13 章）</p></td>
+</tr>
+<tr class="row-even"><td><p>空気抵抗</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{F} = -c\,\mathbf{v}\)</span></p></td>
+<td><p>速度に比例し、速度と逆向きに働く。速いほど強くブレーキがかかる</p></td>
+</tr>
+<tr class="row-odd"><td><p>摩擦力</p></td>
+<td><p>大きさ <span class="math notranslate nohighlight">\(\mu N\)</span></p></td>
+<td><p>接している面に沿って、滑る向きと逆向きに働く。<span class="math notranslate nohighlight">\(N\)</span> は面を押し付ける力（第 12 章）</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2><span class="section-number">10.3. </span>重力と放物運動<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>重力だけを受けて飛ぶ物は、加速度が一定（下向きに <span class="math notranslate nohighlight">\(g\)</span>）なので、位置は時間の 2 次式になる。上向きに初速 <span class="math notranslate nohighlight">\(v_0\)</span> で跳んだ物の高さ <span class="math notranslate nohighlight">\(y\)</span> は、次の式で表される（ここでは上向きを正とする）。</p>
+<div class="math notranslate nohighlight">
+\[y(t) = v_0\,t - \frac{1}{2} g\,t^2, \qquad v(t) = v_0 - g\,t\]</div>
+<p>このグラフは放物線になる。横方向に一定の速さで動きながら跳べば、軌跡も放物線になる。</p>
+<section id="id5">
+<h3><span class="section-number">10.3.1. </span>ジャンプの高さと滞空時間から重力を決める<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>ゲームのジャンプを調整するとき、重力加速度 <span class="math notranslate nohighlight">\(g\)</span> と初速 <span class="math notranslate nohighlight">\(v_0\)</span> を直接いじると、思いどおりの値にたどり着くのに時間がかかる。<span class="math notranslate nohighlight">\(g\)</span> を変えると高さも滞空時間も変わってしまうからである。</p>
+<p>設計者が本当に決めたいのは「何ピクセル跳べるか（最高点の高さ <span class="math notranslate nohighlight">\(h\)</span>）」と「最高点まで何秒かかるか（<span class="math notranslate nohighlight">\(T\)</span>）」である。最高点では速度が 0 になるので、<span class="math notranslate nohighlight">\(v(T) = 0\)</span> と <span class="math notranslate nohighlight">\(y(T) = h\)</span> を連立させて解くと、<span class="math notranslate nohighlight">\(g\)</span> と <span class="math notranslate nohighlight">\(v_0\)</span> が求まる。</p>
+<div class="math notranslate nohighlight">
+\[v_0 = g\,T, \qquad h = v_0 T - \frac{1}{2} g T^2 = \frac{1}{2} g T^2\]</div>
+<div class="math notranslate nohighlight">
+\[g = \frac{2h}{T^2}, \qquad v_0 = \frac{2h}{T}\]</div>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-number">リスト 10.1 </span><span class="caption-text">examples/jump.py の jump_parameters 関数</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">jump_parameters</span><span class="p">(</span><span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">time_to_apex</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;最高点の高さ h と、そこに達するまでの時間 T から、重力加速度 g と初速 v0 を求める。</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="sd">    v0 = g T、h = v0 T - g T^2 / 2 を解くと、g = 2h / T^2、v0 = 2h / T になる。</span>
+<span class="linenos">5</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">6</span>    <span class="n">gravity</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">height</span> <span class="o">/</span> <span class="n">time_to_apex</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="linenos">7</span>    <span class="n">jump_speed</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">height</span> <span class="o">/</span> <span class="n">time_to_apex</span>
+<span class="linenos">8</span>    <span class="k">return</span> <span class="n">gravity</span><span class="p">,</span> <span class="n">jump_speed</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">jump.py</span></code> では、高さ 96 ピクセル（タイル 3 枚分）、最高点まで 0.36 秒としている。このとき <span class="math notranslate nohighlight">\(g\)</span> は約 1481 ピクセル毎秒毎秒、<span class="math notranslate nohighlight">\(v_0\)</span> は約 533 ピクセル毎秒になる。地上の重力 9.8 m/s<sup>2</sup> と比べると、ゲームのキャラクターは現実よりずっと強い重力の中で、ずっと強い力で跳んでいることが多い。そうしないと、ふわふわした頼りない動きになってしまう。</p>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">10.4. </span>ゲームらしいジャンプ<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>物理の式どおりの放物線は、上昇と下降に同じ時間がかかり、どこか間延びして感じられる。アクションゲームでは、遊びやすさのために次のような調整を加えることが多い。<a class="reference internal" href="#fig-jump-arc"><span class="std std-numref">図 10.1</span></a> は、これらの調整による軌道の違いである。</p>
+<figure class="align-default" id="id15">
+<span id="fig-jump-arc"></span><a class="reference internal image-reference" href="_images/jump_arc.png"><img alt="ジャンプの高さの時間変化" src="_images/jump_arc.png" style="width: 560px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 10.1 </span><span class="caption-text">ジャンプの高さの時間変化（jump.py の設定）</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id7">
+<h3><span class="section-number">10.4.1. </span>下降中に重力を強める<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>下降中だけ重力を 2 倍程度にすると、ふわっと上がってストンと落ちる、きびきびしたジャンプになる。<a class="reference internal" href="#fig-jump-arc"><span class="std std-numref">図 10.1</span></a> の青の線がこれに当たる。最高点の高さと、そこまでの時間は変わらない。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">10.4.2. </span>ボタンを押す長さで高さを変える<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>ボタンを短く押せば低く、長く押せば高く跳べると、プレイヤーは細かく操作できるようになる。上昇中にボタンを離したら、上向きの速さを初速の 4 割までに抑える。<a class="reference internal" href="#fig-jump-arc"><span class="std std-numref">図 10.1</span></a> の橙の線は、0.08 秒でボタンを離した場合である。</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">10.4.3. </span>足場から落ちた直後もジャンプを受け付ける<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>足場の端ぎりぎりでジャンプしようとしたとき、ほんの 1 フレーム遅れただけで落ちてしまうと、プレイヤーは「押したのに跳ばなかった」と感じる。そこで、足場から離れた後も 0.1 秒ほどはジャンプを受け付ける。アニメのキャラクターが崖から出てもしばらく空中に留まってから落ちる描写にちなんで、この猶予を<strong>コヨーテタイム</strong>と呼ぶ。</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">10.4.4. </span>着地の直前に押したジャンプを覚えておく<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>逆に、着地の少し前にボタンを押したときも、それを覚えておいて着地した瞬間に跳ばせる。これを<strong>先行入力</strong>（ジャンプバッファー）と呼ぶ。</p>
+<p>これらをまとめた <code class="docutils literal notranslate"><span class="pre">Player.update</span></code> メソッドが<a class="reference internal" href="#code-jump-update"><span class="std std-numref">リスト 10.2</span></a> である。</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<span id="code-jump-update"></span><div class="code-block-caption"><span class="caption-number">リスト 10.2 </span><span class="caption-text">examples/jump.py の Player.update メソッド</span><a class="headerlink" href="#id16" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">jump_pressed</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">jump_held</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">Options</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;1 フレーム進める。ジャンプしたら True を返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>        <span class="c1"># 横方向: 目標の速度へ、加速度の上限つきで近づける</span>
+<span class="linenos"> 4</span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_ground</span><span class="p">:</span>
+<span class="linenos"> 5</span>            <span class="n">accel</span> <span class="o">=</span> <span class="n">GROUND_ACCEL</span> <span class="k">if</span> <span class="n">move</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">GROUND_DECEL</span>
+<span class="linenos"> 6</span>        <span class="k">else</span><span class="p">:</span>
+<span class="linenos"> 7</span>            <span class="n">accel</span> <span class="o">=</span> <span class="n">AIR_ACCEL</span>
+<span class="linenos"> 8</span>        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">approach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">move</span> <span class="o">*</span> <span class="n">RUN_SPEED</span><span class="p">,</span> <span class="n">accel</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>        <span class="c1"># ジャンプの入力を受け付けるかどうか</span>
+<span class="linenos">11</span>        <span class="k">if</span> <span class="n">jump_pressed</span> <span class="ow">and</span> <span class="n">options</span><span class="o">.</span><span class="n">forgiveness</span><span class="p">:</span>
+<span class="linenos">12</span>            <span class="bp">self</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">=</span> <span class="n">JUMP_BUFFER_TIME</span>
+<span class="linenos">13</span>        <span class="n">wants_jump</span> <span class="o">=</span> <span class="n">jump_pressed</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="linenos">14</span>        <span class="n">can_jump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_ground</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="linenos">15</span>        <span class="n">jumped</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">16</span>        <span class="k">if</span> <span class="n">wants_jump</span> <span class="ow">and</span> <span class="n">can_jump</span><span class="p">:</span>
+<span class="linenos">17</span>            <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">JUMP_SPEED</span>
+<span class="linenos">18</span>            <span class="bp">self</span><span class="o">.</span><span class="n">on_ground</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">19</span>            <span class="bp">self</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">20</span>            <span class="n">jumped</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">21</span>        <span class="bp">self</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_timer</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos">22</span>        <span class="bp">self</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coyote_timer</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>        <span class="c1"># 上昇中にボタンを離したら、上向きの速さを抑える（y は下向きが正なので、上昇中は負）</span>
+<span class="linenos">25</span>        <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">variable_height</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">jump_held</span><span class="p">:</span>
+<span class="linenos">26</span>            <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="n">JUMP_SPEED</span> <span class="o">*</span> <span class="n">JUMP_CUT_SCALE</span><span class="p">)</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>        <span class="c1"># 縦方向: 重力が一定とみなせる 1 フレームの間は、等加速度運動の式で正確に進める</span>
+<span class="linenos">29</span>        <span class="n">gravity</span> <span class="o">=</span> <span class="n">GRAVITY</span>
+<span class="linenos">30</span>        <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">fall_gravity</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">31</span>            <span class="n">gravity</span> <span class="o">*=</span> <span class="n">FALL_GRAVITY_SCALE</span>
+<span class="linenos">32</span>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">33</span>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">34</span>        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">MAX_FALL_SPEED</span><span class="p">)</span>
+<span class="linenos">35</span>        <span class="bp">self</span><span class="o">.</span><span class="n">land_or_fall</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+<span class="linenos">36</span>        <span class="k">return</span> <span class="n">jumped</span>
+</pre></div>
+</div>
+</div>
+<p>縦方向の位置の更新には、<span class="math notranslate nohighlight">\(y \mathrel{+}= v\,\Delta t + \frac{1}{2} g\,\Delta t^2\)</span> という等加速度運動の式を使っている。1 フレームの間、重力が一定なら、この式で誤差なく計算できる（後述の数値積分の節を参照）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">jump.py</span></code> では、1 キー・2 キー・3 キーでそれぞれの調整を切り替えられる。調整の無いジャンプと比べると、手触りの違いがよく分かる。</p>
+<figure class="align-default" id="id17">
+<a class="reference internal image-reference" href="_images/screen_jump.png"><img alt="jump.py の画面" src="_images/screen_jump.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 10.2 </span><span class="caption-text">jump.py の画面。黄色の点がジャンプの軌跡、上の線が目標の高さ</span><a class="headerlink" href="#id17" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="id11">
+<h2><span class="section-number">10.5. </span>摩擦と空気抵抗<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>横方向の動きにも、加速度を使って重さを出す。入力したら一瞬で最高速度になるのではなく、加速度の上限を設けて速度を目標へ近づける。入力を離したときは、別の大きさの加速度（地面との摩擦に当たる）で減速させる。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-number">リスト 10.3 </span><span class="caption-text">examples/jump.py の approach 関数</span><a class="headerlink" href="#id18" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">approach</span><span class="p">(</span><span class="n">current</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;current を target へ最大 max_delta だけ近づける。行き過ぎない。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">if</span> <span class="n">current</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+<span class="linenos">4</span>        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="n">max_delta</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="linenos">5</span>    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">current</span> <span class="o">-</span> <span class="n">max_delta</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="#fig-run-velocity"><span class="std std-numref">図 10.3</span></a> は、右キーを 0.35 秒押して離したときの速度の変化である。加速度と減速度の値で、氷の上のような滑る感触から、きびきびした感触まで調整できる。空中での加速度を地上より小さくすると、空中では向きを変えにくくなる。</p>
+<figure class="align-default" id="id19">
+<span id="fig-run-velocity"></span><a class="reference internal image-reference" href="_images/run_velocity.png"><img alt="走るときの速度の変化" src="_images/run_velocity.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 10.3 </span><span class="caption-text">右キーを 0.35 秒押して離したときの横方向の速度</span><a class="headerlink" href="#id19" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>空気抵抗のように速度に比例する力を受けると、速度は毎秒一定の割合で減っていく。これは第 8 章の指数関数的減衰と同じ形であり、フレームレートに依存しないように <span class="math notranslate nohighlight">\(\mathbf{v} \leftarrow \mathbf{v}\,e^{-c\,\Delta t}\)</span> と書ける。第 13 章のパーティクルでは、この方法で空気抵抗を表している。</p>
+</section>
+<section id="id12">
+<h2><span class="section-number">10.6. </span>数値積分<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<p>速度と位置を <span class="math notranslate nohighlight">\(\Delta t\)</span> ずつ進める計算は、微分方程式を数値的に解く<strong>数値積分</strong>の一種である。計算の順序によって精度と安定性が大きく変わるので、代表的な 3 つの方法を比べる。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-number">リスト 10.4 </span><span class="caption-text">examples/integrators.py の 3 つの数値積分の方法</span><a class="headerlink" href="#id20" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">explicit_euler</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">accel</span><span class="p">:</span> <span class="n">Acceleration</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;オイラー法: 今の速度で位置を、今の加速度で速度を進める。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">a</span> <span class="o">=</span> <span class="n">accel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos"> 4</span>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">def</span><span class="w"> </span><span class="nf">semi_implicit_euler</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">accel</span><span class="p">:</span> <span class="n">Acceleration</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;半陰的オイラー法: 先に速度を進め、新しい速度で位置を進める。&quot;&quot;&quot;</span>
+<span class="linenos"> 9</span>    <span class="n">v_new</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">accel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">10</span>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v_new</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">v_new</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">def</span><span class="w"> </span><span class="nf">velocity_verlet</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">accel</span><span class="p">:</span> <span class="n">Acceleration</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos">14</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;速度ベルレ法: 加速度の項まで含めて位置を進め、前後の加速度の平均で速度を進める。&quot;&quot;&quot;</span>
+<span class="linenos">15</span>    <span class="n">a0</span> <span class="o">=</span> <span class="n">accel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">16</span>    <span class="n">x_new</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">a0</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">17</span>    <span class="n">a1</span> <span class="o">=</span> <span class="n">accel</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span>
+<span class="linenos">18</span>    <span class="k">return</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">a0</span> <span class="o">+</span> <span class="n">a1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils align-default" id="id21">
+<caption><span class="caption-number">表 10.2 </span><span class="caption-text">数値積分の方法</span><a class="headerlink" href="#id21" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>計算の順序</p></th>
+<th class="head"><p>性質</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>オイラー法</p></td>
+<td><p>今の速度で位置を進め、今の加速度で速度を進める</p></td>
+<td><p>最も単純だが、エネルギーが増え続けて不安定になりやすい</p></td>
+</tr>
+<tr class="row-odd"><td><p>半陰的オイラー法</p></td>
+<td><p>先に速度を進め、新しい速度で位置を進める</p></td>
+<td><p>オイラー法と同じ手間で、ずっと安定する。ゲームで最もよく使われる</p></td>
+</tr>
+<tr class="row-even"><td><p>速度ベルレ法</p></td>
+<td><p>加速度の項まで含めて位置を進め、前後の加速度の平均で速度を進める</p></td>
+<td><p>精度が高い。加速度が一定なら誤差が無い</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#fig-integrators"><span class="std std-numref">図 10.4</span></a> は、ばねにつながれたおもり（単振動）を 3 つの方法で計算した結果である。左は dt = 1/20 秒での位置で、オイラー法は振れ幅がどんどん大きくなって発散している。右は dt = 1/60 秒での力学的エネルギー（本来は一定）で、オイラー法は 10 秒で 700 倍近くに増えている。半陰的オイラー法と速度ベルレ法は、エネルギーがほぼ一定に保たれる。</p>
+<figure class="align-default" id="id22">
+<span id="fig-integrators"></span><img alt="3 つの数値積分の方法の比較" src="_images/integrators.png" />
+<figcaption>
+<p><span class="caption-number">図 10.4 </span><span class="caption-text">数値積分の方法による違い（左: 単振動の位置、右: エネルギー）</span><a class="headerlink" href="#id22" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">integrators.py</span></code> を実行すると、同じ比較を数値で確かめられる。重力による放物運動（加速度が一定）では、dt = 0.1 秒という粗い刻みでも、速度ベルレ法は最高点の高さを正しく求める。オイラー法は高すぎ、半陰的オイラー法は低すぎる値になる。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-number">リスト 10.5 </span><span class="caption-text">integrators.py の実行結果</span><a class="headerlink" href="#id23" title="Link to this code"></a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>--- 単振動: 振幅 1 m で 10 秒間。エネルギーは本来変わらない（最初は 19.739） ---
+<span class="linenos"> 2</span>dt = 1/60 秒
+<span class="linenos"> 3</span>  オイラー法      10 秒後のエネルギー:    13718.868
+<span class="linenos"> 4</span>  半陰的オイラー法   10 秒後のエネルギー:       19.680
+<span class="linenos"> 5</span>  速度ベルレ法     10 秒後のエネルギー:       19.739
+<span class="linenos"> 6</span>dt = 1/20 秒
+<span class="linenos"> 7</span>  オイラー法      10 秒後のエネルギー: 2956935822.813
+<span class="linenos"> 8</span>  半陰的オイラー法   10 秒後のエネルギー:       18.239
+<span class="linenos"> 9</span>  速度ベルレ法     10 秒後のエネルギー:       19.707
+<span class="linenos">10</span>--- 放物運動: 初速 4.9 m/s で真上に投げる。最高点は本来 1.225 m（0.5 秒後） ---
+<span class="linenos">11</span>  オイラー法      最高点: 1.470 m（dt = 0.1 秒）
+<span class="linenos">12</span>  半陰的オイラー法   最高点: 0.980 m（dt = 0.1 秒）
+<span class="linenos">13</span>  速度ベルレ法     最高点: 1.225 m（dt = 0.1 秒）
+</pre></div>
+</div>
+</div>
+<p>本書の多くのサンプルコードでは、手軽で安定した半陰的オイラー法を使う。ジャンプのように加速度が一定の区間がほとんどで、高さを正確に合わせたい場合は、<code class="docutils literal notranslate"><span class="pre">jump.py</span></code> のように等加速度運動の式（速度ベルレ法と同じ結果になる）を使うとよい。</p>
+</section>
+<section id="dt">
+<h2><span class="section-number">10.7. </span>dt が大きいと何が起きるか<a class="headerlink" href="#dt" title="Link to this heading"></a></h2>
+<p>数値積分の誤差は、dt が大きいほど大きくなる。<a class="reference internal" href="#fig-integrators"><span class="std std-numref">図 10.4</span></a> の左のように、dt が大きいと安定な方法でも誤差が目立ち、不安定な方法はすぐに発散する。ばねが硬い（<span class="math notranslate nohighlight">\(k\)</span> が大きい）ほど、同じ dt でも不安定になりやすい。</p>
+<p>これが、第 3 章でデルタタイムに上限を設けた理由であり、物理を固定タイムステップで進める理由でもある。固定タイムステップなら、dt が常に同じなので、開発中に安定していることを確かめた設定のまま、どの環境でも同じように動く。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="randomness.html" class="btn btn-neutral float-left" title="9. 乱数と確率" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="collision.html" class="btn btn-neutral float-right" title="11. 衝突判定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

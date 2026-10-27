@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Godot 入門 &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="第 1 章 はじめに" href="chapters/ch01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Godot 入門</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="chapters/ch01_introduction.html" class="btn btn-neutral float-right" title="第 1 章 はじめに" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="godot">
+<h1>Godot 入門<a class="headerlink" href="#godot" title="Link to this heading"></a></h1>
+<p>本書は、ゲーム制作の経験はないが Python などでプログラムを書いた経験があるエンジニアに向けた、ゲームエンジン Godot の入門書である。Godot 4.7.2 と GDScript を使い、2D ゲームの基本的な作り方を一通り学ぶ。後半ではシェーダーと 3D の入り口にも触れる。</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch01_introduction.html">第 1 章　はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch01_introduction.html#id2">本書の目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch01_introduction.html#id3">対象読者と前提知識</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch01_introduction.html#id4">本書の構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch01_introduction.html#id5">動作環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch01_introduction.html#id6">表記の決まり</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch01_introduction.html#id7">サンプルコード</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch02_overview.html">第 2 章　Godot の概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch02_overview.html#id1">ゲームエンジンとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch02_overview.html#id2">Godot の歴史</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch02_overview.html#id3">Godot の特徴</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch02_overview.html#id4">対応するプログラミング言語</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch02_overview.html#id5">他のゲームエンジンとの比較</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch02_overview.html#id6">Godot でゲームを作る流れ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch03_setup.html">第 3 章　環境構築</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch03_setup.html#godot">Godot の入手</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch03_setup.html#id3">プロジェクトマネージャー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch03_setup.html#id7">エディターの表示言語</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch03_setup.html#hello-godot">Hello, Godot!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch03_setup.html#id9">外部のコードエディターを使う</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch04_editor.html">第 4 章　エディターの画面構成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id2">画面の全体像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id3">シーンドック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id4">ファイルシステムドック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id5">インスペクター</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id6">メイン画面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id7">下部パネル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id8">プロジェクト設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id9">プロジェクトのパス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch04_editor.html#id10">ヘルプを使う</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id2">ノード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id3">ノードの木構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id4">シーン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id8">実行中のシーンツリー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id9">スクリプトからノードを操作する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id12">グループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch05_nodes_and_scenes.html#id13">シーンを設計するときの考え方</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#python">Python との対応</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id1">スクリプトの基本構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id2">変数と型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id7">制御構文</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id8">関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id9">配列と辞書</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id10">クラス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#id11">ライフサイクル関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch06_gdscript_basics.html#export-onready">&#64;export と &#64;onready</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#id1">シグナル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#id4">関数を値として扱う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#await">await</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#id6">列挙型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#id7">セッターとゲッター</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#super">継承と super</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#id8">静的型付けを活用する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#id11">エラーの扱い</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch07_gdscript_advanced.html#python">Python の経験者がつまずきやすい点</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch08_game_loop.html">第 8 章　ゲームループと時間</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch08_game_loop.html#id2">ゲームループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch08_game_loop.html#process-delta">_process() と delta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch08_game_loop.html#physics-process">_physics_process()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch08_game_loop.html#fps">垂直同期と最大 FPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch08_game_loop.html#id3">時間を扱うノードと関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch08_game_loop.html#id4">一時停止</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch09_input.html">第 9 章　入力</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch09_input.html#id2">入力アクション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch09_input.html#id5">入力を受け取る 2 つの方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch09_input.html#id8">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch09_input.html#id9">入力イベントが伝わる順番</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch09_input.html#id10">マウスの位置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch10_vectors.html">第 10 章　2D の座標とベクトル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch10_vectors.html#id1">2D の座標系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch10_vectors.html#vector2">Vector2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch10_vectors.html#id2">ベクトルの基本的な計算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch10_vectors.html#id8">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch10_vectors.html#id9">ローカル座標とグローバル座標</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch11_physics.html">第 11 章　2D の物理と衝突</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#id1">物理ボディの種類</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#id2">衝突形状</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#characterbody2d">CharacterBody2D でキャラクターを動かす</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#rigidbody2d">RigidBody2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#area2d">Area2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#id5">コリジョンレイヤーとマスク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch11_physics.html#id6">サンプル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html#id2">画像を表示する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html#id3">描画の順番</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html#id4">アニメーションの 3 つの方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html#id5">タイルマップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html#id8">カメラ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch12_graphics_and_animation.html#id9">パーティクル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch13_ui.html">第 13 章　UI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#control">Control ノード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#id1">レイアウト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#id3">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#id4">フォーカスとキーボード操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#id5">マウスのクリックを通すかどうか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#id6">テーマ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch13_ui.html#id7">画面の大きさへの対応</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch14_audio.html">第 14 章　サウンド</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch14_audio.html#id2">音声ファイルの形式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch14_audio.html#id3">音を再生するノード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch14_audio.html#id4">オーディオバス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch14_audio.html#id5">デシベル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch14_audio.html#id6">サンプル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch15_scenes_and_data.html#id2">シーンを切り替える</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch15_scenes_and_data.html#id3">オートロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch15_scenes_and_data.html#id4">独自のリソースでデータを定義する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch15_scenes_and_data.html#id5">データを保存する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch15_scenes_and_data.html#id6">サンプル</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch16_shaders.html">第 16 章　シェーダー入門</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id2">シェーダーとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#godot">Godot のシェーダー言語</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id6">シェーダーを適用する手順</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id7">例 1：点滅（白く光らせる）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id8">例 2：波打ち</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id9">例 3：消滅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id10">例 4：画面全体の効果</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id11">ビジュアルシェーダー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch16_shaders.html#id12">シェーダーを書くときの注意</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id2">完成形</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id3">ゲームの構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id4">準備</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id5">手順 1：プレイヤーを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id8">手順 2：岩を作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#hud">手順 3：HUD を作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id9">手順 4：メインシーンを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id10">手順 5：動かしてみる</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch17_tutorial.html#id11">改良のアイデア</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html#id2">出力によるデバッグ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html#id3">ブレークポイントとステップ実行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html#id4">実行中のシーンツリーを見る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html#id5">よく見るエラー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html#id6">性能を測る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch18_debug_and_optimization.html#id9">最適化の基本</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch19_export.html">第 19 章　エクスポート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#id2">エクスポートの仕組み</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#id3">エクスポートテンプレートを入手する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#id4">エクスポートのプリセットを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#windows">Windows 向けにエクスポートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#web">Web ブラウザー向けにエクスポートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#id5">コマンドラインからエクスポートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch19_export.html#id6">配布する前に確認すること</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch20_3d.html">第 20 章　3D への入り口</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch20_3d.html#d-3d">2D と 3D の違い</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch20_3d.html#id1">3D のシーンを構成する要素</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch20_3d.html#id3">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch20_3d.html#id4">3D モデルを読み込む</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch20_3d.html#id5">3D で知っておきたいこと</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/ch21_next_steps.html">第 21 章　次のステップ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch21_next_steps.html#id2">学んだことの振り返り</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch21_next_steps.html#id3">次に学ぶ題材</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch21_next_steps.html#id4">情報の探し方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/ch21_next_steps.html#id9">ゲームを完成させる練習</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/shortcuts.html">付録 B　ショートカットキー一覧</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/shortcuts.html#id1">全般</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/shortcuts.html#id2">シーンドック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/shortcuts.html#d">2D ビューポート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/shortcuts.html#id3">スクリプトエディター</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/shortcuts.html#id4">デバッガー</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/troubleshooting.html">付録 C　トラブルシューティング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/troubleshooting.html#id1">エディターとプロジェクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/troubleshooting.html#id2">スクリプト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/troubleshooting.html#id3">物理と衝突</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/troubleshooting.html#id4">表示と入力</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/references.html">付録 D　参考文献</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/references.html#godot">Godot の公式資料</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/references.html#id1">ツール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/references.html#id2">ゲームプログラミングとシェーダー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/references.html#id3">コミュニティ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="chapters/ch01_introduction.html" class="btn btn-neutral float-right" title="第 1 章 はじめに" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

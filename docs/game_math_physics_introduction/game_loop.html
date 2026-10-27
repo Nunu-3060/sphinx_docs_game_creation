@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. ゲームループと時間 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="4. ベクトル" href="vectors.html" />
+    <link rel="prev" title="2. 座標系と数値" href="coordinates.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. ゲームループと時間</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.1. ゲームループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.2. フレームレートに依存しない移動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3.3. 可変タイムステップと固定タイムステップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">3.4. 固定タイムステップの実装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.4.1. 描画の補間</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.4.2. どちらを使うか</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>ゲームループと時間</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">3. </span>ゲームループと時間<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームの中の物は、時間とともに動く。ゲームのプログラムでは、この「時間」をどう扱うかを最初に決めておく必要がある。この章では、ゲームの心臓部であるゲームループと、物理の計算に使う時間の刻み方を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">3.1. </span>ゲームループ<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームのプログラムは、<a class="reference internal" href="#fig-loop"><span class="std std-numref">図 3.1</span></a> のような繰り返し（<strong>ゲームループ</strong>）を、終了するまで回し続ける。</p>
+<figure class="align-center" id="id8">
+<span id="fig-loop"></span><div class="graphviz"><img src="_images/graphviz-fe23d32793b8b8a6d5b602c5900ba7892f129946.png" alt="digraph loop {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  input [label=&quot;1. 入力\nキー・マウスの状態を読む&quot;];
+  update [label=&quot;2. 更新\n位置や速度を進める\n衝突を調べる&quot;];
+  draw [label=&quot;3. 描画\n今の状態を画面に描く&quot;];
+  input -&gt; update -&gt; draw;
+  draw -&gt; input [label=&quot;次のフレーム&quot;, fontsize=10, color=&quot;#888888&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 3.1 </span><span class="caption-text">ゲームループ</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ループを 1 回まわるごとに画面が 1 枚描かれる。この 1 枚を<strong>フレーム</strong>と呼び、1 秒あたりのフレームの数を<strong>フレームレート</strong>と呼ぶ。単位は FPS（frames per second）である。多くのゲームは 60 FPS を目標にしている。</p>
+<p><a class="reference internal" href="#code-game-loop"><span class="std std-numref">リスト 3.1</span></a> は、pygame-ce でのゲームループの例である。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<span id="code-game-loop"></span><div class="code-block-caption"><span class="caption-number">リスト 3.1 </span><span class="caption-text">examples/game_loop.py の main 関数</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span>    <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="linenos"> 3</span>    <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+<span class="linenos"> 4</span>    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s1">&#39;Frame-based vs time-based movement&#39;</span><span class="p">)</span>
+<span class="linenos"> 5</span>    <span class="n">font</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+<span class="linenos"> 6</span>    <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+<span class="linenos"> 7</span>    <span class="n">fps_limit</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="linenos"> 8</span>    <span class="n">x_frame</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 9</span>    <span class="n">x_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">12</span>    <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+<span class="linenos">13</span>        <span class="c1"># 1. 入力</span>
+<span class="linenos">14</span>        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+<span class="linenos">15</span>            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+<span class="linenos">16</span>                <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">17</span>            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
+<span class="linenos">18</span>                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_ESCAPE</span><span class="p">:</span>
+<span class="linenos">19</span>                    <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">20</span>                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">in</span> <span class="n">FPS_KEYS</span><span class="p">:</span>
+<span class="linenos">21</span>                    <span class="n">fps_limit</span> <span class="o">=</span> <span class="n">FPS_KEYS</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">]</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>        <span class="c1"># 2. 更新（tick は前のフレームからの経過時間をミリ秒で返す）</span>
+<span class="linenos">24</span>        <span class="n">dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">fps_limit</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">MAX_DT</span><span class="p">)</span>
+<span class="linenos">25</span>        <span class="n">x_frame</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">x_frame</span> <span class="o">+</span> <span class="n">SPEED_PER_FRAME</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">)</span>
+<span class="linenos">26</span>        <span class="n">x_time</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">x_time</span> <span class="o">+</span> <span class="n">SPEED_PER_SECOND</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">)</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>        <span class="c1"># 3. 描画</span>
+<span class="linenos">29</span>        <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">36</span><span class="p">))</span>
+<span class="linenos">30</span>        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span> <span class="p">(</span><span class="n">x_frame</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+<span class="linenos">31</span>        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="p">(</span><span class="n">x_time</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+<span class="linenos">32</span>        <span class="n">info</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;FPS limit: </span><span class="si">{</span><span class="n">fps_limit</span><span class="si">}</span><span class="s1">  actual: </span><span class="si">{</span><span class="n">clock</span><span class="o">.</span><span class="n">get_fps</span><span class="p">()</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">  (keys 1/2/3)&#39;</span>
+<span class="linenos">33</span>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">)),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="linenos">34</span>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;per frame&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">80</span><span class="p">)),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="linenos">35</span>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;per second (dt)&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">)),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">190</span><span class="p">))</span>
+<span class="linenos">36</span>        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">clock.tick(fps_limit)</span></code> は、ループが速く回りすぎないように待ったうえで、前のフレームからの経過時間をミリ秒で返す。この値を 1000 で割って秒にしたものを、本書では<strong>デルタタイム</strong>と呼び、<code class="docutils literal notranslate"><span class="pre">dt</span></code> や <span class="math notranslate nohighlight">\(\Delta t\)</span> と書く。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">3.2. </span>フレームレートに依存しない移動<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>物を動かすとき、最初に思い付くのは「1 フレームに 4 ピクセル動かす」という書き方だろう。この書き方には、フレームレートが変わると物の速さも変わるという問題がある。60 FPS で動くように調整したゲームを 144 Hz のディスプレイで動かすと 2.4 倍の速さになり、処理が重くて 30 FPS に落ちると半分の速さになる。</p>
+<p>そこで、速さを「1 秒あたりの移動量」で決め、毎フレームそれにデルタタイムを掛けた分だけ動かす。</p>
+<div class="math notranslate nohighlight">
+\[x_{\text{次}} = x_{\text{今}} + v \, \Delta t\]</div>
+<p>こうすると、フレームレートによらず 1 秒あたりの移動量は <span class="math notranslate nohighlight">\(v\)</span> になる。<a class="reference internal" href="#fig-dt-compare"><span class="std std-numref">図 3.2</span></a> は、30 FPS、60 FPS、144 FPS での 2 つの方法の比較である。左のグラフでは、フレームレートによって 1 秒後の位置が大きく異なる。右のグラフでは、3 本の線がほぼ重なっている。</p>
+<figure class="align-default" id="id10">
+<span id="fig-dt-compare"></span><img alt="フレーム数を基準にした移動とデルタタイムを基準にした移動の比較" src="_images/dt_compare.png" />
+<figcaption>
+<p><span class="caption-number">図 3.2 </span><span class="caption-text">フレーム数を基準にした移動（左）と、デルタタイムを基準にした移動（右）</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">game_loop.py</span></code> を実行し、1 キー・2 キー・3 キーでフレームレートの上限を切り替えると、上の四角（フレーム数が基準）だけ速さが変わることを確かめられる。</p>
+<p>デルタタイムには上限を設けておく。ウィンドウをドラッグしている間などはループが止まり、再開したときにデルタタイムが数秒にもなることがある。そのまま使うと物が一瞬で遠くへ飛び、壁をすり抜けてしまう。<code class="docutils literal notranslate"><span class="pre">game_loop.py</span></code> では、<code class="docutils literal notranslate"><span class="pre">min(...,</span> <span class="pre">MAX_DT)</span></code> で 0.1 秒までに制限している。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">3.3. </span>可変タイムステップと固定タイムステップ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>デルタタイムをそのまま使って物理を進める方法を<strong>可変タイムステップ</strong>と呼ぶ。簡単で、多くの場面ではこれで十分である。ただし、次のような弱点がある。</p>
+<ul class="simple">
+<li><p><strong>結果がフレームレートによって少し変わる。</strong>第 10 章で見るように、物理の計算は時間を区切って近似的に行うので、区切り方によって誤差が変わる。60 FPS では届いたジャンプが、30 FPS では足場に届かない、ということが起こりうる。</p></li>
+<li><p><strong>dt が大きいと不安定になる。</strong>ばねのように力が位置によって変わる計算では、dt が大きいと誤差が増え続け、物が飛んでいってしまうことがある。</p></li>
+<li><p><strong>再現性が無い。</strong>同じ入力を与えても、フレームレートが違えば結果が少しずつずれる。リプレイの再生やネットワーク対戦では問題になる。</p></li>
+</ul>
+<p>これらを避けるために、物理の更新は常に同じ時間 <span class="math notranslate nohighlight">\(h\)</span>（たとえば 1/120 秒）ずつ進め、描画はそれとは別のペースで行う方法がある。これを<strong>固定タイムステップ</strong>と呼ぶ。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">3.4. </span>固定タイムステップの実装<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>固定タイムステップは、<a class="reference internal" href="#fig-fixed-step"><span class="std std-numref">図 3.3</span></a> のように実装する。前のフレームからの経過時間を<strong>アキュムレーター</strong>と呼ぶ変数に貯めていき、<span class="math notranslate nohighlight">\(h\)</span> 以上貯まっている間は、<span class="math notranslate nohighlight">\(h\)</span> を引いて物理を 1 回進める。</p>
+<figure class="align-center" id="id11">
+<span id="fig-fixed-step"></span><div class="graphviz"><img src="_images/graphviz-bd0efe14189d55e460679d8a12b18e7157654502.png" alt="digraph fixed {
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  add [label=&quot;アキュムレーターに\n経過時間を足す&quot;];
+  check [label=&quot;アキュムレーター ≥ h ?&quot;, shape=diamond, fillcolor=&quot;#fdf0e2&quot;, color=&quot;#e8862a&quot;];
+  step [label=&quot;物理を h 秒進める\nアキュムレーターから h を引く&quot;];
+  draw [label=&quot;描画する\n（残りの時間 / h で補間）&quot;];
+  add -&gt; check;
+  check -&gt; step [label=&quot;はい&quot;, fontsize=10];
+  step -&gt; check;
+  check -&gt; draw [label=&quot;いいえ&quot;, fontsize=10];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 3.3 </span><span class="caption-text">固定タイムステップの処理の流れ</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#code-consume-time"><span class="std std-numref">リスト 3.2</span></a> は、アキュムレーターの処理を関数にしたものである。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<span id="code-consume-time"></span><div class="code-block-caption"><span class="caption-number">リスト 3.2 </span><span class="caption-text">examples/fixed_timestep.py の consume_time 関数</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">consume_time</span><span class="p">(</span><span class="n">accumulator</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">MAX_STEPS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;経過時間をアキュムレーターに貯め、固定ステップで何回更新するかと、残った時間を返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">accumulator</span> <span class="o">+=</span> <span class="n">frame_time</span>
+<span class="linenos"> 4</span>    <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos"> 5</span>    <span class="k">while</span> <span class="n">accumulator</span> <span class="o">&gt;=</span> <span class="n">step</span> <span class="ow">and</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+<span class="linenos"> 6</span>        <span class="n">accumulator</span> <span class="o">-=</span> <span class="n">step</span>
+<span class="linenos"> 7</span>        <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos"> 8</span>    <span class="k">if</span> <span class="n">steps</span> <span class="o">==</span> <span class="n">max_steps</span><span class="p">:</span>
+<span class="linenos"> 9</span>        <span class="c1"># 処理が追いつかないときは、残りの時間を捨てて遅れが膨らみ続けるのを防ぐ</span>
+<span class="linenos">10</span>        <span class="n">accumulator</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="k">return</span> <span class="n">steps</span><span class="p">,</span> <span class="n">accumulator</span>
+</pre></div>
+</div>
+</div>
+<p>更新の回数に上限（<code class="docutils literal notranslate"><span class="pre">max_steps</span></code>）を設けているのは、処理が追いつかない状況への備えである。物理の更新 1 回に <span class="math notranslate nohighlight">\(h\)</span> 以上の時間がかかると、次のフレームではもっと多くの更新が必要になり、さらに時間がかかる、という悪循環に陥る。上限を超えた分の時間は捨て、ゲームの進みが少し遅くなることを受け入れる。</p>
+<section id="id6">
+<h3><span class="section-number">3.4.1. </span>描画の補間<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>固定タイムステップでは、描画のタイミングと物理の更新のタイミングがずれる。たとえば物理を 1 秒に 15 回、描画を 1 秒に 60 回行うと、4 回の描画のうち 3 回は前回と同じ状態を描くことになり、動きがカクつく。</p>
+<p>そこで、直前の 2 回の更新結果を、アキュムレーターに残った時間の割合 <span class="math notranslate nohighlight">\(\alpha\)</span> で補間して描く。</p>
+<div class="math notranslate nohighlight">
+\[\alpha = \frac{\text{アキュムレーターの残り}}{h}, \qquad x_{\text{描画}} = x_{\text{前}} + (x_{\text{今}} - x_{\text{前}}) \, \alpha\]</div>
+<p>この式は第 8 章で扱う線形補間そのものである。<a class="reference internal" href="#fig-interpolation"><span class="std std-numref">図 3.4</span></a> のように、補間すると描かれる位置が滑らかに変わる。その代わり、描かれる位置は最新の状態より最大 1 ステップ遅れる。物理を 1 秒に 120 回のように十分細かく進めれば、この遅れは問題にならない。</p>
+<figure class="align-default" id="id13">
+<span id="fig-interpolation"></span><img alt="補間しない描画と補間した描画の比較" src="_images/interpolation.png" />
+<figcaption>
+<p><span class="caption-number">図 3.4 </span><span class="caption-text">物理を 15 Hz で更新したときの、描かれる位置</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">fixed_timestep.py</span></code> では、上の四角は最新の状態を、下の四角は補間した状態を描く。1 キーで 15 Hz にすると、上の四角のカクつきがよく分かる。<a class="reference internal" href="#code-fixed-loop"><span class="std std-numref">リスト 3.3</span></a> は、そのゲームループのうち更新と描画の部分である。</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<span id="code-fixed-loop"></span><div class="code-block-caption"><span class="caption-number">リスト 3.3 </span><span class="caption-text">examples/fixed_timestep.py のゲームループの一部</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">step</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">rate</span>
+<span class="linenos"> 2</span><span class="n">steps</span><span class="p">,</span> <span class="n">accumulator</span> <span class="o">=</span> <span class="n">consume_time</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">frame_time</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+<span class="linenos"> 4</span>    <span class="n">box</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">accumulator</span> <span class="o">/</span> <span class="n">step</span>  <span class="c1"># 次の更新までに進んだ割合</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">36</span><span class="p">))</span>
+<span class="linenos"> 8</span><span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span> <span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">BOX_SIZE</span><span class="p">,</span> <span class="n">BOX_SIZE</span><span class="p">))</span>
+<span class="linenos"> 9</span><span class="n">drawn_x</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">previous_x</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="linenos">10</span><span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="p">(</span><span class="n">drawn_x</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="n">BOX_SIZE</span><span class="p">,</span> <span class="n">BOX_SIZE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h3><span class="section-number">3.4.2. </span>どちらを使うか<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>小さなゲームや、物理がほとんど無いゲームなら、上限付きの可変タイムステップで十分である。ジャンプの高さや衝突の結果をフレームレートによらず一定にしたい場合や、ばねなどの計算を安定させたい場合は、固定タイムステップを使う。多くのゲームエンジンは、物理だけを固定タイムステップで進める仕組みを備えている（Unity の <code class="docutils literal notranslate"><span class="pre">FixedUpdate</span></code> など）。本書の第 15 章の総合演習では、固定タイムステップを使う。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="coordinates.html" class="btn btn-neutral float-left" title="2. 座標系と数値" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vectors.html" class="btn btn-neutral float-right" title="4. ベクトル" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

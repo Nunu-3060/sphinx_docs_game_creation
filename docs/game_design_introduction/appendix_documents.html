@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>設計文書の書き方 &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="サンプルコード一覧" href="appendix_examples.html" />
+    <link rel="prev" title="12. 総合演習" href="ch12_final_project.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">設計文書の書き方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">設計文書の考え方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ワンページ設計書</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">レベル設計書</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">設計文書の書き方</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>設計文書の書き方<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームの設計は、頭の中にあるだけではチームで共有できず、時間が経つと自分でも忘れてしまう。この付録では、小規模な開発で使いやすい 2 種類の設計文書と、そのテンプレートを紹介する。</p>
+<section id="id2">
+<h2>設計文書の考え方<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームの設計を網羅的にまとめた文書を、ゲームデザインドキュメント（GDD）と呼ぶ。かつては何百ページにも及ぶ GDD を最初に書き上げることもあったが、ゲームの設計はプレイテストのたびに変わるため、厚い文書はすぐに古くなり、誰にも読まれなくなる。</p>
+<p>現在では、次のような書き方が好まれることが多い。</p>
+<ul class="simple">
+<li><p>1 つの文書を短く保ち、要点だけを書く。</p></li>
+<li><p>文章よりも、図、表、箇条書きを使う。</p></li>
+<li><p>決まったことだけでなく、未解決の問いも書く。</p></li>
+<li><p>変更したら、変更した日付と理由を残す。</p></li>
+</ul>
+<p>ここでは、ゲーム全体の要点を 1 ページにまとめる「ワンページ設計書」と、レベルごとの意図をまとめる「レベル設計書」の 2 つを紹介する。</p>
+</section>
+<section id="id3">
+<h2>ワンページ設計書<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ワンページ設計書は、ゲーム全体の要点を 1 ページに収めた文書である。新しくチームに加わった人が最初に読む文書であり、設計の判断に迷ったときに立ち返る基準でもある。</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-number">表 1 </span><span class="caption-text">ワンページ設計書のテンプレート</span><a class="headerlink" href="#id5" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>書く内容</p></th>
+<th class="head"><p>関連する章</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>タイトル</p></td>
+<td><p>仮でもよいので名前を付ける</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>一文での説明</p></td>
+<td><p>「〜して〜するゲーム」のように、ゲームを一文で表す</p></td>
+<td><p>第 4 章</p></td>
+</tr>
+<tr class="row-even"><td><p>体験の目標</p></td>
+<td><p>最も重視する楽しさを 1 つか 2 つ。8 種類の楽しさから選ぶ</p></td>
+<td><p>第 3 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>想定するプレイヤー</p></td>
+<td><p>誰に、どのような場面で遊んでほしいか</p></td>
+<td><p>第 3 章</p></td>
+</tr>
+<tr class="row-even"><td><p>コアループ</p></td>
+<td><p>コアループの図。必要なら外側のループも</p></td>
+<td><p>第 4 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>主なメカニクス</p></td>
+<td><p>ルールの要点を箇条書きで</p></td>
+<td><p>第 2 章、第 4 章</p></td>
+</tr>
+<tr class="row-even"><td><p>難しさと失敗</p></td>
+<td><p>どの種類の難しさを求めるか。失敗したときのペナルティ</p></td>
+<td><p>第 6 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>レベルの構造</p></td>
+<td><p>一本道、ハブ型など。レベルの数の見込み</p></td>
+<td><p>第 9 章</p></td>
+</tr>
+<tr class="row-even"><td><p>未解決の問い</p></td>
+<td><p>まだ確かめていないこと。次のプロトタイプで確かめること</p></td>
+<td><p>第 11 章</p></td>
+</tr>
+</tbody>
+</table>
+<p>第 12 章の『宝石と見張り』を例に書くと、次のようになる。</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-number">表 2 </span><span class="caption-text">ワンページ設計書の例（『宝石と見張り』）</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>タイトル</p></td>
+<td><p>宝石と見張り</p></td>
+</tr>
+<tr class="row-odd"><td><p>一文での説明</p></td>
+<td><p>見張りの動きを先読みして、捕まらずに宝石を集めて脱出するターン制のパズルゲーム</p></td>
+</tr>
+<tr class="row-even"><td><p>体験の目標</p></td>
+<td><p>挑戦（先読みが当たったときの手応え）、発見（見張りのやり過ごし方に気付く驚き）</p></td>
+</tr>
+<tr class="row-odd"><td><p>想定するプレイヤー</p></td>
+<td><p>パズルが好きで、短い時間でじっくり考えて遊びたい人</p></td>
+</tr>
+<tr class="row-even"><td><p>コアループ</p></td>
+<td><p>観察する → 手順を考える → 1 手動かす → 結果を確かめる</p></td>
+</tr>
+<tr class="row-odd"><td><p>主なメカニクス</p></td>
+<td><p>上下左右の移動と待機。往復する見張り。宝石をすべて集めると開く出口。1 手戻す機能</p></td>
+</tr>
+<tr class="row-even"><td><p>難しさと失敗</p></td>
+<td><p>判断の難しさのみ。操作の速さは求めない。捕まっても 1 手戻すだけで再挑戦できる</p></td>
+</tr>
+<tr class="row-odd"><td><p>レベルの構造</p></td>
+<td><p>一本道。4 レベルで見張りを段階的に見せる</p></td>
+</tr>
+<tr class="row-even"><td><p>未解決の問い</p></td>
+<td><p>見張りの向きの表示だけで、動きを十分に予測できるか。レベル 4 のくぼみに気付けるか</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>レベル設計書<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>レベル設計書は、レベルごとに、そのレベルで何をさせたいかをまとめた文書である。レベルを作る前に書いておくと、作っている途中で目的を見失わずに済む。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 3 </span><span class="caption-text">レベル設計書のテンプレート</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>書く内容</p></th>
+<th class="head"><p>関連する章</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>レベル名と番号</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>このレベルの目的</p></td>
+<td><p>新しく導入する要素、または練習させる要素。1 つに絞る</p></td>
+<td><p>第 6 章、第 9 章</p></td>
+</tr>
+<tr class="row-even"><td><p>4 つの段階</p></td>
+<td><p>導入、練習、応用、結びのそれぞれで、何をさせるか</p></td>
+<td><p>第 9 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>緊張と緩和</p></td>
+<td><p>山と谷をどこに置くか。簡単な強度の曲線</p></td>
+<td><p>第 9 章</p></td>
+</tr>
+<tr class="row-even"><td><p>地図</p></td>
+<td><p>全体の配置図。スタート、ゴール、重要な場所、導線</p></td>
+<td><p>第 8 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>使うメトリクス</p></td>
+<td><p>穴の幅、段差の高さなど、操作の難しさの基準</p></td>
+<td><p>第 8 章</p></td>
+</tr>
+<tr class="row-even"><td><p>検証の結果</p></td>
+<td><p>ソルバーやグラフによる検証の結果。プレイテストで見つかった問題</p></td>
+<td><p>第 9 章、第 11 章、第 12 章</p></td>
+</tr>
+</tbody>
+</table>
+<p>レベル設計書は、レベルを作り終えた後も、プレイテストで見つかった問題と、それに対して何を変えたかを書き足していく。変更の経緯が残っていると、後で「なぜこうなっているのか」を確かめられ、同じ失敗を繰り返さずに済む。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch12_final_project.html" class="btn btn-neutral float-left" title="12. 総合演習" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="appendix_examples.html" class="btn btn-neutral float-right" title="サンプルコード一覧" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

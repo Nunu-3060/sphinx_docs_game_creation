@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ゲームデザイン・レベルデザイン入門 &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="1. はじめに" href="ch01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ゲームデザイン・レベルデザイン入門</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>ゲームデザイン・レベルデザイン入門<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>本書は、ゲーム制作は未経験だが Python などのプログラミングの知識があるエンジニアや工学系の大学生に向けて、ゲームデザインとレベルデザインの基本的な考え方を解説する入門書である。</p>
+<p>「面白さ」は感性だけで決まるものではない。本書では、ゲームを状態と規則からなるシステムとして捉え、仮説を立て、作って確かめ、直すという設計の手順でゲームとレベルを組み立てる方法を学ぶ。理論は具体的なゲームの例と Python のサンプルコードで確かめながら進める。</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id2">1.1. 本書の目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id3">1.2. 対象読者と前提知識</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id4">1.3. ゲームデザインとレベルデザイン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id5">1.4. 制作現場での役割分担</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id6">1.5. エンジニアがゲームデザインを学ぶ意義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id7">1.6. 本書の構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch01_introduction.html#id8">1.7. サンプルコードの実行環境</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch02_what_is_game.html#id2">2.1. ゲームの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_what_is_game.html#id3">2.2. 遊びとゲーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_what_is_game.html#id4">2.3. ジャンルの見取り図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_what_is_game.html#mda">2.4. MDA フレームワーク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_what_is_game.html#id5">2.5. MDA でゲームを分析する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_what_is_game.html#id6">2.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_fun_and_player.html#id2">3.1. 楽しさは 1 種類ではない</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_fun_and_player.html#id3">3.2. プレイヤータイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_fun_and_player.html#id4">3.3. 動機付け</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_fun_and_player.html#id6">3.4. フロー理論</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_fun_and_player.html#id7">3.5. 意味のある選択</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_fun_and_player.html#id8">3.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_systems.html#id2">4.1. コアループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_systems.html#id4">4.2. 状態機械</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_systems.html#id6">4.3. 資源の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_systems.html#id7">4.4. フィードバックループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_systems.html#id9">4.5. 創発</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_systems.html#id10">4.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id2">5.1. バランスの目標</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id3">5.2. 成長曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id4">5.3. コストと価値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id5">5.4. 選択肢どうしの相性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id8">5.5. 確率と期待値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id11">5.6. シミュレーションで検証する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_balance.html#id12">5.7. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id2">6.1. 難易度とは何か</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id3">6.2. 難易度曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id4">6.3. 学習を設計する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id7">6.4. 失敗を設計する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id10">6.5. 動的難易度調整</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id11">6.6. 難易度の選択とアクセシビリティ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch06_difficulty.html#id13">6.7. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch07_game_feel.html#id2">7.1. ゲームフィール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch07_game_feel.html#id3">7.2. 応答性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch07_game_feel.html#id4">7.3. ジャンプを設計する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch07_game_feel.html#id8">7.4. 視覚と聴覚のフィードバック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch07_game_feel.html#ui">7.5. UI と情報の提示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch07_game_feel.html#id9">7.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch08_level_basics.html#id2">8.1. レベルの役割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch08_level_basics.html#id3">8.2. 目標を示す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch08_level_basics.html#id4">8.3. 導線と視線誘導</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch08_level_basics.html#id5">8.4. ゲーティング</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch08_level_basics.html#id6">8.5. ブロックアウト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch08_level_basics.html#id8">8.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch09_level_structure.html#id2">9.1. 新しい要素を見せる 4 つの段階</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch09_level_structure.html#id3">9.2. 緊張と緩和</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch09_level_structure.html#id4">9.3. 敵とアイテムの配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch09_level_structure.html#id7">9.4. レベルの構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch09_level_structure.html#id8">9.5. レベルをグラフとして検証する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch09_level_structure.html#id9">9.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id2">10.1. 手続き型生成の利点と限界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id3">10.2. 乱数とシード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id4">10.3. ランダムウォーク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id5">10.4. セル・オートマトンによる洞窟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id6">10.5. 生成したマップを検証する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#bsp">10.6. BSP によるダンジョン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id9">10.7. 手作りと生成の組み合わせ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch10_procgen.html#id10">10.8. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id2">11.1. プロトタイプの目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id3">11.2. 紙のプロトタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id4">11.3. デジタルのプロトタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id5">11.4. プレイテスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id9">11.5. ログで遊び方を記録する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id11">11.6. 改善を繰り返す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch11_prototype_playtest.html#id12">11.7. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id2">12.1. 題材のゲーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id3">12.2. 体験の目標を決める</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id4">12.3. ルールを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id6">12.4. 実装の構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id7">12.5. レベルを設計する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id12">12.6. ソルバーで検証する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id14">12.7. プレイテストの準備</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch12_final_project.html#id15">12.8. 発展課題</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch01_introduction.html" class="btn btn-neutral float-right" title="1. はじめに" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

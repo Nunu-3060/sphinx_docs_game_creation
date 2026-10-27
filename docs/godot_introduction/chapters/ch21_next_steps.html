@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 21 章 次のステップ &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="付録 A 用語集" href="../appendix/glossary.html" />
+    <link rel="prev" title="第 20 章 3D への入り口" href="ch20_3d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 21 章　次のステップ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">学んだことの振り返り</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">次に学ぶ題材</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">情報の探し方</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">公式ドキュメント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">公式のデモプロジェクト</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">コミュニティ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">ゲームを完成させる練習</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 21 章　次のステップ</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch20_3d.html" class="btn btn-neutral float-left" title="第 20 章 3D への入り口" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../appendix/glossary.html" class="btn btn-neutral float-right" title="付録 A 用語集" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch21">
+<span id="id1"></span><h1>第 21 章　次のステップ<a class="headerlink" href="#ch21" title="Link to this heading"></a></h1>
+<p>本書では、Godot で 2D ゲームを作るための基本を一通り学んだ。最後の章では、さらに学ぶための題材と、情報の探し方を紹介する。</p>
+<section id="id2">
+<h2>学んだことの振り返り<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 78 </span><span class="caption-text">本書で学んだこと</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分野</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>基本概念</p></td>
+<td><p>ノードとシーンでゲームを組み立てる。シグナルで部品どうしを疎につなぐ。ゲームループの中で <code class="docutils literal notranslate"><span class="pre">delta</span></code> を使って時間を扱う。</p></td>
+</tr>
+<tr class="row-odd"><td><p>GDScript</p></td>
+<td><p>Python に似た文法で、型を指定して安全に書く。<code class="docutils literal notranslate"><span class="pre">await</span></code> で時間の経過を伴う処理を書く。</p></td>
+</tr>
+<tr class="row-even"><td><p>ゲームの構成要素</p></td>
+<td><p>入力アクション、ベクトル、物理ボディと <code class="docutils literal notranslate"><span class="pre">Area2D</span></code>、アニメーション、タイルマップ、UI、サウンド、シーンの切り替え、データの保存</p></td>
+</tr>
+<tr class="row-odd"><td><p>実践</p></td>
+<td><p>シェーダーで見た目の効果を作る。1 本のゲームを完成させ、デバッグし、エクスポートする。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>次に学ぶ題材<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>作りたいゲームに応じて、次の題材に進むとよい。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 79 </span><span class="caption-text">次に学ぶ題材</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>題材</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ナビゲーション</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NavigationAgent2D</span></code> などを使い、敵が障害物を避けてプレイヤーを追いかける経路探索を実装する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>アニメーションの状態管理</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AnimationTree</span></code> で、待機、歩行、ジャンプなどのアニメーションの切り替えを状態遷移として管理する。</p></td>
+</tr>
+<tr class="row-even"><td><p>多言語対応</p></td>
+<td><p>文字列を翻訳ファイル（CSV や PO 形式）に分け、<code class="docutils literal notranslate"><span class="pre">tr()</span></code> で表示する言語を切り替える。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ネットワーク対戦</p></td>
+<td><p>Godot の高レベルマルチプレイヤー機能（<code class="docutils literal notranslate"><span class="pre">MultiplayerSpawner</span></code>、<code class="docutils literal notranslate"><span class="pre">MultiplayerSynchronizer</span></code>、RPC）を使い、複数のプレイヤーで遊べるゲームを作る。</p></td>
+</tr>
+<tr class="row-even"><td><p>エディターの拡張</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&#64;tool</span></code> を付けたスクリプトや <code class="docutils literal notranslate"><span class="pre">EditorPlugin</span></code> で、ステージの編集を助けるツールをエディターに追加する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>C#</p></td>
+<td><p>.NET 版の Godot で、C# でスクリプトを書く。既存の .NET のライブラリを使える。</p></td>
+</tr>
+<tr class="row-even"><td><p>GDExtension</p></td>
+<td><p>C++ などで書いたネイティブのライブラリをエンジンに組み込み、処理速度が重要な部分を高速化する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>テスト</p></td>
+<td><p>GUT や gdUnit4 などのアドオンで、GDScript の単体テストを書く。</p></td>
+</tr>
+<tr class="row-even"><td><p>シェーダーの応用</p></td>
+<td><p>3D の <code class="docutils literal notranslate"><span class="pre">spatial</span></code> シェーダー、ライトの計算（<code class="docutils literal notranslate"><span class="pre">light()</span></code> 関数）、ポストエフェクトなどに進む。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>情報の探し方<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="id5">
+<h3>公式ドキュメント<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>最も信頼できる情報源は、<a class="reference external" href="https://docs.godotengine.org/en/stable/">Godot の公式ドキュメント</a> である。入門用のチュートリアルから、各機能の解説、全クラスのリファレンスまでそろっている。中でも「Your first 2D game」は、本書の第 17 章と同じく、落ちてくる敵をよけるゲームを作るチュートリアルで、本書の復習によい。</p>
+<p>公式ドキュメントのページは、上部のメニューでバージョンを切り替えられる。古いバージョン（特に Godot 3 系）の情報と混同しないよう、使っているバージョンに合ったページを見る。</p>
+</section>
+<section id="id6">
+<h3>公式のデモプロジェクト<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://github.com/godotengine/godot-demo-projects">Godot のデモプロジェクト集</a> には、2D、3D、GUI、オーディオ、ネットワークなどの分野ごとに、多数のサンプルプロジェクトが収められている。エディターの「AssetLib」画面からも、一部のデモを直接ダウンロードできる。動くコードを読むのは、新しい機能を学ぶ近道である。</p>
+</section>
+<section id="id8">
+<h3>コミュニティ<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://forum.godotengine.org/">Godot Forum</a>：公式のフォーラム。質問を投稿したり、過去の質問と回答を検索したりできる。</p></li>
+<li><p><a class="reference external" href="https://godotengine.org/asset-library/asset">Godot Asset Library</a>：プラグイン、サンプル、素材などのアセットを探せる。</p></li>
+<li><p><a class="reference external" href="https://godotshaders.com/">Godot Shaders</a>：コミュニティが作ったシェーダーの作例集。<a class="reference internal" href="ch16_shaders.html#ch16"><span class="std std-ref">第 16 章　シェーダー入門</span></a> の次の一歩に役立つ。</p></li>
+</ul>
+<p>質問するときは、Godot のバージョン、やりたいこと、試したこと、エラーメッセージ、関係するコードやシーンの構成を添えると、回答を得やすい。</p>
+</section>
+</section>
+<section id="id9">
+<h2>ゲームを完成させる練習<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>ゲーム制作の上達には、小さなゲームを数多く完成させることが効果的である。最初から大きなゲームを目指すと、完成する前に挫折しやすい。</p>
+<ul class="simple">
+<li><p><strong>小さく作って完成させる</strong>：遊びの中心となる仕組みを 1 つ決め、数日で完成できる規模にする。</p></li>
+<li><p><strong>既存のゲームをまねる</strong>：ブロック崩し、シューティング、パズルなど、ルールがよく知られたゲームを作ってみる。設計の判断に悩む時間を減らし、作ることに集中できる。</p></li>
+<li><p><strong>ゲームジャムに参加する</strong>：決められた期間（48 時間など）とテーマでゲームを作るイベントである。<a class="reference external" href="https://itch.io/jams">itch.io のゲームジャムの一覧</a> で、Godot を使うジャムも多く見つかる。期限があることで、完成させる経験を積める。</p></li>
+</ul>
+<p>本書が、読者がゲームを作る楽しさを知るきっかけになれば幸いである。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch20_3d.html" class="btn btn-neutral float-left" title="第 20 章 3D への入り口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../appendix/glossary.html" class="btn btn-neutral float-right" title="付録 A 用語集" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

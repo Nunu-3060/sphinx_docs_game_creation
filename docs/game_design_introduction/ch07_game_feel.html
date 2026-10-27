@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. 操作感とフィードバック &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="8. レベルデザインの基礎" href="ch08_level_basics.html" />
+    <link rel="prev" title="6. 難易度と学習" href="ch06_difficulty.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 操作感とフィードバック</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">7.1. ゲームフィール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">7.2. 応答性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">7.3. ジャンプを設計する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">7.3.1. ジャンプの高さと滞空時間</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">7.3.2. 操作感をよくする 4 つの工夫</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">7.3.3. デモを動かして確かめる</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">7.4. 視覚と聴覚のフィードバック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ui">7.5. UI と情報の提示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">7.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">7. </span>操作感とフィードバック</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">7. </span>操作感とフィードバック<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>同じルールのゲームでも、操作したときの手触りによって面白さは大きく変わる。キャラクターが入力にきびきびと反応し、行動の結果が気持ちよく返ってくるゲームは、それだけで触っていて楽しい。この章では、操作感を作る要素と、その代表例としてジャンプの設計を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">7.1. </span>ゲームフィール<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームデザイナーのスティーブ・スウィンクは、操作したときの手触りや感触をゲームフィールと呼び、次の 3 つの要素から成り立つと説明した。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 7.1 </span><span class="caption-text">ゲームフィールの 3 つの要素</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>要素</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>リアルタイムの操作</p></td>
+<td><p>プレイヤーの入力が、途切れることなく即座にゲームの中の動きに反映される</p></td>
+</tr>
+<tr class="row-odd"><td><p>模擬された空間</p></td>
+<td><p>キャラクターが動き回り、物とぶつかり合う、ゲームの中の物理的な空間</p></td>
+</tr>
+<tr class="row-even"><td><p>磨き上げ</p></td>
+<td><p>動きを強調する演出。アニメーション、効果音、画面の揺れなど</p></td>
+</tr>
+</tbody>
+</table>
+<p>操作感の多くは、仕様書の 1 行では表せない細かな数値と処理の積み重ねで決まる。エンジニアが実装の段階で決めることも多く、ゲームデザインとプログラミングの境目にある領域といえる。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">7.2. </span>応答性<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>操作感の土台は、入力に対する応答の速さである。ボタンを押してから画面上で反応が見えるまでの時間を入力遅延と呼ぶ。</p>
+<p>60 fps（1 秒間に 60 回画面を更新する）のゲームでは、1 フレームは約 16.7 ms である。入力の読み取り、ゲームの更新、描画、ディスプレイへの表示にそれぞれ時間がかかるため、実際の入力遅延は数フレーム分になることが多い。遅延が大きくなると、プレイヤーはキャラクターが重い、思いどおりに動かないと感じる。特に、タイミングの厳しいアクションゲームやリズムゲームでは、遅延をできるだけ小さくする必要がある。</p>
+<p>応答性は、キャラクターの加速と減速の設計にも左右される。ボタンを押した瞬間に最高速度になるキャラクターは機敏に感じられ、ゆっくり加速するキャラクターは重さや慣性を感じさせる。どちらがよいかは作りたい体験による。ただし、加速や減速に時間がかかりすぎると、プレイヤーは自分の入力が無視されたように感じる。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">7.3. </span>ジャンプを設計する<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ジャンプは、アクションゲームの操作感を最もよく表す動作である。ここでは、ジャンプの基本となる物理と、操作感をよくするための 4 つの工夫を、サンプル <code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> で確かめながら説明する。</p>
+<section id="id5">
+<h3><span class="section-number">7.3.1. </span>ジャンプの高さと滞空時間<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>重力加速度を <span class="math notranslate nohighlight">\(g\)</span>、ジャンプの初速を <span class="math notranslate nohighlight">\(v_0\)</span> とすると、空気抵抗を無視した場合のジャンプの最高到達点の高さ <span class="math notranslate nohighlight">\(h\)</span> と、地面に戻るまでの滞空時間 <span class="math notranslate nohighlight">\(T\)</span> は次の式で表せる。</p>
+<div class="math notranslate nohighlight">
+\[h = \frac{v_0^2}{2g}, \qquad T = \frac{2 v_0}{g}\]</div>
+<p>ゲームでは、物理的に正しい値よりも、遊びやすい高さと滞空時間から逆算して <span class="math notranslate nohighlight">\(v_0\)</span> と <span class="math notranslate nohighlight">\(g\)</span> を決めることが多い。上の 2 式から、高さ <span class="math notranslate nohighlight">\(h\)</span> と頂点までの時間 <span class="math notranslate nohighlight">\(t_{\text{peak}} = T / 2\)</span> を決めれば、次のように求められる。</p>
+<div class="math notranslate nohighlight">
+\[g = \frac{2h}{t_{\text{peak}}^2}, \qquad v_0 = \frac{2h}{t_{\text{peak}}}\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> では、1 フレームごとに速度に重力を加え、位置に速度を加える方法で動きを計算している。初速は 1 フレームあたり 11 ピクセル、重力は 1 フレームごとに速度を 0.5 ずつ増やす値なので、最高到達点は上の式で 121 ピクセルになる。実際には 1 フレームごとの離散的な計算になるため、最高到達点は約 115 ピクセルと、式の値より少し低くなる。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">7.3.2. </span>操作感をよくする 4 つの工夫<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>物理的に正しいだけのジャンプは、遊んでみると意外に扱いにくい。多くのアクションゲームでは、次のような工夫を加えている。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 7.2 </span><span class="caption-text">ジャンプの操作感をよくする工夫</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 48.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>工夫</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>解決する問題</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>コヨーテタイム</p></td>
+<td><p>足場の端から落ち始めた直後の数フレームは、まだジャンプを受け付ける</p></td>
+<td><p>端ぎりぎりで跳んだつもりが、1 フレーム遅れて跳べずに落ちる</p></td>
+</tr>
+<tr class="row-odd"><td><p>先行入力（ジャンプバッファ）</p></td>
+<td><p>着地の少し前に押されたジャンプを覚えておき、着地した瞬間に跳ぶ</p></td>
+<td><p>着地の直前に押したジャンプが無視される</p></td>
+</tr>
+<tr class="row-even"><td><p>可変ジャンプ</p></td>
+<td><p>ボタンを早く離すと、上昇を早めに打ち切って低く跳ぶ</p></td>
+<td><p>ジャンプの高さを調整できない</p></td>
+</tr>
+<tr class="row-odd"><td><p>落下を速くする</p></td>
+<td><p>落下中だけ重力を強くする</p></td>
+<td><p>頂点付近でふわふわと浮いたように感じる</p></td>
+</tr>
+</tbody>
+</table>
+<p>コヨーテタイムという名前は、アメリカのアニメーションで、崖から走り出たコヨーテが、下を見て気付くまで空中に留まってから落ちる場面にちなむ。</p>
+<p>これらの工夫に共通するのは、プレイヤーの「意図」を汲み取るという考え方である。足場の端から 1 フレーム遅れてジャンプボタンを押したプレイヤーは、ジャンプしようとしていた。コンピューターにとっては 1 フレームの差でも、人間にとってはほぼ同時である。厳密な判定よりも、プレイヤーの意図に沿った判定のほうが、操作が正確だと感じさせる。</p>
+<p><a class="reference internal" href="#list-jump-gravity"><span class="std std-numref">リスト 7.1</span></a> は重力の処理、<a class="reference internal" href="#list-jump-update"><span class="std std-numref">リスト 7.2</span></a> はジャンプの判定の処理である。</p>
+<div class="literal-block-wrapper docutils container" id="list-jump-gravity">
+<div class="code-block-caption"><span class="caption-number">リスト 7.1 </span><span class="caption-text">jump_feel.py（重力の処理）</span><a class="headerlink" href="#list-jump-gravity" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">83</span><span class="k">def</span><span class="w"> </span><span class="nf">apply_gravity</span><span class="p">(</span><span class="n">vy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">jump_held</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n">JumpSettings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">84</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;1 フレーム分の重力を速度に加える。&quot;&quot;&quot;</span>
+<span class="linenos">85</span>    <span class="n">gravity</span> <span class="o">=</span> <span class="n">GRAVITY</span>
+<span class="linenos">86</span>    <span class="k">if</span> <span class="n">vy</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">settings</span><span class="o">.</span><span class="n">heavy_fall</span><span class="p">:</span>
+<span class="linenos">87</span>        <span class="n">gravity</span> <span class="o">*=</span> <span class="n">FALL_GRAVITY_SCALE</span>
+<span class="linenos">88</span>    <span class="k">elif</span> <span class="n">vy</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">settings</span><span class="o">.</span><span class="n">variable_jump</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">jump_held</span><span class="p">:</span>
+<span class="linenos">89</span>        <span class="n">gravity</span> <span class="o">*=</span> <span class="n">LOW_JUMP_GRAVITY_SCALE</span>
+<span class="linenos">90</span>    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">vy</span> <span class="o">+</span> <span class="n">gravity</span><span class="p">,</span> <span class="n">MAX_FALL_SPEED</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="list-jump-update">
+<div class="code-block-caption"><span class="caption-number">リスト 7.2 </span><span class="caption-text">jump_feel.py（ジャンプの判定）</span><a class="headerlink" href="#list-jump-update" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">129</span>    <span class="k">def</span><span class="w"> </span><span class="nf">_update_jump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="n">InputState</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n">JumpSettings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">130</span>        <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">jump_pressed</span><span class="p">:</span>
+<span class="linenos">131</span>            <span class="c1"># 先行入力が OFF のときは、押したフレームだけ有効にする。</span>
+<span class="linenos">132</span>            <span class="bp">self</span><span class="o">.</span><span class="n">buffer_frames</span> <span class="o">=</span> <span class="n">BUFFER_FRAMES</span> <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">jump_buffer</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="linenos">133</span>        <span class="n">can_jump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_ground</span> <span class="ow">or</span> <span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">coyote_time</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">air_frames</span> <span class="o">&lt;=</span> <span class="n">COYOTE_FRAMES</span><span class="p">)</span>
+<span class="linenos">134</span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_frames</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">can_jump</span><span class="p">:</span>
+<span class="linenos">135</span>            <span class="bp">self</span><span class="o">.</span><span class="n">vy</span> <span class="o">=</span> <span class="o">-</span><span class="n">JUMP_SPEED</span>
+<span class="linenos">136</span>            <span class="bp">self</span><span class="o">.</span><span class="n">on_ground</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">137</span>            <span class="bp">self</span><span class="o">.</span><span class="n">buffer_frames</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">138</span>            <span class="bp">self</span><span class="o">.</span><span class="n">air_frames</span> <span class="o">=</span> <span class="n">COYOTE_FRAMES</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 空中でもう一度跳べないようにする</span>
+<span class="linenos">139</span>        <span class="bp">self</span><span class="o">.</span><span class="n">buffer_frames</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">air_frames</span></code> は足場を離れてからのフレーム数、<code class="docutils literal notranslate"><span class="pre">buffer_frames</span></code> は先行入力の残りフレーム数である。足場の上にいるか、足場を離れてから <code class="docutils literal notranslate"><span class="pre">COYOTE_FRAMES</span></code> フレーム以内であればジャンプできる。ジャンプボタンが押されると <code class="docutils literal notranslate"><span class="pre">buffer_frames</span></code> に <code class="docutils literal notranslate"><span class="pre">BUFFER_FRAMES</span></code> を設定し、その間にジャンプできる状態になれば跳ぶ。</p>
+<p>次の図は、工夫の有無によってジャンプの軌跡がどう変わるかを、<code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> に <code class="docutils literal notranslate"><span class="pre">--plot</span></code> と保存するファイル名を指定して（例：<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">jump_feel.py</span> <span class="pre">--plot</span> <span class="pre">jump.png</span></code>）描いたものである。</p>
+<figure class="align-center" id="id12">
+<img alt="ジャンプの軌跡" src="_images/jump_trajectory.png" />
+<figcaption>
+<p><span class="caption-number">図 7.1 </span><span class="caption-text">ジャンプの軌跡の比較</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>重力が一定の場合、上昇と落下は左右対称になる。落下を速くすると、頂点の高さは変わらないまま落下にかかる時間が短くなり、きびきびとした印象になる。可変ジャンプでボタンを 6 フレームで離すと、低く短いジャンプになる。</p>
+</section>
+<section id="id7">
+<h3><span class="section-number">7.3.3. </span>デモを動かして確かめる<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> を引数なしで実行すると、4 つの工夫を 1〜4 の数字キーで個別に ON / OFF できるデモが起動する。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="go">python jump_feel.py</span>
+</pre></div>
+</div>
+<p>← → で移動、Space でジャンプする。穴に落ちるとスタート地点に戻る。キャラクターは、足場の上では水色、コヨーテタイムの猶予中は黄色、それ以外の空中では橙色で表示される。すべての工夫を OFF にしたときと ON にしたときで、穴を跳び越えたり段差を上ったりする操作の感触を比べてみてほしい。</p>
+<p>走りながら最初の穴を跳び越えるとき、ジャンプボタンを押すのが遅すぎると穴に落ちる。コヨーテタイムが OFF なら足場の端を越えた時点で跳べなくなるが、ON なら端を越えてからも 6 フレーム（60 fps で 0.1 秒）は跳べる。プレイヤーがこの差を数字で意識することは無いが、「押したはずなのに落ちた」と感じる頻度は大きく変わる。</p>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">7.4. </span>視覚と聴覚のフィードバック<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>プレイヤーの行動に対して、ゲームが見た目と音で反応を返すことも、操作感の大きな要素である。ゲーム開発者のマーティン・ヨナソンとペトリ・プルホは、こうした演出を重ねてゲームの手触りを豊かにすることを「ジュース（果汁）を加える」と表現した。2012 年の 2 人の講演「Juice it or lose it」はよく知られている。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 7.3 </span><span class="caption-text">手触りをよくする演出の例</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>演出</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ヒットストップ</p></td>
+<td><p>攻撃が当たった瞬間に、ゲームの進行を数フレームだけ止める。打撃の重さが強調される</p></td>
+</tr>
+<tr class="row-odd"><td><p>画面の揺れ</p></td>
+<td><p>爆発や強い攻撃のときに画面を小さく揺らす</p></td>
+</tr>
+<tr class="row-even"><td><p>つぶれと伸び</p></td>
+<td><p>着地の瞬間にキャラクターを横につぶし、跳ぶ瞬間に縦に伸ばす。動きに弾力が生まれる</p></td>
+</tr>
+<tr class="row-odd"><td><p>パーティクル</p></td>
+<td><p>着地の砂ぼこり、攻撃の火花など、細かな粒子を飛ばす</p></td>
+</tr>
+<tr class="row-even"><td><p>効果音</p></td>
+<td><p>行動ごとに異なる音を鳴らす。連続する音は高さを少しずつ変えると単調にならない</p></td>
+</tr>
+<tr class="row-odd"><td><p>振動</p></td>
+<td><p>コントローラーを振動させて、衝撃を手に伝える</p></td>
+</tr>
+</tbody>
+</table>
+<p>これらの演出は、ルールを何も変えずに操作感を大きく向上させる。ただし、演出は多ければよいわけではない。画面の揺れや点滅が強すぎると、画面が見にくくなるうえ、気分が悪くなるプレイヤーもいる。演出の強さを設定で調整できるようにしておくと、第 6 章で述べたアクセシビリティの面でも望ましい。</p>
+</section>
+<section id="ui">
+<h2><span class="section-number">7.5. </span>UI と情報の提示<a class="headerlink" href="#ui" title="Link to this heading"></a></h2>
+<p>プレイヤーに状況を伝える画面上の表示を UI（ユーザーインターフェース）と呼ぶ。体力、残り時間、地図のように、ゲームの画面に重ねて常に表示する UI は、特に HUD（ヘッドアップディスプレイ）と呼ばれる。</p>
+<p>エリック・ファーゲルホルトとマグヌス・ロレンツォンは、UI を、ゲームの世界の中に存在するかどうかと、ゲームの空間の中に置かれているかどうかによって、次の 4 種類に分けた。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 7.4 </span><span class="caption-text">UI の 4 種類</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 40.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ダイエジェティック</p></td>
+<td><p>ゲームの世界の中に実在し、登場人物にも見えている</p></td>
+<td><p>登場人物が手に持つ地図、車のスピードメーター</p></td>
+</tr>
+<tr class="row-odd"><td><p>ノンダイエジェティック</p></td>
+<td><p>ゲームの世界の外にあり、画面に重ねて表示される</p></td>
+<td><p>画面の隅の体力ゲージ、得点</p></td>
+</tr>
+<tr class="row-even"><td><p>空間的</p></td>
+<td><p>ゲームの空間の中に表示されるが、登場人物には見えていない</p></td>
+<td><p>地面に描かれた目的地への矢印、敵の頭上の体力ゲージ</p></td>
+</tr>
+<tr class="row-odd"><td><p>メタ</p></td>
+<td><p>ゲームの世界の出来事を、画面全体の効果で表す</p></td>
+<td><p>体力が減ると画面の端が赤くなる</p></td>
+</tr>
+</tbody>
+</table>
+<p>ゲームの世界の中に UI を溶け込ませると没入感が高まるが、情報を読み取りにくくなることもある。どの情報をどの方法で伝えるかは、その情報がどのくらい重要か、どのくらい頻繁に確認されるかで決める。</p>
+<p>UI を設計するときは、次の点を確認するとよい。</p>
+<ul class="simple">
+<li><p>判断に必要な情報が、判断が必要なときに見えているか。</p></li>
+<li><p>重要な情報ほど目立つ位置と大きさになっているか。</p></li>
+<li><p>同時に表示する情報が多すぎないか。</p></li>
+<li><p>第 6 章で述べたように、危険の予告になっているか。敵の次の行動が予想できると、プレイヤーは失敗を公平だと感じる。</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2><span class="section-number">7.6. </span>演習<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> で 4 つの工夫を 1 つずつ OFF にして遊び、それぞれが無いとどのような場面で困るかを書き出せ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> の <code class="docutils literal notranslate"><span class="pre">JUMP_SPEED</span></code> と <code class="docutils literal notranslate"><span class="pre">GRAVITY</span></code> を変更し、最高到達点の高さを変えずに頂点までの時間を短くせよ。式で値を求めてから、実際に動かして確かめること。</p></li>
+<li><p>好きなアクションゲームを 1 つ選び、手触りをよくする演出を 5 つ以上見つけて書き出せ。</p></li>
+<li><p>好きなゲームの画面に表示されている UI を、4 種類に分類せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch06_difficulty.html" class="btn btn-neutral float-left" title="6. 難易度と学習" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch08_level_basics.html" class="btn btn-neutral float-right" title="8. レベルデザインの基礎" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

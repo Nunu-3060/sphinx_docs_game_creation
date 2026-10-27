@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ゲームのための数学・物理入門 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="1. はじめに" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ゲームのための数学・物理入門</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>ゲームのための数学・物理入門<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ゲームの中で物が動き、回り、ぶつかり、跳ね返る。その裏側にある数学と物理を、Python のコードと図で学ぶ入門書である。ゲーム制作の経験は無いが Python を書けるエンジニアや工学系の学生を対象とし、2D ゲームを中心に、ベクトル・三角関数・行列・補間・乱数・運動の法則・衝突判定と応答を扱う。最後に、それらをまとめて 2D プラットフォーマー（横スクロールのアクションゲーム）を作る。</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id2">1.1. 本書の目的と対象読者</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id3">1.2. ゲームで数学・物理が必要になる場面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id4">1.3. 「本物の物理」と「気持ちよい物理」</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id5">1.4. 本書の構成と読み方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id8">1.5. 実行環境の準備</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coordinates.html#id2">2.1. ワールド座標と画面座標</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coordinates.html#id3">2.2. 単位を決める</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coordinates.html#id4">2.3. 浮動小数点数の性質</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coordinates.html#id8">2.4. 整数座標と小数座標の使い分け</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="game_loop.html#id2">3.1. ゲームループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="game_loop.html#id3">3.2. フレームレートに依存しない移動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="game_loop.html#id4">3.3. 可変タイムステップと固定タイムステップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="game_loop.html#id5">3.4. 固定タイムステップの実装</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#id2">4.1. ベクトルで位置・変位・速度を表す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#id3">4.2. 足し算・引き算とスカラー倍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#id4">4.3. 長さと正規化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#id7">4.4. 内積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#d">4.5. 2D の外積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#id11">4.6. 反射ベクトル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vectors.html#pygame-vector2">4.7. pygame.Vector2 を使う</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="angles.html#id2">5.1. 度とラジアン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="angles.html#id3">5.2. 三角関数で円運動を書く</a></li>
+<li class="toctree-l2"><a class="reference internal" href="angles.html#atan2">5.3. atan2 で向きを求める</a></li>
+<li class="toctree-l2"><a class="reference internal" href="angles.html#id4">5.4. 回転の式と点の回転</a></li>
+<li class="toctree-l2"><a class="reference internal" href="angles.html#id5">5.5. 角度の補間と最短の回転</a></li>
+<li class="toctree-l2"><a class="reference internal" href="angles.html#id6">5.6. 旋回速度に上限がある追尾</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#id2">6.1. 変換を行列で表す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#id3">6.2. 同次座標で平行移動も行列にする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#id4">6.3. 変換の合成と順序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#id5">6.4. ローカル座標とワールド座標</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#id7">6.5. カメラ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#id8">6.6. 逆変換</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrices.html#d">6.7. 3D への拡張の概要</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rotation3d.html#id1">7.1. 3D のベクトルと外積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotation3d.html#id3">7.2. オイラー角とジンバルロック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotation3d.html#id4">7.3. 回転軸と回転角</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotation3d.html#id5">7.4. クォータニオン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotation3d.html#id9">7.5. 球面線形補間</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotation3d.html#id10">7.6. ゲームエンジンでの回転の扱い</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#id2">8.1. 線形補間と逆補間</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#id3">8.2. イージング関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#id4">8.3. フレームレートに依存しない滑らかな追従</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#id5">8.4. ベジェ曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#catmull-rom">8.5. Catmull-Rom スプライン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#id6">8.6. 等速で曲線上を移動させる</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="randomness.html#id2">9.1. 擬似乱数とシード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randomness.html#id3">9.2. 一様乱数から範囲・方向・円内の点を作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randomness.html#id4">9.3. 重み付き抽選</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randomness.html#id5">9.4. 偏りを減らす乱数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randomness.html#id6">9.5. 確率の期待値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randomness.html#id7">9.6. ノイズ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#id2">10.1. 位置・速度・加速度</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#id3">10.2. ニュートンの運動の法則と力</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#id4">10.3. 重力と放物運動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#id6">10.4. ゲームらしいジャンプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#id11">10.5. 摩擦と空気抵抗</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#id12">10.6. 数値積分</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html#dt">10.7. dt が大きいと何が起きるか</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id2">11.1. 衝突判定の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id3">11.2. 点・円・長方形</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id8">11.3. レイキャスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id11">11.4. 回転した長方形と凸多角形</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id12">11.5. タイルマップとの衝突判定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id13">11.6. すり抜けと連続衝突判定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#id14">11.7. 判定の高速化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="response.html#id2">12.1. めり込みの解消</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html#id4">12.2. 速度の法線方向と接線方向への分解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html#id5">12.3. 反発係数と跳ね返り</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html#id6">12.4. 運動量と力積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html#id7">12.5. 衝突時の摩擦</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html#id8">12.6. 剛体の回転の入門</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="springs.html#id2">13.1. ばねとダンパー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="springs.html#id4">13.2. 拘束とベルレ法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="springs.html#id7">13.3. 布とソフトボディー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="springs.html#id8">13.4. パーティクル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="physics_engine.html#id2">14.1. 物理エンジンが内部で行っていること</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physics_engine.html#pymunk">14.2. pymunk の基本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physics_engine.html#id3">14.3. 自作するか物理エンジンを使うか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physics_engine.html#id4">14.4. 決定性とネットワーク対戦・リプレイ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physics_engine.html#id5">14.5. 主な物理エンジン</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id1">15.1. 作るゲーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id2">15.2. 全体の構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id3">15.3. マップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id4">15.4. ゲームループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id5">15.5. プレイヤーの動き</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id6">15.6. 地形との衝突</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id7">15.7. コイン・トゲ・ゴール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id8">15.8. カメラ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id9">15.9. 演出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id10">15.10. テスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id11">15.11. 改造のアイデア</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html#id12">15.12. 次のステップ</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-right" title="1. はじめに" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

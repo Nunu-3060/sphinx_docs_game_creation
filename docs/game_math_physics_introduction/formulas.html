@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>付録 A 数式・記号の早見表 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="付録 B 用語集" href="glossary.html" />
+    <link rel="prev" title="15. 総合演習：2D プラットフォーマーを作る" href="practice.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">付録 A 数式・記号の早見表</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ベクトル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">角度と回転</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">行列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">補間</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">確率</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">運動と衝突</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">付録 A 数式・記号の早見表</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="a">
+<h1>付録 A 数式・記号の早見表<a class="headerlink" href="#a" title="Link to this heading"></a></h1>
+<p>本書で使った記号と、よく使う公式をまとめる。</p>
+<section id="id1">
+<h2>記号<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 1 </span><span class="caption-text">本書で使う記号</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>記号</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf{a}\)</span>、<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>（太字）</p></td>
+<td><p>ベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(a_x\)</span>、<span class="math notranslate nohighlight">\(a_y\)</span></p></td>
+<td><p>ベクトル <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> の x 成分、y 成分</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(|\mathbf{a}|\)</span></p></td>
+<td><p>ベクトルの長さ</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\hat{\mathbf{a}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{a}\)</span> を正規化した単位ベクトル</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf{a} \cdot \mathbf{b}\)</span></p></td>
+<td><p>内積</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf{a} \times \mathbf{b}\)</span></p></td>
+<td><p>外積（2D では数、3D ではベクトル）</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf{n}\)</span></p></td>
+<td><p>法線（面に垂直な単位ベクトル）</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\Delta t\)</span>、dt</p></td>
+<td><p>デルタタイム（1 回の更新で進める時間）</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(h\)</span></p></td>
+<td><p>固定タイムステップの 1 ステップの時間</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\theta\)</span>、<span class="math notranslate nohighlight">\(\phi\)</span></p></td>
+<td><p>角度（ラジアン）</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\omega\)</span></p></td>
+<td><p>角速度、または角振動数</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(m\)</span>、<span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td><p>質量、慣性モーメント</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(g\)</span></p></td>
+<td><p>重力加速度の大きさ</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(e\)</span></p></td>
+<td><p>反発係数（指数関数の底 <span class="math notranslate nohighlight">\(e^x\)</span> と区別すること）</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td><p>摩擦係数</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(k\)</span>、<span class="math notranslate nohighlight">\(c\)</span></p></td>
+<td><p>ばね定数、減衰係数</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\zeta\)</span></p></td>
+<td><p>減衰比</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h2>ベクトル<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 2 </span><span class="caption-text">ベクトルの公式</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>演算</p></th>
+<th class="head"><p>式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>長さ</p></td>
+<td><p><span class="math notranslate nohighlight">\(|\mathbf{a}| = \sqrt{a_x^2 + a_y^2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>正規化</p></td>
+<td><p><span class="math notranslate nohighlight">\(\hat{\mathbf{a}} = \mathbf{a} / |\mathbf{a}|\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>内積</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{a} \cdot \mathbf{b} = a_x b_x + a_y b_y = |\mathbf{a}|\,|\mathbf{b}|\cos\theta\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>2D の外積</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{a} \times \mathbf{b} = a_x b_y - a_y b_x = |\mathbf{a}|\,|\mathbf{b}|\sin\theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>3D の外積</p></td>
+<td><p><span class="math notranslate nohighlight">\((a_y b_z - a_z b_y,\ a_z b_x - a_x b_z,\ a_x b_y - a_y b_x)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>射影</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathrm{proj}_{\mathbf{b}}\mathbf{a} = \dfrac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}}\,\mathbf{b}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>反射</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{r} = \mathbf{v} - 2(\mathbf{v} \cdot \mathbf{n})\,\mathbf{n}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>角度と回転<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 3 </span><span class="caption-text">角度と回転の公式</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>内容</p></th>
+<th class="head"><p>式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>度とラジアン</p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_{\text{rad}} = \theta_{\text{度}} \times \pi / 180\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>極座標から直交座標</p></td>
+<td><p><span class="math notranslate nohighlight">\((r\cos\theta,\ r\sin\theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>ベクトルの向き</p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta = \mathrm{atan2}(y, x)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>2D の回転</p></td>
+<td><p><span class="math notranslate nohighlight">\(x' = x\cos\theta - y\sin\theta,\quad y' = x\sin\theta + y\cos\theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>角度の正規化</p></td>
+<td><p><span class="math notranslate nohighlight">\(((\theta + \pi) \bmod 2\pi) - \pi\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>行列<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 4 </span><span class="caption-text">2D のアフィン変換の行列</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>変換</p></th>
+<th class="head"><p>行列</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>平行移動</p></td>
+<td><p><span class="math notranslate nohighlight">\(\begin{pmatrix} 1 &amp; 0 &amp; t_x \\ 0 &amp; 1 &amp; t_y \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>回転</p></td>
+<td><p><span class="math notranslate nohighlight">\(\begin{pmatrix} \cos\theta &amp; -\sin\theta &amp; 0 \\ \sin\theta &amp; \cos\theta &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>拡大縮小</p></td>
+<td><p><span class="math notranslate nohighlight">\(\begin{pmatrix} s_x &amp; 0 &amp; 0 \\ 0 &amp; s_y &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>合成の逆</p></td>
+<td><p><span class="math notranslate nohighlight">\((AB)^{-1} = B^{-1}A^{-1}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h2>補間<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">表 5 </span><span class="caption-text">補間の公式</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>内容</p></th>
+<th class="head"><p>式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>線形補間</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathrm{lerp}(a, b, t) = a + (b - a)\,t\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>逆補間</p></td>
+<td><p><span class="math notranslate nohighlight">\((v - a) / (b - a)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>指数関数的減衰</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \leftarrow \mathrm{lerp}(x,\ x_{\text{目標}},\ 1 - e^{-k\,\Delta t})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>smoothstep</p></td>
+<td><p><span class="math notranslate nohighlight">\(3t^2 - 2t^3\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>3 次ベジェ曲線</p></td>
+<td><p><span class="math notranslate nohighlight">\((1 - t)^3 P_0 + 3(1 - t)^2 t\,P_1 + 3(1 - t)t^2 P_2 + t^3 P_3\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>球面線形補間</p></td>
+<td><p><span class="math notranslate nohighlight">\(\dfrac{\sin((1 - t)\Omega)}{\sin\Omega}\,a + \dfrac{\sin(t\Omega)}{\sin\Omega}\,b\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id6">
+<h2>確率<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 6 </span><span class="caption-text">確率の公式</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>内容</p></th>
+<th class="head"><p>式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>初めて当たるまでの回数の期待値</p></td>
+<td><p><span class="math notranslate nohighlight">\(1/p\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>n 回で少なくとも 1 回当たる確率</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - (1 - p)^n\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>その確率が P 以上になる回数</p></td>
+<td><p><span class="math notranslate nohighlight">\(\lceil \log(1 - P) / \log(1 - p) \rceil\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id7">
+<h2>運動と衝突<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 7 </span><span class="caption-text">運動と衝突の公式</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>内容</p></th>
+<th class="head"><p>式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>運動方程式</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{F} = m\,\mathbf{a}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>半陰的オイラー法</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{v} \leftarrow \mathbf{v} + \mathbf{a}\,\Delta t,\quad \mathbf{x} \leftarrow \mathbf{x} + \mathbf{v}\,\Delta t\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>ジャンプの重力と初速</p></td>
+<td><p><span class="math notranslate nohighlight">\(g = 2h / T^2,\quad v_0 = 2h / T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>反発</p></td>
+<td><p><span class="math notranslate nohighlight">\(v_n' = -e\,v_n\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>衝突の力積</p></td>
+<td><p><span class="math notranslate nohighlight">\(j = \dfrac{-(1 + e)\,v_n}{1/m_A + 1/m_B}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>ばねとダンパー</p></td>
+<td><p><span class="math notranslate nohighlight">\(a = -k(x - x_0) - c\,v,\quad k = \omega^2,\quad c = 2\zeta\omega\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>位置ベルレ法</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{x}_{\text{次}} = 2\mathbf{x}_{\text{今}} - \mathbf{x}_{\text{前}} + \mathbf{a}\,\Delta t^2\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>慣性モーメント（円板）</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{2} m r^2\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>慣性モーメント（長方形の板）</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{12} m (w^2 + h^2)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="practice.html" class="btn btn-neutral float-left" title="15. 総合演習：2D プラットフォーマーを作る" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="glossary.html" class="btn btn-neutral float-right" title="付録 B 用語集" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

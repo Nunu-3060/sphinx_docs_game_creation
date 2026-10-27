@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. レベルデザインの基礎 &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="9. レベルの構成とペーシング" href="ch09_level_structure.html" />
+    <link rel="prev" title="7. 操作感とフィードバック" href="ch07_game_feel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. レベルデザインの基礎</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">8.1. レベルの役割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">8.2. 目標を示す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">8.3. 導線と視線誘導</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">8.4. ゲーティング</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">8.5. ブロックアウト</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">8.5.1. メトリクスに基づいて寸法を決める</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">8.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>レベルデザインの基礎</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">8. </span>レベルデザインの基礎<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>ここから本書の後半として、レベルデザインを扱う。第 1 章で述べたように、レベルデザインは、ゲームデザインで決めたルールを遊ぶための具体的な場所と、その中での体験の順番を作る作業である。この章では、レベルが果たす役割と、プレイヤーを迷わせずに導くための基本的な技法を学ぶ。</p>
+<section id="id2">
+<h2><span class="section-number">8.1. </span>レベルの役割<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>レベルは、単に敵やアイテムを置く場所ではない。よいレベルは、次の 3 つの役割を同時に果たしている。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 8.1 </span><span class="caption-text">レベルの 3 つの役割</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>役割</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>遊ばせる</p></td>
+<td><p>ルールが面白く働く状況を作る。メカニクスの舞台になる</p></td>
+<td><p>ジャンプの距離がぎりぎりの穴、敵を誘い込める地形</p></td>
+</tr>
+<tr class="row-odd"><td><p>教える</p></td>
+<td><p>新しい要素を段階的に体験させ、遊び方を身に付けさせる</p></td>
+<td><p>安全な場所で初めて敵に出会わせる</p></td>
+</tr>
+<tr class="row-even"><td><p>語る</p></td>
+<td><p>場所の様子や配置そのものによって、世界や出来事を伝える</p></td>
+<td><p>荒らされた部屋と残された日記から、そこで起きた事件を想像させる</p></td>
+</tr>
+</tbody>
+</table>
+<p>3 つ目の「語る」は、環境によるストーリーテリングと呼ばれる。文章や映像で説明しなくても、倒れた家具、壁の傷、置き去りにされた荷物などの配置によって、プレイヤーは自分で物語を読み取る。プレイヤーが自分で気付いたことは、説明されたことよりも印象に残る。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">8.2. </span>目標を示す<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>プレイヤーがレベルの中で迷う原因の多くは、何をすればよいか、どこへ行けばよいかが分からないことである。レベルデザインでは、まず目標をプレイヤーに示す必要がある。</p>
+<p>目標には、レベル全体の目標（ボスを倒す、出口に着く）と、その場その場の小さな目標（目の前の扉を開ける、あの高台に登る）がある。プレイヤーが常に「次に何をすればよいか」を 1 つは思い浮かべられる状態を保つのがよい。</p>
+<p>目標を示す方法には、次のようなものがある。</p>
+<ul class="simple">
+<li><p>遠くに見える目的地を最初に見せる。レベルの冒頭で高台から全体を見渡させるのは、よく使われる手法である。</p></li>
+<li><p>登場人物の台詞や、ゲーム内の手紙などで目的を伝える。</p></li>
+<li><p>鍵の掛かった扉を先に見せておき、後で鍵を見つけたときに「あの扉だ」と気付かせる。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2><span class="section-number">8.3. </span>導線と視線誘導<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>目標が分かっても、そこへの道筋が分からなければ迷う。デザイナーがプレイヤーに通ってほしい経路を導線と呼ぶ。プレイヤーが空間の中で自分で道を見つけることはウェイファインディングと呼ばれ、それを助けるために、目を向けてほしい方向へ注意を引く手がかりを配置する技法を視線誘導と呼ぶ。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 8.2 </span><span class="caption-text">視線を誘導する主な手がかり</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>手がかり</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ランドマーク</p></td>
+<td><p>遠くからでも見える特徴的な建物や地形。自分の位置と方向を知る目印になる</p></td>
+<td><p>街の中心にそびえる塔、山頂の城</p></td>
+</tr>
+<tr class="row-odd"><td><p>光</p></td>
+<td><p>人は明るい場所に目を向け、明るい方へ進みたくなる</p></td>
+<td><p>暗い洞窟の先から差し込む光、出口を照らす照明</p></td>
+</tr>
+<tr class="row-even"><td><p>色</p></td>
+<td><p>周囲と異なる色は目立つ。同じ色を同じ意味で使い続けると、色自体が合図になる</p></td>
+<td><p>登れる壁の縁や、壊せる箱を特定の色で塗る</p></td>
+</tr>
+<tr class="row-odd"><td><p>形と線</p></td>
+<td><p>道、柵、壁の模様など、線状のものは視線をその方向へ導く</p></td>
+<td><p>通路に沿って並ぶ街灯、奥へ伸びる線路</p></td>
+</tr>
+<tr class="row-even"><td><p>動き</p></td>
+<td><p>動いているものには自然に目が向く</p></td>
+<td><p>風になびく旗、先を飛んでいく鳥、走り去る登場人物</p></td>
+</tr>
+<tr class="row-odd"><td><p>報酬の列</p></td>
+<td><p>拾える物を道筋に沿って並べ、たどらせる</p></td>
+<td><p>進むべき方向に並んだコイン</p></td>
+</tr>
+</tbody>
+</table>
+<p>色を合図として使う場合は、一貫性が重要である。ある場所では黄色が「登れる」を意味し、別の場所では単なる飾りとして黄色が使われていると、プレイヤーは合図を信用しなくなる。また、第 6 章で述べたように、色だけに頼らず、形や模様でも区別できるようにしておくと、色覚の特性にかかわらず読み取れる。</p>
+<p>視線誘導の手がかりは、1 つだけでなく複数を重ねると確実に働く。例えば、出口を明るく照らし（光）、そこへ向かう道に沿って柵を置き（線）、出口の上に風になびく旗を立てる（動き）、という具合である。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">8.4. </span>ゲーティング<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>レベルの中で、条件を満たすまで先に進めないようにする仕掛けをゲート（関門）と呼び、ゲートを使ってプレイヤーの進む順番を制御することをゲーティングと呼ぶ。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 8.3 </span><span class="caption-text">ゲートの種類</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>鍵と扉</p></td>
+<td><p>特定のアイテムを手に入れると開く</p></td>
+<td><p>赤い鍵で開く赤い扉</p></td>
+</tr>
+<tr class="row-odd"><td><p>能力のゲート</p></td>
+<td><p>新しい能力を身に付けると通れるようになる</p></td>
+<td><p>二段ジャンプを覚えると届く高台、泳げるようになると渡れる川</p></td>
+</tr>
+<tr class="row-even"><td><p>課題のゲート</p></td>
+<td><p>課題を達成すると開く</p></td>
+<td><p>部屋の敵をすべて倒すと開く扉</p></td>
+</tr>
+<tr class="row-odd"><td><p>物語のゲート</p></td>
+<td><p>物語の進行に応じて開く</p></td>
+<td><p>登場人物との会話の後に通れるようになる橋</p></td>
+</tr>
+</tbody>
+</table>
+<p>ゲートによって、デザイナーはプレイヤーが体験する順番を保証できる。新しい能力を手に入れる前に、その能力が必要な場所を見せておくと、能力を手に入れたときに「あそこへ行ける」という期待が生まれる。探索型のアクションゲーム（メトロイドヴァニアと呼ばれるジャンル）は、この能力のゲートを中心に設計されている。</p>
+<p>ゲートには、絶対に通れないハードなゲートと、工夫すれば通れるソフトなゲートがある。強い敵が道をふさいでいる場合、普通は倒せないが、腕のあるプレイヤーなら倒して先に進めるかもしれない。ソフトなゲートは、上級者に近道や自由度を与えるが、デザイナーが想定した順番が崩れる可能性も生む。</p>
+<p>鍵と扉の配置は、組み合わせが増えると間違いが起きやすい。鍵を扉の向こう側に置いてしまい、どうやっても先に進めなくなる、といった誤りである。このような配置の誤りを機械的に調べる方法は、第 9 章で扱う。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">8.5. </span>ブロックアウト<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>レベルを作るとき、最初から完成した見た目で作り込むことはしない。まず単純な箱や板だけでレベルの形を作り、実際に遊んで確かめる。この作業をブロックアウト、あるいはグレーボックスと呼ぶ。灰色の箱だけで作ることが多いのが名前の由来である。</p>
+<p>ブロックアウトには、次のような利点がある。</p>
+<ul class="simple">
+<li><p>作り直すのが簡単なので、配置や大きさを何度でも試せる。</p></li>
+<li><p>見た目の良し悪しに気を取られず、遊びとしての良し悪しだけを判断できる。</p></li>
+<li><p>アーティストが作業を始める前に、必要な空間の大きさや形を決められる。</p></li>
+</ul>
+<section id="id7">
+<h3><span class="section-number">8.5.1. </span>メトリクスに基づいて寸法を決める<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>ブロックアウトでは、キャラクターの性能に基づいて空間の寸法を決める。キャラクターの身長、走る速さ、ジャンプの高さと距離などの数値を、レベルデザインではメトリクスと呼ぶ。</p>
+<p>次の図は、第 7 章の <code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> と同じ設定のキャラクターの最大ジャンプの軌跡と、それに基づいて足場を配置した例である。1 マスは 32 ピクセルとしている。</p>
+<figure class="align-center" id="id12">
+<img alt="ジャンプの性能に基づく足場の配置" src="_images/blockout_metrics.png" />
+<figcaption>
+<p><span class="caption-number">図 8.1 </span><span class="caption-text">ジャンプの性能に基づく足場の配置</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>このキャラクターは、走りながら跳ぶと高さ約 3.6 マス、幅約 6.1 マスまで届く。そこで、例えば次のような基準を決める。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 8.4 </span><span class="caption-text">メトリクスに基づく寸法の基準の例</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>用途</p></th>
+<th class="head"><p>寸法</p></th>
+<th class="head"><p>考え方</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>誰でも越えられる穴</p></td>
+<td><p>幅 4 マスまで</p></td>
+<td><p>最大距離の 3 分の 2 程度にして、踏み切りが多少早くても遅くても届くようにする</p></td>
+</tr>
+<tr class="row-odd"><td><p>上級者向けの穴</p></td>
+<td><p>幅 5〜6 マス</p></td>
+<td><p>最大距離に近く、正確な踏み切りが必要になる</p></td>
+</tr>
+<tr class="row-even"><td><p>普通に登れる段差</p></td>
+<td><p>高さ 2 マスまで</p></td>
+<td><p>最大の高さより十分低くし、頂点を過ぎてから余裕をもって着地できるようにする</p></td>
+</tr>
+<tr class="row-odd"><td><p>越えられない壁</p></td>
+<td><p>高さ 4 マス以上</p></td>
+<td><p>最大の高さを超えるので、別の道を探す必要があることが見た目で分かる</p></td>
+</tr>
+</tbody>
+</table>
+<p>基準を決めておくと、レベルのどこでどのくらいの操作の難しさを求めるかを意図して設計できる。逆に基準が無いと、たまたま最大距離ぎりぎりになった穴が、易しいはずの序盤に紛れ込んだりする。なお、メトリクスはキャラクターの性能を調整するたびに変わるので、操作感の調整はブロックアウトよりも先に、ある程度固めておく必要がある。</p>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">8.6. </span>演習<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>好きなゲームのレベルを 1 つ選び、遊ばせる、教える、語るの 3 つの役割をそれぞれどのように果たしているかを説明せよ。</p></li>
+<li><p>同じレベルで、プレイヤーを目的地へ導くために使われている手がかりを、視線誘導の表の分類に従って書き出せ。</p></li>
+<li><p>遊んだことのあるゲームで道に迷った場面を思い出し、どの手がかりを加えれば迷わずに済んだかを提案せよ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jump_feel.py</span></code> の <code class="docutils literal notranslate"><span class="pre">LEVEL</span></code> を書き換えて、メトリクスの基準の表に従ったレベルを作れ。誰でも越えられる穴と上級者向けの穴の両方を含めること。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch07_game_feel.html" class="btn btn-neutral float-left" title="7. 操作感とフィードバック" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch09_level_structure.html" class="btn btn-neutral float-right" title="9. レベルの構成とペーシング" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

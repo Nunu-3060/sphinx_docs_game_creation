@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. はじめに &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="2. 座標系と数値" href="coordinates.html" />
+    <link rel="prev" title="ゲームのための数学・物理入門" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.1. 本書の目的と対象読者</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.2. ゲームで数学・物理が必要になる場面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.3. 「本物の物理」と「気持ちよい物理」</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">1.4. 本書の構成と読み方</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.4.1. 本書で使う座標系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.4.2. 関連する文書</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">1.5. 実行環境の準備</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>はじめに</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">1. </span>はじめに<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2><span class="section-number">1.1. </span>本書の目的と対象読者<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>本書は、ゲームを作るときに必要になる数学と物理を、実際に動くコードとともに学ぶための入門書である。対象読者は次のような人を想定している。</p>
+<ul class="simple">
+<li><p>Python で簡単なプログラムを書けるが、ゲームを作った経験は無いエンジニア</p></li>
+<li><p>工学系の大学生で、高校数学（三角関数、ベクトル、微分・積分の初歩）を一度は学んだ人</p></li>
+</ul>
+<p>数学や物理の教科書は、定義と定理を順に積み上げていく。一方、ゲームを作るときは「敵をプレイヤーの方へ向けたい」「ジャンプの手触りを良くしたい」「弾が壁をすり抜けてしまう」といった具体的な困りごとが先にあり、それを解く道具として数学や物理が必要になる。本書は後者の順序で書いている。各章は、おおむね次の流れで進む。</p>
+<ol class="arabic simple">
+<li><p>ゲームで起きる困りごと</p></li>
+<li><p>それを解く数学・物理の道具</p></li>
+<li><p>Python での実装</p></li>
+<li><p>図や動くデモでの確認</p></li>
+</ol>
+<p>本書を読み終えると、次のことができるようになる。</p>
+<ul class="simple">
+<li><p>キャラクターの移動・追尾・向きの変更を、ベクトルと三角関数で書ける。</p></li>
+<li><p>フレームレートに依存しない移動・ジャンプ・落下を書ける。</p></li>
+<li><p>円・長方形・多角形などの衝突判定と、押し戻し・反射などの応答を書ける。</p></li>
+<li><p>補間・イージング・乱数を使って、動きに手触りを付けられる。</p></li>
+<li><p>物理エンジンが内部で何をしているかを大まかに説明でき、自作と既存のエンジンを使い分けられる。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2><span class="section-number">1.2. </span>ゲームで数学・物理が必要になる場面<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ゲームの 1 フレームの中では、次のような計算が絶えず行われている。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 1.1 </span><span class="caption-text">ゲームの場面と本書の章</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 35.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>場面</p></th>
+<th class="head"><p>使う道具</p></th>
+<th class="head"><p>章</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>キャラクターを一定の速さで動かす</p></td>
+<td><p>デルタタイム、ベクトルの正規化</p></td>
+<td><p>第 3 章、第 4 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>敵が視界にプレイヤーを捉えたかを判定する</p></td>
+<td><p>内積</p></td>
+<td><p>第 4 章</p></td>
+</tr>
+<tr class="row-even"><td><p>砲台をマウスの方へ向ける、弾を撃ち出す</p></td>
+<td><p>三角関数、atan2</p></td>
+<td><p>第 5 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>画面をスクロール・ズームする、クリック位置を求める</p></td>
+<td><p>行列、座標変換、逆変換</p></td>
+<td><p>第 6 章</p></td>
+</tr>
+<tr class="row-even"><td><p>3D のキャラクターやカメラを回す</p></td>
+<td><p>クォータニオン</p></td>
+<td><p>第 7 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>動きの始まりと終わりを滑らかにする、カメラを追従させる</p></td>
+<td><p>補間、イージング、指数関数的減衰</p></td>
+<td><p>第 8 章</p></td>
+</tr>
+<tr class="row-even"><td><p>アイテムのドロップ、地形の生成、画面の揺れ</p></td>
+<td><p>擬似乱数、確率、ノイズ</p></td>
+<td><p>第 9 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>ジャンプ、落下、加速と減速</p></td>
+<td><p>運動方程式、数値積分</p></td>
+<td><p>第 10 章</p></td>
+</tr>
+<tr class="row-even"><td><p>弾が敵に当たったか、壁にぶつかったかを調べる</p></td>
+<td><p>衝突判定</p></td>
+<td><p>第 11 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>ぶつかった物を押し戻す、跳ね返らせる</p></td>
+<td><p>衝突応答、反発係数、力積</p></td>
+<td><p>第 12 章</p></td>
+</tr>
+<tr class="row-even"><td><p>ロープ、布、揺れる UI、火花</p></td>
+<td><p>ばね、拘束、パーティクル</p></td>
+<td><p>第 13 章</p></td>
+</tr>
+<tr class="row-odd"><td><p>積み上げた箱を崩す</p></td>
+<td><p>物理エンジン</p></td>
+<td><p>第 14 章</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2><span class="section-number">1.3. </span>「本物の物理」と「気持ちよい物理」<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ゲームの物理は、現実の物理を正確に再現することが目的ではない。たとえば、アクションゲームのキャラクターの多くは、現実の人間には不可能なほど高く跳び、空中で向きを変え、着地の瞬間にぴたりと止まる。それでも遊ぶ人は不自然に感じず、むしろ思いどおりに動くことを心地よく感じる。</p>
+<p>そのため本書では、物理法則をそのまま使う方法と、遊びやすさのために法則をあえて崩す方法の両方を扱う。第 10 章では、まず放物運動の式から重力と初速を決め、その後で「下降中だけ重力を強める」「足場から落ちた直後でもジャンプを受け付ける」といった、現実には無い調整を加える。こうした調整を意図的に行えるのは、元になる物理を理解しているからである。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">1.4. </span>本書の構成と読み方<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="#fig-intro-map"><span class="std std-numref">図 1.1</span></a> に章の関係を示す。第 2 章から第 9 章までが数学、第 10 章から第 14 章までが物理、第 15 章がまとめの演習である。</p>
+<figure class="align-center" id="id10">
+<span id="fig-intro-map"></span><div class="graphviz"><img src="_images/graphviz-5dc83f7c1e70c65a0f0bdf3f5d7dfd655f2e09e2.png" alt="digraph chapters {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  edge [color=&quot;#888888&quot;];
+  subgraph cluster_math {
+    label=&quot;数学&quot;; color=&quot;#bbbbbb&quot;; fontsize=11;
+    c2 [label=&quot;2. 座標系と数値&quot;];
+    c3 [label=&quot;3. ゲームループと時間&quot;];
+    c4 [label=&quot;4. ベクトル&quot;];
+    c5 [label=&quot;5. 角度と回転&quot;];
+    c6 [label=&quot;6. 行列と座標変換&quot;];
+    c7 [label=&quot;7. 3D の回転と\nクォータニオン&quot;];
+    c8 [label=&quot;8. 補間・イージング・曲線&quot;];
+    c9 [label=&quot;9. 乱数と確率&quot;];
+  }
+  subgraph cluster_phys {
+    label=&quot;物理&quot;; color=&quot;#bbbbbb&quot;; fontsize=11;
+    c10 [label=&quot;10. 運動の物理&quot;];
+    c11 [label=&quot;11. 衝突判定&quot;];
+    c12 [label=&quot;12. 衝突応答&quot;];
+    c13 [label=&quot;13. ばね・拘束・粒子&quot;];
+    c14 [label=&quot;14. 物理エンジンを使う&quot;];
+  }
+  c15 [label=&quot;15. 総合演習\n2D プラットフォーマー&quot;, fillcolor=&quot;#fdf0e2&quot;, color=&quot;#e8862a&quot;];
+  c2 -&gt; c3 -&gt; c4 -&gt; c5 -&gt; c6 -&gt; c7;
+  c4 -&gt; c8; c8 -&gt; c9;
+  c3 -&gt; c10; c4 -&gt; c11; c10 -&gt; c12; c11 -&gt; c12; c12 -&gt; c13; c13 -&gt; c14;
+  c14 -&gt; c15; c9 -&gt; c15;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 1.1 </span><span class="caption-text">本書の構成</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>前から順に読むことを想定しているが、第 7 章（3D の回転）は 2D のゲームだけを作るなら後回しにしてよい。数式は導出を細かく追うより、図とコードで意味をつかむことを優先している。厳密な証明に興味がある場合は、<a class="reference internal" href="references.html"><span class="doc">付録 C 参考文献</span></a>に挙げた文献を参照してほしい。</p>
+<p>本書の数式で使う記号は<a class="reference internal" href="formulas.html"><span class="doc">付録 A 数式・記号の早見表</span></a>に、用語は<a class="reference internal" href="glossary.html"><span class="doc">付録 B 用語集</span></a>にまとめている。</p>
+<section id="id6">
+<h3><span class="section-number">1.4.1. </span>本書で使う座標系<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>数学の教科書では y 軸を上向きに取るが、ゲームの画面では y 軸を下向きに取ることが多い（<a class="reference internal" href="coordinates.html"><span class="doc">座標系と数値</span></a>で説明する）。本書のサンプルコードはすべて画面座標（y 軸が下向き）で書いている。数式や図は、特に断らない限り、どちらの座標系でも成り立つように書いている。向きによって意味が変わる箇所（回転の向き、外積の符号）では、そのつど注意を書いている。</p>
+</section>
+<section id="id7">
+<h3><span class="section-number">1.4.2. </span>関連する文書<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>本書の範囲から外れる話題は、次の文書で扱っている。</p>
+<ul class="simple">
+<li><p>「ゲーム作成入門」: 企画、ゲームエンジンの選び方、アセットの制作、公開まで、ゲーム制作の全体の流れ</p></li>
+<li><p>「コンピューターグラフィックス入門」: 3D の描画（ラスタライズ、シェーディング、テクスチャ）</p></li>
+<li><p>「線形代数入門」: ベクトルと行列の数学的な理論</p></li>
+</ul>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">1.5. </span>実行環境の準備<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>サンプルコードは Python 3.12 以上で動作する。次のライブラリーを使う。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 1.2 </span><span class="caption-text">使用するライブラリー</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ライブラリー</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pygame-ce</p></td>
+<td><p>ウィンドウの表示、描画、キーボードとマウスの入力。ベクトルのクラス <code class="docutils literal notranslate"><span class="pre">pygame.Vector2</span></code> も使う</p></td>
+</tr>
+<tr class="row-odd"><td><p>pymunk</p></td>
+<td><p>2D の物理エンジン（第 14 章で使う）</p></td>
+</tr>
+</tbody>
+</table>
+<p>次のコマンドでインストールできる。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 1.1 </span><span class="caption-text">ライブラリーのインストール</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">py</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pygame-ce</span> <span class="n">pymunk</span>
+</pre></div>
+</div>
+</div>
+<p>サンプルコードは<a class="reference internal" href="examples.html"><span class="doc">付録 D サンプルコード一覧</span></a>からダウンロードできる。ダウンロードしたフォルダーで、次のように実行する。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-number">リスト 1.2 </span><span class="caption-text">サンプルコードの実行</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">py</span> <span class="n">vectors_demo</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<p>いくつかのサンプルコードは、同じフォルダーにある別のファイル（<code class="docutils literal notranslate"><span class="pre">collision.py</span></code> など）を import して使う。ファイルはすべて同じフォルダーに置いてほしい。デモの画面に表示する文字は、フォントの用意が要らないように英語にしている。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>pygame-ce は、pygame から分かれて開発が続けられているライブラリーである。import するときの名前は pygame と同じで、<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pygame</span></code> と書く。元の pygame が入っていると衝突するので、両方を同時にインストールしないこと。</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="ゲームのための数学・物理入門" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="coordinates.html" class="btn btn-neutral float-right" title="2. 座標系と数値" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

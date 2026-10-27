@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. 手続き型生成 &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="11. プロトタイピングとプレイテスト" href="ch11_prototype_playtest.html" />
+    <link rel="prev" title="9. レベルの構成とペーシング" href="ch09_level_structure.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_level_structure.html">9. レベルの構成とペーシング</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. 手続き型生成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">10.1. 手続き型生成の利点と限界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">10.2. 乱数とシード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">10.3. ランダムウォーク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">10.4. セル・オートマトンによる洞窟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">10.5. 生成したマップを検証する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">10.5.1. 到達可能性を調べる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">10.5.2. 指標で選別する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bsp">10.6. BSP によるダンジョン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">10.7. 手作りと生成の組み合わせ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">10.8. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">10. </span>手続き型生成</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">10. </span>手続き型生成<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 8 章と第 9 章では、デザイナーが手作業でレベルを作ることを前提にしていた。これに対して、アルゴリズムによってレベルやアイテムなどを自動的に作ることを、手続き型生成（プロシージャル生成）と呼ぶ。この章では、マップを生成する代表的な 3 つの方法と、生成したマップを検証する方法を学ぶ。</p>
+<section id="id2">
+<h2><span class="section-number">10.1. </span>手続き型生成の利点と限界<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>手続き型生成は古くから使われてきた。1980 年に作られた「Rogue」は、遊ぶたびに異なるダンジョンを生成し、後に「ローグライク」と呼ばれるジャンルの源流になった。現在でも、洞窟や地形を無限に生成するゲームや、毎回異なる構成のレベルを組み立てるアクションゲームなど、多くのゲームで使われている。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 10.1 </span><span class="caption-text">手続き型生成の利点と限界</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>利点</p></th>
+<th class="head"><p>限界</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>遊ぶたびに異なる体験が生まれ、繰り返し遊べる</p></td>
+<td><p>生成されたものが似通い、どれも同じように感じられることがある</p></td>
+</tr>
+<tr class="row-odd"><td><p>手作業では作れない量のコンテンツを用意できる</p></td>
+<td><p>すべての生成結果の品質を保証するのが難しい</p></td>
+</tr>
+<tr class="row-even"><td><p>データの容量を小さくできる（生成の手順とシードだけを持てばよい）</p></td>
+<td><p>第 9 章のような、意図を込めた体験の順番を作りにくい</p></td>
+</tr>
+<tr class="row-odd"><td><p>デザイナー自身も予想しなかった配置が生まれる</p></td>
+<td><p>攻略できない、極端に易しいなどの失敗作が生まれうる</p></td>
+</tr>
+</tbody>
+</table>
+<p>手続き型生成は、手作業のレベルデザインを置き換えるものではない。何を自動で作り、何を手で作るかを決めること自体が、デザインの判断である。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">10.2. </span>乱数とシード<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>手続き型生成では乱数を使うが、同じ結果を再現できることが重要である。プレイヤーが「このマップは面白かった」と友人に共有したり、開発者が不具合の出たマップを調べたりするには、同じマップをもう一度作れる必要がある。</p>
+<p>コンピューターの乱数は、シードと呼ばれる初期値から計算で作られる疑似乱数である。同じシードからは同じ乱数の列が得られる。Python では、<code class="docutils literal notranslate"><span class="pre">random.Random(seed)</span></code> で専用の乱数生成器を作ると、他の処理の乱数に影響されずに結果を再現できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">4</span><span class="nb">print</span><span class="p">([</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>  <span class="c1"># 何度実行しても同じ 5 つの値になる</span>
+</pre></div>
+</div>
+<p>この章のサンプルはすべて <code class="docutils literal notranslate"><span class="pre">--seed</span></code> でシードを指定でき、同じシードなら同じマップになる。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">10.3. </span>ランダムウォーク<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>最も単純な生成方法の 1 つが、ランダムウォーク（酔歩）である。マップ全体を壁で埋めた状態から始め、ある地点から上下左右のどれかにランダムに 1 歩ずつ進み、通った場所を床にする。床の割合が目標に達したら終わる。</p>
+<div class="literal-block-wrapper docutils container" id="list-random-walk">
+<div class="code-block-caption"><span class="caption-number">リスト 10.1 </span><span class="caption-text">procgen_cave.py（ランダムウォーク）</span><a class="headerlink" href="#list-random-walk" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">38</span><span class="k">def</span><span class="w"> </span><span class="nf">random_walk</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">,</span> <span class="n">floor_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Grid</span><span class="p">:</span>
+<span class="linenos">39</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;中央から 1 歩ずつランダムに歩き、通った場所を床にする。&quot;&quot;&quot;</span>
+<span class="linenos">40</span>    <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="n">WALL</span><span class="p">]</span> <span class="o">*</span> <span class="n">WIDTH</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">)]</span>
+<span class="linenos">41</span>    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">WIDTH</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="linenos">42</span>    <span class="n">target</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">*</span> <span class="n">HEIGHT</span> <span class="o">*</span> <span class="n">floor_ratio</span><span class="p">)</span>
+<span class="linenos">43</span>    <span class="n">dug</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">44</span>    <span class="k">while</span> <span class="n">dug</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+<span class="linenos">45</span>        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">WALL</span><span class="p">:</span>
+<span class="linenos">46</span>            <span class="n">grid</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">FLOOR</span>
+<span class="linenos">47</span>            <span class="n">dug</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">48</span>        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)])</span>
+<span class="linenos">49</span>        <span class="c1"># 外周の 1 マスは壁のまま残す。</span>
+<span class="linenos">50</span>        <span class="n">x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">WIDTH</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">51</span>        <span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">HEIGHT</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">52</span>    <span class="k">return</span> <span class="n">grid</span>
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="id12">
+<img alt="ランダムウォークで生成したマップ" src="_images/procgen_walk.png" />
+<figcaption>
+<p><span class="caption-number">図 10.1 </span><span class="caption-text">ランダムウォークで生成したマップ（明るい色が床）</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ランダムウォークで作った床は、歩いた経路そのものなので、必ず 1 つにつながっている。曲がりくねった洞窟のような形になるが、広い空間と細い通路の区別がはっきりせず、どこも似たような見た目になりやすい。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">10.4. </span>セル・オートマトンによる洞窟<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>セル・オートマトンは、マス目の各マスの状態を、周囲のマスの状態に基づく規則で一斉に更新する仕組みである。ライフゲームがよく知られている。洞窟の生成では、次の手順を使う。</p>
+<ol class="arabic simple">
+<li><p>各マスを、一定の確率（ここでは 45 %）で壁に、それ以外を床にする。外周は必ず壁にする。</p></li>
+<li><p>各マスについて周囲 8 マスのうち壁の数を数え、次の規則で一斉に更新する。</p>
+<ul class="simple">
+<li><p>壁のマスは、周囲の壁が 4 つ以上なら壁のまま残り、3 つ以下なら床になる。</p></li>
+<li><p>床のマスは、周囲の壁が 5 つ以上なら壁になり、4 つ以下なら床のまま残る。</p></li>
+</ul>
+</li>
+<li><p>手順 2 を数回繰り返す。</p></li>
+</ol>
+<p>この規則は、周りに壁が多いマスを壁に、周りに床が多いマスを床にするので、細かなノイズが滑らかにまとまり、洞窟らしい形になる。</p>
+<div class="literal-block-wrapper docutils container" id="list-cave-smooth">
+<div class="code-block-caption"><span class="caption-number">リスト 10.2 </span><span class="caption-text">procgen_cave.py（セル・オートマトンによる平滑化）</span><a class="headerlink" href="#list-cave-smooth" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">80</span><span class="k">def</span><span class="w"> </span><span class="nf">smooth</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Grid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Grid</span><span class="p">:</span>
+<span class="linenos">81</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;セル・オートマトンを 1 回適用する。</span>
+<span class="linenos">82</span>
+<span class="linenos">83</span><span class="sd">    壁は周囲の壁が 4 以上なら壁のまま、床は周囲の壁が 5 以上なら壁になる。</span>
+<span class="linenos">84</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">85</span>    <span class="n">new</span><span class="p">:</span> <span class="n">Grid</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">86</span>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">):</span>
+<span class="linenos">87</span>        <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">88</span>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">WIDTH</span><span class="p">):</span>
+<span class="linenos">89</span>            <span class="n">n</span> <span class="o">=</span> <span class="n">count_wall_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos">90</span>            <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">WALL</span> <span class="k">else</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="linenos">91</span>        <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+<span class="linenos">92</span>    <span class="k">return</span> <span class="n">new</span>
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="id13">
+<img alt="セル・オートマトンによる洞窟の生成" src="_images/procgen_cave.png" />
+<figcaption>
+<p><span class="caption-number">図 10.2 </span><span class="caption-text">セル・オートマトンによる洞窟の生成（左から、初期状態、1 回の更新後、4 回の更新後、最大の領域だけを残した結果）</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>図の左から 3 枚目を見ると、大きな洞窟のほかに、どこにもつながっていない小さな空間がいくつか残っている。この空間にアイテムやゴールが置かれると、プレイヤーは決してたどり着けない。そこで、次の節で述べる検証を行う。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">10.5. </span>生成したマップを検証する<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>手続き型生成では、生成した結果がゲームとして成り立っているかを、プログラムで検証する必要がある。最も基本的な検証は、必要な場所にすべて行けるか（到達可能性）である。</p>
+<section id="id7">
+<h3><span class="section-number">10.5.1. </span>到達可能性を調べる<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>上下左右につながっている床のまとまりを、連結成分（領域）と呼ぶ。領域は、まだ調べていない床のマスから幅優先探索を行い、たどり着けたマスを 1 つの領域とする、という操作を繰り返して求められる。</p>
+<div class="literal-block-wrapper docutils container" id="list-cave-regions">
+<div class="code-block-caption"><span class="caption-number">リスト 10.3 </span><span class="caption-text">procgen_cave.py（領域の検出と、最大の領域以外の除去）</span><a class="headerlink" href="#list-cave-regions" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 95</span><span class="k">def</span><span class="w"> </span><span class="nf">find_regions</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Grid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
+<span class="linenos"> 96</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;上下左右でつながった床の領域を、大きい順に返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 97</span>    <span class="n">seen</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="linenos"> 98</span>    <span class="n">regions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 99</span>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">):</span>
+<span class="linenos">100</span>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">WIDTH</span><span class="p">):</span>
+<span class="linenos">101</span>            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">WALL</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+<span class="linenos">102</span>                <span class="k">continue</span>
+<span class="linenos">103</span>            <span class="n">region</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">104</span>            <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)])</span>
+<span class="linenos">105</span>            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="linenos">106</span>            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+<span class="linenos">107</span>                <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+<span class="linenos">108</span>                <span class="n">region</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">))</span>
+<span class="linenos">109</span>                <span class="k">for</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="ow">in</span> <span class="p">((</span><span class="n">cx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cy</span><span class="p">),</span> <span class="p">(</span><span class="n">cx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cy</span><span class="p">),</span> <span class="p">(</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)):</span>
+<span class="linenos">110</span>                    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">ny</span><span class="p">][</span><span class="n">nx</span><span class="p">]</span> <span class="o">==</span> <span class="n">FLOOR</span> <span class="ow">and</span> <span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+<span class="linenos">111</span>                        <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">))</span>
+<span class="linenos">112</span>                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">))</span>
+<span class="linenos">113</span>            <span class="n">regions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+<span class="linenos">114</span>    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">115</span>
+<span class="linenos">116</span>
+<span class="linenos">117</span><span class="k">def</span><span class="w"> </span><span class="nf">keep_largest_region</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Grid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Grid</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
+<span class="linenos">118</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;最も大きい床の領域だけを残し、新しいグリッドと、埋めたマスの一覧を返す。&quot;&quot;&quot;</span>
+<span class="linenos">119</span>    <span class="n">regions</span> <span class="o">=</span> <span class="n">find_regions</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="linenos">120</span>    <span class="n">new</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>
+<span class="linenos">121</span>    <span class="n">removed</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell</span> <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">region</span><span class="p">]</span>
+<span class="linenos">122</span>    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">removed</span><span class="p">:</span>
+<span class="linenos">123</span>        <span class="n">new</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">WALL</span>
+<span class="linenos">124</span>    <span class="k">return</span> <span class="n">new</span><span class="p">,</span> <span class="n">removed</span>
+</pre></div>
+</div>
+</div>
+<p>洞窟の生成では、最も大きい領域だけを残し、他の領域を壁で埋める。図の右端では、埋めた床を赤で示している。こうすると、残った床はすべてつながっているので、どこにスタートやゴールを置いても到達できる。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">10.5.2. </span>指標で選別する<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>到達可能性のほかに、生成結果の良し悪しを測る指標を決めておくと、出来の悪い結果を捨てて生成し直すことができる。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 10.2 </span><span class="caption-text">生成結果を評価する指標の例</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>指標</p></th>
+<th class="head"><p>意味と使い方</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>床の割合</p></td>
+<td><p>狭すぎる、広すぎるマップを除く。洞窟の例では、平滑化の結果によって床の割合が大きく変わる</p></td>
+</tr>
+<tr class="row-odd"><td><p>領域の数と大きさ</p></td>
+<td><p>最大の領域が全体の床に占める割合が小さければ、多くの床を埋めることになるので、生成し直す</p></td>
+</tr>
+<tr class="row-even"><td><p>スタートからゴールまでの距離</p></td>
+<td><p>幅優先探索で求めた最短の歩数。短すぎるとすぐに終わり、長すぎると間延びする</p></td>
+</tr>
+<tr class="row-odd"><td><p>行き止まりの数</p></td>
+<td><p>迷路らしさの目安になる。多すぎると探索が面倒になる</p></td>
+</tr>
+</tbody>
+</table>
+<p>指標が基準を満たすまで生成を繰り返す方法は、単純だが効果的である。生成は一瞬で終わるので、数十回やり直しても遊ぶ人は気付かない。</p>
+</section>
+</section>
+<section id="bsp">
+<h2><span class="section-number">10.6. </span>BSP によるダンジョン<a class="headerlink" href="#bsp" title="Link to this heading"></a></h2>
+<p>洞窟のような自然な形ではなく、部屋と通路からなる人工的なダンジョンを作りたい場合は、BSP（二分空間分割）がよく使われる。</p>
+<ol class="arabic simple">
+<li><p>マップ全体の矩形を、縦または横に 2 つに分割する。分割した矩形をさらに分割する、という操作を、矩形が一定の大きさより小さくなるまで再帰的に繰り返す。</p></li>
+<li><p>分割しきった矩形（これ以上分割しない矩形。分割の過程を木構造として見たときの葉に当たる）の中に、ひとまわり小さい部屋を置く。</p></li>
+<li><p>分割したときに兄弟になった 2 つの矩形どうしを、通路でつなぐ。これを木の下から上へ順に行う。</p></li>
+</ol>
+<p>分割の過程は二分木になる。兄弟どうしは必ずつながれるので、最終的にはすべての部屋が 1 つにつながる。</p>
+<div class="literal-block-wrapper docutils container" id="list-bsp-split">
+<div class="code-block-caption"><span class="caption-number">リスト 10.4 </span><span class="caption-text">procgen_bsp.py（矩形の再帰的な分割）</span><a class="headerlink" href="#list-bsp-split" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">62</span><span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">63</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;node を再帰的に分割する。&quot;&quot;&quot;</span>
+<span class="linenos">64</span>    <span class="n">a</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">area</span>
+<span class="linenos">65</span>    <span class="n">can_vertical</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">&gt;=</span> <span class="n">MIN_LEAF</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="linenos">66</span>    <span class="n">can_horizontal</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span> <span class="o">&gt;=</span> <span class="n">MIN_LEAF</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="linenos">67</span>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">can_vertical</span> <span class="ow">or</span> <span class="n">can_horizontal</span><span class="p">):</span>
+<span class="linenos">68</span>        <span class="k">return</span>
+<span class="linenos">69</span>    <span class="k">if</span> <span class="n">can_vertical</span> <span class="ow">and</span> <span class="n">can_horizontal</span><span class="p">:</span>
+<span class="linenos">70</span>        <span class="c1"># 細長い矩形は長い方向に切る。縦と横の長さが近いときはランダムに選ぶ。</span>
+<span class="linenos">71</span>        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">:</span>
+<span class="linenos">72</span>            <span class="n">vertical</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">73</span>        <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span> <span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">:</span>
+<span class="linenos">74</span>            <span class="n">vertical</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">75</span>        <span class="k">else</span><span class="p">:</span>
+<span class="linenos">76</span>            <span class="n">vertical</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+<span class="linenos">77</span>    <span class="k">else</span><span class="p">:</span>
+<span class="linenos">78</span>        <span class="n">vertical</span> <span class="o">=</span> <span class="n">can_vertical</span>
+<span class="linenos">79</span>    <span class="k">if</span> <span class="n">vertical</span><span class="p">:</span>
+<span class="linenos">80</span>        <span class="n">cut</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MIN_LEAF</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="n">MIN_LEAF</span><span class="p">)</span>
+<span class="linenos">81</span>        <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Rect</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">cut</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span><span class="p">))</span>
+<span class="linenos">82</span>        <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Rect</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">cut</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="n">cut</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span><span class="p">))</span>
+<span class="linenos">83</span>    <span class="k">else</span><span class="p">:</span>
+<span class="linenos">84</span>        <span class="n">cut</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MIN_LEAF</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span> <span class="o">-</span> <span class="n">MIN_LEAF</span><span class="p">)</span>
+<span class="linenos">85</span>        <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Rect</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">cut</span><span class="p">))</span>
+<span class="linenos">86</span>        <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Rect</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">cut</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">h</span> <span class="o">-</span> <span class="n">cut</span><span class="p">))</span>
+<span class="linenos">87</span>    <span class="n">split</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<span class="linenos">88</span>    <span class="n">split</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="list-bsp-corridors">
+<div class="code-block-caption"><span class="caption-number">リスト 10.5 </span><span class="caption-text">procgen_bsp.py（兄弟の部屋を通路でつなぐ）</span><a class="headerlink" href="#list-bsp-corridors" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">105</span><span class="k">def</span><span class="w"> </span><span class="nf">carve_corridors</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">bool</span><span class="p">]],</span> <span class="n">rng</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">106</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;兄弟の部分木から部屋を 1 つずつ選び、L 字の通路でつなぐ。&quot;&quot;&quot;</span>
+<span class="linenos">107</span>    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">108</span>        <span class="k">return</span>
+<span class="linenos">109</span>    <span class="n">carve_corridors</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<span class="linenos">110</span>    <span class="n">carve_corridors</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<span class="linenos">111</span>    <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">rooms</span><span class="p">())</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+<span class="linenos">112</span>    <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">rooms</span><span class="p">())</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+<span class="linenos">113</span>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="linenos">114</span>        <span class="n">grid</span><span class="p">[</span><span class="n">y1</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos">115</span>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="linenos">116</span>        <span class="n">grid</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="id15">
+<img alt="BSP によるダンジョンの生成" src="_images/procgen_bsp.png" />
+<figcaption>
+<p><span class="caption-number">図 10.3 </span><span class="caption-text">BSP によるダンジョンの生成（左から、分割の結果、部屋の配置、通路でつないだ結果）</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>右端の図では、最初の部屋の中央をスタート（緑）とし、そこから幅優先探索で最も遠い床をゴール（赤）にしている。サンプルを実行すると、部屋の数、床のマスの数、スタートから到達できた床のマスの数、ゴールまでの最短の歩数が表示される。床のマスの数と到達できたマスの数が一致していれば、すべての床がつながっていることが確かめられる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>部屋の数 19, 床のマス 829, BFS で到達できた床 829
+<span class="linenos">2</span>スタート (5, 4) からゴール (52, 32) までの最短歩数: 81
+</pre></div>
+</div>
+<p>スタートから最も遠い場所にゴールを置くと、プレイヤーはダンジョンの大部分を通ることになる。さらに、スタートからの距離に応じて敵を強くしたり、宝箱を置いたりすれば、第 9 章で述べた緊張と緩和の流れを、生成したダンジョンにも持ち込める。</p>
+</section>
+<section id="id9">
+<h2><span class="section-number">10.7. </span>手作りと生成の組み合わせ<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>実際のゲームでは、すべてを自動で生成するのではなく、手作業と組み合わせることが多い。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 10.3 </span><span class="caption-text">手作りと生成の組み合わせ方</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>部品を手で作り、並べ方を生成する</p></td>
+<td><p>デザイナーが作った部屋の部品を、ランダムに組み合わせてレベルを作る。2008 年に公開された「Spelunky」は、手作りの部屋のテンプレートを格子状に並べ、スタートからゴールまで必ず通れる経路を保証する方法で知られる</p></td>
+</tr>
+<tr class="row-odd"><td><p>骨組みを生成し、手で仕上げる</p></td>
+<td><p>地形を生成した後で、デザイナーが重要な場所を手作業で調整する。開発の効率化のための使い方である</p></td>
+</tr>
+<tr class="row-even"><td><p>重要な場所は手で作り、その間を生成する</p></td>
+<td><p>町やボスの部屋は手作りにし、その間をつなぐ道や洞窟を生成する</p></td>
+</tr>
+<tr class="row-odd"><td><p>配置だけを生成する</p></td>
+<td><p>地形は手作りにし、敵やアイテムの配置を遊ぶたびに変える</p></td>
+</tr>
+</tbody>
+</table>
+<p>部品を手で作る方法では、部品の中ではデザイナーが意図した体験を保証でき、部品の組み合わせによって多様性も得られる。手続き型生成の利点と限界の両方を考えると、多くの場合、このような組み合わせが現実的な選択になる。</p>
+</section>
+<section id="id10">
+<h2><span class="section-number">10.8. </span>演習<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">procgen_cave.py</span></code> の初期の壁の確率（<code class="docutils literal notranslate"><span class="pre">random_noise</span></code> の <code class="docutils literal notranslate"><span class="pre">wall_probability</span></code>）を 0.40 と 0.50 に変えて実行し、生成される洞窟の形と床の割合がどう変わるかを確かめよ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">procgen_cave.py</span></code> の洞窟の生成に、「最大の領域が全体の床の 90 % 未満なら生成し直す」という選別を加えよ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">procgen_bsp.py</span></code> の <code class="docutils literal notranslate"><span class="pre">MIN_LEAF</span></code> を変えて実行し、部屋の数と大きさがどう変わるかを確かめよ。</p></li>
+<li><p>自分の作りたいゲームについて、手続き型生成を使う部分と、手作業で作る部分を決め、その理由を説明せよ。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch09_level_structure.html" class="btn btn-neutral float-left" title="9. レベルの構成とペーシング" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch11_prototype_playtest.html" class="btn btn-neutral float-right" title="11. プロトタイピングとプレイテスト" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

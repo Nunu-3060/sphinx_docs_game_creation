@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9. レベルの構成とペーシング &mdash; ゲームデザイン・レベルデザイン入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d56308b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="10. 手続き型生成" href="ch10_procgen.html" />
+    <link rel="prev" title="8. レベルデザインの基礎" href="ch08_level_basics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームデザイン・レベルデザイン入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_what_is_game.html">2. ゲームとは何か</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_fun_and_player.html">3. 楽しさとプレイヤー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_systems.html">4. ゲームをシステムとして捉える</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_balance.html">5. ゲームバランス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_difficulty.html">6. 難易度と学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_game_feel.html">7. 操作感とフィードバック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_level_basics.html">8. レベルデザインの基礎</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. レベルの構成とペーシング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">9.1. 新しい要素を見せる 4 つの段階</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">9.2. 緊張と緩和</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">9.3. 敵とアイテムの配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">9.3.1. 敵の配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">9.3.2. アイテムの配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">9.4. レベルの構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">9.5. レベルをグラフとして検証する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">9.6. 演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_procgen.html">10. 手続き型生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_prototype_playtest.html">11. プロトタイピングとプレイテスト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_final_project.html">12. 総合演習</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_documents.html">設計文書の書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_examples.html">サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームデザイン・レベルデザイン入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">9. </span>レベルの構成とペーシング</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">9. </span>レベルの構成とペーシング<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 8 章では、レベルの役割と、プレイヤーを導く技法を学んだ。この章では、レベルの中で体験をどの順番で並べるか（ペーシング）と、レベル全体の構造の設計を扱う。最後に、レベルの構造をグラフとして表し、プログラムで検証する方法を紹介する。</p>
+<section id="id2">
+<h2><span class="section-number">9.1. </span>新しい要素を見せる 4 つの段階<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>第 6 章で、新しい要素は段階を踏んで見せるとよいと述べた。ここでは、その段階をレベルの構成方法として具体的に考える。</p>
+<p>任天堂のデザイナーである林田宏一は、「スーパーマリオ 3Dランド」の開発について語ったインタビューで、各レベルを起承転結の 4 段階で構成する考え方を紹介している。本書では、この考え方を次の 4 つの段階として整理する。この 4 つの段階は、1 つのレベルの中だけでなく、複数のレベルの並びに当てはめることもできる（第 12 章）。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 9.1 </span><span class="caption-text">新しい要素を見せる 4 つの段階</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 35.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>段階</p></th>
+<th class="head"><p>目的</p></th>
+<th class="head"><p>例（一定の間隔で出たり引っ込んだりする足場）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>導入（起）</p></td>
+<td><p>新しい要素に、安全な状況で出会わせる</p></td>
+<td><p>地面の上に足場を置く。乗り損ねても下の地面に落ちるだけで、何度でも試せる</p></td>
+</tr>
+<tr class="row-odd"><td><p>練習（承）</p></td>
+<td><p>新しい要素だけに集中して、扱い方を身に付けさせる</p></td>
+<td><p>穴の上に足場を 3 つ並べ、タイミングよく渡らせる</p></td>
+</tr>
+<tr class="row-even"><td><p>応用（転）</p></td>
+<td><p>既に知っている要素と組み合わせたり、意外な使い方を見せたりする</p></td>
+<td><p>足場の上に敵が歩いてくる。または足場を使って、普段は届かない高い場所に登る</p></td>
+</tr>
+<tr class="row-odd"><td><p>結び（結）</p></td>
+<td><p>学んだことを確かめさせ、達成感とともにレベルを終える</p></td>
+<td><p>足場を連続して渡り切ると、ゴールの旗にたどり着く</p></td>
+</tr>
+</tbody>
+</table>
+<p>この構成は、新しい要素を 1 つ決めれば、それを中心にレベル全体を組み立てられるという点で実用的である。逆に言えば、1 つのレベルに新しい要素を詰め込みすぎると、それぞれの要素を十分に練習させる余裕が無くなる。</p>
+<p>「転」の段階は特に重要である。要素の意外な使い方を見せることで、プレイヤーは「この要素にはこんな使い方もあるのか」と、要素の理解を一段深める。ここで生まれる驚きが、単調な繰り返しを防ぐ。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">9.2. </span>緊張と緩和<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>レベルの中で、プレイヤーが感じる緊張の度合いを時間に沿って並べたものを、強度（インテンシティ）の曲線と呼ぶことがある。次の図は、アクションゲームの 1 つのレベルの例である。</p>
+<figure class="align-center" id="id11">
+<img alt="レベル内の緊張と緩和" src="_images/intensity_curve.png" />
+<figcaption>
+<p><span class="caption-number">図 9.1 </span><span class="caption-text">レベル内の緊張と緩和</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>緊張が続きすぎるとプレイヤーは疲れ、緩みが続きすぎると退屈する。山（戦闘、難しい足場）と谷（探索、休憩）を交互に置くことで、山の緊張がより強く感じられる。図の例では、次のような考え方で配置している。</p>
+<ul class="simple">
+<li><p>最初の山は低くし、レベルの雰囲気と操作に慣れさせる。</p></li>
+<li><p>新しい敵が出た後は谷を置き、緊張から解放する。</p></li>
+<li><p>山場の前には休憩とセーブの場所を置き、準備を整えさせる。</p></li>
+<li><p>最大の山（ボス）の後には報酬を置き、達成感とともにレベルを終える。</p></li>
+</ul>
+<p>これは第 6 章の波型の難易度曲線を、1 つのレベルの中で行うものと考えることができる。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">9.3. </span>敵とアイテムの配置<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="id5">
+<h3><span class="section-number">9.3.1. </span>敵の配置<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>敵の強さだけでなく、敵をどこにどう置くかによって、戦闘の難しさと面白さは大きく変わる。</p>
+<ul class="simple">
+<li><p><strong>見えている敵と隠れている敵</strong>：遠くから見えている敵には、近づく前に作戦を立てられる。曲がり角の先に隠れている敵は緊張感を生むが、多用すると理不尽に感じさせる。</p></li>
+<li><p><strong>地形との組み合わせ</strong>：高い所にいる敵、狭い通路にいる敵、身を隠せる物が近くにある敵では、同じ敵でも戦い方が変わる。</p></li>
+<li><p><strong>敵の組み合わせ</strong>：近づいてくる敵と、離れて撃ってくる敵を組み合わせると、プレイヤーは位置取りを考えなければならなくなる。</p></li>
+<li><p><strong>戻り道</strong>：敵を倒した後の部屋を戻るときに、新しい敵が待ち構えていると、同じ場所でも異なる体験になる。</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3><span class="section-number">9.3.2. </span>アイテムの配置<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>回復アイテムや弾薬などのアイテムは、ペーシングを調整する道具になる。</p>
+<ul class="simple">
+<li><p>難しい戦闘の直後に回復アイテムを置くと、苦戦したプレイヤーを救い、次の区間へ進む余裕を与える。</p></li>
+<li><p>難しい戦闘の直前に置くと、プレイヤーは「この先に何かある」と身構える。予告として使える一方、驚きは減る。</p></li>
+<li><p>本筋から外れた場所に価値のあるアイテムを置くと、寄り道や探索に報酬を与えられる。第 3 章のエクスプローラーのタイプのプレイヤーは、こうした寄り道を好む。</p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">9.4. </span>レベルの構造<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>レベル全体を、場所（部屋や区間）とそのつながりで見ると、いくつかの典型的な構造がある。</p>
+<figure class="align-center" id="id12">
+<div class="graphviz"><img src="_images/graphviz-6074ce8b0ddb51e2fb799902f10727f871ffa022.png" alt="digraph linear {
+    rankdir=LR;
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    S [label=&quot;スタート&quot;, fillcolor=&quot;#d8f0d8&quot;];
+    G [label=&quot;ゴール&quot;, fillcolor=&quot;#f8dada&quot;];
+    S -&gt; A -&gt; B -&gt; C -&gt; G;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 9.2 </span><span class="caption-text">一本道の構造</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id13">
+<div class="graphviz"><img src="_images/graphviz-369d55620f71af17cfa672f5659199097e5e0bfe.png" alt="digraph branch {
+    rankdir=LR;
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    S [label=&quot;スタート&quot;, fillcolor=&quot;#d8f0d8&quot;];
+    G [label=&quot;ゴール&quot;, fillcolor=&quot;#f8dada&quot;];
+    S -&gt; A;
+    A -&gt; B1 [label=&quot;正面突破&quot;];
+    A -&gt; B2 [label=&quot;遠回り&quot;];
+    B1 -&gt; C;
+    B2 -&gt; C;
+    C -&gt; G;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 9.3 </span><span class="caption-text">分岐と合流の構造</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id14">
+<div class="graphviz"><img src="_images/graphviz-3d7378a04695242a96298996b7f2ddd310002199.png" alt="graph hub {
+    layout=circo;
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    H [label=&quot;ハブ\n（拠点）&quot;, fillcolor=&quot;#fff4c8&quot;];
+    H -- W1 [label=&quot;&quot;];
+    H -- W2;
+    H -- W3;
+    H -- W4;
+    W1 [label=&quot;レベル 1&quot;];
+    W2 [label=&quot;レベル 2&quot;];
+    W3 [label=&quot;レベル 3&quot;];
+    W4 [label=&quot;レベル 4&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 9.4 </span><span class="caption-text">ハブ型の構造</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 9.2 </span><span class="caption-text">レベルの構造の比較</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 32.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>構造</p></th>
+<th class="head"><p>特徴</p></th>
+<th class="head"><p>長所</p></th>
+<th class="head"><p>短所</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>一本道</p></td>
+<td><p>決まった順番に場所を通る</p></td>
+<td><p>体験の順番を完全に制御でき、作りやすい</p></td>
+<td><p>プレイヤーの選択の余地が少ない</p></td>
+</tr>
+<tr class="row-odd"><td><p>分岐と合流</p></td>
+<td><p>途中で道が分かれ、また 1 つにまとまる</p></td>
+<td><p>選択の余地を与えつつ、全体の流れは制御できる</p></td>
+<td><p>分岐の数だけ作る量が増える</p></td>
+</tr>
+<tr class="row-even"><td><p>ハブ型</p></td>
+<td><p>拠点から複数のレベルへ行き来する</p></td>
+<td><p>攻略の順番をプレイヤーが選べる</p></td>
+<td><p>どの順番でも成り立つように難易度を調整する必要がある</p></td>
+</tr>
+<tr class="row-odd"><td><p>オープンワールド</p></td>
+<td><p>広い空間を自由に移動できる</p></td>
+<td><p>探索と発見の楽しさが大きい</p></td>
+<td><p>体験の順番を制御しにくく、作る量も非常に多い</p></td>
+</tr>
+</tbody>
+</table>
+<p>どの構造を選ぶかは、ゲームが重視する楽しさによって決まる。物語を順番に体験させたいなら一本道に近い構造が、探索の楽しさを重視するならハブ型やオープンワールドが向いている。実際のゲームでは、全体はハブ型だが個々のレベルは一本道、というように組み合わせることが多い。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">9.5. </span>レベルをグラフとして検証する<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>レベルの構造を、部屋を頂点、通路を辺とするグラフとして表すと、プログラムで検証できるようになる。ここでは、第 8 章で触れた鍵と扉の配置の誤りを調べる。</p>
+<p>次の図は、検証の対象とするレベルの構造である。鍵の掛かった通路には、開けるのに必要な鍵の名前を付けている。</p>
+<figure class="align-center" id="id16">
+<div class="graphviz"><img src="_images/graphviz-c6cea6f6c42880d98cb8d80d126221603c0eefef.png" alt="graph keys {
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;];
+    entrance [label=&quot;入口&quot;, fillcolor=&quot;#d8f0d8&quot;];
+    hall [label=&quot;広間&quot;];
+    east [label=&quot;東の通路&quot;];
+    store [label=&quot;倉庫\n（赤の鍵）&quot;, fillcolor=&quot;#fde0e0&quot;];
+    tower [label=&quot;北の塔\n（青の鍵）&quot;, fillcolor=&quot;#e0e8fd&quot;];
+    basement [label=&quot;地下&quot;];
+    boss [label=&quot;ボス部屋&quot;, fillcolor=&quot;#f8dada&quot;];
+    entrance -- hall;
+    hall -- east;
+    east -- store;
+    hall -- tower [label=&quot;赤の扉&quot;, color=&quot;#c04040&quot;, fontcolor=&quot;#c04040&quot;, penwidth=2];
+    hall -- basement [label=&quot;青の扉&quot;, color=&quot;#3060c0&quot;, fontcolor=&quot;#3060c0&quot;, penwidth=2];
+    basement -- boss;
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 9.5 </span><span class="caption-text">鍵と扉のあるレベルの構造</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>検証の手順は次のとおりである。</p>
+<ol class="arabic simple">
+<li><p>手持ちの鍵で通れる通路だけを使って、スタートから行ける部屋を幅優先探索（BFS）で求める。幅優先探索は、出発点から近い順に頂点を調べるグラフの探索方法である。</p></li>
+<li><p>行ける部屋に、まだ持っていない鍵があれば拾い、手順 1 に戻る。</p></li>
+<li><p>ゴールに行ければ成功である。新しい鍵が見つからないのにゴールに行けなければ、そのレベルは攻略できない。</p></li>
+</ol>
+<p><a class="reference internal" href="#list-level-graph"><span class="std std-numref">リスト 9.1</span></a> は、この手順を実装したものである。</p>
+<div class="literal-block-wrapper docutils container" id="list-level-graph">
+<div class="code-block-caption"><span class="caption-number">リスト 9.1 </span><span class="caption-text">level_graph.py（鍵と扉の検証）</span><a class="headerlink" href="#list-level-graph" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">18</span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">19</span><span class="k">class</span><span class="w"> </span><span class="nc">Passage</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの部屋をつなぐ通路。lock が None でなければ、その鍵が必要である。&quot;&quot;&quot;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="n">a</span><span class="p">:</span> <span class="nb">str</span>
+<span class="linenos">23</span>    <span class="n">b</span><span class="p">:</span> <span class="nb">str</span>
+<span class="linenos">24</span>    <span class="n">lock</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="nd">@dataclass</span>
+<span class="linenos">28</span><span class="k">class</span><span class="w"> </span><span class="nc">Level</span><span class="p">:</span>
+<span class="linenos">29</span>    <span class="n">start</span><span class="p">:</span> <span class="nb">str</span>
+<span class="linenos">30</span>    <span class="n">goal</span><span class="p">:</span> <span class="nb">str</span>
+<span class="linenos">31</span>    <span class="n">passages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Passage</span><span class="p">]</span>
+<span class="linenos">32</span>    <span class="n">keys</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>  <span class="c1"># 部屋の名前 → その部屋にある鍵</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>    <span class="k">def</span><span class="w"> </span><span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">room</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">held</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="linenos">35</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;手持ちの鍵 held で通れる通路の先にある部屋を返す。&quot;&quot;&quot;</span>
+<span class="linenos">36</span>        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">37</span>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">passages</span><span class="p">:</span>
+<span class="linenos">38</span>            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">lock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">lock</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">held</span><span class="p">:</span>
+<span class="linenos">39</span>                <span class="k">continue</span>
+<span class="linenos">40</span>            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="n">room</span><span class="p">:</span>
+<span class="linenos">41</span>                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos">42</span>            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">b</span> <span class="o">==</span> <span class="n">room</span><span class="p">:</span>
+<span class="linenos">43</span>                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">44</span>        <span class="k">return</span> <span class="n">result</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="k">def</span><span class="w"> </span><span class="nf">reachable</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="n">Level</span><span class="p">,</span> <span class="n">held</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="linenos">48</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;手持ちの鍵で行ける部屋を、幅優先探索で見つけた順に返す。&quot;&quot;&quot;</span>
+<span class="linenos">49</span>    <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="n">level</span><span class="o">.</span><span class="n">start</span><span class="p">]</span>
+<span class="linenos">50</span>    <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">level</span><span class="o">.</span><span class="n">start</span><span class="p">])</span>
+<span class="linenos">51</span>    <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+<span class="linenos">52</span>        <span class="n">room</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+<span class="linenos">53</span>        <span class="k">for</span> <span class="n">nxt</span> <span class="ow">in</span> <span class="n">level</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">room</span><span class="p">,</span> <span class="n">held</span><span class="p">):</span>
+<span class="linenos">54</span>            <span class="k">if</span> <span class="n">nxt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+<span class="linenos">55</span>                <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nxt</span><span class="p">)</span>
+<span class="linenos">56</span>                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nxt</span><span class="p">)</span>
+<span class="linenos">57</span>    <span class="k">return</span> <span class="n">visited</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span><span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="n">Level</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="linenos">61</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;鍵を拾いながら探索を繰り返し、ゴールに着けるかを表示して返す。&quot;&quot;&quot;</span>
+<span class="linenos">62</span>    <span class="n">held</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="linenos">63</span>    <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">64</span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="linenos">65</span>        <span class="n">rooms</span> <span class="o">=</span> <span class="n">reachable</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">held</span><span class="p">)</span>
+<span class="linenos">66</span>        <span class="n">new_keys</span> <span class="o">=</span> <span class="p">{</span><span class="n">level</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rooms</span> <span class="k">if</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">level</span><span class="o">.</span><span class="n">keys</span><span class="p">}</span> <span class="o">-</span> <span class="n">held</span>
+<span class="linenos">67</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  段階 </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">: 行ける部屋 = </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rooms</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">68</span>        <span class="k">if</span> <span class="n">level</span><span class="o">.</span><span class="n">goal</span> <span class="ow">in</span> <span class="n">rooms</span><span class="p">:</span>
+<span class="linenos">69</span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  → ゴール「</span><span class="si">{</span><span class="n">level</span><span class="o">.</span><span class="n">goal</span><span class="si">}</span><span class="s2">」に到達できる&quot;</span><span class="p">)</span>
+<span class="linenos">70</span>            <span class="k">return</span> <span class="kc">True</span>
+<span class="linenos">71</span>        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_keys</span><span class="p">:</span>
+<span class="linenos">72</span>            <span class="n">all_rooms</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">a</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">level</span><span class="o">.</span><span class="n">passages</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">b</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">level</span><span class="o">.</span><span class="n">passages</span><span class="p">}</span>
+<span class="linenos">73</span>            <span class="n">stuck</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">all_rooms</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">rooms</span><span class="p">))</span>
+<span class="linenos">74</span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  → 新しい鍵が無く、先に進めない（行けない部屋: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stuck</span><span class="p">)</span><span class="si">}</span><span class="s2">）&quot;</span><span class="p">)</span>
+<span class="linenos">75</span>            <span class="k">return</span> <span class="kc">False</span>
+<span class="linenos">76</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;           拾った鍵 = </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">new_keys</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">77</span>        <span class="n">held</span> <span class="o">|=</span> <span class="n">new_keys</span>
+<span class="linenos">78</span>        <span class="n">step</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">main</span></code> 関数では、青の鍵を北の塔に置いた正しい配置と、青の扉の向こうの地下に置いてしまった誤った配置の 2 つを検証している。実行すると次のように表示される。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>正しい配置（青の鍵は北の塔にある）
+<span class="linenos"> 2</span>  段階 1: 行ける部屋 = 入口, 広間, 東の通路, 倉庫
+<span class="linenos"> 3</span>           拾った鍵 = 赤の鍵
+<span class="linenos"> 4</span>  段階 2: 行ける部屋 = 入口, 広間, 東の通路, 北の塔, 倉庫
+<span class="linenos"> 5</span>           拾った鍵 = 青の鍵
+<span class="linenos"> 6</span>  段階 3: 行ける部屋 = 入口, 広間, 東の通路, 北の塔, 地下, 倉庫, ボス部屋
+<span class="linenos"> 7</span>  → ゴール「ボス部屋」に到達できる
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>破綻した配置（青の鍵が、青の扉の向こうの地下にある）
+<span class="linenos">10</span>  段階 1: 行ける部屋 = 入口, 広間, 東の通路, 倉庫
+<span class="linenos">11</span>           拾った鍵 = 赤の鍵
+<span class="linenos">12</span>  段階 2: 行ける部屋 = 入口, 広間, 東の通路, 北の塔, 倉庫
+<span class="linenos">13</span>  → 新しい鍵が無く、先に進めない（行けない部屋: ボス部屋, 地下）
+</pre></div>
+</div>
+<p>この検証は、レベルが攻略可能かどうかを判定するだけでなく、プレイヤーが鍵を手に入れる順番（段階）も示している。段階の数や、各段階で行ける範囲の広さは、レベルの進行の設計を見直す材料になる。例えば、段階 1 で行ける範囲が広すぎるなら、プレイヤーは最初の鍵を探して長く迷うかもしれない。</p>
+<p>なお、このサンプルでは鍵を何度でも使えるものとしている。1 回使うと無くなる鍵の場合は、どの扉に鍵を使うかという選択が生まれ、使い方によっては先に進めなくなる。このような場合は、手持ちの鍵と開けた扉の組み合わせまで含めた状態を探索する必要がある。その考え方は、第 12 章の総合演習で、レベルの解を探すプログラムとして扱う。</p>
+</section>
+<section id="id9">
+<h2><span class="section-number">9.6. </span>演習<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>好きなゲームのレベルを 1 つ選び、新しい要素を見せる 4 つの段階がどこに当たるかを説明せよ。当てはまらない場合は、どのような構成になっているかを説明せよ。</p></li>
+<li><p>同じレベルについて、緊張と緩和の曲線を描け。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">level_graph.py</span></code> に、緑の鍵と緑の扉を追加したレベルを作り、検証せよ。わざと攻略できない配置も作り、検証で見つかることを確かめよ。</p></li>
+<li><p>一本道、分岐と合流、ハブ型のうち 1 つを選び、その構造を持つレベルの部屋のつながりを図に描け。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch08_level_basics.html" class="btn btn-neutral float-left" title="8. レベルデザインの基礎" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch10_procgen.html" class="btn btn-neutral float-right" title="10. 手続き型生成" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

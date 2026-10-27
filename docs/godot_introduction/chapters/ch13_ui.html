@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 13 章 UI &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 14 章 サウンド" href="ch14_audio.html" />
+    <link rel="prev" title="第 12 章 描画とアニメーション" href="ch12_graphics_and_animation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 13 章　UI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#control">Control ノード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">レイアウト</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">コンテナー</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">サンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">フォーカスとキーボード操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">マウスのクリックを通すかどうか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">テーマ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">画面の大きさへの対応</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch17_tutorial.html">第 17 章　チュートリアル：岩よけゲームを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 13 章　UI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch12_graphics_and_animation.html" class="btn btn-neutral float-left" title="第 12 章 描画とアニメーション" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch14_audio.html" class="btn btn-neutral float-right" title="第 14 章 サウンド" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ui">
+<span id="ch13"></span><h1>第 13 章　UI<a class="headerlink" href="#ui" title="Link to this heading"></a></h1>
+<p>本章では、ボタン、ラベル、スライダーなどの UI（ユーザーインターフェース）を作る方法を説明する。Godot の UI は <code class="docutils literal notranslate"><span class="pre">Control</span></code> を継承したノードで作る。エディター自体もこの仕組みで作られているので、ゲームのメニュー画面から道具アプリケーションまで、さまざまな画面を作れる。サンプルは <code class="docutils literal notranslate"><span class="pre">chapter13</span></code> フォルダーにある。</p>
+<section id="control">
+<h2>Control ノード<a class="headerlink" href="#control" title="Link to this heading"></a></h2>
+<p>UI の部品は <code class="docutils literal notranslate"><span class="pre">Control</span></code> を継承したノードである。<code class="docutils literal notranslate"><span class="pre">Node2D</span></code> の系統のノードが位置、回転、拡大率で配置されるのに対し、<code class="docutils literal notranslate"><span class="pre">Control</span></code> の系統のノードは「長方形の領域」を持ち、親の領域に対する相対的な位置と大きさで配置される。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 48 </span><span class="caption-text">よく使う Control ノード</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Label</span></code></p></td>
+<td><p>文字列を表示する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RichTextLabel</span></code></p></td>
+<td><p>色や太字などの書式付きの文字列を、BBCode という記法で表示する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Button</span></code></p></td>
+<td><p>押せるボタン。<code class="docutils literal notranslate"><span class="pre">pressed</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code>、<code class="docutils literal notranslate"><span class="pre">CheckButton</span></code></p></td>
+<td><p>オン・オフを切り替える。<code class="docutils literal notranslate"><span class="pre">toggled</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OptionButton</span></code></p></td>
+<td><p>ドロップダウンで項目を選ぶ。<code class="docutils literal notranslate"><span class="pre">item_selected</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></p></td>
+<td><p>1 行の文字列を入力する。<code class="docutils literal notranslate"><span class="pre">text_submitted</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HSlider</span></code>、<code class="docutils literal notranslate"><span class="pre">VSlider</span></code></p></td>
+<td><p>スライダーで数値を選ぶ。<code class="docutils literal notranslate"><span class="pre">value_changed</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ProgressBar</span></code></p></td>
+<td><p>進み具合や体力をバーで表示する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TextureRect</span></code></p></td>
+<td><p>画像を表示する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ColorRect</span></code></p></td>
+<td><p>単色の長方形を表示する。背景などに使う。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Panel</span></code>、<code class="docutils literal notranslate"><span class="pre">PanelContainer</span></code></p></td>
+<td><p>枠付きの背景を表示する。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id1">
+<h2>レイアウト<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Control</span></code> の配置は、アンカー（anchor）とオフセット（offset）で決まる。</p>
+<ul class="simple">
+<li><p><strong>アンカー</strong>：親の領域のどこを基準にするか。0.0 が親の左端（上端）、1.0 が右端（下端）を表す。上下左右の 4 辺それぞれに設定する。</p></li>
+<li><p><strong>オフセット</strong>：アンカーの位置からのずれ（ピクセル）</p></li>
+</ul>
+<p>例えば、アンカーを左右とも 1.0、上下とも 0.0 にすると、親の右上を基準に配置される。親（ウィンドウ）の大きさが変わっても、右上にくっついたままになる。</p>
+<p>アンカーとオフセットを直接設定する代わりに、ビューポートのツールバーにある「アンカーのプリセット」から「左上」「中央」「Rect全面」などを選ぶのが簡単である。「Rect全面」（Full Rect）は親の領域いっぱいに広げる設定で、背景や画面全体の UI のルートによく使う。</p>
+<section id="id2">
+<h3>コンテナー<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>UI の部品を 1 つずつ手で配置するのは大変で、画面の大きさが変わったときにも崩れやすい。そこで、子ノードを自動で並べるコンテナー（container）を使う。コンテナーの子になった <code class="docutils literal notranslate"><span class="pre">Control</span></code> は、位置と大きさをコンテナーが決める。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 49 </span><span class="caption-text">よく使うコンテナー</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>コンテナー</p></th>
+<th class="head"><p>子ノードの並べ方</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VBoxContainer</span></code>、<code class="docutils literal notranslate"><span class="pre">HBoxContainer</span></code></p></td>
+<td><p>縦、または横に 1 列に並べる。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GridContainer</span></code></p></td>
+<td><p>指定した列数の格子状に並べる。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MarginContainer</span></code></p></td>
+<td><p>周囲に余白を付ける。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CenterContainer</span></code></p></td>
+<td><p>子を中央に配置する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PanelContainer</span></code></p></td>
+<td><p>背景の枠を表示し、その中に子を配置する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ScrollContainer</span></code></p></td>
+<td><p>子が収まらない場合にスクロールできるようにする。</p></td>
+</tr>
+</tbody>
+</table>
+<p>コンテナーの中で各部品がどれだけの幅を取るかは、部品のインスペクターの「Container Sizing」（size_flags_horizontal、size_flags_vertical）で決める。「塗りつぶし」（Fill）は割り当てられた幅いっぱいに広がる。「拡大」（Expand）を付けると、余った幅を取り合って広がる。例えば、<code class="docutils literal notranslate"><span class="pre">HBoxContainer</span></code> の中でラベルの幅は固定し、入力欄だけを残りの幅いっぱいに広げたい場合は、入力欄に「拡大」を付ける。</p>
+<p>最小の大きさは <code class="docutils literal notranslate"><span class="pre">custom_minimum_size</span></code> で指定する。コンテナーは、子の最小の大きさより小さくはしない。</p>
+</section>
+</section>
+<section id="id3">
+<h2>サンプル<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ui_demo.tscn</span></code> は、設定画面を模したサンプルである。画面上部に HP のバーとスコアを表示し、中央のパネルで名前、音量、難易度を入力して「決定」を押すと、入力内容が表示される。</p>
+<figure class="align-default" id="id10">
+<a class="screenshot reference internal image-reference" href="../_images/ch13_ui.png"><img alt="../_images/ch13_ui.png" class="screenshot" src="../_images/ch13_ui.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 25 </span><span class="caption-text">ui_demo.tscn の実行結果</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id11">
+<div class="graphviz"><object data="../_images/graphviz-c3496453f492379fcf66c066e3c0a5dc4a0671af.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph ui {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=10];
+  center [label=&quot;Center\n（CenterContainer）\nRect全面&quot;];
+  panel [label=&quot;Panel\n（PanelContainer）&quot;];
+  margin [label=&quot;Margin\n（MarginContainer）&quot;];
+  vbox [label=&quot;VBox\n（VBoxContainer）&quot;];
+  title [label=&quot;Title（Label）&quot;];
+  name_row [label=&quot;NameRow（HBoxContainer）\nLabel ＋ NameEdit（LineEdit）&quot;];
+  vol_row [label=&quot;VolumeRow（HBoxContainer）\nLabel ＋ VolumeSlider ＋ VolumeLabel&quot;];
+  dif_row [label=&quot;DifficultyRow（HBoxContainer）\nLabel ＋ DifficultyOption&quot;];
+  apply [label=&quot;ApplyButton（Button）&quot;];
+  result [label=&quot;ResultLabel（Label）&quot;];
+  center -&gt; panel -&gt; margin -&gt; vbox;
+  vbox -&gt; title;
+  vbox -&gt; name_row;
+  vbox -&gt; vol_row;
+  vbox -&gt; dif_row;
+  vbox -&gt; apply;
+  vbox -&gt; result;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 26 </span><span class="caption-text">ui_demo.tscn のノードの構成（中央のパネル部分）</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">CenterContainer</span></code> を画面全体に広げ、その中に <code class="docutils literal notranslate"><span class="pre">PanelContainer</span></code> を置くことで、パネルが常に画面の中央に表示される。パネルの中は <code class="docutils literal notranslate"><span class="pre">VBoxContainer</span></code> で縦に並べ、各行は <code class="docutils literal notranslate"><span class="pre">HBoxContainer</span></code> でラベルと入力欄を横に並べている。入力欄（<code class="docutils literal notranslate"><span class="pre">NameEdit</span></code> など）には「拡大」を付けて、残りの幅を使うようにしている。</p>
+<p>画面上部の <code class="docutils literal notranslate"><span class="pre">TopBar</span></code> は <code class="docutils literal notranslate"><span class="pre">HBoxContainer</span></code> で、アンカーのプリセットを「上伸長」（Top Wide、上端に沿って左右いっぱいに広げる）にしている。HP のバーとスコアの間に、「拡大」を付けた空の <code class="docutils literal notranslate"><span class="pre">Control</span></code> を置くことで、スコアを右端に寄せている。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">リスト 26 </span><span class="caption-text">chapter13/ui_demo.gd</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Control</span>
+<span class="linenos"> 2</span><span class="c1">## 設定画面風の UI。入力欄の値をまとめて、決定ボタンで表示する。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_name_edit</span><span class="p">:</span><span class="w"> </span><span class="n">LineEdit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%NameEdit</span>
+<span class="linenos"> 5</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_volume_slider</span><span class="p">:</span><span class="w"> </span><span class="n">HSlider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%VolumeSlider</span>
+<span class="linenos"> 6</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_volume_label</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%VolumeLabel</span>
+<span class="linenos"> 7</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_difficulty</span><span class="p">:</span><span class="w"> </span><span class="n">OptionButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%DifficultyOption</span>
+<span class="linenos"> 8</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_result</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">%ResultLabel</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">difficulty_name</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;かんたん&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ふつう&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;むずかしい&quot;</span><span class="p">]:</span>
+<span class="linenos">13</span><span class="w">        </span><span class="n">_difficulty</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">difficulty_name</span><span class="p">)</span>
+<span class="linenos">14</span><span class="w">    </span><span class="n">_difficulty</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">15</span><span class="w">    </span><span class="n">_volume_slider</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_volume_changed</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nv">%ApplyButton</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_apply_pressed</span><span class="p">)</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">_on_volume_changed</span><span class="p">(</span><span class="n">_volume_slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="linenos">18</span><span class="w">    </span><span class="n">_name_edit</span><span class="o">.</span><span class="n">grab_focus</span><span class="p">()</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">func</span><span class="w"> </span><span class="n">_on_volume_changed</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">_volume_label</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%%</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">value</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="k">func</span><span class="w"> </span><span class="n">_on_apply_pressed</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">26</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">player_name</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">_name_edit</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip_edges</span><span class="p">()</span>
+<span class="linenos">27</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">player_name</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+<span class="linenos">28</span><span class="w">        </span><span class="n">player_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;名無し&quot;</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">_result</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos">30</span><span class="w">        </span><span class="s2">&quot;名前: </span><span class="si">%s</span><span class="s2"> / 音量: </span><span class="si">%d</span><span class="s2"> </span><span class="si">%%</span><span class="s2"> / 難易度: </span><span class="si">%s</span><span class="s2">&quot;</span>
+<span class="linenos">31</span><span class="w">        </span><span class="o">%</span><span class="w"> </span><span class="p">[</span><span class="n">player_name</span><span class="p">,</span><span class="w"> </span><span class="n">_volume_slider</span><span class="o">.</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">_difficulty</span><span class="o">.</span><span class="n">get_item_text</span><span class="p">(</span><span class="n">_difficulty</span><span class="o">.</span><span class="n">selected</span><span class="p">)]</span>
+<span class="linenos">32</span><span class="w">    </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">%NameEdit</span></code> などは、シーン固有名（<a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a>）で取得している。UI のシーンは階層が深くなりやすいので、シーン固有名を使うと、レイアウトを変えてもスクリプトを直さずに済む。</p>
+</section>
+<section id="id4">
+<h2>フォーカスとキーボード操作<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ボタンなどの部品は、キーボードやゲームパッドでも操作できる。操作の対象になっている部品を「フォーカスがある」と言い、<kbd class="kbd docutils literal notranslate">Tab</kbd> キーや方向キーでフォーカスを移動し、<kbd class="kbd docutils literal notranslate">Enter</kbd> キーで押せる。この操作には <code class="docutils literal notranslate"><span class="pre">ui_accept</span></code>、<code class="docutils literal notranslate"><span class="pre">ui_up</span></code> などの組み込みのアクションが使われる。</p>
+<p>ゲームパッドで遊ぶゲームでは、画面を開いたときに <code class="docutils literal notranslate"><span class="pre">grab_focus()</span></code> で最初の部品にフォーカスを当てておく必要がある。そうしないと、マウスを使わない限り操作を始められない。<code class="docutils literal notranslate"><span class="pre">ui_demo.gd</span></code> の 18 行目では、名前の入力欄にフォーカスを当てている。</p>
+</section>
+<section id="id5">
+<h2>マウスのクリックを通すかどうか<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Control</span></code> は、マウスのクリックを受け取ると、それより奥にある部品やゲームの世界にクリックを渡さない。そのため、画面全体を覆う半透明の <code class="docutils literal notranslate"><span class="pre">ColorRect</span></code> などを置くと、その下のボタンが押せなくなる。</p>
+<p>この動作は「マウス」→「フィルター」（mouse_filter）で変更できる。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 50 </span><span class="caption-text">マウスのフィルターの種類</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>動作</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Stop</p></td>
+<td><p>クリックを受け取り、奥には渡さない。ボタンなどの既定値</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pass</p></td>
+<td><p>クリックを受け取り、親にも渡す。</p></td>
+</tr>
+<tr class="row-even"><td><p>Ignore</p></td>
+<td><p>クリックを受け取らない。奥の部品にそのまま渡す。</p></td>
+</tr>
+</tbody>
+</table>
+<p>背景や装飾だけの <code class="docutils literal notranslate"><span class="pre">ColorRect</span></code> や <code class="docutils literal notranslate"><span class="pre">Label</span></code> は、Ignore にしておくとよい。本書のサンプルでも、画面全体を覆う背景や画面効果の <code class="docutils literal notranslate"><span class="pre">ColorRect</span></code> は Ignore にしている。</p>
+</section>
+<section id="id6">
+<h2>テーマ<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>UI の色、フォント、余白などの見た目は、テーマ（<code class="docutils literal notranslate"><span class="pre">Theme</span></code> リソース）で決まる。個別の部品の見た目だけを変えるには、インスペクターの「テーマのオーバーライド」を使う。サンプルでは、タイトルの文字を大きくするために「テーマのオーバーライド」→「フォントサイズ」を設定している。</p>
+<p>UI 全体の見た目をそろえたい場合は、<code class="docutils literal notranslate"><span class="pre">Theme</span></code> リソースを作って、UI のルートノードの「テーマ」（theme）に設定する。子ノードは親のテーマを引き継ぐ。プロジェクト全体の既定のテーマは、プロジェクト設定の「GUI」→「テーマ」で設定できる。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>Godot の既定のフォントには日本語の文字が含まれていない。Windows のエディターで日本語が表示されるのは、足りない文字を OS のフォントで補う機能（システムフォントのフォールバック）が働いているためである。Web 向けに書き出した場合など、OS のフォントを使えない環境では日本語が表示されないことがある。日本語を使うゲームを配布する場合は、日本語のフォントファイル（ライセンスを確認したもの）をプロジェクトに入れ、プロジェクト設定の「GUI」→「テーマ」→「カスタムフォント」に設定しておく。</p>
+</div>
+</section>
+<section id="id7">
+<h2>画面の大きさへの対応<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>ゲームのウィンドウの大きさが変わったとき、画面の内容をどう表示するかは、プロジェクト設定の「表示」→「ウィンドウ」にある「ストレッチ」の「モード」（display/window/stretch/mode）で決める。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 51 </span><span class="caption-text">ストレッチのモード</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>モード</p></th>
+<th class="head"><p>動作</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>disabled</p></td>
+<td><p>拡大縮小しない。ウィンドウを大きくすると、見える範囲が広がる。既定値</p></td>
+</tr>
+<tr class="row-odd"><td><p>canvas_items</p></td>
+<td><p>基準の大きさ（既定では 1152 × 648）で作った画面を、ウィンドウの大きさに合わせて拡大縮小する。文字や図形は拡大後の解像度で描画されるので、くっきり表示される。</p></td>
+</tr>
+<tr class="row-even"><td><p>viewport</p></td>
+<td><p>基準の大きさで描画した結果の画像を拡大する。ドット絵のゲームで、ドットの大きさをそろえたい場合に使う。</p></td>
+</tr>
+</tbody>
+</table>
+<p>本書のサンプルプロジェクトでは canvas_items にしている。縦横比が異なるウィンドウでの表示方法は、同じ場所の「アスペクト」で設定する。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch12_graphics_and_animation.html" class="btn btn-neutral float-left" title="第 12 章 描画とアニメーション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch14_audio.html" class="btn btn-neutral float-right" title="第 14 章 サウンド" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

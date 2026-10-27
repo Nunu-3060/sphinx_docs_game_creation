@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. 行列と座標変換 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="7. 3D の回転とクォータニオン" href="rotation3d.html" />
+    <link rel="prev" title="5. 角度と回転" href="angles.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. 行列と座標変換</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">6.1. 変換を行列で表す</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">6.2. 同次座標で平行移動も行列にする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">6.3. 変換の合成と順序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">6.4. ローカル座標とワールド座標</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">6.4.1. 親子関係</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">6.5. カメラ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">6.6. 逆変換</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d">6.7. 3D への拡張の概要</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">12. 衝突応答</a></li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>行列と座標変換</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">6. </span>行列と座標変換<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>前の章では、点を回転させる式を扱った。ゲームでは、回転のほかに拡大縮小と平行移動を組み合わせ、さらに「腕の先の手」「船の上の砲台」のような親子関係や、スクロールするカメラも扱う。こうした変換を統一的に扱う道具が<strong>行列</strong>である。</p>
+<section id="id2">
+<h2><span class="section-number">6.1. </span>変換を行列で表す<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>前の章の回転の式は、行列とベクトルの積で書ける。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}\end{split}\]</div>
+<p>行列とベクトルの積は、「行列の各行とベクトルの内積を並べたもの」である。上の式の 1 行目を計算すると <span class="math notranslate nohighlight">\(x' = x\cos\theta - y\sin\theta\)</span> になり、前の章の式と一致する。行列の各列は、前の章の<a class="reference internal" href="angles.html#fig-rotation"><span class="std std-numref">図 5.3</span></a> で見た「x 軸と y 軸の単位ベクトルが移る先」になっている。</p>
+<p>拡大縮小も行列で書ける。x 方向に <span class="math notranslate nohighlight">\(s_x\)</span> 倍、y 方向に <span class="math notranslate nohighlight">\(s_y\)</span> 倍するなら、次のとおりである。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} s_x &amp; 0 \\ 0 &amp; s_y \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(s_x = -1\)</span> にすると左右が反転する。2D のゲームで、キャラクターの絵を左右反転して逆向きに歩かせるときに使う。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">6.2. </span>同次座標で平行移動も行列にする<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>平行移動 <span class="math notranslate nohighlight">\((x + t_x, y + t_y)\)</span> は、2×2 の行列の積では書けない。行列の積は、原点 (0, 0) を必ず原点に移すからである。</p>
+<p>そこで、点 <span class="math notranslate nohighlight">\((x, y)\)</span> に 3 番目の成分として 1 を付け加えた <span class="math notranslate nohighlight">\((x, y, 1)\)</span> で表し、3×3 の行列を使う。このような表し方を<strong>同次座標</strong>と呼ぶ。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix} x' \\ y' \\ 1 \end{pmatrix} = \begin{pmatrix} a &amp; b &amp; c \\ d &amp; e &amp; f \\ 0 &amp; 0 &amp; 1 \end{pmatrix} \begin{pmatrix} x \\ y \\ 1 \end{pmatrix} = \begin{pmatrix} a x + b y + c \\ d x + e y + f \\ 1 \end{pmatrix}\end{split}\]</div>
+<p>左上の 2×2 の部分（<span class="math notranslate nohighlight">\(a, b, d, e\)</span>）が回転や拡大縮小を、右の列（<span class="math notranslate nohighlight">\(c, f\)</span>）が平行移動を表す。回転・拡大縮小・平行移動を組み合わせた変換を<strong>アフィン変換</strong>と呼び、2D のアフィン変換はすべてこの形の行列で表せる。</p>
+<p>同次座標の 3 番目の成分を 0 にすると、平行移動の影響を受けなくなる。位置（点）は 1、向きや速度（ベクトル）は 0 として変換すると、「向きは回転するが、平行移動はしない」という正しい扱いになる。</p>
+<p><a class="reference internal" href="#code-mat3"><span class="std std-numref">リスト 6.1</span></a> は、この行列を表すクラス <code class="docutils literal notranslate"><span class="pre">Mat3</span></code> である。最後の行は常に (0, 0, 1) なので、上の 2 行の 6 つの値だけを持っている。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<span id="code-mat3"></span><div class="code-block-caption"><span class="caption-number">リスト 6.1 </span><span class="caption-text">examples/transform2d.py の Mat3 クラス（冒頭）</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="k">class</span><span class="w"> </span><span class="nc">Mat3</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 次元のアフィン変換を表す 3×3 行列。&quot;&quot;&quot;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>    <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="linenos"> 6</span>    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 7</span>    <span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 8</span>    <span class="n">d</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 9</span>    <span class="n">e</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="linenos">10</span>    <span class="n">f</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="nd">@staticmethod</span>
+<span class="linenos">13</span>    <span class="k">def</span><span class="w"> </span><span class="nf">translation</span><span class="p">(</span><span class="n">tx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ty</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mat3</span><span class="p">:</span>
+<span class="linenos">14</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;平行移動。&quot;&quot;&quot;</span>
+<span class="linenos">15</span>        <span class="k">return</span> <span class="n">Mat3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ty</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="nd">@staticmethod</span>
+<span class="linenos">18</span>    <span class="k">def</span><span class="w"> </span><span class="nf">rotation</span><span class="p">(</span><span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mat3</span><span class="p">:</span>
+<span class="linenos">19</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;原点を中心とする回転（angle はラジアン）。&quot;&quot;&quot;</span>
+<span class="linenos">20</span>        <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+<span class="linenos">21</span>        <span class="k">return</span> <span class="n">Mat3</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="nd">@staticmethod</span>
+<span class="linenos">24</span>    <span class="k">def</span><span class="w"> </span><span class="nf">scaling</span><span class="p">(</span><span class="n">sx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mat3</span><span class="p">:</span>
+<span class="linenos">25</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;原点を中心とする拡大縮小。&quot;&quot;&quot;</span>
+<span class="linenos">26</span>        <span class="k">return</span> <span class="n">Mat3</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">27</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2><span class="section-number">6.3. </span>変換の合成と順序<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>複数の変換を続けて行うことを、変換の<strong>合成</strong>と呼ぶ。行列では、合成は行列の積になる。点 <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> に変換 <span class="math notranslate nohighlight">\(B\)</span> を行ってから変換 <span class="math notranslate nohighlight">\(A\)</span> を行う場合は、次のように書ける。</p>
+<div class="math notranslate nohighlight">
+\[A (B \mathbf{p}) = (A B) \mathbf{p}\]</div>
+<p>積 <span class="math notranslate nohighlight">\(AB\)</span> を一度計算しておけば、たくさんの点を 1 回の行列の積で変換できる。ここで、行列は<strong>右から順に</strong>適用されることに注意する。<span class="math notranslate nohighlight">\(AB\)</span> は「先に <span class="math notranslate nohighlight">\(B\)</span>、後に <span class="math notranslate nohighlight">\(A\)</span>」である。</p>
+<p>行列の積は、掛ける順番を入れ替えると一般に結果が変わる。<a class="reference internal" href="#fig-transform-order"><span class="std std-numref">図 6.1</span></a> は、90° の回転 <span class="math notranslate nohighlight">\(R\)</span> と (3, 0) の平行移動 <span class="math notranslate nohighlight">\(T\)</span> を、異なる順序で合成した例である。</p>
+<figure class="align-default" id="id10">
+<span id="fig-transform-order"></span><img alt="回転と平行移動の順序による違い" src="_images/transform_order.png" />
+<figcaption>
+<p><span class="caption-number">図 6.1 </span><span class="caption-text">変換の順序による違い。灰色が元の形、橙が変換後の形</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(TR\)</span>（回転してから移動）: 矢印はその場で上を向き、(3, 0) へ移る。</p></li>
+<li><p><span class="math notranslate nohighlight">\(RT\)</span>（移動してから回転）: 矢印は (3, 0) へ移ってから原点を中心に回るので、(0, 3) へ回り込む。</p></li>
+</ul>
+<p>物を「その場で回して、置きたい場所へ動かす」なら、<span class="math notranslate nohighlight">\(T R S\)</span>（拡大縮小 → 回転 → 平行移動の順に適用）にするのが基本である。</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-number">リスト 6.2 </span><span class="caption-text">examples/transform2d.py の Mat3.__matmul__ メソッド</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Mat3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mat3</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;行列の積 self @ other。点に適用すると、other を先に、self を後に適用したことになる。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>        <span class="k">return</span> <span class="n">Mat3</span><span class="p">(</span>
+<span class="linenos"> 4</span>            <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
+<span class="linenos"> 5</span>            <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">e</span><span class="p">,</span>
+<span class="linenos"> 6</span>            <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span>
+<span class="linenos"> 7</span>            <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
+<span class="linenos"> 8</span>            <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">e</span><span class="p">,</span>
+<span class="linenos"> 9</span>            <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span>
+<span class="linenos">10</span>        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Python では <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 演算子で行列の積を書けるように、<code class="docutils literal notranslate"><span class="pre">__matmul__</span></code> を定義している。<code class="docutils literal notranslate"><span class="pre">transform2d.py</span></code> を実行すると、<a class="reference internal" href="#fig-transform-order"><span class="std std-numref">図 6.1</span></a> と同じ計算の結果が表示される。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">6.4. </span>ローカル座標とワールド座標<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>物の形は、その物自身を基準とした座標系で定義しておくと扱いやすい。この座標系を<strong>ローカル座標</strong>と呼ぶ。たとえば、車の形は「車の中心が原点、前方が x 軸」のローカル座標で定義する。車がゲームの世界のどこにあり、どちらを向いているかは、ローカル座標からワールド座標への変換（<strong>ワールド変換</strong>）で表す。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{p}_{\text{ワールド}} = M_{\text{ワールド}} \, \mathbf{p}_{\text{ローカル}}, \qquad M_{\text{ワールド}} = T(\text{位置}) \, R(\text{向き}) \, S(\text{大きさ})\]</div>
+<section id="id6">
+<h3><span class="section-number">6.4.1. </span>親子関係<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>ロボットの腕のように、ある部品（子）が別の部品（親）に取り付けられている場合を考える。子の位置と向きは、親を基準にして決まる。親が動けば、子も一緒に動く。</p>
+<p>この関係は、行列の積でそのまま表せる。子のワールド変換は、親のワールド変換に「親から見た子の変換（子のローカル変換）」を掛けたものである。</p>
+<div class="math notranslate nohighlight">
+\[M_{\text{子}} = M_{\text{親}} \, L_{\text{子}}\]</div>
+<p><a class="reference internal" href="#fig-parent-child"><span class="std std-numref">図 6.2</span></a> は 2 つの部品からなる腕である。それぞれの部品のローカル座標の軸を矢印で示している。子の座標系は、親の先端に置かれ、親の向きに対してさらに回転している。</p>
+<figure class="align-default" id="id12">
+<span id="fig-parent-child"></span><a class="reference internal image-reference" href="_images/parent_child.png"><img alt="親子関係のある変換" src="_images/parent_child.png" style="width: 440px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 6.2 </span><span class="caption-text">親子関係のある部品のローカル座標</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">arm_demo.py</span></code> は、3 つの関節を持つロボットアームである。<a class="reference internal" href="#code-arm"><span class="std std-numref">リスト 6.3</span></a> のように、根元から順に、親のワールド変換に自分のローカル変換を掛けていく。</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<span id="code-arm"></span><div class="code-block-caption"><span class="caption-number">リスト 6.3 </span><span class="caption-text">examples/arm_demo.py の segment_world_transforms 関数</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">segment_world_transforms</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">Mat3</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mat3</span><span class="p">]:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;各部品のワールド変換を、根元から順に求める。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">transforms</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 4</span>    <span class="n">parent</span> <span class="o">=</span> <span class="n">base</span>
+<span class="linenos"> 5</span>    <span class="n">parent_length</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos"> 6</span>    <span class="k">for</span> <span class="n">angle</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">SEGMENT_LENGTHS</span><span class="p">):</span>
+<span class="linenos"> 7</span>        <span class="c1"># 親の先端へ移動してから、自分の関節の角度だけ回す</span>
+<span class="linenos"> 8</span>        <span class="n">local</span> <span class="o">=</span> <span class="n">Mat3</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="n">parent_length</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="n">Mat3</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+<span class="linenos"> 9</span>        <span class="n">world</span> <span class="o">=</span> <span class="n">parent</span> <span class="o">@</span> <span class="n">local</span>
+<span class="linenos">10</span>        <span class="n">transforms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">world</span><span class="p">)</span>
+<span class="linenos">11</span>        <span class="n">parent</span><span class="p">,</span> <span class="n">parent_length</span> <span class="o">=</span> <span class="n">world</span><span class="p">,</span> <span class="n">length</span>
+<span class="linenos">12</span>    <span class="k">return</span> <span class="n">transforms</span>
+</pre></div>
+</div>
+</div>
+<p>各部品のローカル変換は「親の先端へ移動してから、自分の関節の角度だけ回す」である。Q キーで第 1 関節を回すと、先の 2 つの部品も一緒に回ることを確かめられる。このように、物を親子関係の木構造で管理する仕組みを<strong>シーングラフ</strong>と呼ぶ。Unity の Transform や Godot の Node2D は、この仕組みを提供している。</p>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">6.5. </span>カメラ<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>スクロールするゲームでは、ワールド座標の物を画面に描く前に、カメラに合わせて変換する。この変換を<strong>ビュー変換</strong>と呼ぶ。2D のカメラが位置 <span class="math notranslate nohighlight">\(\mathbf{c}\)</span>、回転角 <span class="math notranslate nohighlight">\(\phi\)</span>、ズーム率 <span class="math notranslate nohighlight">\(z\)</span> を持つとき、ワールド座標を画面座標に変換する行列は次のようになる。</p>
+<div class="math notranslate nohighlight">
+\[V = T(\text{画面の中心}) \, S(z) \, R(-\phi) \, T(-\mathbf{c})\]</div>
+<p>右から順に、次の変換を行っている。</p>
+<ol class="arabic simple">
+<li><p>カメラの位置が原点に来るように、世界全体をずらす。</p></li>
+<li><p>カメラが回った角度と逆向きに、世界全体を回す。</p></li>
+<li><p>ズーム率に合わせて拡大縮小する。</p></li>
+<li><p>原点（カメラの位置）が画面の中央に来るようにずらす。</p></li>
+</ol>
+<p>カメラを右に動かすと世界は左に動いて見え、カメラを時計回りに回すと世界は反時計回りに回って見える。カメラの変換は、カメラ自身のワールド変換の<strong>逆</strong>になっている。</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-number">リスト 6.4 </span><span class="caption-text">examples/camera_demo.py の view_matrix 関数</span><a class="headerlink" href="#id14" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">view_matrix</span><span class="p">(</span><span class="n">camera</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">,</span> <span class="n">zoom</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shake</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Vector2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mat3</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;ワールド座標を画面座標に変換する行列。右から順に適用される。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="p">(</span>
+<span class="linenos">4</span>        <span class="n">Mat3</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="n">SCREEN_WIDTH</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">shake</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">shake</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 4. 画面の中央へ（揺れのずれも加える）</span>
+<span class="linenos">5</span>        <span class="o">@</span> <span class="n">Mat3</span><span class="o">.</span><span class="n">scaling</span><span class="p">(</span><span class="n">zoom</span><span class="p">,</span> <span class="n">zoom</span><span class="p">)</span>  <span class="c1"># 3. 拡大縮小</span>
+<span class="linenos">6</span>        <span class="o">@</span> <span class="n">Mat3</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="o">-</span><span class="n">angle</span><span class="p">)</span>  <span class="c1"># 2. カメラの回転と逆向きに回す</span>
+<span class="linenos">7</span>        <span class="o">@</span> <span class="n">Mat3</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="o">-</span><span class="n">camera</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">camera</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 1. カメラの位置が原点に来るように動かす</span>
+<span class="linenos">8</span>    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">camera_demo.py</span></code> では、すべての物の頂点をこの行列で変換して描いている。カメラの揺れ（スペースキー）は、手順 4 のずらす量に小さな乱数を加えるだけで実現している。揺れを乱数の代わりにノイズで作る方法は第 9 章で、カメラを滑らかに追従させる方法は第 8 章で扱う。</p>
+<figure class="align-default" id="id15">
+<a class="reference internal image-reference" href="_images/screen_camera_demo.png"><img alt="camera_demo.py の画面" src="_images/screen_camera_demo.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 6.3 </span><span class="caption-text">camera_demo.py の画面（カメラを回転・ズームしている）</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id8">
+<h2><span class="section-number">6.6. </span>逆変換<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>マウスでクリックした場所にある物を選ぶには、画面座標をワールド座標に戻す必要がある。これには、ビュー変換の<strong>逆行列</strong> <span class="math notranslate nohighlight">\(V^{-1}\)</span> を使う。逆行列は、元の行列と掛けると何もしない変換（単位行列）になる行列である。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{p}_{\text{ワールド}} = V^{-1} \, \mathbf{p}_{\text{画面}}\]</div>
+<p>アフィン変換の逆行列は、左上の 2×2 の部分の逆行列と、平行移動の部分から計算できる。</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-number">リスト 6.5 </span><span class="caption-text">examples/transform2d.py の Mat3.inverse メソッド</span><a class="headerlink" href="#id16" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>    <span class="k">def</span><span class="w"> </span><span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mat3</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;逆行列。拡大率が 0 の変換（行列式が 0）には逆行列が無い。&quot;&quot;&quot;</span>
+<span class="linenos">3</span>        <span class="n">det</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span>
+<span class="linenos">4</span>        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">det</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-12</span><span class="p">:</span>
+<span class="linenos">5</span>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;この変換には逆変換が無い&#39;</span><span class="p">)</span>
+<span class="linenos">6</span>        <span class="n">ia</span><span class="p">,</span> <span class="n">ib</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">/</span> <span class="n">det</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="n">det</span>
+<span class="linenos">7</span>        <span class="n">id_</span><span class="p">,</span> <span class="n">ie</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">/</span> <span class="n">det</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">/</span> <span class="n">det</span>
+<span class="linenos">8</span>        <span class="k">return</span> <span class="n">Mat3</span><span class="p">(</span><span class="n">ia</span><span class="p">,</span> <span class="n">ib</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">ia</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="n">ib</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">),</span> <span class="n">id_</span><span class="p">,</span> <span class="n">ie</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">id_</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="n">ie</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">det</span></code> は 2×2 の部分の<strong>行列式</strong>で、変換によって面積が何倍になるかを表す。拡大率が 0 の変換は面積を 0 につぶしてしまい、元に戻せないので、逆行列が無い。</p>
+<p>合成した変換の逆変換は、それぞれの逆変換を逆の順序で合成したものになる。</p>
+<div class="math notranslate nohighlight">
+\[(A B)^{-1} = B^{-1} A^{-1}\]</div>
+<p>「靴下をはいてから靴をはく」の逆が「靴を脱いでから靴下を脱ぐ」になるのと同じである。<code class="docutils literal notranslate"><span class="pre">camera_demo.py</span></code> でクリックすると、<code class="docutils literal notranslate"><span class="pre">view.inverse()</span></code> でクリック位置をワールド座標に変換し、そこに印を置く。カメラを回したりズームしたりしても、印はクリックした場所の地面に留まる。</p>
+</section>
+<section id="d">
+<h2><span class="section-number">6.7. </span>3D への拡張の概要<a class="headerlink" href="#d" title="Link to this heading"></a></h2>
+<p>3D でも考え方は同じである。点を <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> の同次座標で表し、4×4 の行列で回転・拡大縮小・平行移動を表す。ローカル座標 → ワールド座標 → カメラから見た座標（ビュー座標）という変換の流れも 2D と変わらない。</p>
+<p>3D では、これに<strong>投影</strong>が加わる。<a class="reference internal" href="#fig-perspective"><span class="std std-numref">図 6.4</span></a> のように、カメラから遠い物ほど小さく見えるように描く<strong>透視投影</strong>では、カメラからの奥行き <span class="math notranslate nohighlight">\(z\)</span> で割ることで、点を投影面に写す。</p>
+<div class="math notranslate nohighlight">
+\[x' = \frac{f\,x}{z}, \qquad y' = \frac{f\,y}{z}\]</div>
+<p><span class="math notranslate nohighlight">\(f\)</span> はカメラから投影面までの距離（焦点距離）で、大きいほど望遠になる。</p>
+<figure class="align-default" id="id17">
+<span id="fig-perspective"></span><img alt="透視投影の相似な三角形" src="_images/perspective.png" />
+<figcaption>
+<p><span class="caption-number">図 6.4 </span><span class="caption-text">透視投影。同じ高さの物でも、遠いほど投影面上で小さくなる</span><a class="headerlink" href="#id17" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>座標の流れ全体を<a class="reference internal" href="#fig-spaces"><span class="std std-numref">図 6.5</span></a> にまとめる。次の章の <code class="docutils literal notranslate"><span class="pre">cube_demo.py</span></code> では、この透視投影の式を使って立方体を描く。投影の詳細やクリッピングなど、3D の描画については「コンピューターグラフィックス入門」を参照してほしい。</p>
+<figure class="align-center" id="id18">
+<span id="fig-spaces"></span><div class="graphviz"><img src="_images/graphviz-821001d2f61879a6857f937d36ee0f32c5e45bc7.png" alt="digraph spaces {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#eef3fb&quot;, color=&quot;#3b75c4&quot;, fontsize=11];
+  edge [fontsize=10];
+  local [label=&quot;ローカル座標\n（物自身が基準）&quot;];
+  world [label=&quot;ワールド座標\n（ゲームの世界）&quot;];
+  view [label=&quot;ビュー座標\n（カメラが基準）&quot;];
+  screen [label=&quot;画面座標\n（ピクセル）&quot;];
+  local -&gt; world [label=&quot;ワールド変換\nT R S&quot;];
+  world -&gt; view [label=&quot;ビュー変換\n（カメラの逆）&quot;];
+  view -&gt; screen [label=&quot;投影（3D）\n拡大と中央へ移動&quot;];
+  screen -&gt; world [label=&quot;逆変換（クリック位置）&quot;, style=dashed, color=&quot;#e8862a&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 6.5 </span><span class="caption-text">座標系と変換の流れ</span><a class="headerlink" href="#id18" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="angles.html" class="btn btn-neutral float-left" title="5. 角度と回転" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rotation3d.html" class="btn btn-neutral float-right" title="7. 3D の回転とクォータニオン" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

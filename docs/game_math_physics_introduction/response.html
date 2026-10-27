@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12. 衝突応答 &mdash; ゲームのための数学・物理入門</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3989ba92" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=19757887"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="13. ばね・拘束・粒子" href="springs.html" />
+    <link rel="prev" title="11. 衝突判定" href="collision.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ゲームのための数学・物理入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本編</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinates.html">2. 座標系と数値</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_loop.html">3. ゲームループと時間</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">4. ベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angles.html">5. 角度と回転</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrices.html">6. 行列と座標変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotation3d.html">7. 3D の回転とクォータニオン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">8. 補間・イージング・曲線</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomness.html">9. 乱数と確率</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion.html">10. 運動の物理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">11. 衝突判定</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. 衝突応答</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">12.1. めり込みの解消</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">12.1.1. 軸ごとに解決する方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">12.2. 速度の法線方向と接線方向への分解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">12.3. 反発係数と跳ね返り</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">12.4. 運動量と力積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">12.5. 衝突時の摩擦</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">12.6. 剛体の回転の入門</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="springs.html">13. ばね・拘束・粒子</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics_engine.html">14. 物理エンジンを使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">15. 総合演習：2D プラットフォーマーを作る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">付録 A 数式・記号の早見表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 B 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 C 参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">付録 D サンプルコード一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ゲームのための数学・物理入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">12. </span>衝突応答</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">12. </span>衝突応答<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>前の章の衝突判定で、物どうしが重なっていることと、その法線・めり込みの深さが分かった。この章では、その情報を使って物を押し戻し、跳ね返らせる<strong>衝突応答</strong>を扱う。</p>
+<section id="id2">
+<h2><span class="section-number">12.1. </span>めり込みの解消<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームでは時間を区切って物を動かすので、衝突が見つかった時点では、物はすでに少しめり込んでいることが多い。まず、めり込みを解消するように位置を直す。</p>
+<p>動かない壁との衝突なら、動く物だけを法線の向きにめり込みの深さだけ動かせばよい。両方が動く物の場合は、質量に応じて押し分ける。軽い物ほど大きく動き、重い物はあまり動かない。具体的には、質量の逆数の比で配分する。</p>
+<div class="math notranslate nohighlight">
+\[\Delta\mathbf{x}_A = -\frac{1/m_A}{1/m_A + 1/m_B}\,d\,\mathbf{n}, \qquad \Delta\mathbf{x}_B = +\frac{1/m_B}{1/m_A + 1/m_B}\,d\,\mathbf{n}\]</div>
+<p>ここで <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> は A から B へ向かう法線、<span class="math notranslate nohighlight">\(d\)</span> はめり込みの深さである。物理の計算では、質量 <span class="math notranslate nohighlight">\(m\)</span> そのものより、その逆数 <span class="math notranslate nohighlight">\(1/m\)</span> を持っておくと便利である。動かない物（壁や地面）は「質量が無限大」とみなし、質量の逆数を 0 にすれば、同じ式で扱えるからである。</p>
+<section id="id3">
+<h3><span class="section-number">12.1.1. </span>軸ごとに解決する方法<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>タイルマップの 2D アクションゲームでは、キャラクターを x 方向と y 方向に分けて動かし、それぞれの後で押し戻す方法がよく使われる（<a class="reference internal" href="#fig-axis-separation"><span class="std std-numref">図 12.1</span></a>）。</p>
+<ol class="arabic simple">
+<li><p>x 方向にだけ動かす。壁のタイルと重なったら、動いていた向きに応じて、壁の左端か右端にキャラクターの端をそろえる。</p></li>
+<li><p>y 方向にだけ動かす。重なったら、床の上端か天井の下端にそろえる。下向きに動いていて床にそろえた場合は「着地した」とする。</p></li>
+</ol>
+<figure class="align-default" id="id9">
+<span id="fig-axis-separation"></span><img alt="軸ごとに押し戻す方法" src="_images/axis_separation.png" />
+<figcaption>
+<p><span class="caption-number">図 12.1 </span><span class="caption-text">x 方向と y 方向に分けて動かし、それぞれ押し戻す</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>軸を分けると、どちらの向きに押し戻せばよいかが「その軸で動いていた向き」から決まるので、角に斜めから突っ込んだときにも迷わない。床の上を歩くときに床のタイルの継ぎ目に引っかかる、といった問題も起きにくい。第 15 章の総合演習の <code class="docutils literal notranslate"><span class="pre">move_and_collide</span></code> 関数は、この方法で実装している。</p>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">12.2. </span>速度の法線方向と接線方向への分解<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>位置を直しただけでは、物は次のステップでまたぶつかってしまう。速度も直す必要がある。第 4 章の反射ベクトルと同じく、相手に対する速度（<strong>相対速度</strong>）を、法線方向の成分と接線方向の成分に分けて考える（<a class="reference internal" href="#fig-normal-tangent"><span class="std std-numref">図 12.2</span></a>）。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v}_{\text{相対}} = \mathbf{v}_B - \mathbf{v}_A, \qquad v_n = \mathbf{v}_{\text{相対}} \cdot \mathbf{n}\]</div>
+<p><span class="math notranslate nohighlight">\(v_n &lt; 0\)</span> なら、2 つの物は近づきつつある。<span class="math notranslate nohighlight">\(v_n &gt; 0\)</span> なら、すでに離れつつあるので、何もしなくてよい。</p>
+<figure class="align-default" id="id10">
+<span id="fig-normal-tangent"></span><img alt="速度の法線方向と接線方向への分解" src="_images/normal_tangent.png" />
+<figcaption>
+<p><span class="caption-number">図 12.2 </span><span class="caption-text">速度の法線方向と接線方向への分解</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>法線方向の成分</strong>: ぶつかる向きの成分。跳ね返りでは、これが反転する。</p></li>
+<li><p><strong>接線方向の成分</strong>: 面に沿って滑る向きの成分。摩擦が無ければ変わらない。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2><span class="section-number">12.3. </span>反発係数と跳ね返り<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>衝突の前後で、法線方向の相対速度がどれだけ残るかを表すのが<strong>反発係数</strong> <span class="math notranslate nohighlight">\(e\)</span> である。</p>
+<div class="math notranslate nohighlight">
+\[v_n' = -e\,v_n\]</div>
+<p><span class="math notranslate nohighlight">\(e = 1\)</span> なら同じ速さで跳ね返り（完全弾性衝突）、<span class="math notranslate nohighlight">\(e = 0\)</span> なら跳ね返らずにくっつく（完全非弾性衝突）。現実の物は 0 と 1 の間で、ゴムボールは大きく、粘土は小さい。<a class="reference internal" href="#fig-restitution"><span class="std std-numref">図 12.3</span></a> は、2 m の高さから落としたボールの跳ね方である。反発係数が小さいほど早く止まる。</p>
+<figure class="align-default" id="id11">
+<span id="fig-restitution"></span><a class="reference internal image-reference" href="_images/restitution.png"><img alt="反発係数による跳ね方の違い" src="_images/restitution.png" style="width: 520px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 12.3 </span><span class="caption-text">反発係数による跳ね方の違い</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id6">
+<h2><span class="section-number">12.4. </span>運動量と力積<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>両方が動く物の衝突では、相手の質量によって跳ね返り方が変わる。軽いボールが重いボールにぶつかると、軽い方は大きく跳ね返り、重い方はほとんど動かない。これを正しく計算するには、運動量と力積を使う。</p>
+<p><strong>運動量</strong>は質量と速度の積 <span class="math notranslate nohighlight">\(m\mathbf{v}\)</span> である。外から力が働かなければ、衝突の前後で 2 つの物の運動量の合計は変わらない（運動量保存の法則）。これは作用・反作用の法則から導かれる。</p>
+<p>衝突の瞬間に働く大きな力を、時間で積み重ねた量を<strong>力積</strong>と呼ぶ。衝突応答では、力積 <span class="math notranslate nohighlight">\(\mathbf{J} = j\,\mathbf{n}\)</span> を、B には <span class="math notranslate nohighlight">\(+\mathbf{J}\)</span>、A には <span class="math notranslate nohighlight">\(-\mathbf{J}\)</span> として与え、速度を次のように変える。</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v}_A' = \mathbf{v}_A - \frac{j}{m_A}\,\mathbf{n}, \qquad \mathbf{v}_B' = \mathbf{v}_B + \frac{j}{m_B}\,\mathbf{n}\]</div>
+<p>A と B に逆向きで同じ大きさの力積を与えているので、運動量の合計は保たれる。衝突後の法線方向の相対速度が <span class="math notranslate nohighlight">\(-e\,v_n\)</span> になるという条件から、力積の大きさ <span class="math notranslate nohighlight">\(j\)</span> が決まる。</p>
+<div class="math notranslate nohighlight">
+\[j = \frac{-(1 + e)\,v_n}{1/m_A + 1/m_B}\]</div>
+<p><a class="reference internal" href="#code-resolve"><span class="std std-numref">リスト 12.1</span></a> は、めり込みの解消、反発、摩擦（後述）をまとめた関数である。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<span id="code-resolve"></span><div class="code-block-caption"><span class="caption-number">リスト 12.1 </span><span class="caption-text">examples/response.py の resolve_contact 関数</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span><span class="w"> </span><span class="nf">resolve_contact</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Body</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Body</span><span class="p">,</span> <span class="n">normal</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">restitution</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">friction</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;a と b の接触を解消する。normal は a から b へ向かう単位ベクトル、depth はめり込みの深さ。&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>    <span class="n">total_inv_mass</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">inv_mass</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">inv_mass</span>
+<span class="linenos"> 4</span>    <span class="k">if</span> <span class="n">total_inv_mass</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="k">return</span>  <span class="c1"># どちらも動かない</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>    <span class="c1"># 1. めり込みの解消: 質量の逆数の比で押し分ける（軽い方が大きく動く）</span>
+<span class="linenos"> 8</span>    <span class="n">correction</span> <span class="o">=</span> <span class="n">normal</span> <span class="o">*</span> <span class="p">(</span><span class="n">depth</span> <span class="o">/</span> <span class="n">total_inv_mass</span><span class="p">)</span>
+<span class="linenos"> 9</span>    <span class="n">a</span><span class="o">.</span><span class="n">position</span> <span class="o">-=</span> <span class="n">correction</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">inv_mass</span>
+<span class="linenos">10</span>    <span class="n">b</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">correction</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">inv_mass</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="c1"># 2. 法線方向の速度を、反発係数に応じて反転させる力積</span>
+<span class="linenos">13</span>    <span class="n">relative</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">velocity</span>
+<span class="linenos">14</span>    <span class="n">normal_speed</span> <span class="o">=</span> <span class="n">relative</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
+<span class="linenos">15</span>    <span class="k">if</span> <span class="n">normal_speed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">16</span>        <span class="k">return</span>  <span class="c1"># すでに離れつつある</span>
+<span class="linenos">17</span>    <span class="n">j</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">restitution</span><span class="p">)</span> <span class="o">*</span> <span class="n">normal_speed</span> <span class="o">/</span> <span class="n">total_inv_mass</span>
+<span class="linenos">18</span>    <span class="n">a</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-=</span> <span class="n">normal</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">inv_mass</span><span class="p">)</span>
+<span class="linenos">19</span>    <span class="n">b</span><span class="o">.</span><span class="n">velocity</span> <span class="o">+=</span> <span class="n">normal</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">inv_mass</span><span class="p">)</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>    <span class="c1"># 3. 接線方向の摩擦: ずれる速度を打ち消す力積。大きさは法線方向の力積の friction 倍まで（クーロン摩擦）</span>
+<span class="linenos">22</span>    <span class="n">relative</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">velocity</span>
+<span class="linenos">23</span>    <span class="n">tangent</span> <span class="o">=</span> <span class="n">relative</span> <span class="o">-</span> <span class="n">normal</span> <span class="o">*</span> <span class="n">relative</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
+<span class="linenos">24</span>    <span class="k">if</span> <span class="n">tangent</span><span class="o">.</span><span class="n">length_squared</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-12</span><span class="p">:</span>
+<span class="linenos">25</span>        <span class="k">return</span>
+<span class="linenos">26</span>    <span class="n">tangent</span> <span class="o">=</span> <span class="n">tangent</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="linenos">27</span>    <span class="n">jt</span> <span class="o">=</span> <span class="o">-</span><span class="n">relative</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tangent</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_inv_mass</span>
+<span class="linenos">28</span>    <span class="n">jt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="n">friction</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">friction</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="n">jt</span><span class="p">))</span>
+<span class="linenos">29</span>    <span class="n">a</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-=</span> <span class="n">tangent</span> <span class="o">*</span> <span class="p">(</span><span class="n">jt</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">inv_mass</span><span class="p">)</span>
+<span class="linenos">30</span>    <span class="n">b</span><span class="o">.</span><span class="n">velocity</span> <span class="o">+=</span> <span class="n">tangent</span> <span class="o">*</span> <span class="p">(</span><span class="n">jt</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">inv_mass</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>同じ質量の 2 つのボールが反発係数 1 で正面衝突すると、速度がそっくり入れ替わる（ビリヤードで、当てた球が止まり、当てられた球が同じ速さで進む）。<code class="docutils literal notranslate"><span class="pre">test_physics.py</span></code> では、このことと、衝突の前後で運動量の合計が変わらないことを確かめている。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">12.5. </span>衝突時の摩擦<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>接線方向の速度、つまり面に沿って滑る速度は、摩擦によって減る。衝突応答では、接線方向にも力積を与えて、滑る速度を打ち消す。ただし、摩擦の力積の大きさには上限があり、法線方向の力積 <span class="math notranslate nohighlight">\(j\)</span> の <span class="math notranslate nohighlight">\(\mu\)</span> 倍までとする（<strong>クーロン摩擦</strong>）。<span class="math notranslate nohighlight">\(\mu\)</span> は<strong>摩擦係数</strong>で、氷なら小さく、ゴムなら大きい。強く押し付けられているほど、大きな摩擦が働くということである。</p>
+<p><code class="docutils literal notranslate"><span class="pre">resolve_contact</span></code> の手順 3 では、接線方向の単位ベクトル <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> を求め、滑る速度を 0 にする力積を計算してから、<span class="math notranslate nohighlight">\(\pm\mu j\)</span> の範囲に収めている。</p>
+<p><code class="docutils literal notranslate"><span class="pre">response.py</span></code> は、大きさの異なるボールが箱の中でぶつかり合うデモである（<a class="reference internal" href="#fig-screen-response"><span class="std std-numref">図 12.4</span></a>）。ボールの質量は面積に比例させている。上下キーで反発係数を、F キーで摩擦の有無を、G キーで重力の有無を切り替えられる。重力と摩擦を切って反発係数を 1 にすると、画面の上に表示される運動エネルギーの合計がほぼ一定に保たれる。</p>
+<figure class="align-default" id="id13">
+<span id="fig-screen-response"></span><a class="reference internal image-reference" href="_images/screen_response.png"><img alt="response.py の画面" src="_images/screen_response.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 12.4 </span><span class="caption-text">response.py の画面</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">step_world</span></code> では、1 フレームを 4 回に分けて物理を進めている（サブステップ）。たくさんのボールが積み重なると、1 つの衝突を解消したことで別の衝突が生じる。細かく何度も解消を繰り返すことで、積み重なったボールが沈み込みにくくなる。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">12.6. </span>剛体の回転の入門<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>ここまでは、物の回転を考えなかった。現実の物は、中心からずれた場所を押されると回り出す。変形しない物体を<strong>剛体</strong>と呼び、剛体の運動は「重心の移動」と「重心の周りの回転」に分けて扱う。回転の運動は、移動の運動と次のように対応している。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 12.1 </span><span class="caption-text">移動と回転の対応</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>移動</p></th>
+<th class="head"><p>回転</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>位置 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span></p></td>
+<td><p>角度 <span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<td><p>2D では角度 1 つで向きが決まる</p></td>
+</tr>
+<tr class="row-odd"><td><p>速度 <span class="math notranslate nohighlight">\(\mathbf{v}\)</span></p></td>
+<td><p>角速度 <span class="math notranslate nohighlight">\(\omega\)</span></p></td>
+<td><p>1 秒あたりに回る角度</p></td>
+</tr>
+<tr class="row-even"><td><p>質量 <span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td><p>慣性モーメント <span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td><p>回しにくさ。質量が中心から遠くに分布しているほど大きい</p></td>
+</tr>
+<tr class="row-odd"><td><p>力 <span class="math notranslate nohighlight">\(\mathbf{F}\)</span></p></td>
+<td><p>トルク <span class="math notranslate nohighlight">\(\tau = \mathbf{r} \times \mathbf{F}\)</span></p></td>
+<td><p>回そうとする働き。<span class="math notranslate nohighlight">\(\mathbf{r}\)</span> は重心から力が働く点へのベクトル（2D の外積）</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf{F} = m\,\mathbf{a}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\tau = I\,\alpha\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span> は角加速度（角速度の変化の割合）</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>慣性モーメント</strong>は、形と質量から決まる。たとえば、半径 <span class="math notranslate nohighlight">\(r\)</span> の円板では <span class="math notranslate nohighlight">\(I = \frac{1}{2} m r^2\)</span>、幅 <span class="math notranslate nohighlight">\(w\)</span>・高さ <span class="math notranslate nohighlight">\(h\)</span> の長方形の板では <span class="math notranslate nohighlight">\(I = \frac{1}{12} m (w^2 + h^2)\)</span> である。物理エンジンでは、形状を与えると自動で計算してくれることが多い（第 14 章）。</p>
+<p>剛体どうしの衝突では、接触点が重心からずれているので、力積によって角速度も変わる。接触点の速度は「重心の速度」と「回転による速度 <span class="math notranslate nohighlight">\(\omega \times \mathbf{r}\)</span>」の和になり、力積の大きさの式の分母には、回転のしにくさを表す項が加わる。</p>
+<div class="math notranslate nohighlight">
+\[j = \frac{-(1 + e)\,v_n}{\dfrac{1}{m_A} + \dfrac{1}{m_B} + \dfrac{(\mathbf{r}_A \times \mathbf{n})^2}{I_A} + \dfrac{(\mathbf{r}_B \times \mathbf{n})^2}{I_B}}, \qquad \Delta\omega_B = \frac{\mathbf{r}_B \times j\,\mathbf{n}}{I_B}\]</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{r}_A\)</span>、<span class="math notranslate nohighlight">\(\mathbf{r}_B\)</span> は、それぞれの重心から接触点へのベクトルである。<span class="math notranslate nohighlight">\(\Delta\omega_A\)</span> は、力積の向きが逆になるだけで同じ形の式になる。ここまでの考え方が分かれば十分で、実際のゲームで回転する剛体を大量に扱うなら、物理エンジンを使う方がよい。複数の接触点を同時に安定して解く、静止した物を眠らせて計算を省く、といった工夫が必要になるからである。次の 2 つの章で、ばねや拘束の仕組みと、物理エンジンの使い方を見ていく。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="collision.html" class="btn btn-neutral float-left" title="11. 衝突判定" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="springs.html" class="btn btn-neutral float-right" title="13. ばね・拘束・粒子" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 17 章 チュートリアル：岩よけゲームを作る &mdash; Godot 入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=006f2dfd" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 18 章 デバッグと最適化" href="ch18_debug_and_optimization.html" />
+    <link rel="prev" title="第 16 章 シェーダー入門" href="ch16_shaders.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Godot 入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">第 I 部　準備</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_introduction.html">第 1 章　はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_overview.html">第 2 章　Godot の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_setup.html">第 3 章　環境構築</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_editor.html">第 4 章　エディターの画面構成</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 II 部　基本概念</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch05_nodes_and_scenes.html">第 5 章　ノードとシーン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_gdscript_basics.html">第 6 章　GDScript の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_gdscript_advanced.html">第 7 章　GDScript の応用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_game_loop.html">第 8 章　ゲームループと時間</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 III 部　ゲームの構成要素</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch09_input.html">第 9 章　入力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch10_vectors.html">第 10 章　2D の座標とベクトル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch11_physics.html">第 11 章　2D の物理と衝突</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch12_graphics_and_animation.html">第 12 章　描画とアニメーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch13_ui.html">第 13 章　UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch14_audio.html">第 14 章　サウンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch15_scenes_and_data.html">第 15 章　シーン管理とデータ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 IV 部　実践と発展</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch16_shaders.html">第 16 章　シェーダー入門</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 17 章　チュートリアル：岩よけゲームを作る</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">完成形</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ゲームの構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">準備</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">手順 1：プレイヤーを作る</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">シーンを作る</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">スクリプトを書く</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">手順 2：岩を作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hud">手順 3：HUD を作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">手順 4：メインシーンを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">手順 5：動かしてみる</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">改良のアイデア</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch18_debug_and_optimization.html">第 18 章　デバッグと最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch19_export.html">第 19 章　エクスポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch20_3d.html">第 20 章　3D への入り口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch21_next_steps.html">第 21 章　次のステップ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 A　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/shortcuts.html">付録 B　ショートカットキー一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/troubleshooting.html">付録 C　トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/examples.html">付録 E　サンプルファイル一覧</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Godot 入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 17 章　チュートリアル：岩よけゲームを作る</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="ch16_shaders.html" class="btn btn-neutral float-left" title="第 16 章 シェーダー入門" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch18_debug_and_optimization.html" class="btn btn-neutral float-right" title="第 18 章 デバッグと最適化" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ch17">
+<span id="id1"></span><h1>第 17 章　チュートリアル：岩よけゲームを作る<a class="headerlink" href="#ch17" title="Link to this heading"></a></h1>
+<p>本章では、ここまでに学んだ内容を組み合わせて、1 本の小さなゲームを完成させる。題材は、空から落ちてくる岩をよけ続ける「岩よけゲーム」である。完成したものは、サンプルの <code class="docutils literal notranslate"><span class="pre">chapter17</span></code> フォルダーにある。</p>
+<section id="id2">
+<h2>完成形<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<figure class="align-default" id="id12">
+<a class="screenshot reference internal image-reference" href="../_images/ch17_play.png"><img alt="../_images/ch17_play.png" class="screenshot" src="../_images/ch17_play.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 35 </span><span class="caption-text">岩よけゲームのプレイ画面</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>ゲームの仕様は次のとおりである。</p>
+<ul class="simple">
+<li><p>「スタート」ボタンを押すと、2 秒後にゲームが始まる。</p></li>
+<li><p>プレイヤーは上下左右に動ける。画面の外には出られない。</p></li>
+<li><p>岩が画面の上からランダムな位置に落ちてくる。時間がたつほど、岩の数が増え、落下速度も上がる。</p></li>
+<li><p>1 秒生き延びるごとに 1 点もらえる。</p></li>
+<li><p>岩に当たると、プレイヤーが白く光って消え、ゲームオーバーになる。最高記録を更新した場合は保存する。</p></li>
+<li><p>ゲーム中に <kbd class="kbd docutils literal notranslate">P</kbd> キーを押すと、一時停止する。</p></li>
+<li><p>BGM と効果音を鳴らす。</p></li>
+</ul>
+<p>本章で使う主な知識と、説明した章の対応は次のとおりである。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 62 </span><span class="caption-text">本章で使う知識</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>知識</p></th>
+<th class="head"><p>説明した章</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>シーンのインスタンス化、グループ</p></td>
+<td><p><a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>シグナル、<code class="docutils literal notranslate"><span class="pre">await</span></code></p></td>
+<td><p><a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Timer</span></code> ノード、一時停止と処理モード</p></td>
+<td><p><a class="reference internal" href="ch08_game_loop.html#ch08"><span class="std std-ref">第 8 章　ゲームループと時間</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>入力アクション</p></td>
+<td><p><a class="reference internal" href="ch09_input.html#ch09"><span class="std std-ref">第 9 章　入力</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Area2D</span></code> による衝突の検出、コリジョンレイヤー</p></td>
+<td><p><a class="reference internal" href="ch11_physics.html#ch11"><span class="std std-ref">第 11 章　2D の物理と衝突</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Tween</span></code></p></td>
+<td><p><a class="reference internal" href="ch12_graphics_and_animation.html#ch12"><span class="std std-ref">第 12 章　描画とアニメーション</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CanvasLayer</span></code> による HUD、アンカー</p></td>
+<td><p><a class="reference internal" href="ch12_graphics_and_animation.html#ch12"><span class="std std-ref">第 12 章　描画とアニメーション</span></a>、<a class="reference internal" href="ch13_ui.html#ch13"><span class="std std-ref">第 13 章　UI</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer</span></code>、オーディオバス</p></td>
+<td><p><a class="reference internal" href="ch14_audio.html#ch14"><span class="std std-ref">第 14 章　サウンド</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ConfigFile</span></code> による保存</p></td>
+<td><p><a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>点滅のシェーダー</p></td>
+<td><p><a class="reference internal" href="ch16_shaders.html#ch16"><span class="std std-ref">第 16 章　シェーダー入門</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>ゲームの構成<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ゲームは 4 つのシーンで構成する。</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">表 63 </span><span class="caption-text">岩よけゲームのシーン</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>シーン</p></th>
+<th class="head"><p>役割</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">player.tscn</span></code></p></td>
+<td><p>プレイヤー。入力に応じて動き、岩に当たったら <code class="docutils literal notranslate"><span class="pre">hit</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rock.tscn</span></code></p></td>
+<td><p>落ちてくる岩。まっすぐ落ちて、画面の外に出たら自分を削除する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hud.tscn</span></code></p></td>
+<td><p>スコア、メッセージ、スタートボタンなどの表示。ボタンが押されたら <code class="docutils literal notranslate"><span class="pre">start_game</span></code> シグナルを発行する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">main.tscn</span></code></p></td>
+<td><p>ゲーム全体。ほかのシーンを組み合わせ、岩の生成、スコアの計算、ゲームオーバーの処理を行う。</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-default" id="id15">
+<div class="graphviz"><object data="../_images/graphviz-729ae03dd700631fafc3c15fb06f9e832dc0a604.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph main {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=11];
+  main [label=&quot;Main（Node）\nmain.gd&quot;, fillcolor=&quot;#cfe2ff&quot;];
+  bg [label=&quot;Background\n（ColorRect）&quot;];
+  player [label=&quot;Player\n（player.tscn）&quot;, fillcolor=&quot;#d4edda&quot;];
+  start [label=&quot;StartPosition\n（Marker2D）&quot;];
+  rt [label=&quot;RockTimer\n（Timer）&quot;];
+  st [label=&quot;ScoreTimer\n（Timer）&quot;];
+  stt [label=&quot;StartTimer\n（Timer）&quot;];
+  hud [label=&quot;HUD\n（hud.tscn）&quot;, fillcolor=&quot;#d4edda&quot;];
+  music [label=&quot;Music\n（AudioStreamPlayer）&quot;];
+  hit [label=&quot;HitSound\n（AudioStreamPlayer）&quot;];
+  rocks [label=&quot;Rock × 多数\n（rock.tscn、実行中に生成）&quot;, fillcolor=&quot;#fff3cd&quot;, style=&quot;rounded,filled,dashed&quot;];
+  main -&gt; bg;
+  main -&gt; player;
+  main -&gt; start;
+  main -&gt; rt;
+  main -&gt; st;
+  main -&gt; stt;
+  main -&gt; hud;
+  main -&gt; music;
+  main -&gt; hit;
+  main -&gt; rocks [style=dashed];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 36 </span><span class="caption-text">main.tscn のノードの構成</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>シーンどうしは、<a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a> で説明した「呼び出しは下へ、通知は上へ」の方針でつなぐ。<code class="docutils literal notranslate"><span class="pre">Main</span></code> は子の <code class="docutils literal notranslate"><span class="pre">Player</span></code> や <code class="docutils literal notranslate"><span class="pre">HUD</span></code> のメソッドを直接呼ぶ。<code class="docutils literal notranslate"><span class="pre">Player</span></code> と <code class="docutils literal notranslate"><span class="pre">HUD</span></code> は <code class="docutils literal notranslate"><span class="pre">Main</span></code> のことを知らず、シグナルで出来事を知らせるだけである。</p>
+</section>
+<section id="id4">
+<h2>準備<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>新しいプロジェクトで作る場合は、次の準備をする。サンプルプロジェクトで作業する場合は、すでに設定済みである。</p>
+<ol class="arabic simple">
+<li><p>サンプルプロジェクトの <code class="docutils literal notranslate"><span class="pre">assets</span></code> フォルダーから、<code class="docutils literal notranslate"><span class="pre">player.png</span></code>、<code class="docutils literal notranslate"><span class="pre">rock.png</span></code>、<code class="docutils literal notranslate"><span class="pre">bgm.wav</span></code>、<code class="docutils literal notranslate"><span class="pre">hit.wav</span></code> をプロジェクトにコピーする。<code class="docutils literal notranslate"><span class="pre">chapter16/flash.gdshader</span></code> もコピーする。</p></li>
+<li><p>「プロジェクト設定」の「インプットマップ」で、<code class="docutils literal notranslate"><span class="pre">move_left</span></code>、<code class="docutils literal notranslate"><span class="pre">move_right</span></code>、<code class="docutils literal notranslate"><span class="pre">move_up</span></code>、<code class="docutils literal notranslate"><span class="pre">move_down</span></code>、<code class="docutils literal notranslate"><span class="pre">pause</span></code> のアクションを作り、キーを割り当てる（<a class="reference internal" href="ch09_input.html#ch09"><span class="std std-ref">第 9 章　入力</span></a>）。</p></li>
+<li><p>「プロジェクト設定」の「レイヤー名」→「2D物理」で、レイヤー 2 に <code class="docutils literal notranslate"><span class="pre">player</span></code>、レイヤー 3 に <code class="docutils literal notranslate"><span class="pre">enemy</span></code> と名前を付ける（<a class="reference internal" href="ch11_physics.html#ch11"><span class="std std-ref">第 11 章　2D の物理と衝突</span></a>）。</p></li>
+<li><p>下部パネルの「オーディオ」で、<code class="docutils literal notranslate"><span class="pre">BGM</span></code> と <code class="docutils literal notranslate"><span class="pre">SE</span></code> のバスを追加する（<a class="reference internal" href="ch14_audio.html#ch14"><span class="std std-ref">第 14 章　サウンド</span></a>）。</p></li>
+</ol>
+<p>画面の大きさは既定の 1152 × 648 のまま使う。</p>
+</section>
+<section id="id5">
+<h2>手順 1：プレイヤーを作る<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<section id="id6">
+<h3>シーンを作る<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>「シーン」→「新規シーン」で、次の構成のシーンを作り、<code class="docutils literal notranslate"><span class="pre">player.tscn</span></code> として保存する。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 64 </span><span class="caption-text">player.tscn のノード</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード名</p></th>
+<th class="head"><p>種類</p></th>
+<th class="head"><p>設定</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Player</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Area2D</span></code></p></td>
+<td><p>コリジョンのレイヤーは 2（player）だけ、マスクは 3（enemy）だけにする。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></p></td>
+<td><p>テクスチャに <code class="docutils literal notranslate"><span class="pre">player.png</span></code> を設定する。マテリアルに「新規 ShaderMaterial」を作り、シェーダーに <code class="docutils literal notranslate"><span class="pre">flash.gdshader</span></code> を設定する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code></p></td>
+<td><p>シェイプに「新規 CircleShape2D」を作り、半径を 20 にする。位置を (0, 2) にする。</p></td>
+</tr>
+</tbody>
+</table>
+<p>プレイヤーは岩にぶつかって止まる必要はなく、重なったことが分かればよい。そこで、物理ボディではなく <code class="docutils literal notranslate"><span class="pre">Area2D</span></code> を使う。当たり判定の円は、画像（直径 48 ピクセルの円）より小さめにしている。</p>
+</section>
+<section id="id7">
+<h3>スクリプトを書く<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Player</span></code> に <code class="docutils literal notranslate"><span class="pre">player.gd</span></code> をアタッチし、次のように書く。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-number">リスト 37 </span><span class="caption-text">chapter17/player.gd</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Area2D</span>
+<span class="linenos"> 2</span><span class="c1">## 岩よけゲームのプレイヤー。上下左右に動き、岩に当たると hit シグナルを発行する。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">## 岩に当たったときに発行する。</span>
+<span class="linenos"> 5</span><span class="k">signal</span><span class="w"> </span><span class="n">hit</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">const</span><span class="w"> </span><span class="n">SPEED</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">400.0</span><span class="w">  </span><span class="c1"># 移動速度 [ピクセル/秒]</span>
+<span class="linenos"> 8</span><span class="k">const</span><span class="w"> </span><span class="n">MARGIN</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">24.0</span><span class="w">  </span><span class="c1"># 画面の端から離しておく距離</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_collision</span><span class="p">:</span><span class="w"> </span><span class="n">CollisionShape2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$CollisionShape2D</span>
+<span class="linenos">11</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_flash</span><span class="p">:</span><span class="w"> </span><span class="n">ShaderMaterial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Sprite2D</span><span class="o">.</span><span class="n">material</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">15</span><span class="w">    </span><span class="c1"># ゲーム開始までは表示も操作もしない。</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">hide</span><span class="p">()</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">set_process</span><span class="p">(</span><span class="bp">false</span><span class="p">)</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">get_vector</span><span class="p">(</span><span class="s2">&quot;move_left&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_right&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_up&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;move_down&quot;</span><span class="p">)</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">position</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SPEED</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">23</span><span class="w">    </span><span class="c1"># 画面の外に出ないように位置を制限する。</span>
+<span class="linenos">24</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">screen_size</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="n">MARGIN</span><span class="p">,</span><span class="w"> </span><span class="n">MARGIN</span><span class="p">),</span><span class="w"> </span><span class="n">screen_size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="n">MARGIN</span><span class="p">,</span><span class="w"> </span><span class="n">MARGIN</span><span class="p">))</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="c1">## 指定した位置からゲームを開始する。</span>
+<span class="linenos">29</span><span class="k">func</span><span class="w"> </span><span class="n">start</span><span class="p">(</span><span class="n">start_position</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start_position</span>
+<span class="linenos">31</span><span class="w">    </span><span class="n">_flash</span><span class="o">.</span><span class="n">set_shader_parameter</span><span class="p">(</span><span class="s2">&quot;flash_amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span>
+<span class="linenos">32</span><span class="w">    </span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">33</span><span class="w">    </span><span class="n">_collision</span><span class="o">.</span><span class="n">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+<span class="linenos">34</span><span class="w">    </span><span class="n">set_process</span><span class="p">(</span><span class="bp">true</span><span class="p">)</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="k">func</span><span class="w"> </span><span class="n">_on_area_entered</span><span class="p">(</span><span class="n">_area</span><span class="p">:</span><span class="w"> </span><span class="n">Area2D</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">38</span><span class="w">    </span><span class="n">hit</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+<span class="linenos">39</span><span class="w">    </span><span class="n">set_process</span><span class="p">(</span><span class="bp">false</span><span class="p">)</span>
+<span class="linenos">40</span><span class="w">    </span><span class="c1"># 同じ衝突で何度も hit を発行しないよう、当たり判定を無効にする。</span>
+<span class="linenos">41</span><span class="w">    </span><span class="c1"># 物理処理の最中には形状を変更できないため、set_deferred() で処理の後に変更する。</span>
+<span class="linenos">42</span><span class="w">    </span><span class="n">_collision</span><span class="o">.</span><span class="n">set_deferred</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">true</span><span class="p">)</span>
+<span class="linenos">43</span><span class="w">    </span><span class="c1"># 白く光ってから消える演出（シェーダーは第 16 章の flash.gdshader と同じもの）</span>
+<span class="linenos">44</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">tween</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">create_tween</span><span class="p">()</span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_method</span><span class="p">(</span><span class="n">_set_flash_amount</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">)</span>
+<span class="linenos">46</span><span class="w">    </span><span class="n">tween</span><span class="o">.</span><span class="n">tween_callback</span><span class="p">(</span><span class="n">hide</span><span class="p">)</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span><span class="k">func</span><span class="w"> </span><span class="n">_set_flash_amount</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">50</span><span class="w">    </span><span class="n">_flash</span><span class="o">.</span><span class="n">set_shader_parameter</span><span class="p">(</span><span class="s2">&quot;flash_amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_ready()</span></code>：ゲームが始まるまでは、非表示にして <code class="docutils literal notranslate"><span class="pre">_process()</span></code> も止めておく。<code class="docutils literal notranslate"><span class="pre">set_process(false)</span></code> で <code class="docutils literal notranslate"><span class="pre">_process()</span></code> の呼び出しを止められる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_process()</span></code>：<a class="reference internal" href="ch09_input.html#ch09"><span class="std std-ref">第 9 章　入力</span></a> と同じく <code class="docutils literal notranslate"><span class="pre">get_vector()</span></code> で移動する。<code class="docutils literal notranslate"><span class="pre">clamp()</span></code> で、位置を画面の端から <code class="docutils literal notranslate"><span class="pre">MARGIN</span></code> だけ内側の範囲に制限している。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start()</span></code>：<code class="docutils literal notranslate"><span class="pre">Main</span></code> から呼ばれ、指定した位置でプレイヤーを表示して動けるようにする。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_on_area_entered()</span></code>：岩（<code class="docutils literal notranslate"><span class="pre">Area2D</span></code>）が重なったときに呼ばれる。<code class="docutils literal notranslate"><span class="pre">hit</span></code> シグナルを発行し、白く光ってから消える演出を <code class="docutils literal notranslate"><span class="pre">Tween</span></code> で行う。</p></li>
+</ul>
+<p>最後に、「シグナル」ドックで <code class="docutils literal notranslate"><span class="pre">Player</span></code> 自身の <code class="docutils literal notranslate"><span class="pre">area_entered</span></code> シグナルを <code class="docutils literal notranslate"><span class="pre">_on_area_entered()</span></code> に接続する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">_on_area_entered()</span></code> の 42 行目では、当たり判定を <code class="docutils literal notranslate"><span class="pre">set_deferred()</span></code> で無効にしている。衝突のシグナルは物理演算の処理の最中に呼ばれるため、その場で衝突形状を変更するとエラーになる。<code class="docutils literal notranslate"><span class="pre">set_deferred()</span></code> は、現在の処理が終わった後にプロパティを変更する。当たり判定を無効にしておかないと、消える演出の途中で別の岩に触れたときに、<code class="docutils literal notranslate"><span class="pre">hit</span></code> が再び発行されてしまう。</p>
+</section>
+</section>
+<section id="id8">
+<h2>手順 2：岩を作る<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>次の構成のシーンを作り、<code class="docutils literal notranslate"><span class="pre">rock.tscn</span></code> として保存する。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 65 </span><span class="caption-text">rock.tscn のノード</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード名</p></th>
+<th class="head"><p>種類</p></th>
+<th class="head"><p>設定</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Rock</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Area2D</span></code></p></td>
+<td><p>コリジョンのレイヤーは 3（enemy）だけ、マスクはすべてオフにする。<code class="docutils literal notranslate"><span class="pre">rocks</span></code> グループに追加する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></p></td>
+<td><p>テクスチャに <code class="docutils literal notranslate"><span class="pre">rock.png</span></code> を設定する。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CollisionShape2D</span></code></p></td>
+<td><p>シェイプに「新規 CircleShape2D」を作り、半径を 18 にする。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VisibleOnScreenNotifier2D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VisibleOnScreenNotifier2D</span></code></p></td>
+<td><p>「四角形」（rect）を、岩の画像を囲む (-24, -24, 48, 48) にする。</p></td>
+</tr>
+</tbody>
+</table>
+<p>岩のマスクをすべてオフにしているのは、岩の側から何かを検出する必要がないからである。プレイヤーの側のマスクに enemy が入っているので、プレイヤーは岩を検出できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">VisibleOnScreenNotifier2D</span></code> は、指定した四角形が画面に入ったときと出たときにシグナルを発行するノードである。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-number">リスト 38 </span><span class="caption-text">chapter17/rock.gd</span><a class="headerlink" href="#id19" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Area2D</span>
+<span class="linenos"> 2</span><span class="c1">## 画面の上から落ちてくる岩。画面の下へ出たら自分自身を削除する。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">## 落下速度 [ピクセル/秒]。生成する側（main.gd）が設定する。</span>
+<span class="linenos"> 5</span><span class="k">var</span><span class="w"> </span><span class="n">speed</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">200.0</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var</span><span class="w"> </span><span class="n">_spin</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="w">  </span><span class="c1"># 回転の速さ [ラジアン/秒]</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">    </span><span class="n">_spin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">randf_range</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">)</span>
+<span class="linenos">12</span><span class="w">    </span><span class="nv">$VisibleOnScreenNotifier2D</span><span class="o">.</span><span class="n">screen_exited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">queue_free</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">float</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">    </span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">rotation</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">_spin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">speed</span></code> は <code class="docutils literal notranslate"><span class="pre">Main</span></code> が岩を作るときに設定する。<code class="docutils literal notranslate"><span class="pre">_ready()</span></code> では回転の速さをランダムに決め、<code class="docutils literal notranslate"><span class="pre">screen_exited</span></code> シグナルを <code class="docutils literal notranslate"><span class="pre">queue_free</span></code> に直接接続している。画面の下に出た岩は自動で削除されるので、岩が増え続けてメモリーを使い切ることはない。岩は画面の上の外側に生成されるが、<code class="docutils literal notranslate"><span class="pre">screen_exited</span></code> は一度画面に入ってから出たときに発行されるので、生成された直後に削除されることはない。</p>
+</section>
+<section id="hud">
+<h2>手順 3：HUD を作る<a class="headerlink" href="#hud" title="Link to this heading"></a></h2>
+<p>スコアやメッセージを表示する HUD（heads-up display）を作る。カメラの影響を受けず、常にゲーム画面の手前に表示されるよう、ルートを <code class="docutils literal notranslate"><span class="pre">CanvasLayer</span></code> にする。</p>
+<table class="docutils align-default" id="id20">
+<caption><span class="caption-number">表 66 </span><span class="caption-text">hud.tscn のノード</span><a class="headerlink" href="#id20" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード名</p></th>
+<th class="head"><p>種類</p></th>
+<th class="head"><p>設定</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HUD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CanvasLayer</span></code></p></td>
+<td><p>「プロセス」→「モード」を Always にする（一時停止中も動かすため）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ScoreLabel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Label</span></code></p></td>
+<td><p>アンカーのプリセットを「上伸長」にする。文字を中央揃えにし、フォントサイズを 48 にする。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Message</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Label</span></code></p></td>
+<td><p>アンカーのプリセットを「中央水平伸長」にする。文字を上下左右とも中央揃えにし、フォントサイズを 48 にする。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">StartButton</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Button</span></code></p></td>
+<td><p>アンカーのプリセットを「中央下」にし、少し上へずらす。テキストを「スタート」にする。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PauseLabel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Label</span></code></p></td>
+<td><p>アンカーのプリセットを「Rect全面」にし、テキストを「一時停止中」にする。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-number">リスト 39 </span><span class="caption-text">chapter17/hud.gd</span><a class="headerlink" href="#id21" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">CanvasLayer</span>
+<span class="linenos"> 2</span><span class="c1">## スコア、メッセージ、開始ボタンを表示する画面。一時停止の切り替えも受け持つ。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">## 開始ボタンが押されたときに発行する。</span>
+<span class="linenos"> 5</span><span class="k">signal</span><span class="w"> </span><span class="n">start_game</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="c1">## ゲーム中だけ一時停止できるようにするためのフラグ。main.gd が設定する。</span>
+<span class="linenos"> 8</span><span class="k">var</span><span class="w"> </span><span class="n">can_pause</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_score_label</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$ScoreLabel</span>
+<span class="linenos">11</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_message</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Message</span>
+<span class="linenos">12</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_start_button</span><span class="p">:</span><span class="w"> </span><span class="n">Button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$StartButton</span>
+<span class="linenos">13</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_pause_label</span><span class="p">:</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$PauseLabel</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">17</span><span class="w">    </span><span class="n">_start_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_start_button_pressed</span><span class="p">)</span>
+<span class="linenos">18</span><span class="w">    </span><span class="n">_pause_label</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">func</span><span class="w"> </span><span class="n">_unhandled_input</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">InputEvent</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">    </span><span class="c1"># この CanvasLayer は Process Mode が Always なので、一時停止中も入力を受け取れる。</span>
+<span class="linenos">23</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">can_pause</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;pause&quot;</span><span class="p">):</span>
+<span class="linenos">24</span><span class="w">        </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">paused</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">paused</span>
+<span class="linenos">25</span><span class="w">        </span><span class="n">_pause_label</span><span class="o">.</span><span class="n">visible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">paused</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="k">func</span><span class="w"> </span><span class="n">show_title</span><span class="p">(</span><span class="n">high_score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;岩をよけろ！</span><span class="se">\n</span><span class="s2">最高記録: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">high_score</span><span class="p">)</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">_start_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">31</span><span class="w">    </span><span class="n">_start_button</span><span class="o">.</span><span class="n">grab_focus</span><span class="p">()</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="k">func</span><span class="w"> </span><span class="n">show_message</span><span class="p">(</span><span class="n">text</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">35</span><span class="w">    </span><span class="n">_message</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">text</span>
+<span class="linenos">36</span><span class="w">    </span><span class="n">_message</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="k">func</span><span class="w"> </span><span class="n">hide_message</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">40</span><span class="w">    </span><span class="n">_message</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="k">func</span><span class="w"> </span><span class="n">update_score</span><span class="p">(</span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">44</span><span class="w">    </span><span class="n">_score_label</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="k">func</span><span class="w"> </span><span class="n">show_game_over</span><span class="p">(</span><span class="n">high_score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">is_new_record</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">48</span><span class="w">    </span><span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;新記録！&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">is_new_record</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;ゲームオーバー&quot;</span><span class="p">)</span>
+<span class="linenos">49</span><span class="w">    </span><span class="c1"># 2 秒待ってからタイトル表示に戻す。</span>
+<span class="linenos">50</span><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">timeout</span>
+<span class="linenos">51</span><span class="w">    </span><span class="n">show_title</span><span class="p">(</span><span class="n">high_score</span><span class="p">)</span>
+<span class="linenos">52</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span><span class="k">func</span><span class="w"> </span><span class="n">_on_start_button_pressed</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">55</span><span class="w">    </span><span class="n">_start_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+<span class="linenos">56</span><span class="w">    </span><span class="n">start_game</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">show_game_over()</span></code> では、「ゲームオーバー」などのメッセージを表示してから <code class="docutils literal notranslate"><span class="pre">await</span></code> で 2 秒待ち、タイトルの表示に戻している（<a class="reference internal" href="ch07_gdscript_advanced.html#ch07"><span class="std std-ref">第 7 章　GDScript の応用</span></a>）。</p>
+<p>一時停止は <code class="docutils literal notranslate"><span class="pre">HUD</span></code> が受け持つ。<code class="docutils literal notranslate"><span class="pre">get_tree().paused</span></code> を <code class="docutils literal notranslate"><span class="pre">true</span></code> にすると、処理モードが「継承」のノードはすべて止まる。<code class="docutils literal notranslate"><span class="pre">HUD</span></code> は処理モードを Always にしているので、一時停止中も <code class="docutils literal notranslate"><span class="pre">_unhandled_input()</span></code> が呼ばれ、もう一度 <kbd class="kbd docutils literal notranslate">P</kbd> キーを押すと再開できる。ゲームオーバーの後などに一時停止できないよう、<code class="docutils literal notranslate"><span class="pre">can_pause</span></code> が <code class="docutils literal notranslate"><span class="pre">true</span></code> のときだけ受け付けている。</p>
+</section>
+<section id="id9">
+<h2>手順 4：メインシーンを作る<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>最後に、すべてを組み合わせるメインシーンを作る。</p>
+<table class="docutils align-default" id="id22">
+<caption><span class="caption-number">表 67 </span><span class="caption-text">main.tscn のノード</span><a class="headerlink" href="#id22" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ノード名</p></th>
+<th class="head"><p>種類</p></th>
+<th class="head"><p>設定</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Main</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Node</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Background</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ColorRect</span></code></p></td>
+<td><p>アンカーのプリセットを「Rect全面」にし、色を濃い紺色にする。マウスのフィルターを Ignore にする。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Player</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">player.tscn</span></code> のインスタンス</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">StartPosition</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Marker2D</span></code></p></td>
+<td><p>位置を (576, 560) にする。プレイヤーの開始位置の目印である。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RockTimer</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Timer</span></code></p></td>
+<td><p>待機時間を 0.6 にする。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ScoreTimer</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Timer</span></code></p></td>
+<td><p>待機時間は既定の 1 のままにする。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">StartTimer</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Timer</span></code></p></td>
+<td><p>待機時間を 2、単発をオンにする。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HUD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hud.tscn</span></code> のインスタンス</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Music</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer</span></code></p></td>
+<td><p>ストリームに <code class="docutils literal notranslate"><span class="pre">bgm.wav</span></code>、バスに <code class="docutils literal notranslate"><span class="pre">BGM</span></code> を設定する。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HitSound</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer</span></code></p></td>
+<td><p>ストリームに <code class="docutils literal notranslate"><span class="pre">hit.wav</span></code>、バスに <code class="docutils literal notranslate"><span class="pre">SE</span></code> を設定する。</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Main</span></code> に <code class="docutils literal notranslate"><span class="pre">main.gd</span></code> をアタッチし、次のように書く。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-number">リスト 40 </span><span class="caption-text">chapter17/main.gd</span><a class="headerlink" href="#id23" title="Link to this code"></a></div>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span>
+<span class="linenos"> 2</span><span class="c1">## 岩よけゲームの進行を管理する。岩の生成、スコアの計算、ゲームオーバーの処理を行う。</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="n">Player</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://chapter17/player.gd&quot;</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="n">Rock</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://chapter17/rock.gd&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="n">Hud</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb">preload</span><span class="p">(</span><span class="s2">&quot;res://chapter17/hud.gd&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="k">const</span><span class="w"> </span><span class="n">SAVE_PATH</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;user://rock_dodge.cfg&quot;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1">## 生成する岩のシーン。インスペクターで rock.tscn を指定する。</span>
+<span class="linenos">10</span><span class="nd">@export</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">rock_scene</span><span class="p">:</span><span class="w"> </span><span class="n">PackedScene</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">var</span><span class="w"> </span><span class="n">score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">13</span><span class="k">var</span><span class="w"> </span><span class="n">high_score</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_player</span><span class="p">:</span><span class="w"> </span><span class="n">Player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Player</span>
+<span class="linenos">16</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_hud</span><span class="p">:</span><span class="w"> </span><span class="n">Hud</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$HUD</span>
+<span class="linenos">17</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_start_position</span><span class="p">:</span><span class="w"> </span><span class="n">Marker2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$StartPosition</span>
+<span class="linenos">18</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_rock_timer</span><span class="p">:</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$RockTimer</span>
+<span class="linenos">19</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_score_timer</span><span class="p">:</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$ScoreTimer</span>
+<span class="linenos">20</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_start_timer</span><span class="p">:</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$StartTimer</span>
+<span class="linenos">21</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_music</span><span class="p">:</span><span class="w"> </span><span class="n">AudioStreamPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$Music</span>
+<span class="linenos">22</span><span class="nd">@onready</span><span class="w"> </span><span class="k">var</span><span class="w"> </span><span class="n">_hit_sound</span><span class="p">:</span><span class="w"> </span><span class="n">AudioStreamPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$HitSound</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">26</span><span class="w">    </span><span class="n">_load_high_score</span><span class="p">()</span>
+<span class="linenos">27</span><span class="w">    </span><span class="n">_player</span><span class="o">.</span><span class="n">hit</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">game_over</span><span class="p">)</span>
+<span class="linenos">28</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">start_game</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">new_game</span><span class="p">)</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">_start_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_start_timer_timeout</span><span class="p">)</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">_score_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_score_timer_timeout</span><span class="p">)</span>
+<span class="linenos">31</span><span class="w">    </span><span class="n">_rock_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_rock_timer_timeout</span><span class="p">)</span>
+<span class="linenos">32</span><span class="w">    </span><span class="n">_music</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_music</span><span class="o">.</span><span class="n">play</span><span class="p">)</span>
+<span class="linenos">33</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">show_title</span><span class="p">(</span><span class="n">high_score</span><span class="p">)</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="k">func</span><span class="w"> </span><span class="n">new_game</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">37</span><span class="w">    </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">38</span><span class="w">    </span><span class="n">_rock_timer</span><span class="o">.</span><span class="n">wait_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.6</span>
+<span class="linenos">39</span><span class="w">    </span><span class="c1"># 前のゲームで残っている岩をすべて削除する。</span>
+<span class="linenos">40</span><span class="w">    </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">call_group</span><span class="p">(</span><span class="s2">&quot;rocks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;queue_free&quot;</span><span class="p">)</span>
+<span class="linenos">41</span><span class="w">    </span><span class="n">_player</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">_start_position</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+<span class="linenos">42</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">update_score</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="linenos">43</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;用意...&quot;</span><span class="p">)</span>
+<span class="linenos">44</span><span class="w">    </span><span class="n">_start_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">_music</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="k">func</span><span class="w"> </span><span class="n">game_over</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">49</span><span class="w">    </span><span class="n">_rock_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="linenos">50</span><span class="w">    </span><span class="n">_score_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="linenos">51</span><span class="w">    </span><span class="n">_music</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="linenos">52</span><span class="w">    </span><span class="n">_hit_sound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+<span class="linenos">53</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">can_pause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+<span class="linenos">54</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">is_new_record</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">high_score</span>
+<span class="linenos">55</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">is_new_record</span><span class="p">:</span>
+<span class="linenos">56</span><span class="w">        </span><span class="n">high_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">score</span>
+<span class="linenos">57</span><span class="w">        </span><span class="n">_save_high_score</span><span class="p">()</span>
+<span class="linenos">58</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">show_game_over</span><span class="p">(</span><span class="n">high_score</span><span class="p">,</span><span class="w"> </span><span class="n">is_new_record</span><span class="p">)</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span>
+<span class="linenos">61</span><span class="k">func</span><span class="w"> </span><span class="n">_on_start_timer_timeout</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">62</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">hide_message</span><span class="p">()</span>
+<span class="linenos">63</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">can_pause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">true</span>
+<span class="linenos">64</span><span class="w">    </span><span class="n">_rock_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">65</span><span class="w">    </span><span class="n">_score_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">66</span>
+<span class="linenos">67</span>
+<span class="linenos">68</span><span class="k">func</span><span class="w"> </span><span class="n">_on_score_timer_timeout</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">69</span><span class="w">    </span><span class="n">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">70</span><span class="w">    </span><span class="n">_hud</span><span class="o">.</span><span class="n">update_score</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="linenos">71</span><span class="w">    </span><span class="c1"># 時間がたつほど岩の出現間隔を短くして、難しくする。</span>
+<span class="linenos">72</span><span class="w">    </span><span class="n">_rock_timer</span><span class="o">.</span><span class="n">wait_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxf</span><span class="p">(</span><span class="mf">0.6</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">)</span>
+<span class="linenos">73</span>
+<span class="linenos">74</span>
+<span class="linenos">75</span><span class="k">func</span><span class="w"> </span><span class="n">_on_rock_timer_timeout</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">76</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">rock</span><span class="p">:</span><span class="w"> </span><span class="n">Rock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rock_scene</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+<span class="linenos">77</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">screen_width</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">get_viewport</span><span class="p">()</span><span class="o">.</span><span class="n">get_visible_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">x</span>
+<span class="linenos">78</span><span class="w">    </span><span class="n">rock</span><span class="o">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="n">randf_range</span><span class="p">(</span><span class="mf">24.0</span><span class="p">,</span><span class="w"> </span><span class="n">screen_width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">24.0</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="mf">32.0</span><span class="p">)</span>
+<span class="linenos">79</span><span class="w">    </span><span class="n">rock</span><span class="o">.</span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">randf_range</span><span class="p">(</span><span class="mf">150.0</span><span class="p">,</span><span class="w"> </span><span class="mf">250.0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">5.0</span>
+<span class="linenos">80</span><span class="w">    </span><span class="n">add_child</span><span class="p">(</span><span class="n">rock</span><span class="p">)</span>
+<span class="linenos">81</span>
+<span class="linenos">82</span>
+<span class="linenos">83</span><span class="k">func</span><span class="w"> </span><span class="n">_load_high_score</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">84</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">ConfigFile</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">85</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">SAVE_PATH</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">OK</span><span class="p">:</span>
+<span class="linenos">86</span><span class="w">        </span><span class="n">high_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;record&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;high_score&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">87</span>
+<span class="linenos">88</span>
+<span class="linenos">89</span><span class="k">func</span><span class="w"> </span><span class="n">_save_high_score</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">void</span><span class="p">:</span>
+<span class="linenos">90</span><span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">ConfigFile</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="linenos">91</span><span class="w">    </span><span class="n">config</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;record&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;high_score&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">high_score</span><span class="p">)</span>
+<span class="linenos">92</span><span class="w">    </span><span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">SAVE_PATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>スクリプトを保存したら、<code class="docutils literal notranslate"><span class="pre">Main</span></code> を選び、インスペクターに表示された <code class="docutils literal notranslate"><span class="pre">Rock</span> <span class="pre">Scene</span></code>（rock_scene）に <code class="docutils literal notranslate"><span class="pre">rock.tscn</span></code> をドラッグして設定する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.gd</span></code> の主な処理は次のとおりである。</p>
+<ul class="simple">
+<li><p><strong>4 行目～ 6 行目</strong>：<code class="docutils literal notranslate"><span class="pre">player.gd</span></code> などを <code class="docutils literal notranslate"><span class="pre">preload()</span></code> で読み込み、型の名前として使っている。<code class="docutils literal notranslate"><span class="pre">class_name</span></code> を付けずに済むので、プロジェクト全体のクラス名を増やさずに、型の付いた変数を宣言できる。</p></li>
+<li><p><strong>_ready()</strong>：シグナルを接続し、タイトルを表示する。</p></li>
+<li><p><strong>new_game()</strong>：スコアを 0 に戻し、前のゲームの岩を <code class="docutils literal notranslate"><span class="pre">rocks</span></code> グループを使ってまとめて削除し（<a class="reference internal" href="ch05_nodes_and_scenes.html#ch05"><span class="std std-ref">第 5 章　ノードとシーン</span></a>）、プレイヤーを開始位置に置く。<code class="docutils literal notranslate"><span class="pre">StartTimer</span></code> を開始し、2 秒後に <code class="docutils literal notranslate"><span class="pre">_on_start_timer_timeout()</span></code> で岩の生成とスコアの計算を始める。</p></li>
+<li><p><strong>_on_rock_timer_timeout()</strong>：<code class="docutils literal notranslate"><span class="pre">rock_scene</span></code> から岩のインスタンスを作り、画面の上の外側のランダムな位置に置いて、<code class="docutils literal notranslate"><span class="pre">Main</span></code> の子として追加する。落下速度は、スコアが高いほど速くする。</p></li>
+<li><p><strong>_on_score_timer_timeout()</strong>：1 秒ごとにスコアを増やす。岩を出す間隔を少しずつ短くして、難しくしていく。</p></li>
+<li><p><strong>game_over()</strong>：プレイヤーの <code class="docutils literal notranslate"><span class="pre">hit</span></code> シグナルで呼ばれる。タイマーと BGM を止め、最高記録を更新していれば <code class="docutils literal notranslate"><span class="pre">ConfigFile</span></code> で保存する。</p></li>
+</ul>
+<figure class="align-default" id="id24">
+<div class="graphviz"><object data="../_images/graphviz-74ad00d536975dc0f0498685174beea99163dca7.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph flow {
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0fe&quot;, fontsize=10];
+  edge [fontsize=9];
+  title [label=&quot;HUD.show_title()\nタイトル表示&quot;];
+  newgame [label=&quot;Main.new_game()\nプレイヤーを配置&quot;];
+  wait [label=&quot;StartTimer（2 秒）&quot;];
+  play [label=&quot;プレイ中\nRockTimer：岩を生成\nScoreTimer：スコア加算&quot;, fillcolor=&quot;#d4edda&quot;];
+  over [label=&quot;Main.game_over()\n記録の保存&quot;];
+  result [label=&quot;HUD.show_game_over()\n2 秒待つ&quot;];
+  title -&gt; newgame [label=&quot;start_game シグナル&quot;];
+  newgame -&gt; wait;
+  wait -&gt; play [label=&quot;timeout&quot;];
+  play -&gt; over [label=&quot;Player の hit シグナル&quot;];
+  over -&gt; result;
+  result -&gt; title;
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 37 </span><span class="caption-text">1 回のゲームの処理の流れ</span><a class="headerlink" href="#id24" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id10">
+<h2>手順 5：動かしてみる<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">main.tscn</span></code> を開いて <kbd class="kbd docutils literal notranslate">F6</kbd> を押すか、メインシーンに設定して <kbd class="kbd docutils literal notranslate">F5</kbd> を押す。最初に次のようなタイトルの表示になる。</p>
+<figure class="align-default" id="id25">
+<a class="screenshot reference internal image-reference" href="../_images/ch17_title.png"><img alt="../_images/ch17_title.png" class="screenshot" src="../_images/ch17_title.png" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 38 </span><span class="caption-text">岩よけゲームのタイトルの表示</span><a class="headerlink" href="#id25" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>「スタート」を押してゲームを始め、次の点を確認する。</p>
+<ul class="simple">
+<li><p>「スタート」を押すと「用意...」と表示され、2 秒後に岩が落ち始める。</p></li>
+<li><p>プレイヤーが画面の外に出ない。</p></li>
+<li><p>スコアが 1 秒ごとに増え、時間がたつと岩が増える。</p></li>
+<li><p>岩に当たると白く光って消え、効果音が鳴る。2 秒後に「スタート」ボタンが再び表示される。</p></li>
+<li><p><kbd class="kbd docutils literal notranslate">P</kbd> キーで一時停止と再開ができる。</p></li>
+<li><p>ゲームを終了して起動し直しても、最高記録が残っている。</p></li>
+</ul>
+<p>うまく動かない場合は、付録 C のトラブルシューティングと、<a class="reference internal" href="ch18_debug_and_optimization.html#ch18"><span class="std std-ref">第 18 章　デバッグと最適化</span></a> のデバッグの方法を参考にする。特に、コリジョンのレイヤーとマスクの設定、シグナルの接続、<code class="docutils literal notranslate"><span class="pre">rock_scene</span></code> の設定を確認するとよい。</p>
+</section>
+<section id="id11">
+<h2>改良のアイデア<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>完成したゲームを改造して、さらに理解を深めよう。</p>
+<ul class="simple">
+<li><p>岩に当たったときに、<code class="docutils literal notranslate"><span class="pre">CPUParticles2D</span></code> で破片が飛び散る効果を追加する（<a class="reference internal" href="ch12_graphics_and_animation.html#ch12"><span class="std std-ref">第 12 章　描画とアニメーション</span></a>）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Camera2D</span></code> を追加し、岩に当たったときに画面を揺らす（<a class="reference internal" href="ch12_graphics_and_animation.html#ch12"><span class="std std-ref">第 12 章　描画とアニメーション</span></a>）。</p></li>
+<li><p>岩の大きさや速さに種類を作り、<a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a> の独自のリソースでデータとして定義する。</p></li>
+<li><p>一定時間ごとに出現するアイテムを取ると、しばらく無敵になるようにする。</p></li>
+<li><p>上位 5 件の記録を JSON で保存し、ランキングとして表示する（<a class="reference internal" href="ch15_scenes_and_data.html#ch15"><span class="std std-ref">第 15 章　シーン管理とデータ</span></a>）。</p></li>
+<li><p><a class="reference internal" href="ch19_export.html#ch19"><span class="std std-ref">第 19 章　エクスポート</span></a> の手順でエクスポートし、友人に遊んでもらう。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ch16_shaders.html" class="btn btn-neutral float-left" title="第 16 章 シェーダー入門" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ch18_debug_and_optimization.html" class="btn btn-neutral float-right" title="第 18 章 デバッグと最適化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
