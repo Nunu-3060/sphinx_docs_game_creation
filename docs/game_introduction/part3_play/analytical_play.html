@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8 章 分析的に遊ぶ &mdash; ゲーム入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3989ba92" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="9 章 ゲームと社会" href="society.html" />
+    <link rel="prev" title="7 章 遊び方・楽しみ方" href="how_to_play.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ゲーム入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 1 部　ゲームを知る</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part1_know/index.html">第 1 部　ゲームを知る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 2 部　ゲームの仕組み</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part2_mechanism/index.html">第 2 部　ゲームの仕組み</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 3 部　ゲームを遊ぶ</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第 3 部　ゲームを遊ぶ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_to_play.html">7 章　遊び方・楽しみ方</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8 章　分析的に遊ぶ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">分析の手順</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">演習 1　構成要素に分ける</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">演習 2　選択を数える</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">演習 3　偶然を測る</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">演習 4　ループを見つける</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">演習 5　バランスを調べる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">演習 6　手触りを調べる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">演習 7　難易度を調べる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">演習 8　市販のゲームを分析する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">演習 9　ルールを 1 つ変える</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">分析を言葉にする</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="society.html">9 章　ゲームと社会</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">まとめ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../next_steps.html">10 章　次に学ぶこと</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/worksheets.html">付録 A　分析ワークシート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/samples.html">付録 B　サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 C　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ゲーム入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">第 3 部　ゲームを遊ぶ</a></li>
+      <li class="breadcrumb-item active">8 章　分析的に遊ぶ</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>8 章　分析的に遊ぶ<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、5 章と 6 章で学んだ概念を使い、ゲームを遊びながら分析する。演習は、紙で遊べる単純なゲームから始め、Python によるシミュレーション、Godot のサンプルでの実験を経て、市販のゲームの分析へと進む。</p>
+<p>各演習は「目的 → 手順 → 解答例または記入例 → 考察」の形でそろえた。解答例と記入例は 1 つの例であり、自分の結果と違っていてもかまわない。違いが生じた理由を考えることも分析の一部である。</p>
+<section id="id2">
+<h2>分析の手順<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームを分析するときは、次の手順を繰り返す。</p>
+<figure class="align-center" id="id22">
+<div class="graphviz"><img src="../_images/graphviz-cd48fb2891a491d3bf5b61863f6ccd80ab0f5b88.png" alt="digraph analysis {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0f8&quot;, color=&quot;#1f5f99&quot;, fontsize=12];
+  play [label=&quot;遊ぶ&quot;];
+  record [label=&quot;記録する&quot;];
+  split [label=&quot;分解する&quot;];
+  hypo [label=&quot;仮説を立てる&quot;];
+  change [label=&quot;ルールを変えて\n確かめる&quot;];
+  play -&gt; record -&gt; split -&gt; hypo -&gt; change;
+  change -&gt; play [label=&quot;もう一度遊ぶ&quot;, style=dashed, fontsize=10, constraint=false];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 10 </span><span class="caption-text">分析の手順</span><a class="headerlink" href="#id22" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id23">
+<caption><span class="caption-number">表 36 </span><span class="caption-text">分析の各段階</span><a class="headerlink" href="#id23" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>段階</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>遊ぶ</p></td>
+<td><p>まずは普通に楽しむ。最初から分析しようとすると、プレイヤーとしての素直な感情を見逃す</p></td>
+</tr>
+<tr class="row-odd"><td><p>記録する</p></td>
+<td><p>楽しかった瞬間、退屈だった瞬間、迷った選択を書き留める（付録のワークシート）</p></td>
+</tr>
+<tr class="row-even"><td><p>分解する</p></td>
+<td><p>1 章の 4 つの構成要素、6 章の MDA とコアループで、ゲームを部品に分ける</p></td>
+</tr>
+<tr class="row-odd"><td><p>仮説を立てる</p></td>
+<td><p>「この楽しさは、このメカニクスから生まれているのではないか」と考える</p></td>
+</tr>
+<tr class="row-even"><td><p>ルールを変えて確かめる</p></td>
+<td><p>ルールを変えて遊び、仮説どおりに体験が変わるかを確かめる。デジタルゲームでは、パラメーターを変えたりシミュレーションしたりする</p></td>
+</tr>
+</tbody>
+</table>
+<p>最後の段階が、本を読むだけの理解と、遊んで確かめる理解との違いである。</p>
+</section>
+<section id="id3">
+<h2>演習 1　構成要素に分ける<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：1 章の 4 つの構成要素で、単純なゲームを分解する練習をする。</p>
+<p><strong>手順</strong>：三目並べとニム（5 章）を紙で、または <code class="docutils literal notranslate"><span class="pre">tictactoe.py</span> <span class="pre">play</span></code> と <code class="docutils literal notranslate"><span class="pre">nim.py</span></code> で数回遊び、目的、ルール、フィードバック、自発的な参加の 4 つに分ける。</p>
+<section id="id4">
+<h3>記入例<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id24">
+<caption><span class="caption-number">表 37 </span><span class="caption-text">記入例：三目並べとニムの分解</span><a class="headerlink" href="#id24" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>要素</p></th>
+<th class="head"><p>三目並べ</p></th>
+<th class="head"><p>ニム</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>目的</p></td>
+<td><p>自分の印を縦、横、斜めのいずれかに 3 つ並べる</p></td>
+<td><p>最後の石を取る</p></td>
+</tr>
+<tr class="row-odd"><td><p>ルール</p></td>
+<td><p>交互に 1 マスずつ印を書く。書いた印は動かせない</p></td>
+<td><p>交互に、1 つの山から 1 個以上取る。複数の山からは取れない</p></td>
+</tr>
+<tr class="row-even"><td><p>フィードバック</p></td>
+<td><p>盤面。相手のリーチ（あと 1 つで並ぶ状態）が見える</p></td>
+<td><p>山の大きさ。ただし、局面の良し悪しは見ただけでは分からない</p></td>
+</tr>
+<tr class="row-odd"><td><p>自発的な参加</p></td>
+<td><p>子どものころは自分から遊んだが、今は誘われないと遊ばない</p></td>
+<td><p>最初は遊ぶ気になったが、必勝法を知ると遊ぶ気が無くなった</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>考察</strong>：2 つのゲームは、どちらも完全情報で偶然の要素の無いゲームである。違いはフィードバックにあり、三目並べは良し悪しが盤面から見えるが、ニムは見えない（ニム和を計算しないと分からない）。ニムを初めて遊ぶと AI が魔法のように見えるのはこのためである。</p>
+</section>
+</section>
+<section id="id5">
+<h2>演習 2　選択を数える<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：三目並べが大人にとって「つまらない」理由を、5 章の数値で説明する。</p>
+<p><strong>手順</strong>：<code class="docutils literal notranslate"><span class="pre">py</span> <span class="pre">tictactoe.py</span></code> で局面数とゲームの値を求め、6 章の「楽しさは学習」「意味のある選択」の考え方で解釈する。</p>
+<section id="id6">
+<h3>解答例<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">tictactoe.py</span></code> の出力から、到達できる局面は 5,478 しかなく、初期局面の値は 0（双方が最善を尽くすと引き分け）である。</p>
+<ul class="simple">
+<li><p><strong>学ぶことが少ない</strong>：局面が少なく、しかも盤面の対称性（回転と裏返し）で同じものをまとめるとさらに減る。大人は、引き分けにする打ち方をすぐに学び終える（6 章の「楽しさは学習」）。</p></li>
+<li><p><strong>選択に意味が無い</strong>：双方が正しく打てば結果は必ず引き分けで、どの選択も結果を変えない。間違えない者どうしでは、選択が勝敗に影響しない（6 章の「意味のある選択」）。</p></li>
+</ul>
+<p><strong>考察</strong>：子どもが三目並べを楽しめるのは、まだパターンを学んでいる途中だからである。同じゲームでも、プレイヤーの知識によって面白さが変わる。将棋や囲碁は局面の数が非常に多く、人間が学び尽くすことができないので、長く楽しまれている。</p>
+</section>
+</section>
+<section id="id7">
+<h2>演習 3　偶然を測る<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：すごろくの勝敗が、どれだけ運で決まるかを数値で測る。</p>
+<p><strong>手順</strong>：<a class="reference download internal" download="" href="../_downloads/be103957fdf958b184ed492158dee472/sugoroku.py"><code class="xref download docutils literal notranslate"><span class="pre">sugoroku.py</span></code></a> を実行する。このすごろくには、1 回の手番で 1 回だけ振り直せるルールがある。振り直しの判断がこのゲームで唯一の選択であり、次の 2 つの戦略を比べる。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">skilled</span></code>：3 以下が出たら振り直す（期待値 3.5 より小さい目を捨てる）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">random</span></code>：2 回に 1 回、でたらめに振り直す</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>&gt; py sugoroku.py
+<span class="linenos"> 2</span>演習 3-1 同じ戦略どうし（random 対 random）での先手の勝率
+<span class="linenos"> 3</span>  ゴールまで  10 マス: 0.664
+<span class="linenos"> 4</span>  ゴールまで  30 マス: 0.600
+<span class="linenos"> 5</span>  ゴールまで 100 マス: 0.549
+<span class="linenos"> 6</span>演習 3-2 skilled 対 random での skilled の勝率（先手と後手を交互に入れ替える）
+<span class="linenos"> 7</span>  ゴールまで  10 マス: 0.675
+<span class="linenos"> 8</span>  ゴールまで  30 マス: 0.797
+<span class="linenos"> 9</span>  ゴールまで 100 マス: 0.945
+<span class="linenos">10</span>  ゴールまで 300 マス: 0.997
+<span class="linenos">11</span>（以下、演習 4 の結果）
+</pre></div>
+</div>
+<section id="id8">
+<h3>解答例<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<figure class="align-default" id="id25">
+<a class="reference internal image-reference" href="../_images/sugoroku_skill.png"><img alt="ゴールまでのマス数と勝率の関係" src="../_images/sugoroku_skill.png" style="width: 75%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 11 </span><span class="caption-text">ゴールまでのマス数と勝率の関係（各 20,000 回のシミュレーション）</span><a class="headerlink" href="#id25" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>実力の差が勝率に表れにくい</strong>：運だけで決まるなら勝率は 0.5、実力だけで決まるなら上手な側の勝率は 1 になる。ゴールまで 10 マスでは、skilled の勝率は約 0.68 にとどまる。上手に振り直しても、短いゲームではサイコロの運の方が大きい。</p></li>
+<li><p><strong>先手が有利</strong>：同じ戦略どうしでも、10 マスでは先手が約 0.66 の確率で勝つ。先に振る分だけゴールに早く着く可能性があるからである。</p></li>
+<li><p><strong>長いゲームほど実力が出る</strong>：ゴールまでのマス数を増やすと、振る回数が増えて運が平均化され（5 章でサイコロの個数を増やした分布と同じ理由）、skilled の勝率は 1 に近づき、先手の勝率は 0.5 に近づく（先手の有利が無くなる）。</p></li>
+</ul>
+<p><strong>考察</strong>：運と実力の割合は、ゲームの長さで調整できる。家族で遊ぶすごろくが短いのは、子どもでも大人に勝てるようにするためと考えることもできる。逆に、実力を競う競技では、1 回の勝負でなく、何回も対戦した合計で勝敗を決めることが多い。</p>
+</section>
+</section>
+<section id="id9">
+<h2>演習 4　ループを見つける<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：6 章のフィードバックループを、すごろくに加えて効果を測る。</p>
+<p><strong>手順</strong>：次の 2 つのルールを加え、基本ルールと比べる。ゴールまでは 30 マス、skilled 対 random で、先手と後手を交互に入れ替える。</p>
+<ul class="simple">
+<li><p><strong>追いつきルール</strong>（負のフィードバックループ）：後ろにいるプレイヤーは、出た目に 2 を足す。</p></li>
+<li><p><strong>独走ルール</strong>（正のフィードバックループ）：前にいるプレイヤーは、出た目に 2 を足す。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">py</span> <span class="pre">sugoroku.py</span></code> の出力の後半が、この演習の結果である。</p>
+<section id="id10">
+<h3>解答例<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id26">
+<caption><span class="caption-number">表 38 </span><span class="caption-text">ルールによる違い（20,000 回のシミュレーション）</span><a class="headerlink" href="#id26" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ルール</p></th>
+<th class="head"><p>skilled の勝率</p></th>
+<th class="head"><p>負けた側の残りマス（平均）</p></th>
+<th class="head"><p>先頭の入れ替わり（平均）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>基本ルール</p></td>
+<td><p>0.797</p></td>
+<td><p>6.9</p></td>
+<td><p>2.78</p></td>
+</tr>
+<tr class="row-odd"><td><p>追いつきルール</p></td>
+<td><p>0.684</p></td>
+<td><p>3.3</p></td>
+<td><p>4.96</p></td>
+</tr>
+<tr class="row-even"><td><p>独走ルール</p></td>
+<td><p>0.725</p></td>
+<td><p>11.5</p></td>
+<td><p>1.90</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-default" id="id27">
+<a class="reference internal image-reference" href="../_images/sugoroku_gap.png"><img alt="ルールごとの、終了時に負けた側が残していたマス数の分布" src="../_images/sugoroku_gap.png" style="width: 75%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 12 </span><span class="caption-text">ゲーム終了時の差の分布</span><a class="headerlink" href="#id27" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>追いつきルール</strong>：終了時の差が半分以下に縮まり、先頭が入れ替わる回数はほぼ倍になった。接戦が増え、最後まで勝負が分からない。</p></li>
+<li><p><strong>独走ルール</strong>：終了時の差が広がり、先頭の入れ替わりは減った。序盤でリードした方がそのまま逃げ切る展開が多い。</p></li>
+<li><p><strong>どちらも実力の差が表れにくくなった</strong>：追いつきルールでは、上手な側が前に出ると相手に 2 が足されるので、リードが打ち消される。独走ルールでは、序盤のサイコロの運で先に前に出た側が 2 を足され続け、1 手番あたり 2 という加算は、上手な振り直しによる差（期待値で 1 手番あたり約 0.75）より大きい。</p></li>
+</ul>
+<p><strong>考察</strong>：負のループは接戦を、正のループは決着を生むが、どちらも強すぎると実力より運やルールが勝敗を決めてしまう。多くのゲームでは、加算を小さくする、条件を付ける（大差がついたときだけ働くなど）といった調整で、緊張感と実力の反映を両立させている。<code class="docutils literal notranslate"><span class="pre">sugoroku.py</span></code> の <code class="docutils literal notranslate"><span class="pre">BONUS</span></code> の値を 1 や 4 に変えて、結果がどう変わるか試してみるとよい。</p>
+</section>
+</section>
+<section id="id11">
+<h2>演習 5　バランスを調べる<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：勝ったときの点を手ごとに変えたじゃんけんで、最適な手の割合がどう変わるかを調べ、6 章のバランスの考え方を確かめる。</p>
+<p><strong>手順</strong>：<a class="reference download internal" download="" href="../_downloads/d9eb47a6dbb946cd5b9615f6bcd3735c/rps.py"><code class="xref download docutils literal notranslate"><span class="pre">rps.py</span></code></a> に、グー、パー、チョキで勝ったときの点を与えて実行する。次の 3 つを試す。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>py rps.py 1 1 1
+<span class="linenos">2</span>py rps.py 1 1 2
+<span class="linenos">3</span>py rps.py 3 6 6
+</pre></div>
+</div>
+<section id="id12">
+<h3>解答例<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id28">
+<caption><span class="caption-number">表 39 </span><span class="caption-text">勝ったときの点と最適な割合</span><a class="headerlink" href="#id28" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>勝ったときの点（グー、パー、チョキ）</p></th>
+<th class="head"><p>グー</p></th>
+<th class="head"><p>パー</p></th>
+<th class="head"><p>チョキ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1、1、1（普通のじゃんけん）</p></td>
+<td><p>0.333</p></td>
+<td><p>0.333</p></td>
+<td><p>0.333</p></td>
+</tr>
+<tr class="row-odd"><td><p>1、1、2（チョキで勝つと 2 点）</p></td>
+<td><p>0.500</p></td>
+<td><p>0.250</p></td>
+<td><p>0.250</p></td>
+</tr>
+<tr class="row-even"><td><p>3、6、6（グリコ）</p></td>
+<td><p>0.400</p></td>
+<td><p>0.200</p></td>
+<td><p>0.400</p></td>
+</tr>
+</tbody>
+</table>
+<p>チョキの点を上げても、チョキを出す割合は増えない。増えるのは、チョキに勝つグーである。一般に、グー、パー、チョキで勝ったときの点を <span class="math notranslate nohighlight">\(w_R, w_P, w_S\)</span> とすると、最適な割合はグー：パー：チョキ = <span class="math notranslate nohighlight">\(w_S : w_R : w_P\)</span> になる。各手の割合は、その手自身で勝ったときの点ではなく、その手が負かす手で勝ったときの点に比例する。チョキの点が高いと、相手のチョキを止めるグーの価値が上がるからである。</p>
+<p><strong>考察</strong>：均衡の状態では、どの手を出しても期待値は 0 で、ある手の点を上げても、その手で得をすることはできない。得ができるのは、相手が均衡からずれた割合で出す場合だけである。<code class="docutils literal notranslate"><span class="pre">rps.py</span></code> の出力の最後の 2 行は、相手が均等に出す場合に、どの手で得ができるかを示している。つまり、点の調整は「どの手が強いか」ではなく、「プレイヤーが互いを読み合う割合」を変える。カードゲームのカードの強さを調整するときも、強いカードを使う人が増えると、それに強いカードを使う人も増える、という連鎖を考える必要がある。</p>
+</section>
+</section>
+<section id="id13">
+<h2>演習 6　手触りを調べる<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：6 章の手触りを、パラメーターを変えて体験する。</p>
+<p><strong>手順</strong>：4 章で準備した <code class="docutils literal notranslate"><span class="pre">dodge_lab</span></code> で、<code class="docutils literal notranslate"><span class="pre">Main</span></code> ノードの次のパラメーターを 1 つずつ変え、それぞれ 2〜3 回遊んで操作感を記録する。変えたら元の値に戻してから次のパラメーターを試す。</p>
+<table class="docutils align-default" id="id29">
+<caption><span class="caption-number">表 40 </span><span class="caption-text">試すパラメーターの値</span><a class="headerlink" href="#id29" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>パラメーター</p></th>
+<th class="head"><p>値</p></th>
+<th class="head"><p>観察の観点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">acceleration</span></code></p></td>
+<td><p>300、1500、100000</p></td>
+<td><p>動き出しの重さ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">deceleration</span></code></p></td>
+<td><p>200、2000、100000</p></td>
+<td><p>止まりやすさ、滑る感覚</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_speed</span></code></p></td>
+<td><p>150、300、600</p></td>
+<td><p>速さと、細かい位置合わせのしやすさ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fall_gravity</span></code></p></td>
+<td><p>100、400、1200</p></td>
+<td><p>ブロックの落ち方の印象と、反応できるかどうか</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id14">
+<h3>記入例<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id30">
+<caption><span class="caption-number">表 41 </span><span class="caption-text">記入例：手触りの記録</span><a class="headerlink" href="#id30" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>変更</p></th>
+<th class="head"><p>感じたこと</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">acceleration</span></code> 300</p></td>
+<td><p>重い乗り物のようで、動き出しが遅い。ブロックが見えてから動いても間に合わず、操作しているのに思いどおりにならない感覚が強い</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">acceleration</span></code> 100000</p></td>
+<td><p>キーを押した瞬間に最高速度になる。機敏だが、少しだけ動かすのが難しい</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">deceleration</span></code> 200</p></td>
+<td><p>氷の上のように滑る。止まりたい位置の手前でキーを離す必要があり、慣れると上達を感じる</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_speed</span></code> 600</p></td>
+<td><p>避けるのは楽だが、細かい位置合わせが難しく、行き過ぎてブロックに当たる</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fall_gravity</span></code> 1200</p></td>
+<td><p>ブロックが急に落ちてくるので、見てから避けるのではなく、出現した瞬間に判断する必要がある</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>考察</strong>：同じゲームでも、数値を変えるだけで「機敏」「重い」「滑る」と、まったく違う手触りになる。どれが正しいということはなく、ゲームが目指すエステティクス（6 章）に合っているかどうかが基準になる。たとえば、氷の上を舞台にするゲームなら、滑る手触りはむしろ望ましい。</p>
+</section>
+</section>
+<section id="id15">
+<h2>演習 7　難易度を調べる<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：6 章の難易度曲線を、自分の記録から描く。</p>
+<p><strong>手順</strong>：</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dodge_lab</span></code> の <code class="docutils literal notranslate"><span class="pre">spawn_interval</span></code> を 1.2、0.9、0.6、0.45、0.3 の順に変え、それぞれ 5 回ずつ遊ぶ。その他のパラメーターは初期値に戻しておく。</p></li>
+<li><p>記録は、4 章で説明した保存先の <code class="docutils literal notranslate"><span class="pre">dodge_lab_log.csv</span></code> に自動で追記される。</p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/fba3007ba1585fbd3da0f485fea93176/difficulty_plot.py"><code class="xref download docutils literal notranslate"><span class="pre">difficulty_plot.py</span></code></a> に CSV ファイルの場所を与えて、難易度曲線を描く。次の例は Windows のコマンドプロンプトの場合で、PowerShell では <code class="docutils literal notranslate"><span class="pre">%APPDATA%</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">$env:APPDATA</span></code> と書く。</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>py difficulty_plot.py &quot;%APPDATA%\Godot\app_userdata\Dodge Lab\dodge_lab_log.csv&quot;
+</pre></div>
+</div>
+<p>Godot を使えない場合は、記入例のデータ <a class="reference download internal" download="" href="../_downloads/423212e9fecd0ed33d7685e61e3f5e1a/difficulty_sample.csv"><code class="xref download docutils literal notranslate"><span class="pre">difficulty_sample.csv</span></code></a> を使い、引数を付けずに <code class="docutils literal notranslate"><span class="pre">py</span> <span class="pre">difficulty_plot.py</span></code> と実行する。</p>
+<section id="id16">
+<h3>記入例<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<p>次の図は、記入例のデータ（ある 1 人のプレイヤーの記録）から描いた難易度曲線である。</p>
+<figure class="align-default" id="id31">
+<a class="reference internal image-reference" href="../_images/difficulty.png"><img alt="ブロックの出現間隔と生存時間の関係" src="../_images/difficulty.png" style="width: 75%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 13 </span><span class="caption-text">難易度曲線の例（点は 1 回ごとの記録、線は平均）</span><a class="headerlink" href="#id31" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p>出現間隔が 1.2 秒ではほとんどの回で 60 秒生き残り、0.9 秒でも 5 回中 2 回は生き残った。</p></li>
+<li><p>0.9 秒から 0.6 秒の間で、平均の生存時間が約 49 秒から約 23 秒へと急に下がった。</p></li>
+<li><p>0.3 秒では、ほぼ 5 秒以内に当たった。</p></li>
+</ul>
+<p><strong>考察</strong>：難しさは出現間隔に比例して上がるのではなく、ある値を境に急に上がる。このプレイヤーにとっては、0.9 秒と 0.6 秒の間に「崖」がある。ゲームを設計するなら、この区間を細かく刻んで、時間とともに出現間隔を少しずつ短くすれば、なだらかな難易度曲線が作れる。ただし、崖の位置はプレイヤーの腕前によって違うので、何人かの記録を比べることが望ましい。また、同じ設定でも 1 回ごとのばらつきが大きいことから、難易度の調整には 1 回の結果でなく複数回の平均を使う必要があることも分かる。</p>
+</section>
+</section>
+<section id="id17">
+<h2>演習 8　市販のゲームを分析する<a class="headerlink" href="#id17" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：6 章の MDA とコアループを使って、実際のゲームを分析する。</p>
+<p><strong>手順</strong>：好きなアナログゲームとデジタルゲームを 1 つずつ選び、<a class="reference download internal" download="" href="../_downloads/3dc63ce1d812c5a2628719134f6a2432/02_mda_analysis.txt"><code class="xref download docutils literal notranslate"><span class="pre">ワークシート</span> <span class="pre">2</span></code></a> に記入する。分析する前に、少なくとも 2 回は遊んでおく。</p>
+<section id="id18">
+<h3>記入例<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id32">
+<caption><span class="caption-number">表 42 </span><span class="caption-text">記入例：カタン（アナログ）</span><a class="headerlink" href="#id32" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>記入例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>エステティクス</p></td>
+<td><p>仲間（交渉の駆け引き）と挑戦。サイコロの目に一喜一憂する感覚</p></td>
+</tr>
+<tr class="row-odd"><td><p>ダイナミクス</p></td>
+<td><p>資源の交換の交渉が常に起きる。リードしているプレイヤーは交換に応じてもらえなくなる（負のループ）。開拓地が多いほど資源が増え、さらに開拓地を増やせる（正のループ）</p></td>
+</tr>
+<tr class="row-even"><td><p>メカニクス</p></td>
+<td><p>2d6 の出目に対応した土地から資源を得る。資源を組み合わせて道や開拓地を作る。7 が出ると盗賊が動き、手札が 8 枚以上のプレイヤーは半分を捨てる。先に 10 点を取った人が勝ち</p></td>
+</tr>
+<tr class="row-odd"><td><p>コアループ</p></td>
+<td><p>短い：サイコロを振る → 資源を得る → 交渉する → 建設する。長い：開拓地を増やして生産力を上げる → 得点を重ねる</p></td>
+</tr>
+<tr class="row-even"><td><p>つながり</p></td>
+<td><p>出目の分布（5 章）により、6 や 8 の土地の価値が高く、初期配置の選択が重要になる。交渉のメカニクスが、プレイヤーどうしの関係（仲間）というエステティクスを生んでいる</p></td>
+</tr>
+<tr class="row-odd"><td><p>まとめ</p></td>
+<td><p>正のループで伸びる開拓を、交渉という負のループで抑えることで、最後まで接戦になるように作られたゲーム</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id33">
+<caption><span class="caption-number">表 43 </span><span class="caption-text">記入例：テトリス（デジタル）</span><a class="headerlink" href="#id33" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>記入例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>エステティクス</p></td>
+<td><p>挑戦と感覚。ぴたりと収まる気持ちよさ、何も考えずに没頭できる暇つぶし</p></td>
+</tr>
+<tr class="row-odd"><td><p>ダイナミクス</p></td>
+<td><p>1 列ずつ消すより、まっすぐな長いブロック用に 1 列分の溝を空けて、4 列を一度に消そうとする。積み上げるほど得点の機会は増えるが、危険も増す</p></td>
+</tr>
+<tr class="row-even"><td><p>メカニクス</p></td>
+<td><p>7 種類のブロックが落ちてくる。横 1 列がそろうと消える。消した列が多いほど速度が上がる。同時に消す列数が多いほど得点が高い</p></td>
+</tr>
+<tr class="row-odd"><td><p>コアループ</p></td>
+<td><p>短い：ブロックを回して置く → 列が消える。長い：速度が上がる → 高得点を目指して再挑戦する</p></td>
+</tr>
+<tr class="row-even"><td><p>つながり</p></td>
+<td><p>「同時に消すほど高得点」のメカニクスが、「危険を承知で積み上げる」というダイナミクスを生み、危機を切り抜けたときの挑戦の楽しさにつながっている</p></td>
+</tr>
+<tr class="row-odd"><td><p>まとめ</p></td>
+<td><p>単純なルールから、リスクと報酬の選択を絶えず生み出すゲーム</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>考察</strong>：2 つのゲームは媒体も遊び方もまったく違うが、MDA で見ると、どちらも「リスクを取るかどうか」の選択と、それを生むメカニクスを持っている。分析で大切なのは、メカニクスの列挙ではなく、メカニクスがどのダイナミクスとエステティクスを生んでいるかという「つながり」を見つけることである。</p>
+</section>
+</section>
+<section id="id19">
+<h2>演習 9　ルールを 1 つ変える<a class="headerlink" href="#id19" title="Link to this heading"></a></h2>
+<p><strong>目的</strong>：実際のゲームのルールを 1 つだけ変えて遊び、仮説を確かめる。</p>
+<p><strong>手順</strong>：よく知っているゲームを選び、変えるルールを 1 つ決める。変える前に仮説を立て、<a class="reference download internal" download="" href="../_downloads/52ed6a243625640bc400a65fdf73d1b6/03_rule_change.txt"><code class="xref download docutils literal notranslate"><span class="pre">ワークシート</span> <span class="pre">3</span></code></a> に記入しながら、変更前と変更後を同じ人数で遊ぶ。</p>
+<section id="id20">
+<h3>記入例<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id34">
+<caption><span class="caption-number">表 44 </span><span class="caption-text">記入例：大富豪の「革命」を無くす</span><a class="headerlink" href="#id34" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>記入例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>変えるルール</p></td>
+<td><p>同じ数字のカード 4 枚を出すとカードの強さが逆転する「革命」を無くす</p></td>
+</tr>
+<tr class="row-odd"><td><p>仮説</p></td>
+<td><p>大富豪には、勝った人が負けた人から強いカードを受け取る「カード交換」という正のループがある。革命はそれを打ち消す負のループなので、無くすと同じ人が勝ち続ける</p></td>
+</tr>
+<tr class="row-even"><td><p>遊んだ回数</p></td>
+<td><p>変更前、変更後ともに 4 人で 6 回（カード交換は 2 回目から行う）</p></td>
+</tr>
+<tr class="row-odd"><td><p>結果</p></td>
+<td><p>変更後は、2 回目以降の 5 回のうち 4 回で、前の回の大富豪が大富豪を維持した。変更前は 5 回中 2 回だった。大貧民になった人は、強いカードを渡し続けるので、変更後は逆転の望みがほとんど無かった</p></td>
+</tr>
+<tr class="row-even"><td><p>感想</p></td>
+<td><p>大貧民になった人は「やることが無い」と退屈そうだった。大富豪の人も、勝って当然なので嬉しくないと言った</p></td>
+</tr>
+<tr class="row-odd"><td><p>結論</p></td>
+<td><p>仮説は当たった。革命は、正のループで固定されがちな順位を揺さぶる役割を持っている。変更は残さない</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>考察</strong>：ルールを 1 つ変えると、そのルールが担っていた役割が浮かび上がる。何気なく遊んでいたルールにも、それぞれ意味がある。ハウスルール（7 章）を作るときも、まず 1 つだけ変えて、何が起きるかを観察するとよい。</p>
+</section>
+</section>
+<section id="id21">
+<h2>分析を言葉にする<a class="headerlink" href="#id21" title="Link to this heading"></a></h2>
+<p>分析の最後に、遊んだ感想を、この章で使った言葉で書き直す練習をする。分析の言葉で書くと、自分がなぜ楽しかったのかを他の人に伝えられ、7 章で述べたように、他の人のレビューを読むときの手掛かりにもなる。</p>
+<table class="docutils align-default" id="id35">
+<caption><span class="caption-number">表 45 </span><span class="caption-text">記入例：感想を分析の言葉で書き直す</span><a class="headerlink" href="#id35" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>もとの感想</p></th>
+<th class="head"><p>分析の言葉で書き直した例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>やめ時が分からない</p></td>
+<td><p>1 回が 3 分ほどの短いコアループと、報酬で強くなる長いループが重なっていて、いつも「次の区切り」が目の前にある</p></td>
+</tr>
+<tr class="row-odd"><td><p>最後まで誰が勝つか分からなくて面白い</p></td>
+<td><p>負のフィードバックループ（リーダーへの妨害が集まる）が働き、先頭が何度も入れ替わる</p></td>
+</tr>
+<tr class="row-even"><td><p>運ゲーでつまらない</p></td>
+<td><p>1 ゲームが短く、偶然の要素の影響に対して、プレイヤーの選択の影響が小さい</p></td>
+</tr>
+<tr class="row-odd"><td><p>操作が気持ちいい</p></td>
+<td><p>入力への反応が速く、加速と減速が短い。当たったときの演出がはっきりしている</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how_to_play.html" class="btn btn-neutral float-left" title="7 章 遊び方・楽しみ方" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="society.html" class="btn btn-neutral float-right" title="9 章 ゲームと社会" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

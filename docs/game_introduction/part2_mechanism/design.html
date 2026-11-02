@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6 章 デザイン &mdash; ゲーム入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3989ba92" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 3 部 ゲームを遊ぶ" href="../part3_play/index.html" />
+    <link rel="prev" title="5 章 数理" href="mathematics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ゲーム入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 1 部　ゲームを知る</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part1_know/index.html">第 1 部　ゲームを知る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 2 部　ゲームの仕組み</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第 2 部　ゲームの仕組み</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="production.html">4 章　制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">5 章　数理</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6 章　デザイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">面白さとは何か</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mda">MDA フレームワーク</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">コアループ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">フィードバックループ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">バランス</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">難易度とチュートリアル</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">手触り</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">アナログゲーム特有の課題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">演習</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 3 部　ゲームを遊ぶ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part3_play/index.html">第 3 部　ゲームを遊ぶ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">まとめ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../next_steps.html">10 章　次に学ぶこと</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/worksheets.html">付録 A　分析ワークシート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/samples.html">付録 B　サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 C　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ゲーム入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">第 2 部　ゲームの仕組み</a></li>
+      <li class="breadcrumb-item active">6 章　デザイン</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>6 章　デザイン<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、ゲームの面白さを説明し、設計するための概念を紹介する。ここで説明する概念は、8 章で実際にゲームを分析するときの道具になる。</p>
+<section id="id2">
+<h2>面白さとは何か<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>ゲームの面白さを 1 つの理論で説明することはできないが、よく引用される考え方が 3 つある。</p>
+<dl class="simple">
+<dt><strong>フロー</strong></dt><dd><p>心理学者ミハイ・チクセントミハイは、人が時間を忘れて活動に没頭している状態を<a class="reference internal" href="../appendix/glossary.html#term-28"><span class="xref std std-term">フロー</span></a>と呼んだ（『フロー体験　喜びの現象学』1990）。フローは、課題の難しさと本人の技能がつり合っているときに生じやすい。課題が技能より難しすぎると不安を感じ、易しすぎると退屈を感じる。ゲームでは、プレイヤーの上達に合わせて課題を難しくしていくことで、フローの状態を保とうとする。</p>
+</dd>
+<dt><strong>楽しさは学習である</strong></dt><dd><p>ゲームデザイナーのラフ・コスターは『「おもしろい」のゲームデザイン』（2004）で、ゲームの楽しさの正体は、パターンを学び、身に付けることだと論じた。パターンを完全に理解すると、そのゲームは退屈になる。大人が三目並べで遊ばなくなるのは、引き分けにする方法をすでに学び終えているからである（5 章）。</p>
+</dd>
+<dt><strong>意味のある選択</strong></dt><dd><p>ゲームデザイナーのシド・マイヤーは「ゲームとは興味深い選択の連続である」と述べたとされる。選択肢が 1 つしかない、どれを選んでも結果が同じ、どれが正解か明らかである、といった選択は、プレイヤーにとって意味が無い。意味のある選択とは、それぞれの選択肢に利点と欠点があり、結果がゲームの展開に影響するものである。</p>
+</dd>
+</dl>
+<p>1 章の作業定義で「選択を重ねる」をゲームの条件に含めたのは、この考え方による。</p>
+</section>
+<section id="mda">
+<h2>MDA フレームワーク<a class="headerlink" href="#mda" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="../appendix/glossary.html#term-MDA"><span class="xref std std-term">MDA フレームワーク</span></a>は、ロビン・ハニキー、マーク・ルブラン、ロバート・ズベックが 2004 年に発表した、ゲームを 3 つの層に分けて考える枠組みである。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 25 </span><span class="caption-text">MDA の 3 つの層</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>層</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>すごろくの例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>メカニクス（Mechanics）</p></td>
+<td><p>ルール、データ、アルゴリズム。設計者が直接決めるもの</p></td>
+<td><p>サイコロを振り、出た目だけ進む。先にゴールに着いた人が勝つ</p></td>
+</tr>
+<tr class="row-odd"><td><p>ダイナミクス（Dynamics）</p></td>
+<td><p>メカニクスが、プレイヤーの行動と組み合わさって実際に生む振る舞い</p></td>
+<td><p>抜きつ抜かれつの展開。大差がついても逆転が起こりうる</p></td>
+</tr>
+<tr class="row-even"><td><p>エステティクス（Aesthetics）</p></td>
+<td><p>プレイヤーが感じる感情的な反応</p></td>
+<td><p>サイコロを振る瞬間のどきどき感。勝ち負けを気にせず皆で笑える</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-center" id="id12">
+<div class="graphviz"><img src="../_images/graphviz-3f5dfc79de15a9b37c20543a8de03d8c50095a7b.png" alt="digraph mda {
+  rankdir=LR;
+  node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f0f8&quot;, color=&quot;#1f5f99&quot;, fontsize=12];
+  edge [fontsize=10];
+  designer [label=&quot;設計者&quot;, shape=plaintext, style=&quot;&quot;];
+  m [label=&quot;メカニクス\n（ルール）&quot;];
+  d [label=&quot;ダイナミクス\n（振る舞い）&quot;];
+  a [label=&quot;エステティクス\n（感情）&quot;];
+  player [label=&quot;プレイヤー&quot;, shape=plaintext, style=&quot;&quot;];
+  designer -&gt; m [label=&quot;作る&quot;];
+  m -&gt; d -&gt; a [color=&quot;#1f5f99&quot;, label=&quot;生む&quot;];
+  player -&gt; a [label=&quot;感じる&quot;];
+  a -&gt; d -&gt; m [color=&quot;#d9822b&quot;, fontcolor=&quot;#d9822b&quot;, style=dashed, constraint=false, label=&quot;さかのぼる&quot;];
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 8 </span><span class="caption-text">設計者とプレイヤーから見た MDA</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>設計者はメカニクスしか直接決められない。一方、プレイヤーが最初に触れるのはエステティクスであり、メカニクスはその奥に隠れている。設計者は「どのような感情を生みたいか」から逆算してメカニクスを決め、プレイヤーは感情からさかのぼってルールを理解する。</p>
+<p>ハニキーらは、エステティクスの例として次の 8 つを挙げている：感覚（Sensation）、空想（Fantasy）、物語（Narrative）、挑戦（Challenge）、仲間（Fellowship）、発見（Discovery）、表現（Expression）、暇つぶし（Submission）。</p>
+</section>
+<section id="id3">
+<h2>コアループ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ゲームの中で繰り返される行動の単位を<a class="reference internal" href="../appendix/glossary.html#term-15"><span class="xref std std-term">コアループ</span></a>と呼ぶ。たとえば、アクション RPG の短いループは「敵を見つける → 戦う → 報酬を得る」であり、長いループは「報酬で装備を強くする → より難しい場所に行く」である。</p>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">表 26 </span><span class="caption-text">コアループの例</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ゲーム</p></th>
+<th class="head"><p>短いループ（数秒〜数分）</p></th>
+<th class="head"><p>長いループ（1 ゲーム〜数日）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>将棋</p></td>
+<td><p>相手の手を読む → 指す</p></td>
+<td><p>対局する → 振り返る → 定跡を学ぶ</p></td>
+</tr>
+<tr class="row-odd"><td><p>デッキ構築のボードゲーム</p></td>
+<td><p>カードを使う → 新しいカードを買う</p></td>
+<td><p>山札が強くなり、より高い得点のカードが買えるようになる</p></td>
+</tr>
+<tr class="row-even"><td><p>落ち物パズル</p></td>
+<td><p>ブロックを置く → 列が消える</p></td>
+<td><p>速度が上がる → 高得点を目指して再挑戦する</p></td>
+</tr>
+</tbody>
+</table>
+<p>コアループが楽しくないと、それをどれだけ飾っても楽しいゲームにはならない。4 章で述べたプロトタイプの段階で確かめるのは、主にこのコアループの面白さである。</p>
+</section>
+<section id="id4">
+<h2>フィードバックループ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ゲームの状態が、次の状態に影響を与え続ける仕組みを<a class="reference internal" href="../appendix/glossary.html#term-26"><span class="xref std std-term">フィードバックループ</span></a>と呼ぶ。</p>
+<figure class="align-center" id="id14">
+<div class="graphviz"><img src="../_images/graphviz-0eed1b655738bf7a4e4b60776c03104759939127.png" alt="digraph loops {
+  node [shape=box, style=&quot;rounded,filled&quot;, fontsize=11];
+  subgraph cluster_pos {
+    label=&quot;正のループ（差が広がる）&quot;; fontsize=12; color=&quot;#d9822b&quot;;
+    p1 [label=&quot;リードする&quot;, fillcolor=&quot;#fbeee2&quot;, color=&quot;#d9822b&quot;];
+    p2 [label=&quot;多くの資源を得る&quot;, fillcolor=&quot;#fbeee2&quot;, color=&quot;#d9822b&quot;];
+    p3 [label=&quot;さらに有利になる&quot;, fillcolor=&quot;#fbeee2&quot;, color=&quot;#d9822b&quot;];
+    p1 -&gt; p2 -&gt; p3 -&gt; p1;
+  }
+  subgraph cluster_neg {
+    label=&quot;負のループ（差が縮まる）&quot;; fontsize=12; color=&quot;#3a8f5c&quot;;
+    n1 [label=&quot;遅れる&quot;, fillcolor=&quot;#e6f2ea&quot;, color=&quot;#3a8f5c&quot;];
+    n2 [label=&quot;救済を受ける\n（強いアイテムなど）&quot;, fillcolor=&quot;#e6f2ea&quot;, color=&quot;#3a8f5c&quot;];
+    n3 [label=&quot;追いつく&quot;, fillcolor=&quot;#e6f2ea&quot;, color=&quot;#3a8f5c&quot;];
+    n1 -&gt; n2 -&gt; n3 -&gt; n1;
+  }
+}" class="graphviz" /></div>
+<figcaption>
+<p><span class="caption-number">図 9 </span><span class="caption-text">正のフィードバックループ（左）と負のフィードバックループ（右）</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">表 27 </span><span class="caption-text">正と負のフィードバックループ</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>効果</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>正のループ</p></td>
+<td><p>有利な側がさらに有利になり、差が広がる。ゲームを終わりに向かわせる</p></td>
+<td><p>モノポリーで、土地を多く持つ人が家賃を集めてさらに土地を買う</p></td>
+</tr>
+<tr class="row-odd"><td><p>負のループ</p></td>
+<td><p>不利な側が追いつきやすくなり、差が縮まる。接戦を生む</p></td>
+<td><p>レースゲームで、下位のプレイヤーほど強いアイテムが出る</p></td>
+</tr>
+</tbody>
+</table>
+<p>正のループが強すぎると、序盤で勝負が決まり、残りの時間が消化試合になる。負のループが強すぎると、序盤の努力が意味を失い、最後の運だけで勝負が決まる。多くのゲームは両方を組み合わせて、終盤まで緊張感が続くように調整している。8 章の演習 4 では、すごろくにこの 2 種類のループを加えて、効果を数値で確かめる。</p>
+</section>
+<section id="id5">
+<h2>バランス<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>ゲームの選択肢（キャラクター、カード、戦略など）の強さの関係を<strong>バランス</strong>と呼ぶ。</p>
+<dl class="simple">
+<dt><strong>推移的な関係</strong></dt><dd><p>A が B より強く、B が C より強ければ、A は C より強い、という関係。強さに一列の順位がつく。コスト（値段、手間）と効果をつり合わせることで、弱い選択肢にも使う理由を持たせる。</p>
+</dd>
+<dt><strong>非推移的な関係</strong></dt><dd><p>じゃんけんのように、A は B に、B は C に、C は A に強い、という三すくみの関係。どれか 1 つが常に最善ということが無いので、相手の選択を読むことが重要になる。</p>
+</dd>
+</dl>
+<p>バランスが崩れ、1 つの選択肢が常に最善になると、他の選択肢は意味を失う。これは「意味のある選択」が失われることでもある。5 章の「グリコ」の計算のように、点数（効果）を変えると最適な選び方の割合が変わる。バランスの調整は、この割合を設計者の意図に近づける作業といえる。</p>
+</section>
+<section id="id6">
+<h2>難易度とチュートリアル<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>時間とともに難しさがどう変わるかを示したものを<strong>難易度曲線</strong>と呼ぶ。フローの考え方に従えば、難易度はプレイヤーの上達に合わせて上がっていくのが望ましい。ただし、一直線に上げ続けると疲れてしまうので、難しい場面のあとに易しい場面を挟み、緩急をつけることが多い。</p>
+<p>新しいプレイヤーにルールと操作を教える部分を<strong>チュートリアル</strong>と呼ぶ。よいチュートリアルは、説明の文章を読ませるのではなく、安全な状況で実際に試させ、1 つずつ新しい要素を加えていく。</p>
+<p>8 章の演習 7 では、Godot のサンプルでブロックの出現間隔を変え、難易度曲線を実際に描く。</p>
+</section>
+<section id="id7">
+<h2>手触り<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>デジタルゲームでは、操作したときの感触も面白さを大きく左右する。これを<a class="reference internal" href="../appendix/glossary.html#term-13"><span class="xref std std-term">ゲームフィール</span></a>（手触り）と呼ぶ。スティーブ・スウィンクは『Game Feel』（2008）で、手触りは、実時間での操作への反応、ゲームの中の空間での動き、それを強調する演出（エフェクト、音、画面の揺れなど）からなるとした。</p>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">表 28 </span><span class="caption-text">手触りを左右する要素</span><a class="headerlink" href="#id16" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>要素</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>反応の速さ</p></td>
+<td><p>ボタンを押してから画面が変わるまでの時間。短いほど「自分が動かしている」感覚が強い</p></td>
+</tr>
+<tr class="row-odd"><td><p>加速と減速</p></td>
+<td><p>最高速度に達するまでの時間と、止まるまでの時間。短いと機敏に、長いと重く滑るように感じる</p></td>
+</tr>
+<tr class="row-even"><td><p>重力と跳躍</p></td>
+<td><p>跳ぶ高さと落ちる速さ。現実の物理に従うより、上りより下りを速くする方が気持ちよく感じられることが多い</p></td>
+</tr>
+<tr class="row-odd"><td><p>演出</p></td>
+<td><p>当たったときの効果音、一瞬の停止、画面の揺れなど。同じ動きでも、演出によって手応えが大きく変わる</p></td>
+</tr>
+</tbody>
+</table>
+<p>8 章の演習 6 では、Godot のサンプルで加速度や減速度を変え、手触りの違いを体験する。</p>
+</section>
+<section id="id8">
+<h2>アナログゲーム特有の課題<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>アナログゲームには、デジタルゲームでは目立たない設計上の課題がある。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">表 29 </span><span class="caption-text">アナログゲーム特有の課題</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>課題</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../appendix/glossary.html#term-20"><span class="xref std std-term">ダウンタイム</span></a></p></td>
+<td><p>他のプレイヤーの手番を待つ時間。長いと退屈になる。全員が同時に行動する、他人の手番にも関われるなどの工夫で短くする</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../appendix/glossary.html#term-9"><span class="xref std std-term">キングメーカー問題</span></a></p></td>
+<td><p>勝つ見込みの無くなったプレイヤーの行動が、誰が勝つかを決めてしまう問題。多人数の対戦で起きやすい</p></td>
+</tr>
+<tr class="row-even"><td><p>ルールの量</p></td>
+<td><p>デジタルゲームでは計算機がルールを処理するが、アナログゲームでは人がルールを覚え、処理しなければならない。ルールが多すぎると、遊ぶ前の説明だけで疲れてしまう</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id9">
+<h2>演習<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>最近遊んだゲームを 1 つ選び、MDA の 3 つの層とコアループを、それぞれ一言で書く。これは 8 章の演習 8 の準備になる。</p>
+<section id="id10">
+<h3>記入例<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">表 30 </span><span class="caption-text">記入例：協力型のボードゲーム</span><a class="headerlink" href="#id18" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>記入例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>メカニクス</p></td>
+<td><p>手番ごとに危機のカードが増える。プレイヤーは役割ごとの特殊能力を使って危機を減らす</p></td>
+</tr>
+<tr class="row-odd"><td><p>ダイナミクス</p></td>
+<td><p>全員で相談して手番の行動を決める。危機が連鎖して一気に悪化する場面がある</p></td>
+</tr>
+<tr class="row-even"><td><p>エステティクス</p></td>
+<td><p>仲間（Fellowship）と挑戦（Challenge）。追い詰められてからの逆転の達成感</p></td>
+</tr>
+<tr class="row-odd"><td><p>コアループ</p></td>
+<td><p>危機が増える → 相談する → 能力を組み合わせて対処する</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mathematics.html" class="btn btn-neutral float-left" title="5 章 数理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../part3_play/index.html" class="btn btn-neutral float-right" title="第 3 部 ゲームを遊ぶ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

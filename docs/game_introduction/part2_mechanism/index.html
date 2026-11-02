@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 2 部 ゲームの仕組み &mdash; ゲーム入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3989ba92" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="4 章 制作" href="production.html" />
+    <link rel="prev" title="3 章 種類" href="../part1_know/types.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ゲーム入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 1 部　ゲームを知る</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part1_know/index.html">第 1 部　ゲームを知る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 2 部　ゲームの仕組み</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 2 部　ゲームの仕組み</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="production.html">4 章　制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">5 章　数理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html">6 章　デザイン</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 3 部　ゲームを遊ぶ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part3_play/index.html">第 3 部　ゲームを遊ぶ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">まとめ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../next_steps.html">10 章　次に学ぶこと</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/worksheets.html">付録 A　分析ワークシート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/samples.html">付録 B　サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/glossary.html">付録 C　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/references.html">付録 D　参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ゲーム入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 2 部　ゲームの仕組み</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>第 2 部　ゲームの仕組み<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>第 2 部では、ゲームがどのように作られ（4 章）、どのような数理に支えられ（5 章）、どのような考え方で設計されるか（6 章）を説明する。いずれも入口として要点に絞り、第 3 部の分析で使う概念を中心に扱う。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="production.html">4 章　制作</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="production.html#id2">制作の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="production.html#id3">規模と体制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="production.html#id4">ゲームプログラムの骨格</a></li>
+<li class="toctree-l2"><a class="reference internal" href="production.html#id5">ゲームエンジン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="production.html#godot">Godot のサンプルを動かす</a></li>
+<li class="toctree-l2"><a class="reference internal" href="production.html#id6">アナログゲームの制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="production.html#id7">演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mathematics.html">5 章　数理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id2">状態とゲーム木</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id3">完全情報ゲームを解く</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id4">組合せゲーム理論</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id5">同時に手を選ぶゲーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id6">確率と期待値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id7">乱数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id8">強さを測る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html#id9">演習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">6 章　デザイン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id2">面白さとは何か</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#mda">MDA フレームワーク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id3">コアループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id4">フィードバックループ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id5">バランス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id6">難易度とチュートリアル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id7">手触り</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id8">アナログゲーム特有の課題</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#id9">演習</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../part1_know/types.html" class="btn btn-neutral float-left" title="3 章 種類" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="production.html" class="btn btn-neutral float-right" title="4 章 制作" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

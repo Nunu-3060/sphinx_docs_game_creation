@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>付録 A 分析ワークシート &mdash; ゲーム入門</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3989ba92" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="付録 B サンプルコード一覧" href="samples.html" />
+    <link rel="prev" title="10 章 次に学ぶこと" href="../next_steps.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ゲーム入門
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 1 部　ゲームを知る</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part1_know/index.html">第 1 部　ゲームを知る</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 2 部　ゲームの仕組み</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part2_mechanism/index.html">第 2 部　ゲームの仕組み</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">第 3 部　ゲームを遊ぶ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../part3_play/index.html">第 3 部　ゲームを遊ぶ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">まとめ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../next_steps.html">10 章　次に学ぶこと</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">付録</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">付録 A　分析ワークシート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">ワークシート 1　遊びの記録</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mda">ワークシート 2　MDA とコアループによる分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ワークシート 3　ルール変更の記録</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="samples.html">付録 B　サンプルコード一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">付録 C　用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">付録 D　参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ゲーム入門</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">付録 A　分析ワークシート</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="a">
+<h1>付録 A　分析ワークシート<a class="headerlink" href="#a" title="Link to this heading"></a></h1>
+<p>7 章と 8 章の演習で使うワークシートである。表の項目を自分のノートに書き写して使うか、テキストファイルをダウンロードして、テキストエディターで記入する。</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-number">表 52 </span><span class="caption-text">ワークシートの一覧</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ワークシート</p></th>
+<th class="head"><p>使う演習</p></th>
+<th class="head"><p>ダウンロード</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ワークシート 1　遊びの記録</p></td>
+<td><p>7 章</p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/41ab12e40414380ce72a6ebfecfcb01d/01_play_log.txt"><code class="xref download docutils literal notranslate"><span class="pre">01_play_log.txt</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>ワークシート 2　MDA とコアループによる分析</p></td>
+<td><p>8 章の演習 8</p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/3dc63ce1d812c5a2628719134f6a2432/02_mda_analysis.txt"><code class="xref download docutils literal notranslate"><span class="pre">02_mda_analysis.txt</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>ワークシート 3　ルール変更の記録</p></td>
+<td><p>8 章の演習 9</p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/52ed6a243625640bc400a65fdf73d1b6/03_rule_change.txt"><code class="xref download docutils literal notranslate"><span class="pre">03_rule_change.txt</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="id1">
+<h2>ワークシート 1　遊びの記録<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>1 回遊ぶごとに 1 枚書く。1 週間続けたら、最後の「振り返り」を書く。記入例は 7 章の演習にある。</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-number">表 53 </span><span class="caption-text">1 回ごとの記録</span><a class="headerlink" href="#id4" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>書くこと</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>日付</p></td>
+<td><p>―</p></td>
+</tr>
+<tr class="row-odd"><td><p>ゲーム名</p></td>
+<td><p>―</p></td>
+</tr>
+<tr class="row-even"><td><p>媒体と場所</p></td>
+<td><p>アナログかデジタルか。どこで遊んだか</p></td>
+</tr>
+<tr class="row-odd"><td><p>人数と相手</p></td>
+<td><p>―</p></td>
+</tr>
+<tr class="row-even"><td><p>遊んだ時間</p></td>
+<td><p>ルールの説明を含めた時間</p></td>
+</tr>
+<tr class="row-odd"><td><p>結果</p></td>
+<td><p>勝ち負け、到達点など</p></td>
+</tr>
+<tr class="row-even"><td><p>いちばん楽しかった瞬間</p></td>
+<td><p>具体的な場面</p></td>
+</tr>
+<tr class="row-odd"><td><p>退屈だった、またはいらいらした瞬間</p></td>
+<td><p>具体的な場面</p></td>
+</tr>
+<tr class="row-even"><td><p>迷った選択</p></td>
+<td><p>どこで、何と何を比べたか</p></td>
+</tr>
+<tr class="row-odd"><td><p>次に遊ぶときに試したいこと</p></td>
+<td><p>―</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-number">表 54 </span><span class="caption-text">1 週間の振り返り</span><a class="headerlink" href="#id5" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>書くこと</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>遊んだゲームの数と合計時間</p></td>
+<td><p>―</p></td>
+</tr>
+<tr class="row-odd"><td><p>楽しかった瞬間に共通すること</p></td>
+<td><p>6 章の概念（フロー、意味のある選択など）で説明できるか</p></td>
+</tr>
+<tr class="row-even"><td><p>退屈だった瞬間に共通すること</p></td>
+<td><p>待ち時間、決着後の消化試合など</p></td>
+</tr>
+<tr class="row-odd"><td><p>自分が好きな遊び方の型</p></td>
+<td><p>ソロ、対戦、協力、パーティー、物語型（7 章）</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mda">
+<h2>ワークシート 2　MDA とコアループによる分析<a class="headerlink" href="#mda" title="Link to this heading"></a></h2>
+<p>分析する前に、少なくとも 2 回は遊んでおく。記入例は 8 章の演習 8 にある。</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-number">表 55 </span><span class="caption-text">MDA とコアループによる分析</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>書くこと</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="arabic simple">
+<li><p>エステティクス</p></li>
+</ol>
+</td>
+<td><p>最も強く感じる楽しさを 1 つか 2 つ選び、そう感じた場面を書く（感覚、空想、物語、挑戦、仲間、発見、表現、暇つぶし）</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="2">
+<li><p>ダイナミクス</p></li>
+</ol>
+</td>
+<td><p>よく起きる展開。正のフィードバックループと負のフィードバックループ</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="3">
+<li><p>メカニクス</p></li>
+</ol>
+</td>
+<td><p>目的、プレイヤーが選べる行動、偶然の要素、隠れている情報</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="4">
+<li><p>コアループ</p></li>
+</ol>
+</td>
+<td><p>短いループ（数秒〜数分）と長いループ（1 ゲーム〜数日）</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="5">
+<li><p>つながり</p></li>
+</ol>
+</td>
+<td><p>2 のダイナミクスを生んでいる 3 のメカニクスはどれか。1 のエステティクスを生んでいる 2 のダイナミクスはどれか</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="6">
+<li><p>まとめ</p></li>
+</ol>
+</td>
+<td><p>このゲームを 1 文で説明する</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h2>ワークシート 3　ルール変更の記録<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>変えるルールは 1 つだけにする。記入例は 8 章の演習 9 にある。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 56 </span><span class="caption-text">ルール変更の記録</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>書くこと</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>変えるルール</p></td>
+<td><p>変更前と変更後</p></td>
+</tr>
+<tr class="row-odd"><td><p>仮説</p></td>
+<td><p>変えると何が起きると思うか。遊ぶ前に書く</p></td>
+</tr>
+<tr class="row-even"><td><p>遊んだ回数と時間</p></td>
+<td><p>変更前と変更後のそれぞれ</p></td>
+</tr>
+<tr class="row-odd"><td><p>結果</p></td>
+<td><p>勝ち負けの決まり方はどう変わったか。迷う場面は増えたか、減ったか。遊んだ人の感想</p></td>
+</tr>
+<tr class="row-even"><td><p>仮説の検証</p></td>
+<td><p>仮説は当たったか。外れたなら、なぜか</p></td>
+</tr>
+<tr class="row-odd"><td><p>結論</p></td>
+<td><p>このルール変更を残すか。その理由</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../next_steps.html" class="btn btn-neutral float-left" title="10 章 次に学ぶこと" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="samples.html" class="btn btn-neutral float-right" title="付録 B サンプルコード一覧" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
