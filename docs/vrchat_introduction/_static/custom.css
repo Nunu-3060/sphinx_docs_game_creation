@@ -1,0 +1,12 @@
+/* 表のセル内で文章を折り返し、横スクロールを防ぐ */
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+    white-space: normal;
+}
+
+/* 図の最大幅を本文の幅に合わせる */
+.figure img,
+figure img {
+    max-width: 100%;
+    height: auto;
+}
